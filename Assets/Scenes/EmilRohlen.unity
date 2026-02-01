@@ -361,6 +361,7 @@ GameObject:
   - component: {fileID: 1945391110}
   - component: {fileID: 1945391109}
   - component: {fileID: 1945391108}
+  - component: {fileID: 1945391112}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -480,12 +481,34 @@ Transform:
   m_GameObject: {fileID: 1945391107}
   serializedVersion: 2
   m_LocalRotation: {x: 0.44601488, y: 0.22957534, z: -0.119509354, w: 0.85678667}
-  m_LocalPosition: {x: -5.5, y: 12.5, z: -8.5}
+  m_LocalPosition: {x: -5.5, y: 13.58, z: -8.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1981123856}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 55, y: 30, z: 0}
+--- !u!114 &1945391112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1945391107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1614a990e29e45b685fda35ad468f54c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _target: {fileID: 1981123852}
+  _lerpPosition: 1
+  _positionLerpSpeed: 0.1
+  _followOffset: 1
+  _followBehaviour: 0
+  _lerpZoom: 1
+  _zoomInLerpSpeed: 0.05
+  _zoomOutLerpSpeed: 0.2
+  _minFOV: 60
+  _maxFOV: 70
 --- !u!1 &1981123850
 GameObject:
   m_ObjectHideFlags: 0
@@ -634,11 +657,10 @@ Transform:
   m_GameObject: {fileID: 1981123850}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.08, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1945391111}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1981123857
@@ -786,3 +808,4 @@ SceneRoots:
   - {fileID: 209853727}
   - {fileID: 371350487}
   - {fileID: 1981123856}
+  - {fileID: 1945391111}
