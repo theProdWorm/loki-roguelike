@@ -1,6 +1,5 @@
 using Entities.Stats;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Entities
 {
@@ -8,8 +7,6 @@ namespace Entities
     {
         [SerializeField] protected EntityBaseStats _entityBaseStats;
 
-        public UnityEvent<Entity> OnDeath;
-        
         protected int _maxHealth;
         protected int _currentHealth;
         
@@ -19,12 +16,12 @@ namespace Entities
         
         private bool _isDead;
 
-        private void Start()
+        protected virtual void Start()
         {
             StatsUpdated();
         }
 
-        private void StatsUpdated()
+        protected virtual void StatsUpdated()
         {
             _maxHealth = _entityBaseStats.MaxHealth;
             _moveSpeed = _entityBaseStats.MoveSpeed;
@@ -47,7 +44,6 @@ namespace Entities
                 return;
             
             _isDead = true;
-            OnDeath?.Invoke(this);
         }
     }
 }
