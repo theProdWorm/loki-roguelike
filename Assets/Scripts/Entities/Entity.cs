@@ -17,6 +17,9 @@ namespace Entities
         protected float _moveSpeed;
         
         protected int _damage;
+        protected float _range;
+
+        protected float _damageReduction;
         
         private bool _isDead;
 

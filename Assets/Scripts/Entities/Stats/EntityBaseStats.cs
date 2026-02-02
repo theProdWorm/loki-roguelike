@@ -7,6 +7,7 @@ namespace Entities.Stats
     {
         public int MaxHealth;
         public int Damage;
+        
         public float MoveSpeed;
     }
 }
