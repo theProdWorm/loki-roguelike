@@ -2,13 +2,23 @@ using System.Collections.Generic;
 using Entities.Stats;
 using Items;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Entities.Player
 {
-    public partial class Player : Entity
+    public class Player : Entity
     {
-        [HideInInspector]
-        public PlayerBaseStats PlayerBaseStats;
+        [SerializeField] private Rigidbody _rigidbody;
+        
+        private PlayerBaseStats _playerBaseStats;
+        
+        private Camera _camera;
+        
+        private Vector3 _rightDirection;
+        private Vector3 _forwardDirection;
+        
+        private Vector2 _moveInput;
+        private Vector2 _aimInput;
 
         private float _splashRadiusMultiplier;
         
@@ -21,14 +31,44 @@ namespace Entities.Player
         
         private readonly List<Effect> _effects = new();
 
+        private void Start()
+        {
+            InitializeBaseStats();
+            InitializeMovement();
+            
+            _playerBaseStats = (PlayerBaseStats) EntityBaseStats;
+        }
+        
         protected override void InitializeBaseStats()
         {
             base.InitializeBaseStats();
 
-            _critChance = PlayerBaseStats.CritChance;
-            _critDamage = PlayerBaseStats.CritDamage;
+            _critChance = _playerBaseStats.CritChance;
+            _critDamage = _playerBaseStats.CritDamage;
         }
         
+        private void InitializeMovement()
+        {
+            _camera = Camera.main!;
+            
+            _rightDirection = _camera.transform.right.normalized;
+
+            var cameraForward = _camera.transform.forward;
+            var downProjection = Vector3.Project(cameraForward, Vector3.up);
+            
+            _forwardDirection = (cameraForward - downProjection).normalized;
+        }
+        
+        private void Update()
+        {
+            Vector3 movementX = _moveInput.x * _rightDirection;
+            Vector3 movementZ = _moveInput.y * _forwardDirection;
+            
+            Vector3 movement = _moveSpeed * (movementX + movementZ);
+            
+            _rigidbody.linearVelocity = movement + new Vector3(0, _rigidbody.linearVelocity.y, 0);
+        }
+
         public override void TakeDamage(int amount)
         {
             int reducedDamage = Mathf.CeilToInt(amount * (1 - _damageReduction));
@@ -42,7 +82,7 @@ namespace Entities.Player
             item.Apply(this);
         }
 
-        #region Add Base Stats
+        #region Stat Modification
         public void AddBaseMaxHealth(int amount)
         {
             _baseMaxHealth += amount;
@@ -60,9 +100,7 @@ namespace Entities.Player
             _baseMoveSpeed += amount;
             UpdateStats();
         }
-        #endregion
         
-        #region Add Multipliers
         public void AddMaxHealthMultiplier(float amount)
         {
             _maxHealthMultiplier += amount;
@@ -80,9 +118,7 @@ namespace Entities.Player
             _moveSpeedMultiplier += amount;
             UpdateStats();
         }
-        #endregion
 
-        #region Add Stats
         public void AddRangeMultiplier(float amount)
         {
             _rangeMultiplier += amount;
@@ -108,6 +144,42 @@ namespace Entities.Player
             _maxHealth = Mathf.CeilToInt(_baseMaxHealth * _maxHealthMultiplier);
             _damage = Mathf.CeilToInt(_baseDamage * _damageMultiplier);
             _moveSpeed = _baseMoveSpeed * _moveSpeedMultiplier;
+        }
+        #endregion
+        
+        #region Input
+        public void Move(InputAction.CallbackContext context)
+        {
+            _moveInput = context.ReadValue<Vector2>();
+        }
+
+        public void Aim(InputAction.CallbackContext context)
+        {
+            _aimInput = context.ReadValue<Vector2>();
+        }
+
+        public void Dash(InputAction.CallbackContext context)
+        {
+            if (!context.performed)
+                return;
+            
+            // TODO: Perform dash
+        }
+        
+        public void Attack(InputAction.CallbackContext context)
+        {
+            if (!context.performed)
+                return;
+            
+            // TODO: Perform attack
+        }
+        
+        public void Special(InputAction.CallbackContext context)
+        {
+            if (!context.performed)
+                return;
+            
+            // TODO: Perform special
         }
         #endregion
     }

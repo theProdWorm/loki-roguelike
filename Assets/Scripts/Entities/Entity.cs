@@ -12,6 +12,12 @@ namespace Entities
 
         public UnityEvent<Entity> OnDeath;
         
+        [Tooltip("Referenced entity DEALT damage")]
+        public UnityEvent<Entity> OnDamageTaken;
+        
+        [Tooltip("Referenced entity TOOK damage")]
+        public UnityEvent<Entity> OnDamageDealt;
+        
         protected int _baseMaxHealth;
         protected int _baseDamage;
         protected float _baseMoveSpeed;
@@ -36,9 +42,9 @@ namespace Entities
             _baseDamage = EntityBaseStats.Damage;
             _baseMoveSpeed = EntityBaseStats.MoveSpeed;
             
-            _maxHealth = EntityBaseStats.MaxHealth;
-            _damage = EntityBaseStats.Damage;
-            _moveSpeed = EntityBaseStats.MoveSpeed;
+            _maxHealth = _baseMaxHealth;
+            _damage = _baseDamage;
+            _moveSpeed = _baseMoveSpeed;
             
             _currentHealth = _maxHealth;
         }
