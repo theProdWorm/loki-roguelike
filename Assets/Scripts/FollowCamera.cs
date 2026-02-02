@@ -4,7 +4,7 @@ public class FollowCamera : MonoBehaviour
 {
     private enum FollowBehaviour
     {
-        Ahead, Behind, Center
+        Ahead, Behind
     }
     
     [SerializeField] private Rigidbody _target;
@@ -45,7 +45,6 @@ public class FollowCamera : MonoBehaviour
         Vector3 followPoint = _target.position + _followOffset * _followBehaviour switch
         {
             FollowBehaviour.Ahead => _target.linearVelocity.normalized,
-            FollowBehaviour.Behind => -_target.linearVelocity.normalized,
             _ => Vector3.zero
         };
 

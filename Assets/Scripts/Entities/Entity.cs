@@ -1,12 +1,16 @@
 using Entities.Stats;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Entities
 {
+    [RequireComponent(typeof(Rigidbody))]
     public abstract class Entity : MonoBehaviour
     {
         [SerializeField] protected EntityBaseStats _entityBaseStats;
 
+        public UnityEvent<Entity> OnDeath;
+        
         protected int _maxHealth;
         protected int _currentHealth;
         
@@ -30,7 +34,7 @@ namespace Entities
             // TODO: Apply additional stats
         }
 
-        public void TakeDamage(int amount)
+        public virtual void TakeDamage(int amount)
         {
             _currentHealth -= amount;
             
@@ -38,12 +42,14 @@ namespace Entities
                 Die();
         }
         
-        protected void Die()
+        protected virtual void Die()
         {
             if (_isDead)
                 return;
             
             _isDead = true;
+            
+            OnDeath?.Invoke(this);
         }
     }
 }
