@@ -1,42 +1,48 @@
 using Entities.Stats;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace Entities
 {
     [RequireComponent(typeof(Rigidbody))]
     public abstract class Entity : MonoBehaviour
     {
-        [SerializeField] protected EntityBaseStats _entityBaseStats;
+        [SerializeField] public EntityBaseStats EntityBaseStats;
 
         public UnityEvent<Entity> OnDeath;
         
-        protected int _maxHealth;
-        protected int _currentHealth;
+        protected int _baseMaxHealth;
+        protected int _baseDamage;
+        protected float _baseMoveSpeed;
         
+        protected int _maxHealthMultiplier;
+        protected int _damageMultiplier;
+        protected float _moveSpeedMultiplier;
+        
+        protected int _maxHealth;
+        protected int _damage;
         protected float _moveSpeed;
         
-        protected int _damage;
-        protected float _range;
-
-        protected float _damageReduction;
+        protected float _rangeMultiplier = 1f;
+        
+        protected int _currentHealth;
         
         private bool _isDead;
 
-        protected virtual void Start()
+        protected virtual void InitializeBaseStats()
         {
-            StatsUpdated();
-        }
-
-        protected virtual void StatsUpdated()
-        {
-            _maxHealth = _entityBaseStats.MaxHealth;
-            _moveSpeed = _entityBaseStats.MoveSpeed;
-            _damage = _entityBaseStats.Damage;
+            _baseMaxHealth = EntityBaseStats.MaxHealth;
+            _baseDamage = EntityBaseStats.Damage;
+            _baseMoveSpeed = EntityBaseStats.MoveSpeed;
             
-            // TODO: Apply additional stats
+            _maxHealth = EntityBaseStats.MaxHealth;
+            _damage = EntityBaseStats.Damage;
+            _moveSpeed = EntityBaseStats.MoveSpeed;
+            
+            _currentHealth = _maxHealth;
         }
-
+        
         public virtual void TakeDamage(int amount)
         {
             _currentHealth -= amount;
@@ -45,7 +51,7 @@ namespace Entities
                 Die();
         }
         
-        protected virtual void Die()
+        private void Die()
         {
             if (_isDead)
                 return;

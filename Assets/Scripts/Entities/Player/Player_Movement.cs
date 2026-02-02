@@ -1,14 +1,11 @@
-using Entities.Stats;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Entities
+namespace Entities.Player
 {
-    public class Player : Entity
+    public partial class Player
     {
-        [SerializeField] private Rigidbody _rigidbody;
-        
-        private PlayerBaseStats _playerBaseStats;
+        [SerializeField] protected Rigidbody _rigidbody;
 
         private Camera _camera;
         
@@ -18,12 +15,8 @@ namespace Entities
         private Vector2 _moveInput;
         private Vector2 _aimInput;
 
-        protected override void Start()
+        private void InitializeMovement()
         {
-            StatsUpdated();
-            
-            _playerBaseStats = (PlayerBaseStats) _entityBaseStats;
-            
             _camera = Camera.main!;
             
             _rightDirection = _camera.transform.right.normalized;
@@ -33,14 +26,7 @@ namespace Entities
             
             _forwardDirection = (cameraForward - downProjection).normalized;
         }
-
-        protected override void StatsUpdated()
-        {
-            base.StatsUpdated();
-            
-            // Player specific stuff
-        }
-
+        
         private void Update()
         {
             Vector3 movementX = _moveInput.x * _rightDirection;
@@ -48,7 +34,7 @@ namespace Entities
             
             Vector3 movement = _moveSpeed * (movementX + movementZ);
             
-            _rigidbody.linearVelocity = movement;
+            _rigidbody.linearVelocity = movement + new Vector3(0, _rigidbody.linearVelocity.y, 0);
         }
         
         public void OnMove(InputAction.CallbackContext context)
