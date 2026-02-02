@@ -16,8 +16,8 @@ namespace Entities
         protected int _baseDamage;
         protected float _baseMoveSpeed;
         
-        protected int _maxHealthMultiplier;
-        protected int _damageMultiplier;
+        protected float _maxHealthMultiplier;
+        protected float _damageMultiplier;
         protected float _moveSpeedMultiplier;
         
         protected int _maxHealth;

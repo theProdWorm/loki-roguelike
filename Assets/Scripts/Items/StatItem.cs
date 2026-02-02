@@ -9,14 +9,22 @@ namespace Items
         
         public void Apply(Player player)
         {
-            if (_stats.MaxHealth != 0)
-                player.AddMaxHealthMultiplier(_stats.MaxHealth);
-            if (_stats.Damage != 0)
-                player.AddDamageMultiplier(_stats.Damage);
-            if (!Mathf.Approximately(_stats.Range, 0))
-                player.AddRangeMultiplier(_stats.Range);
-            if (!Mathf.Approximately(_stats.MoveSpeed, 0))
-                player.AddMoveSpeedMultiplier(_stats.MoveSpeed);
+            if (_stats.BaseMaxHealth != 0)
+                player.AddBaseMaxHealth(_stats.BaseMaxHealth);
+            if (_stats.BaseDamage != 0)
+                player.AddBaseDamage(_stats.BaseDamage);
+            if (_stats.BaseMoveSpeed != 0)
+                player.AddBaseMoveSpeed(_stats.BaseMoveSpeed);
+            
+            if (!Mathf.Approximately(_stats.MaxHealthMultiplier, 0))
+                player.AddMaxHealthMultiplier(_stats.MaxHealthMultiplier);
+            if (!Mathf.Approximately(_stats.DamageMultiplier, 0))
+                player.AddDamageMultiplier(_stats.DamageMultiplier);
+            if (!Mathf.Approximately(_stats.RangeMultiplier, 0))
+                player.AddRangeMultiplier(_stats.RangeMultiplier);
+            
+            if (!Mathf.Approximately(_stats.MoveSpeedMultiplier, 0))
+                player.AddMoveSpeedMultiplier(_stats.MoveSpeedMultiplier);
             if (!Mathf.Approximately(_stats.CritChance, 0))
                 player.AddCritChanceMultiplier(_stats.CritChance);
             if (!Mathf.Approximately(_stats.CritDamage, 0))

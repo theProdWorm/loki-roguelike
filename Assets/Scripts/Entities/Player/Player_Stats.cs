@@ -46,7 +46,7 @@ namespace Entities.Player
         public void AddBaseMaxHealth(int amount)
         {
             _baseMaxHealth += amount;
-            UpdateStats(
+            UpdateStats();
         }
 
         public void AddBaseDamage(int amount)
@@ -63,13 +63,13 @@ namespace Entities.Player
         #endregion
         
         #region Add Multipliers
-        public void AddMaxHealthMultiplier(int amount)
+        public void AddMaxHealthMultiplier(float amount)
         {
             _maxHealthMultiplier += amount;
             UpdateStats();
         }
 
-        public void AddDamageMultiplier(int amount)
+        public void AddDamageMultiplier(float amount)
         {
             _damageMultiplier += amount;
             UpdateStats();
@@ -105,8 +105,8 @@ namespace Entities.Player
 
         private void UpdateStats()
         {
-            _maxHealth = _baseMaxHealth * _maxHealthMult;
-            _damage = _baseDamage * _damageMultiplier;
+            _maxHealth = Mathf.CeilToInt(_baseMaxHealth * _maxHealthMultiplier);
+            _damage = Mathf.CeilToInt(_baseDamage * _damageMultiplier);
             _moveSpeed = _baseMoveSpeed * _moveSpeedMultiplier;
         }
         #endregion
