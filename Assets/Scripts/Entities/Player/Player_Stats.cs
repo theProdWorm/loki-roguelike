@@ -46,7 +46,7 @@ namespace Entities.Player
         public void AddBaseMaxHealth(int amount)
         {
             _baseMaxHealth += amount;
-            UpdateStats();
+            UpdateStats(
         }
 
         public void AddBaseDamage(int amount)
