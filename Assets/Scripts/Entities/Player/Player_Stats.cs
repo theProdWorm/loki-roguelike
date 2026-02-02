@@ -46,40 +46,48 @@ namespace Entities.Player
         public void AddBaseMaxHealth(int amount)
         {
             _baseMaxHealth += amount;
+            UpdateStats();
         }
 
         public void AddBaseDamage(int amount)
         {
             _baseDamage += amount;
+            UpdateStats();
         }
 
         public void AddBaseMoveSpeed(float amount)
         {
             _baseMoveSpeed += amount;
+            UpdateStats();
         }
         #endregion
         
-        
+        #region Add Multipliers
         public void AddMaxHealthMultiplier(int amount)
         {
             _maxHealthMultiplier += amount;
+            UpdateStats();
         }
 
         public void AddDamageMultiplier(int amount)
         {
             _damageMultiplier += amount;
+            UpdateStats();
         }
+        
+        public void AddMoveSpeedMultiplier(float amount)
+        {
+            _moveSpeedMultiplier += amount;
+            UpdateStats();
+        }
+        #endregion
 
+        #region Add Stats
         public void AddRangeMultiplier(float amount)
         {
             _rangeMultiplier += amount;
         }
-
-        public void AddMoveSpeedMultiplier(float amount)
-        {
-            _moveSpeedMultiplier += amount;
-        }
-
+        
         public void AddCritChanceMultiplier(float amount)
         {
             _critChance += amount;
@@ -94,5 +102,13 @@ namespace Entities.Player
         {
             _damageReduction += amount;
         }
+
+        private void UpdateStats()
+        {
+            _maxHealth = _baseMaxHealth * _maxHealthMult;
+            _damage = _baseDamage * _damageMultiplier;
+            _moveSpeed = _baseMoveSpeed * _moveSpeedMultiplier;
+        }
+        #endregion
     }
 }
