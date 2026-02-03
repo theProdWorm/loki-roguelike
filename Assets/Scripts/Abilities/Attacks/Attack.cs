@@ -24,11 +24,11 @@ namespace Abilities.Attacks
             _owner = owner;
             tag = owner.tag;
             
-            if (tag  == "Player")
+            if (CompareTag("Player"))
                 _hostileTag = "Hostile";
-            else if (tag == "Hostile")
+            else if (CompareTag("Hostile"))
                 _hostileTag = "Player";
-            else if (tag == "Charmed")
+            else if (CompareTag("Charmed"))
                 _hostileTag = "Hostile";
         }
 
