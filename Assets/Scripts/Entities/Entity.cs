@@ -1,7 +1,8 @@
+using System.Collections.Generic;
+using Abilities.Attacks;
 using Stats;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 namespace Entities
 {
@@ -36,6 +37,8 @@ namespace Entities
         
         private bool _isDead;
 
+        private List<Attack> _activeAttacks;
+        
         protected virtual void InitializeBaseStats()
         {
             _baseMaxHealth = EntityBaseStats.MaxHealth;
@@ -65,6 +68,14 @@ namespace Entities
             _isDead = true;
             
             OnDeath?.Invoke(this);
+        }
+
+        private void InstantiateAttack(Attack attack)
+        {
+            var attackInstance = Instantiate(attack, transform.position, transform.rotation);
+            attackInstance.SetOwner(this);
+            
+            _activeAttacks.Add(attackInstance);
         }
     }
 }
