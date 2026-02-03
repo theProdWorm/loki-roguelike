@@ -18,7 +18,7 @@ namespace Abilities.Attacks
             }
         }
 
-        private void Start()
+        private void Awake()
         {
             _baseScale = transform.localScale;
             UpdateScale();
