@@ -33,10 +33,10 @@ namespace Entities.Player
 
         private void Start()
         {
+            _playerBaseStats = (PlayerBaseStats) EntityBaseStats;
+            
             InitializeBaseStats();
             InitializeMovement();
-            
-            _playerBaseStats = (PlayerBaseStats) EntityBaseStats;
         }
         
         protected override void InitializeBaseStats()

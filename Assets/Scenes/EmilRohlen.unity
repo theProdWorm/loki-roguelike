@@ -543,7 +543,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da6ea2dd4c882574c94b9624656835d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _entityBaseStats: {fileID: 11400000, guid: 201f19a15aeb70e41ba663d4e4487c31, type: 2}
+  EntityBaseStats: {fileID: 11400000, guid: 201f19a15aeb70e41ba663d4e4487c31, type: 2}
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDamageTaken:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDamageDealt:
+    m_PersistentCalls:
+      m_Calls: []
   _rigidbody: {fileID: 1981123852}
 --- !u!54 &1981123852
 Rigidbody:
