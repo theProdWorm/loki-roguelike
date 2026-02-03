@@ -8,14 +8,9 @@ namespace Abilities.Attacks
         
         protected override void OnTriggerEnter(Collider otherCollider)
         {
-            if (_isDead)
-                return;
-            
-            _isDead = true;
-            
             base.OnTriggerEnter(otherCollider);
 
-            OnAttackFinished?.Invoke(_owner);
+            OnAttackFinished?.Invoke();
         }
     }
 }

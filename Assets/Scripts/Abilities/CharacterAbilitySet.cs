@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace Abilities
 {
+    [CreateAssetMenu(fileName = "New Character Ability Set", menuName = "Abilities/Character Ability Set", order = 0)]
     public class CharacterAbilitySet : ScriptableObject
     {
         public Ability Attack;

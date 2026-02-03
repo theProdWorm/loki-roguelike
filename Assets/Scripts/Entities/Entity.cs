@@ -31,7 +31,7 @@ namespace Entities
         protected int _damage;
         protected float _moveSpeed;
         
-        protected float _AoEMultiplier = 1f;
+        protected float _areaSizeMultiplier = 1f;
         
         protected int _currentHealth;
         

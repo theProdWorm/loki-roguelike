@@ -155,9 +155,9 @@ namespace Entities.Player
             UpdateStats();
         }
 
-        public void AddAoEMultiplier(float amount)
+        public void AddAreaSizeMultiplier(float amount)
         {
-            _AoEMultiplier += amount;
+            _areaSizeMultiplier += amount;
         }
         
         public void AddCritChanceMultiplier(float amount)
@@ -209,8 +209,8 @@ namespace Entities.Player
             var attack = Instantiate(ability.Prefab, transform.position, transform.rotation)
                 .GetComponent<Attack>();
 
-            if (attack is AreaAttack splashAttack)
-                splashAttack.Radius *= _AoEMultiplier;
+            if (attack is AreaAttack areaAttack)
+                areaAttack.AreaSizeMultiplier = _areaSizeMultiplier;
 
             // TODO: Perform attack
         }

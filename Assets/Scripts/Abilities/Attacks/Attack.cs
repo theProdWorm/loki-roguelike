@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Entities;
 using Stats;
 using UnityEngine;
@@ -8,15 +7,15 @@ namespace Abilities.Attacks
 {
     public abstract class Attack : MonoBehaviour
     {
-        public UnityEvent<Entity> OnAttackFinished;
-        public UnityEvent<Entity> OnHit;
+        public UnityEvent<Entity> OnHitEntity;
+        public UnityEvent OnAttackFinished;
         
         protected Entity _owner;
         
-        private AttackStats _stats;
+        protected AttackStats _stats;
 
-        private string _hostileTag;
-        
+        protected string _hostileTag;
+
         public void SetStats(AttackStats stats) => _stats = stats;
 
         public void SetOwner(Entity owner) 
@@ -31,21 +30,24 @@ namespace Abilities.Attacks
             else if (CompareTag("Charmed"))
                 _hostileTag = "Hostile";
         }
+        
+        public virtual void DestroySelf() => Destroy(gameObject);
 
-        protected virtual void TryHitEntity(Entity entity)
+        protected Entity PerformAttack(Collider otherCollider)
         {
-            if (!entity.CompareTag(_hostileTag) && !entity.CompareTag("Charmed"))
-                return;
+            if (!otherCollider.CompareTag(_hostileTag) && !otherCollider.CompareTag("Charmed"))
+                return null;
             
+            var entity = otherCollider.gameObject.GetComponent<Entity>();
             entity.TakeDamage(_stats.Damage);
             
-            OnHit?.Invoke(entity);
+            OnHitEntity?.Invoke(entity);
+            
+            return entity;
         }
         
         protected virtual void OnTriggerEnter(Collider otherCollider)
         {
-            var entity = otherCollider.gameObject.GetComponent<Entity>();
-            TryHitEntity(entity);
         }
     }
 }
