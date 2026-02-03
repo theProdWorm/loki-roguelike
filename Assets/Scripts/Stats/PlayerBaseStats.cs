@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Entities.Stats
+namespace Stats
 {
     [CreateAssetMenu(fileName = "Player Base Stats", menuName = "Stats/Player Base Stats")]
     public class PlayerBaseStats : EntityBaseStats

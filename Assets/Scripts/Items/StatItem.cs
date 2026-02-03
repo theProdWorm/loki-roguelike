@@ -21,7 +21,7 @@ namespace Items
             if (!Mathf.Approximately(_stats.DamageMultiplier, 0))
                 player.AddDamageMultiplier(_stats.DamageMultiplier);
             if (!Mathf.Approximately(_stats.RangeMultiplier, 0))
-                player.AddRangeMultiplier(_stats.RangeMultiplier);
+                player.AddAoEMultiplier(_stats.RangeMultiplier);
             
             if (!Mathf.Approximately(_stats.MoveSpeedMultiplier, 0))
                 player.AddMoveSpeedMultiplier(_stats.MoveSpeedMultiplier);

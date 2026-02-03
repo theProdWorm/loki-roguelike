@@ -1,4 +1,4 @@
-using Entities.Stats;
+using Stats;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -30,7 +30,7 @@ namespace Entities
         protected int _damage;
         protected float _moveSpeed;
         
-        protected float _rangeMultiplier = 1f;
+        protected float _AoEMultiplier = 1f;
         
         protected int _currentHealth;
         

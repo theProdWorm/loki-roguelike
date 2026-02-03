@@ -1,6 +1,8 @@
 using System.Collections.Generic;
-using Entities.Stats;
+using Abilities;
+using Abilities.Attacks;
 using Items;
+using Stats;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,7 +10,23 @@ namespace Entities.Player
 {
     public class Player : Entity
     {
+        public enum Character { Fenrir, Hel, Jörmungandr }
+        
         [SerializeField] private Rigidbody _rigidbody;
+        
+        [Header("Fenrir")]
+        [SerializeField] private CharacterAbilitySet _fenrirAbilities;
+        [SerializeField] private Animator _fenrirAnimator;
+        
+        [Header("Hel")]
+        [SerializeField] private CharacterAbilitySet _helAbilities;
+        [SerializeField] private Animator _helAnimator;
+        
+        [Header("Jörmungandr")]
+        [SerializeField] private CharacterAbilitySet _jörmungandrAbilities;
+        [SerializeField] private Animator _jörmungandrAnimator;
+
+        public Character ActiveCharacter;
         
         private PlayerBaseStats _playerBaseStats;
         
@@ -19,8 +37,6 @@ namespace Entities.Player
         
         private Vector2 _moveInput;
         private Vector2 _aimInput;
-
-        private float _splashRadiusMultiplier;
         
         private float _critChance;
         private float _critDamage;
@@ -37,6 +53,8 @@ namespace Entities.Player
             
             InitializeBaseStats();
             InitializeMovement();
+            
+            CharacterIndexChanged();
         }
         
         protected override void InitializeBaseStats()
@@ -61,14 +79,21 @@ namespace Entities.Player
         
         private void Update()
         {
+            MoveAndRotate();
+        }
+
+        private void MoveAndRotate()
+        {
             Vector3 movementX = _moveInput.x * _rightDirection;
             Vector3 movementZ = _moveInput.y * _forwardDirection;
             
             Vector3 movement = _moveSpeed * (movementX + movementZ);
             
-            _rigidbody.linearVelocity = movement + new Vector3(0, _rigidbody.linearVelocity.y, 0);
+            _rigidbody.linearVelocity = movement;
+            
+            transform.LookAt(_rigidbody.position + movement);
         }
-
+        
         public override void TakeDamage(int amount)
         {
             int reducedDamage = Mathf.CeilToInt(amount * (1 - _damageReduction));
@@ -80,6 +105,17 @@ namespace Entities.Player
             _items.Add(item);
             
             item.Apply(this);
+        }
+
+        private void CharacterIndexChanged()
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                bool activeState = i == (int) ActiveCharacter;
+                
+                var child = transform.GetChild(i);
+                child.gameObject.SetActive(activeState);
+            }
         }
 
         #region Stat Modification
@@ -119,9 +155,9 @@ namespace Entities.Player
             UpdateStats();
         }
 
-        public void AddRangeMultiplier(float amount)
+        public void AddAoEMultiplier(float amount)
         {
-            _rangeMultiplier += amount;
+            _AoEMultiplier += amount;
         }
         
         public void AddCritChanceMultiplier(float amount)
@@ -157,20 +193,25 @@ namespace Entities.Player
         {
             _aimInput = context.ReadValue<Vector2>();
         }
-
-        public void Dash(InputAction.CallbackContext context)
-        {
-            if (!context.performed)
-                return;
-            
-            // TODO: Perform dash
-        }
         
         public void Attack(InputAction.CallbackContext context)
         {
             if (!context.performed)
                 return;
-            
+
+            var ability = ActiveCharacter switch
+            {
+                Character.Hel => _helAbilities.Attack,
+                Character.Jörmungandr => _jörmungandrAbilities.Attack,
+                _ => _fenrirAbilities.Attack // Default to Fenrir
+            };
+
+            var attack = Instantiate(ability.Prefab, transform.position, transform.rotation)
+                .GetComponent<Attack>();
+
+            if (attack is AreaAttack splashAttack)
+                splashAttack.Radius *= _AoEMultiplier;
+
             // TODO: Perform attack
         }
         
@@ -180,6 +221,30 @@ namespace Entities.Player
                 return;
             
             // TODO: Perform special
+        }
+        
+        public void Dash(InputAction.CallbackContext context)
+        {
+            if (!context.performed)
+                return;
+            
+            // TODO: Perform dash
+        }
+
+        public void SwitchPrevious(InputAction.CallbackContext context)
+        {
+            int characterIndex = Mathf.Abs((int) --ActiveCharacter) % 2;
+            ActiveCharacter = (Character) characterIndex;
+            
+            CharacterIndexChanged();
+        }
+
+        public void SwitchNext(InputAction.CallbackContext context)
+        {
+            int characterIndex = (int) ++ActiveCharacter % 2;
+            ActiveCharacter = (Character) characterIndex;
+            
+            CharacterIndexChanged();
         }
         #endregion
     }
