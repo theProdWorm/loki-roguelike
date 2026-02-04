@@ -7,6 +7,14 @@ namespace Stats
         public float CritChance;
         public float CritDamage;
 
-        public float AoE;
+        public float AreaSizeMultiplier;
+
+        public AttackStats(int damage, float critChance, float critDamage, float areaSizeMultiplier)
+        {
+            Damage = damage;
+            CritChance = critChance;
+            CritDamage = critDamage;
+            AreaSizeMultiplier = areaSizeMultiplier;
+        }
     }
 }

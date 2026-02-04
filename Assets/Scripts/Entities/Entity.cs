@@ -37,7 +37,7 @@ namespace Entities
         
         private bool _isDead;
 
-        private List<Attack> _activeAttacks;
+        private readonly List<Attack> _activeAttacks = new();
         
         protected virtual void InitializeBaseStats()
         {
@@ -52,9 +52,11 @@ namespace Entities
             _currentHealth = _maxHealth;
         }
         
-        public virtual void TakeDamage(int amount)
+        public virtual void TakeDamage(int amount, Entity attacker)
         {
             _currentHealth -= amount;
+            
+            OnDamageTaken?.Invoke(attacker);
             
             if (_currentHealth <= 0)
                 Die();

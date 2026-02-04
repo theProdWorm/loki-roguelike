@@ -46,7 +46,7 @@ namespace Abilities.Attacks
                 return null;
             
             var entity = otherCollider.gameObject.GetComponent<Entity>();
-            entity.TakeDamage(_damage);
+            entity.TakeDamage(_damage, _owner);
             
             OnHitEntity?.Invoke(entity);
             

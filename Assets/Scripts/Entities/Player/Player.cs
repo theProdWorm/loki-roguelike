@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 
 namespace Entities.Player
 {
+    [RequireComponent(typeof(Rigidbody))]
     public class Player : Entity
     {
         public enum Character { Fenrir, Hel, Jörmungandr }
@@ -80,6 +81,8 @@ namespace Entities.Player
         private void Update()
         {
             MoveAndRotate();
+            
+            _rigidbody.angularVelocity = Vector3.zero;
         }
 
         private void MoveAndRotate()
@@ -94,10 +97,10 @@ namespace Entities.Player
             transform.LookAt(_rigidbody.position + movement);
         }
         
-        public override void TakeDamage(int amount)
+        public override void TakeDamage(int amount, Entity attacker)
         {
             int reducedDamage = Mathf.CeilToInt(amount * (1 - _damageReduction));
-            base.TakeDamage(reducedDamage);
+            base.TakeDamage(reducedDamage, attacker);
         }
         
         public void AddItem(IItem item)
@@ -207,12 +210,13 @@ namespace Entities.Player
             };
 
             var attack = Instantiate(ability.Prefab, transform.position, transform.rotation)
-                .GetComponent<Attack>();
+                .GetComponentInChildren<Attack>();
 
+            AttackStats attackStats = new(_damage, _critChance, _critDamage, _areaSizeMultiplier);
+            attack.SetStats(attackStats);
+            
             if (attack is AreaAttack areaAttack)
                 areaAttack.AreaSizeMultiplier = _areaSizeMultiplier;
-
-            // TODO: Perform attack
         }
         
         public void Special(InputAction.CallbackContext context)
