@@ -7,7 +7,7 @@ namespace Items
     {
         private StatItemStats _stats;
         
-        public void Apply(Player player)
+        public virtual void Apply(Player player)
         {
             if (_stats.BaseMaxHealth != 0)
                 player.AddBaseMaxHealth(_stats.BaseMaxHealth);
@@ -20,8 +20,8 @@ namespace Items
                 player.AddMaxHealthMultiplier(_stats.MaxHealthMultiplier);
             if (!Mathf.Approximately(_stats.DamageMultiplier, 0))
                 player.AddDamageMultiplier(_stats.DamageMultiplier);
-            if (!Mathf.Approximately(_stats.RangeMultiplier, 0))
-                player.AddAreaSizeMultiplier(_stats.RangeMultiplier);
+            if (!Mathf.Approximately(_stats.AreaSizeMultiplier, 0))
+                player.AddAreaSizeMultiplier(_stats.AreaSizeMultiplier);
             
             if (!Mathf.Approximately(_stats.MoveSpeedMultiplier, 0))
                 player.AddMoveSpeedMultiplier(_stats.MoveSpeedMultiplier);

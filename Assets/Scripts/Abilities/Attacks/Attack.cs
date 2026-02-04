@@ -9,14 +9,21 @@ namespace Abilities.Attacks
     {
         public UnityEvent<Entity> OnHitEntity;
         public UnityEvent OnAttackFinished;
-        
-        protected Entity _owner;
+
+        [SerializeField] private float _damageMultiplier;
+
+        protected int _damage;
         
         protected AttackStats _stats;
-
+        
+        protected Entity _owner;
         protected string _hostileTag;
 
-        public void SetStats(AttackStats stats) => _stats = stats;
+        public void SetStats(AttackStats stats) 
+        {
+            _stats = stats;
+            _damage = Mathf.CeilToInt(_stats.Damage * _damageMultiplier);
+        }
 
         public void SetOwner(Entity owner) 
         {
@@ -39,7 +46,7 @@ namespace Abilities.Attacks
                 return null;
             
             var entity = otherCollider.gameObject.GetComponent<Entity>();
-            entity.TakeDamage(_stats.Damage);
+            entity.TakeDamage(_damage);
             
             OnHitEntity?.Invoke(entity);
             

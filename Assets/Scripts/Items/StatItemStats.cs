@@ -18,7 +18,7 @@ namespace Items
         public float MoveSpeedMultiplier;
         
         [Range(-1, 3)]
-        public float RangeMultiplier;
+        public float AreaSizeMultiplier;
         
         [Range(-1, 1)]
         public float CritChance;
