@@ -673,7 +673,7 @@ GameObject:
   - component: {fileID: 934804501}
   - component: {fileID: 934804503}
   m_Layer: 9
-  m_Name: Decal Projector
+  m_Name: Hole
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -712,7 +712,7 @@ Transform:
   m_GameObject: {fileID: 934804500}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.97, z: -13.11}
+  m_LocalPosition: {x: 0, y: 0.97, z: -13.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -737,7 +737,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3, y: 3, z: 3}
+  m_Size: {x: 3.5, y: 3.5, z: 3.5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1490689174
 GameObject:
@@ -1294,7 +1294,7 @@ MonoBehaviour:
   _dashPoint: {fileID: 1490689175}
   _dashCharges: 2
   _dashDuration: 0.12
-  _dashCooldown: 2
+  _dashCooldown: 0.048
   _dashHoleSnapFraction: 0.5
   _dashingPlayerLayer:
     serializedVersion: 2
@@ -1332,7 +1332,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 84
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!136 &1981123853
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -72,6 +72,7 @@ namespace Entities.Player
         private readonly List<IItem> _items = new();
         private readonly List<Effect> _effects = new();
 
+        private float _originalDashDistance;
         private int _remainingDashCharges;
         private float _remainingDashCooldown;
 
@@ -79,6 +80,8 @@ namespace Entities.Player
 
         private void Start()
         {
+            _originalDashDistance = Vector3.Distance(_rigidbody.position, _dashPoint.position);
+            
             _remainingDashCharges = _dashCharges;
             
             _playerBaseStats = (PlayerBaseStats) EntityBaseStats;
@@ -150,24 +153,23 @@ namespace Entities.Player
             
             gameObject.layer = dashLayer;
 
-            float originalDashDistance = Vector3.Distance(_rigidbody.position, _dashPoint.position);
             float actualDashDistance = Vector3.Distance(_rigidbody.position, dashPoint);
             
-            float dashDistanceFraction = actualDashDistance / originalDashDistance;
+            float dashDistanceFraction = actualDashDistance / _originalDashDistance;
             float dashDuration = _dashDuration * dashDistanceFraction;
             float dashSpeed = actualDashDistance / dashDuration;
+
+            if (dashDuration < 0.01f)
+                goto stop;
             
             _rigidbody.linearVelocity = dashSpeed * transform.forward;
 
-            float remainingDashDuration = dashDuration;
-            while (remainingDashDuration > 0)
-            {
-                yield return null;
-                remainingDashDuration -= Time.deltaTime;
-            }
+            yield return new WaitForSeconds(dashDuration);
             
-            _rigidbody.linearVelocity = _moveInput;
+            _rigidbody.linearVelocity = Vector3.zero;
+            // _rigidbody.position = dashPoint;
             
+            stop:
             _hasControl = true;
             gameObject.layer = defaultPlayerLayer;
         }
@@ -312,12 +314,13 @@ namespace Entities.Player
             
             Vector3 dashPoint = _dashPoint.position;
             
-            // Distance from center of player to the front collision point
-            Vector3 collisionPointOffset = _frontCollisionPoint.position - _rigidbody.position;
-            
             // Projected dash vector using the calculated offset from player center to front
             Vector3 dashVector = dashPoint - _rigidbody.position;
             float distance = dashVector.magnitude;
+            
+            // Distance from center of player to the front collision point
+            Vector3 collisionPointOffset =
+                dashVector.normalized * 0.02f + _frontCollisionPoint.position - _rigidbody.position;
             
             Ray ray = new(_frontCollisionPoint.position, dashVector);
             bool hitWall = Physics.Raycast(ray, out var hit, distance, _wallLayer);
@@ -326,15 +329,15 @@ namespace Entities.Player
                 dashPoint = hit.point - collisionPointOffset; // Subtract to get the center of the player after dash
 
                 // Do new raycast for holes
-                bool aboveHole = Physics.OverlapSphere(dashPoint, _collider.radius, _holeLayer).Length > 0;
-                if (aboveHole)
+                var holeColliders = Physics.OverlapSphere(dashPoint, _collider.radius, _holeLayer);
+                if (holeColliders.Length > 0)
                 {
                     // Calculate new dash vector
                     dashVector = dashPoint - _rigidbody.position;
                     distance = dashVector.magnitude;
 
-                    ray = new(_frontCollisionPoint.position, dashVector);
-                    bool hitHole = Physics.Raycast(ray, out hit, distance, _holeLayer);
+                    ray = new(_rigidbody.position, dashVector);
+                    bool hitHole = holeColliders[0].Raycast(ray, out hit, distance);
 
                     if (hitHole)
                         dashPoint = hit.point - collisionPointOffset;
@@ -365,8 +368,21 @@ namespace Entities.Player
                     float holeDashDistance = Vector3.Distance(forwardHitPoint, dashPoint);
 
                     float fraction = holeDashDistance / holeDiameter;
+
+                    bool snapToOtherSide = fraction >= _dashHoleSnapFraction;
                     
-                    if (fraction >= _dashHoleSnapFraction)
+                    if (snapToOtherSide)
+                    {
+                        ray = new(forwardHitPoint, dashVector);
+                        distance = holeDiameter + 2 * _collider.radius + 0.02f;
+                        
+                        hitWall = Physics.Raycast(ray, out hit, distance);
+                        
+                        if (hitWall)
+                            snapToOtherSide = false;
+                    }
+                    
+                    if (snapToOtherSide)
                         dashPoint = backwardHitPoint + collisionPointOffset;
                     else
                         dashPoint = forwardHitPoint - collisionPointOffset;
