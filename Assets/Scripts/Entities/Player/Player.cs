@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Abilities;
 using Abilities.Attacks;
@@ -13,7 +14,29 @@ namespace Entities.Player
     {
         public enum Character { Fenrir, Hel, Jörmungandr }
         
+        [SerializeField] private Transform _characterContainer;
+        [SerializeField] private PlayerInput _playerInput;
+        
+        [Header("Collision")]
+        [SerializeField] private CapsuleCollider _collider;
         [SerializeField] private Rigidbody _rigidbody;
+        [SerializeField] private Transform _frontCollisionPoint;
+
+        [SerializeField] private LayerMask _wallLayer;
+        [SerializeField] private LayerMask _holeLayer;
+        
+        [Header("Dash")]
+        [SerializeField] private Transform _dashPoint;
+
+        [SerializeField] private int _dashCharges;
+        [SerializeField] private float _dashDuration;
+        [SerializeField] private float _dashCooldown;
+
+        [Tooltip("The fraction cutoff for dashing OVER holes")]
+        [SerializeField] private float _dashHoleSnapFraction;
+
+        [SerializeField] private LayerMask _defaultPlayerLayer;
+        [SerializeField] private LayerMask _dashingPlayerLayer;
         
         [Header("Fenrir")]
         [SerializeField] private CharacterAbilitySet _fenrirAbilities;
@@ -45,11 +68,17 @@ namespace Entities.Player
         protected float _damageReduction = 0f;
         
         private readonly List<IItem> _items = new();
-        
         private readonly List<Effect> _effects = new();
+
+        private int _remainingDashCharges;
+        private float _remainingDashCooldown;
+
+        private bool _hasControl = true;
 
         private void Start()
         {
+            _remainingDashCharges = _dashCharges;
+            
             _playerBaseStats = (PlayerBaseStats) EntityBaseStats;
             
             InitializeBaseStats();
@@ -80,7 +109,16 @@ namespace Entities.Player
         
         private void Update()
         {
-            MoveAndRotate();
+            if (_remainingDashCooldown > 0)
+            {
+                _remainingDashCooldown -= Time.deltaTime;
+                
+                if (_remainingDashCooldown <= 0)
+                    _remainingDashCharges = _dashCharges;
+            }
+            
+            if (_hasControl)
+                MoveAndRotate();
             
             _rigidbody.angularVelocity = Vector3.zero;
         }
@@ -95,6 +133,32 @@ namespace Entities.Player
             _rigidbody.linearVelocity = movement;
             
             transform.LookAt(_rigidbody.position + movement);
+        }
+
+        private IEnumerator DashCoroutine(Vector3 dashPoint)
+        {
+            _hasControl = false;
+
+            float originalDashDistance = Vector3.Distance(_rigidbody.position, _dashPoint.position);
+            float actualDashDistance = Vector3.Distance(transform.position, dashPoint);
+            
+            float dashDistanceFraction = actualDashDistance / originalDashDistance;
+
+            float dashDuration = _dashDuration * dashDistanceFraction;
+            
+            float dashSpeed = actualDashDistance / dashDuration;
+            
+            _rigidbody.linearVelocity = dashSpeed * transform.forward;
+
+            float remainingDashDuration = dashDuration;
+            while (remainingDashDuration > 0)
+            {
+                yield return null;
+                remainingDashDuration -= Time.deltaTime;
+            }
+            
+            _rigidbody.linearVelocity = _moveInput;
+            _hasControl = true;
         }
         
         public override void TakeDamage(int amount, Entity attacker)
@@ -229,8 +293,71 @@ namespace Entities.Player
         
         public void Dash(InputAction.CallbackContext context)
         {
-            if (!context.performed)
+            if (!context.performed || !_hasControl || _remainingDashCharges <= 0)
                 return;
+            
+            _remainingDashCharges--;
+            _remainingDashCooldown = _dashCooldown;
+            
+            Vector3 dashPoint = _dashPoint.position;
+            
+            // Distance from center of player to the front collision point
+            Vector3 collisionPointOffset = _frontCollisionPoint.position - transform.position;
+            
+            // Projected dash vector using the calculated offset from player center to front
+            Vector3 dashVector = dashPoint - transform.position;
+            float distance = dashVector.magnitude;
+            
+            Ray ray = new(_frontCollisionPoint.position, dashVector);
+            bool hitWall = Physics.Raycast(ray, out var hit, distance, _wallLayer);
+            if (hitWall) // Interpret holes as walls
+            {
+                dashPoint = hit.point - collisionPointOffset; // Subtract to get the center of the player after dash
+
+                // Do new raycast for holes
+                bool aboveHole = Physics.OverlapSphere(dashPoint, _collider.radius, _holeLayer).Length > 0;
+                if (aboveHole)
+                {
+                    // Calculate new dash vector
+                    dashVector = (dashPoint + collisionPointOffset) - _frontCollisionPoint.position;
+
+                    ray = new(_frontCollisionPoint.position, dashVector);
+                    bool hitHole = Physics.Raycast(ray, out hit, distance, _holeLayer);
+
+                    if (hitHole)
+                        dashPoint = hit.point - collisionPointOffset;
+                }
+            }
+            else
+            {
+                var holeColliders = Physics.OverlapSphere(dashPoint, _collider.radius, _holeLayer);
+                if (holeColliders.Length > 0)
+                {
+                    Ray frontRay = new(dashPoint, dashVector);
+                    Ray reverseRay = new(dashPoint, -dashVector);
+
+                    var holeCollider = holeColliders[0];
+
+                    holeCollider.Raycast(frontRay, out var frontHitInfo, 100);
+                    holeCollider.Raycast(reverseRay, out var reverseHitInfo, 100);
+                    
+                    Vector3 frontHitPoint = frontHitInfo.point;
+                    Vector3 reverseHitPoint = reverseHitInfo.point;
+                    
+                    Vector3 colliderDiameter = reverseHitPoint - frontHitPoint;
+                    Vector3 dashPointOffset = dashPoint - frontHitPoint;
+
+                    float holeDashDistance = colliderDiameter.magnitude - dashPointOffset.magnitude;
+                    float dashFraction = holeDashDistance / colliderDiameter.magnitude;
+
+                    if (dashFraction >= _dashHoleSnapFraction)
+                        dashPoint = reverseHitPoint + collisionPointOffset;
+                    else
+                        dashPoint = frontHitPoint - collisionPointOffset;
+                }
+            }
+
+            StartCoroutine(DashCoroutine(dashPoint));
             
             // TODO: Perform dash
         }
