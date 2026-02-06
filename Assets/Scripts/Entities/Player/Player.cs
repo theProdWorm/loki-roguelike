@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Abilities;
@@ -77,6 +78,9 @@ namespace Entities.Player
         private float _remainingDashCooldown;
 
         private bool _hasControl = true;
+        
+        private List<IInteractable> _interactables = new();
+        private IInteractable _currentInteractable;
 
         private void Start()
         {
@@ -126,6 +130,9 @@ namespace Entities.Player
                 MoveAndRotate();
             
             _rigidbody.angularVelocity = Vector3.zero;
+            
+            if(_interactables.Count > 0)
+                FindMainInteractable();
         }
 
         private void MoveAndRotate()
@@ -262,6 +269,45 @@ namespace Entities.Player
             _moveSpeed = _baseMoveSpeed * _moveSpeedMultiplier;
         }
         #endregion
+
+        #region Collision
+
+        private void FindMainInteractable()
+        {
+            if(_currentInteractable !=null)
+             _currentInteractable.Highlighted = false;
+            int lowestIndex = 0;
+            for (int i = 0; i < _interactables.Count; i++)
+            {
+                if(Vector3.Distance(_rigidbody.position,_interactables[i].Position) < 
+                   Vector3.Distance(_rigidbody.position,_interactables[lowestIndex].Position))
+                    lowestIndex = i;
+            }
+            _currentInteractable = _interactables[lowestIndex];
+            _currentInteractable.Highlighted = true;
+            
+             
+        }
+        
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Interactable"))
+            {
+                _interactables.Add(other.GetComponent<IInteractable>());
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag("Interactable"))
+            {
+                IInteractable inter = other.GetComponent<IInteractable>();
+                if(inter == _currentInteractable) 
+                    _currentInteractable.Highlighted = false;
+                _interactables.Remove(inter);
+            }
+        }
+        #endregion
         
         #region Input
         public void Move(InputAction.CallbackContext context)
@@ -272,6 +318,20 @@ namespace Entities.Player
         public void Aim(InputAction.CallbackContext context)
         {
             _aimInput = context.ReadValue<Vector2>();
+        }
+
+        public void Interact(InputAction.CallbackContext context)
+        {
+            if(!context.performed) return;
+            if (_currentInteractable != null)
+            {
+                print("interacted!");
+                _currentInteractable.Interacted();
+                _currentInteractable.Highlighted = false;
+                _interactables.Remove(_currentInteractable);
+                _currentInteractable = null;
+            }
+                
         }
         
         public void Attack(InputAction.CallbackContext context)
