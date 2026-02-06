@@ -2,15 +2,14 @@ using UnityEngine;
 
 namespace Abilities
 {
-    [CreateAssetMenu(fileName = "New Character Ability Set", menuName = "Abilities/Character Ability Set", order = 0)]
+    [CreateAssetMenu(fileName = "New Character Ability Set", menuName = "Abilities/Character Ability Set", order = 2)]
     public class CharacterAbilitySet : ScriptableObject
     {
-        public Ability Attack;
-        public Ability Special;
-        public Ability Switch;
-        
-        [Header("Unused")]
+        public AttackAbility Attack;
+        public AttackAbility Special;
         public Ability Dash;
-        public Ability Ultimate;
+        
+        public AttackAbility Switch;
+        public AttackAbility Ultimate;
     }
 }

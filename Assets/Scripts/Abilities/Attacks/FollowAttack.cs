@@ -8,8 +8,7 @@ namespace Abilities.Attacks
         
         protected override void OnTriggerEnter(Collider otherCollider)
         {
-            base.OnTriggerEnter(otherCollider);
-
+            var entity = PerformAttack(otherCollider);
             OnAttackFinished?.Invoke();
         }
     }

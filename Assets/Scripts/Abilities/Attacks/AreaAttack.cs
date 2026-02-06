@@ -25,5 +25,10 @@ namespace Abilities.Attacks
         }
         
         private void UpdateScale() => transform.localScale = _baseScale * AreaSizeMultiplier;
+
+        protected override void OnTriggerEnter(Collider otherCollider)
+        {
+            PerformAttack(otherCollider);
+        }
     }
 }

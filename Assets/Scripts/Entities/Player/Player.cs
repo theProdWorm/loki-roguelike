@@ -29,11 +29,8 @@ namespace Entities.Player
         [Header("Dash")]
         [SerializeField] private Transform _dashPoint;
 
-        [SerializeField] private int _dashCharges;
         [Range(0.01f, 0.5f)]
         [SerializeField] private float _dashDuration;
-        [Range(0f, 1f)]
-        [SerializeField] private float _dashCooldown;
 
         [Tooltip("The fraction cutoff for dashing OVER holes")]
         [Range(0.5f, 1f)]
@@ -55,6 +52,10 @@ namespace Entities.Player
 
         public Character ActiveCharacter;
         
+        private CharacterAbilityRecord _fenrirAbilityRecord;
+        private CharacterAbilityRecord _helAbilityRecord;
+        private CharacterAbilityRecord _jörmungandrAbilityRecord;
+        
         private PlayerBaseStats _playerBaseStats;
         
         private Camera _camera;
@@ -74,19 +75,19 @@ namespace Entities.Player
         private readonly List<Effect> _effects = new();
 
         private float _originalDashDistance;
-        private int _remainingDashCharges;
-        private float _remainingDashCooldown;
 
         private bool _hasControl = true;
         
         private List<IInteractable> _interactables = new();
         private IInteractable _currentInteractable;
 
-        private void Start()
+        protected override void Start()
         {
-            _originalDashDistance = Vector3.Distance(_rigidbody.position, _dashPoint.position);
-            
-            _remainingDashCharges = _dashCharges;
+            _originalDashDistance = Vector3.Distance(transform.position, _dashPoint.position);
+
+            _fenrirAbilityRecord = new(_fenrirAbilities);
+            //_helAbilityRecord = new(_helAbilities);
+            //_jörmungandrAbilityRecord = new(_jörmungandrAbilities);
             
             _playerBaseStats = (PlayerBaseStats) EntityBaseStats;
             
@@ -118,13 +119,9 @@ namespace Entities.Player
         
         private void Update()
         {
-            if (_remainingDashCooldown > 0)
-            {
-                _remainingDashCooldown -= Time.deltaTime;
-                
-                if (_remainingDashCooldown <= 0)
-                    _remainingDashCharges = _dashCharges;
-            }
+            _fenrirAbilityRecord.Update();
+            //_helAbilityRecord.Update();
+            //_jörmungandrAbilityRecord.Update();
             
             if (_hasControl)
                 MoveAndRotate();
@@ -144,7 +141,7 @@ namespace Entities.Player
             
             _rigidbody.linearVelocity = movement;
             
-            transform.LookAt(_rigidbody.position + movement);
+            transform.LookAt(transform.position + movement);
         }
 
         private IEnumerator DashCoroutine(Vector3 dashPoint)
@@ -174,7 +171,7 @@ namespace Entities.Player
             yield return new WaitForSeconds(dashDuration);
             
             _rigidbody.linearVelocity = Vector3.zero;
-            // _rigidbody.position = dashPoint;
+            _rigidbody.position = dashPoint;
             
             stop:
             _hasControl = true;
@@ -339,21 +336,27 @@ namespace Entities.Player
             if (!context.performed)
                 return;
 
+            var record = ActiveCharacter switch
+            {
+                Character.Hel => _helAbilityRecord,
+                Character.Jörmungandr => _jörmungandrAbilityRecord,
+                _ => _fenrirAbilityRecord // Default to Fenrir
+            };
+
+            if (!record.TryUseAttack())
+                return;
+            
             var ability = ActiveCharacter switch
             {
                 Character.Hel => _helAbilities.Attack,
                 Character.Jörmungandr => _jörmungandrAbilities.Attack,
                 _ => _fenrirAbilities.Attack // Default to Fenrir
             };
-
-            var attack = Instantiate(ability.Prefab, _rigidbody.position, _rigidbody.rotation)
-                .GetComponentInChildren<Attack>();
+            
 
             AttackStats attackStats = new(_damage, _critChance, _critDamage, _areaSizeMultiplier);
-            attack.SetStats(attackStats);
             
-            if (attack is AreaAttack areaAttack)
-                areaAttack.AreaSizeMultiplier = _areaSizeMultiplier;
+            InstantiateAttack(ability.Prefab, attackStats);
         }
         
         public void Special(InputAction.CallbackContext context)
@@ -366,11 +369,18 @@ namespace Entities.Player
         
         public void Dash(InputAction.CallbackContext context)
         {
-            if (!context.performed || !_hasControl || _remainingDashCharges <= 0)
+            if (!context.performed || !_hasControl)
                 return;
-            
-            _remainingDashCharges--;
-            _remainingDashCooldown = _dashCooldown;
+
+            var record = ActiveCharacter switch
+            {
+                Character.Hel => _helAbilityRecord,
+                Character.Jörmungandr => _jörmungandrAbilityRecord,
+                _ => _fenrirAbilityRecord
+            };
+
+            if (!record.TryUseDash())
+                return;
             
             Vector3 dashPoint = _dashPoint.position;
             
@@ -425,6 +435,9 @@ namespace Entities.Player
                     var backwardHitPoint = hit.point;
                     
                     float holeDiameter = Vector3.Distance(forwardHitPoint, backwardHitPoint);
+                    if (holeDiameter > 200)
+                        goto coroutine;
+                    
                     float holeDashDistance = Vector3.Distance(forwardHitPoint, dashPoint);
 
                     float fraction = holeDashDistance / holeDiameter;
@@ -449,6 +462,7 @@ namespace Entities.Player
                 }
             }
 
+            coroutine:
             StartCoroutine(DashCoroutine(dashPoint));
         }
 

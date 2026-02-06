@@ -12,12 +12,12 @@ namespace Abilities.Attacks
 
         [SerializeField] private float _damageMultiplier;
 
-        protected int _damage;
-        
-        protected AttackStats _stats;
-        
-        protected Entity _owner;
-        protected string _hostileTag;
+        private int _damage;
+
+        private AttackStats _stats;
+
+        private Entity _owner;
+        private string _hostileTag;
 
         public void SetStats(AttackStats stats) 
         {
@@ -30,11 +30,11 @@ namespace Abilities.Attacks
             _owner = owner;
             tag = owner.tag;
             
-            if (CompareTag("Player"))
+            if (_owner.CompareTag("Player"))
                 _hostileTag = "Hostile";
-            else if (CompareTag("Hostile"))
+            else if (_owner.CompareTag("Hostile"))
                 _hostileTag = "Player";
-            else if (CompareTag("Charmed"))
+            else if (_owner.CompareTag("Charmed"))
                 _hostileTag = "Hostile";
         }
         
@@ -52,9 +52,7 @@ namespace Abilities.Attacks
             
             return entity;
         }
-        
-        protected virtual void OnTriggerEnter(Collider otherCollider)
-        {
-        }
+
+        protected abstract void OnTriggerEnter(Collider otherCollider);
     }
 }

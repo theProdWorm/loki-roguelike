@@ -14,7 +14,7 @@ namespace Entities
         public UnityEvent<Entity> OnDeath;
         
         [Tooltip("Referenced entity DEALT damage")]
-        public UnityEvent<Entity> OnDamageTaken;
+        public UnityEvent<int> OnDamageTaken;
         
         [Tooltip("Referenced entity TOOK damage")]
         public UnityEvent<Entity> OnDamageDealt;
@@ -38,6 +38,11 @@ namespace Entities
         private bool _isDead;
 
         private readonly List<Attack> _activeAttacks = new();
+
+        protected virtual void Start()
+        {
+            InitializeBaseStats();
+        }
         
         protected virtual void InitializeBaseStats()
         {
@@ -54,9 +59,11 @@ namespace Entities
         
         public virtual void TakeDamage(int amount, Entity attacker)
         {
+            Debug.Log(_currentHealth);
+            
             _currentHealth -= amount;
             
-            OnDamageTaken?.Invoke(attacker);
+            OnDamageTaken?.Invoke(amount);
             
             if (_currentHealth <= 0)
                 Die();
@@ -72,12 +79,21 @@ namespace Entities
             OnDeath?.Invoke(this);
         }
 
-        private void InstantiateAttack(Attack attack)
+        protected void InstantiateAttack(GameObject prefab, AttackStats stats)
         {
-            var attackInstance = Instantiate(attack, transform.position, transform.rotation);
+            var attackInstance = Instantiate(prefab, transform.position, transform.rotation)
+                .GetComponentInChildren<Attack>(true);
+            
             attackInstance.SetOwner(this);
+            attackInstance.SetStats(stats);
+            
+            
+            if (attackInstance is AreaAttack areaAttack)
+                areaAttack.AreaSizeMultiplier = _areaSizeMultiplier;
             
             _activeAttacks.Add(attackInstance);
+            
+            attackInstance.transform.parent.position = transform.position;
         }
     }
 }
