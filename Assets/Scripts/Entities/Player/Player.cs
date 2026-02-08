@@ -449,7 +449,7 @@ namespace Entities.Player
                         ray = new(forwardHitPoint, dashVector);
                         distance = holeDiameter + 2 * _collider.radius + 0.02f;
                         
-                        hitWall = Physics.Raycast(ray, out hit, distance);
+                        hitWall = Physics.Raycast(ray, out hit, distance, _wallLayer);
                         
                         if (hitWall)
                             snapToOtherSide = false;
