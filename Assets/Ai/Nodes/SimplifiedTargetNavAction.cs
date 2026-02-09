@@ -78,7 +78,7 @@ namespace Unity.Behavior
             float distance = GetDistanceXZ();
             bool destinationReached = distance <= (DistanceThreshold + _colliderOffset);
 
-            if (destinationReached && (!_navMeshAgent || !_navMeshAgent.pathPending))
+            if (destinationReached && !_navMeshAgent.pathPending)
             {
                 return Status.Success;
             }
@@ -149,7 +149,7 @@ namespace Unity.Behavior
 
             // If using a navigation mesh, set target position for navigation mesh agent.
             _navMeshAgent = Agent.Value.GetComponentInChildren<NavMeshAgent>();
-            if (!_navMeshAgent)
+            if (_navMeshAgent)
             {
                 if (_navMeshAgent.isOnNavMesh)
                 {
@@ -162,6 +162,7 @@ namespace Unity.Behavior
                 _navMeshAgent.stoppingDistance = DistanceThreshold + _colliderOffset;
                 _navMeshAgent.SetDestination(_colliderAdjustedTargetPosition);
             }
+            else return Status.Failure;
 
             _animator = Agent.Value.GetComponentInChildren<Animator>();
             UpdateAnimatorSpeed(0f);
@@ -185,6 +186,7 @@ namespace Unity.Behavior
                         break;
                     return targetCollider.ClosestPoint(Agent.Value.transform.position);
             }
+
             // Default to target position.
             return Target.Value.transform.position;
         }

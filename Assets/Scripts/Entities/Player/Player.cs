@@ -25,6 +25,11 @@ namespace Entities.Player
 
         [SerializeField] private LayerMask _wallLayer;
         [SerializeField] private LayerMask _holeLayer;
+
+        [Header("Interaction")]
+        [SerializeField] private float _lookWeight;
+        [SerializeField] private float _distanceWeight;
+        
         
         [Header("Dash")]
         [SerializeField] private Transform _dashPoint;
@@ -274,16 +279,28 @@ namespace Entities.Player
             if(_currentInteractable !=null)
              _currentInteractable.Highlighted = false;
             int lowestIndex = 0;
+            float highestScore = 0;
             for (int i = 0; i < _interactables.Count; i++)
             {
-                if(Vector3.Distance(_rigidbody.position,_interactables[i].Position) < 
-                   Vector3.Distance(_rigidbody.position,_interactables[lowestIndex].Position))
-                    lowestIndex = i;
+                
+                var between = (_interactables[i].Position - _rigidbody.position);
+                var distance = between.magnitude;
+                var direction = between/distance;
+
+                float distScore = 1 - Mathf.Clamp01(distance/ 10f);
+                var dot = Vector3.Dot(transform.forward, direction);
+
+                float score = dot * _lookWeight + distScore * _distanceWeight;
+                if (score > highestScore)
+                {
+                     lowestIndex = i;
+                     highestScore = score;
+                }
+                   
             }
             _currentInteractable = _interactables[lowestIndex];
             _currentInteractable.Highlighted = true;
             
-             
         }
         
         private void OnTriggerEnter(Collider other)
