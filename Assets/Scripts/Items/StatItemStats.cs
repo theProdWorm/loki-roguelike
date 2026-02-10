@@ -4,9 +4,8 @@ using UnityEngine.UI;
 namespace Items
 {
     [CreateAssetMenu(fileName = "New StatItem", menuName = "Items/StatItem")]
-    public class StatItemStats : ScriptableObject
+    public class StatItemStats : BaseItemStats
     {
-        public Image icon; 
             
         public int BaseMaxHealth;
         public int BaseDamage;
