@@ -491,7 +491,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &544061046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -504,10 +504,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0038c16c34866b4f9e25c9c0dc0f7e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Graph: {fileID: -8465415758385086198, guid: 9ff971a741cfef14285781b725cfbaee, type: 2}
+  m_Graph: {fileID: 145641741501247862, guid: 30598b507ff6e034e941bdfab7820360, type: 2}
   m_BlackboardVariableOverridesList:
   - rid: 4525729551639380240
-  m_OriginalGraph: {fileID: -8465415758385086198, guid: 9ff971a741cfef14285781b725cfbaee, type: 2}
+  m_OriginalGraph: {fileID: 145641741501247862, guid: 30598b507ff6e034e941bdfab7820360, type: 2}
   m_IsInitialised: 0
   m_IsStarted: 0
   references:
@@ -885,6 +885,22 @@ PrefabInstance:
       propertyPath: _distanceWeight
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3904859379294053273, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
+      propertyPath: list.list.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3904859379294053273, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
+      propertyPath: list.list.Array.data[0].item
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 3904859379294053273, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3904859379294053273, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3960114018095941365, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
       propertyPath: m_ActionEvents.Array.data[4].m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -1183,7 +1199,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -1218,7 +1234,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 41192c121838a1544a4e4274ff74f442, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1001 &9047148020267595982
 PrefabInstance:
@@ -1272,6 +1288,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chest
       objectReference: {fileID: 0}
+    - target: {fileID: 5541352025584513665, guid: d3ece1d02ed9ddd4f97eee0887d57af5, type: 3}
+      propertyPath: lootTable
+      value: 
+      objectReference: {fileID: 11400000, guid: 7c3cefb11c8826d4b91c353bef2ca161, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
