@@ -452,7 +452,7 @@ namespace Entities.Player
                     var backwardHitPoint = hit.point;
                     
                     float holeDiameter = Vector3.Distance(forwardHitPoint, backwardHitPoint);
-                    if (holeDiameter > 200)
+                    if (holeDiameter > 200 || holeDiameter < .1f)
                         goto coroutine;
                     
                     float holeDashDistance = Vector3.Distance(forwardHitPoint, dashPoint);
