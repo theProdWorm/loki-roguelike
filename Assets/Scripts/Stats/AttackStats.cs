@@ -1,20 +1,34 @@
+using UnityEngine;
+
 namespace Stats
 {
     public class AttackStats
     {
-        public int Damage;
+        public readonly GameObject Prefab;
 
-        public float CritChance;
-        public float CritDamage;
+        public readonly int Damage;
 
-        public float AreaSizeMultiplier;
+        public readonly float CritChance;
+        public readonly float CritDamage;
 
-        public AttackStats(int damage, float critChance, float critDamage, float areaSizeMultiplier)
+        public readonly float AreaSizeMultiplier;
+
+        public AttackStats(GameObject prefab, int damage, float critChance, float critDamage, float areaSizeMultiplier)
         {
+            Prefab = prefab;
             Damage = damage;
             CritChance = critChance;
             CritDamage = critDamage;
             AreaSizeMultiplier = areaSizeMultiplier;
+        }
+
+        public AttackStats(GameObject prefab, AttackStats original) :
+            this(prefab,
+                original.Damage, 
+                original.CritChance, 
+                original.CritDamage,
+                original.AreaSizeMultiplier)
+        {
         }
     }
 }

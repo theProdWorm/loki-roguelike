@@ -8,9 +8,13 @@ namespace Abilities.Attacks
         [SerializeField] private float _speed;
         [SerializeField] private int _maxHits;
 
+        [SerializeField] private float _range;
+        
         [SerializeField] private Rigidbody _rigidbody;
         
         private int _remainingHits;
+
+        private float _distanceTraveled;
         
         private bool _isDead;
 
@@ -19,9 +23,20 @@ namespace Abilities.Attacks
             _remainingHits = _maxHits;
             _rigidbody.linearVelocity = transform.forward * _speed;
         }
+
+        private void Update()
+        {
+            _distanceTraveled += _rigidbody.linearVelocity.magnitude * Time.deltaTime;
+            
+            if (_distanceTraveled >= _range)
+                Die();
+        }
         
         private void Die()
         {
+            if (_isDead)
+                return;
+            
             _isDead = true;
             OnAttackFinished?.Invoke();
         }

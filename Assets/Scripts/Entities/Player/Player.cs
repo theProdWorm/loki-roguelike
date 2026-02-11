@@ -30,8 +30,9 @@ namespace Entities.Player
         [SerializeField] private float _lookWeight;
         [SerializeField] private float _distanceWeight;
         
-        
         [Header("Dash")]
+        [SerializeField] private Ability _dashAbility;
+        
         [SerializeField] private Transform _dashPoint;
 
         [Range(0.01f, 0.5f)]
@@ -55,11 +56,13 @@ namespace Entities.Player
         [SerializeField] private CharacterAbilitySet _jörmungandrAbilities;
         [SerializeField] private Animator _jörmungandrAnimator;
 
+        private Animator[] _animators;
+        
         public Character ActiveCharacter;
         
-        private CharacterAbilityRecord _fenrirAbilityRecord;
-        private CharacterAbilityRecord _helAbilityRecord;
-        private CharacterAbilityRecord _jörmungandrAbilityRecord;
+        private AttackAbilityTracker[] _attackAbilityTrackers;
+        private AttackAbilityTracker[] _specialAbilityTrackers;
+        private AbilityTracker _dashAbilityTracker;
         
         private PlayerBaseStats _playerBaseStats;
         
@@ -90,9 +93,28 @@ namespace Entities.Player
         {
             _originalDashDistance = Vector3.Distance(transform.position, _dashPoint.position);
 
-            _fenrirAbilityRecord = new(_fenrirAbilities);
-            //_helAbilityRecord = new(_helAbilities);
-            //_jörmungandrAbilityRecord = new(_jörmungandrAbilities);
+            _animators = new[]
+            {
+                _fenrirAnimator,
+                _helAnimator,
+                _jörmungandrAnimator
+            };
+            
+            _attackAbilityTrackers = new AttackAbilityTracker[]
+            {
+                new(_fenrirAbilities.Attack, PerformAttack),
+                new(_helAbilities.Attack, PerformAttack),
+                //new(_jörmungandrAbilities.Attack, PerformAttack)
+            };
+            
+            _specialAbilityTrackers = new AttackAbilityTracker[]
+            {
+                // new(_fenrirAbilities.Special, PerformAttack),
+                // new(_helAbilities.Special, PerformAttack),
+                // new(_jörmungandrAbilities.Special, PerformAttack)
+            };
+            
+            _dashAbilityTracker = new(_dashAbility, PerformDash);
             
             _playerBaseStats = (PlayerBaseStats) EntityBaseStats;
             
@@ -124,8 +146,12 @@ namespace Entities.Player
         
         private void Update()
         {
-            _fenrirAbilityRecord.Update();
-            //_helAbilityRecord.Update();
+            foreach (var abilityTracker in _attackAbilityTrackers)
+                abilityTracker.Update();
+            foreach (var abilityTracker in _specialAbilityTrackers)
+                abilityTracker.Update();
+            
+            _dashAbilityTracker.Update();
             //_jörmungandrAbilityRecord.Update();
             
             if (_hasControl)
@@ -149,6 +175,123 @@ namespace Entities.Player
             transform.LookAt(transform.position + movement);
         }
 
+        private void PerformAttack(AbilityStats stats, int useTimes)
+        {
+            var attackStats = new AttackStats(
+                stats.AttackPrefab, 
+                _damage, 
+                _critChance, 
+                _critDamage, 
+                _areaSizeMultiplier);
+
+            if (stats.Burst)
+                StartCoroutine(AttackCoroutine(attackStats, useTimes, stats.BurstDelay, stats.SpreadAngle));
+            else
+                Attack.Create(this, transform.position, transform.rotation, attackStats);
+        }
+
+        private IEnumerator AttackCoroutine(AttackStats stats, int times, float delay, float spreadAngle)
+        {
+            float halfAngle = spreadAngle * (times - 1) * 0.5f;
+            
+            for (int i = 0; i < times; i++)
+            {
+                float angle = spreadAngle * i - halfAngle;
+                Quaternion rotation = transform.rotation * Quaternion.AngleAxis(angle, Vector3.up);
+                
+                Attack.Create(this, transform.position, rotation, stats);
+
+                if (i != times - 1)
+                    yield return new WaitForSeconds(delay);
+            }
+        }
+
+        private void PerformDash()
+        {
+            Vector3 dashPoint = _dashPoint.position;
+            
+            // Projected dash vector using the calculated offset from player center to front
+            Vector3 dashVector = dashPoint - _rigidbody.position;
+            float distance = dashVector.magnitude;
+            
+            // Distance from center of player to the front collision point
+            Vector3 collisionPointOffset =
+                dashVector.normalized * 0.02f + _frontCollisionPoint.position - _rigidbody.position;
+            
+            Ray ray = new(_frontCollisionPoint.position, dashVector);
+            bool hitWall = Physics.Raycast(ray, out var hit, distance, _wallLayer);
+            if (hitWall) // Interpret holes as walls
+            {
+                dashPoint = hit.point - collisionPointOffset; // Subtract to get the center of the player after dash
+
+                // Do new raycast for holes
+                var holeColliders = Physics.OverlapSphere(dashPoint, _collider.radius, _holeLayer);
+                if (holeColliders.Length > 0)
+                {
+                    // Calculate new dash vector
+                    dashVector = dashPoint - _rigidbody.position;
+                    distance = dashVector.magnitude;
+
+                    ray = new(_rigidbody.position, dashVector);
+                    bool hitHole = holeColliders[0].Raycast(ray, out hit, distance);
+
+                    if (hitHole)
+                        dashPoint = hit.point - collisionPointOffset;
+                }
+            }
+            else // May dash over holes
+            {
+                print("didn't hit wall");
+                
+                var holeColliders = Physics.OverlapSphere(dashPoint, _collider.radius, _holeLayer);
+                if (holeColliders.Length > 0)
+                {
+                    var holeCollider = holeColliders[0];
+                    
+                    Vector3 forwardRayOrigin = dashPoint - dashVector.normalized * 100f;
+                    Ray forwardRay = new(forwardRayOrigin, dashVector);
+                    holeCollider.Raycast(forwardRay, out hit, 10000);
+                    
+                    var forwardHitPoint = hit.point;
+                    
+                    Vector3 backwardRayOrigin = dashPoint + dashVector.normalized * 100f;
+                    Ray backwardRay = new(backwardRayOrigin, -dashVector);
+                    holeCollider.Raycast(backwardRay, out hit, 10000);
+
+                    var backwardHitPoint = hit.point;
+                    
+                    float holeDiameter = Vector3.Distance(forwardHitPoint, backwardHitPoint);
+                    if (holeDiameter > 200)
+                        goto coroutine;
+                    
+                    float holeDashDistance = Vector3.Distance(forwardHitPoint, dashPoint);
+
+                    float fraction = holeDashDistance / holeDiameter;
+
+                    bool snapToOtherSide = fraction >= _dashHoleSnapFraction;
+                    
+                    if (snapToOtherSide)
+                    {
+                        ray = new(forwardHitPoint, dashVector);
+                        distance = holeDiameter + 2 * _collider.radius + 0.02f;
+                        
+                        hitWall = Physics.Raycast(ray, out hit, distance, _wallLayer);
+                        
+                        if (hitWall)
+                            snapToOtherSide = false;
+                    }
+                    
+                    if (snapToOtherSide)
+                        dashPoint = backwardHitPoint + collisionPointOffset;
+                    else
+                        dashPoint = forwardHitPoint - collisionPointOffset;
+                }
+            }
+
+            coroutine:
+            StartCoroutine(DashCoroutine(dashPoint));
+        }
+        
         private IEnumerator DashCoroutine(Vector3 dashPoint)
         {
             _hasControl = false;
@@ -276,8 +419,9 @@ namespace Entities.Player
 
         private void FindMainInteractable()
         {
-            if(_currentInteractable !=null)
-             _currentInteractable.Highlighted = false;
+            if (_currentInteractable != null) 
+                _currentInteractable.Highlighted = false;
+            
             int lowestIndex = 0;
             float highestScore = 0;
             for (int i = 0; i < _interactables.Count; i++)
@@ -298,9 +442,9 @@ namespace Entities.Player
                 }
                    
             }
+            
             _currentInteractable = _interactables[lowestIndex];
             _currentInteractable.Highlighted = true;
-            
         }
         
         private void OnTriggerEnter(Collider other)
@@ -315,175 +459,54 @@ namespace Entities.Player
         {
             if (other.CompareTag("Interactable"))
             {
-                IInteractable inter = other.GetComponent<IInteractable>();
-                if(inter == _currentInteractable) 
+                IInteractable interactable = other.GetComponent<IInteractable>();
+                
+                if(interactable == _currentInteractable) 
                     _currentInteractable.Highlighted = false;
-                _interactables.Remove(inter);
+                
+                _interactables.Remove(interactable);
             }
         }
         #endregion
         
         #region Input
-        public void Move(InputAction.CallbackContext context)
+        public void MoveInput(InputAction.CallbackContext context)
         {
             _moveInput = context.ReadValue<Vector2>();
         }
 
-        public void Aim(InputAction.CallbackContext context)
+        public void AimInput(InputAction.CallbackContext context)
         {
             _aimInput = context.ReadValue<Vector2>();
         }
 
-        public void Interact(InputAction.CallbackContext context)
+        public void InteractInput(InputAction.CallbackContext context)
         {
-            if(!context.performed) return;
-            if (_currentInteractable != null)
-            {
-                print("interacted!");
-                _currentInteractable.Interacted();
-                _currentInteractable.Highlighted = false;
-                _interactables.Remove(_currentInteractable);
-                _currentInteractable = null;
-            }
-                
+            if(!context.performed) 
+                return;
+
+            if (_currentInteractable == null)
+                return;
+        
+            print("interacted!");
+            
+            _currentInteractable.Interacted();
+            _currentInteractable.Highlighted = false;
+            
+            _interactables.Remove(_currentInteractable);
+            _currentInteractable = null;
         }
         
-        public void Attack(InputAction.CallbackContext context)
-        {
-            if (!context.performed)
-                return;
-
-            var record = ActiveCharacter switch
-            {
-                Character.Hel => _helAbilityRecord,
-                Character.Jörmungandr => _jörmungandrAbilityRecord,
-                _ => _fenrirAbilityRecord // Default to Fenrir
-            };
-
-            if (!record.TryUseAttack())
-                return;
-            
-            var ability = ActiveCharacter switch
-            {
-                Character.Hel => _helAbilities.Attack,
-                Character.Jörmungandr => _jörmungandrAbilities.Attack,
-                _ => _fenrirAbilities.Attack // Default to Fenrir
-            };
-            
-
-            AttackStats attackStats = new(_damage, _critChance, _critDamage, _areaSizeMultiplier);
-            
-            InstantiateAttack(ability.Prefab, attackStats);
-        }
+        public void AttackInput(InputAction.CallbackContext context) =>
+            _attackAbilityTrackers[(int) ActiveCharacter].RegisterInput(context);
         
-        public void Special(InputAction.CallbackContext context)
-        {
-            if (!context.performed)
-                return;
-            
-            // TODO: Perform special
-        }
+        public void SpecialInput(InputAction.CallbackContext context) =>
+             _specialAbilityTrackers[(int) ActiveCharacter].RegisterInput(context);
         
-        public void Dash(InputAction.CallbackContext context)
-        {
-            if (!context.performed || !_hasControl)
-                return;
+        public void DashInput(InputAction.CallbackContext context) =>
+            _dashAbilityTracker.RegisterInput(context);
 
-            var record = ActiveCharacter switch
-            {
-                Character.Hel => _helAbilityRecord,
-                Character.Jörmungandr => _jörmungandrAbilityRecord,
-                _ => _fenrirAbilityRecord
-            };
-
-            if (!record.TryUseDash())
-                return;
-            
-            Vector3 dashPoint = _dashPoint.position;
-            
-            // Projected dash vector using the calculated offset from player center to front
-            Vector3 dashVector = dashPoint - _rigidbody.position;
-            float distance = dashVector.magnitude;
-            
-            // Distance from center of player to the front collision point
-            Vector3 collisionPointOffset =
-                dashVector.normalized * 0.02f + _frontCollisionPoint.position - _rigidbody.position;
-            
-            Ray ray = new(_frontCollisionPoint.position, dashVector);
-            bool hitWall = Physics.Raycast(ray, out var hit, distance, _wallLayer);
-            if (hitWall) // Interpret holes as walls
-            {
-                dashPoint = hit.point - collisionPointOffset; // Subtract to get the center of the player after dash
-
-                // Do new raycast for holes
-                var holeColliders = Physics.OverlapSphere(dashPoint, _collider.radius, _holeLayer);
-                if (holeColliders.Length > 0)
-                {
-                    // Calculate new dash vector
-                    dashVector = dashPoint - _rigidbody.position;
-                    distance = dashVector.magnitude;
-
-                    ray = new(_rigidbody.position, dashVector);
-                    bool hitHole = holeColliders[0].Raycast(ray, out hit, distance);
-
-                    if (hitHole)
-                        dashPoint = hit.point - collisionPointOffset;
-                }
-            }
-            else // May dash over holes
-            {
-                print("didn't hit wall");
-                
-                var holeColliders = Physics.OverlapSphere(dashPoint, _collider.radius, _holeLayer);
-                if (holeColliders.Length > 0)
-                {
-                    var holeCollider = holeColliders[0];
-                    
-                    Vector3 forwardRayOrigin = dashPoint - dashVector.normalized * 100f;
-                    Ray forwardRay = new(forwardRayOrigin, dashVector);
-                    holeCollider.Raycast(forwardRay, out hit, 10000);
-                    
-                    var forwardHitPoint = hit.point;
-                    
-                    Vector3 backwardRayOrigin = dashPoint + dashVector.normalized * 100f;
-                    Ray backwardRay = new(backwardRayOrigin, -dashVector);
-                    holeCollider.Raycast(backwardRay, out hit, 10000);
-
-                    var backwardHitPoint = hit.point;
-                    
-                    float holeDiameter = Vector3.Distance(forwardHitPoint, backwardHitPoint);
-                    if (holeDiameter > 200 || holeDiameter < .1f)
-                        goto coroutine;
-                    
-                    float holeDashDistance = Vector3.Distance(forwardHitPoint, dashPoint);
-
-                    float fraction = holeDashDistance / holeDiameter;
-
-                    bool snapToOtherSide = fraction >= _dashHoleSnapFraction;
-                    
-                    if (snapToOtherSide)
-                    {
-                        ray = new(forwardHitPoint, dashVector);
-                        distance = holeDiameter + 2 * _collider.radius + 0.02f;
-                        
-                        hitWall = Physics.Raycast(ray, out hit, distance, _wallLayer);
-                        
-                        if (hitWall)
-                            snapToOtherSide = false;
-                    }
-                    
-                    if (snapToOtherSide)
-                        dashPoint = backwardHitPoint + collisionPointOffset;
-                    else
-                        dashPoint = forwardHitPoint - collisionPointOffset;
-                }
-            }
-
-            coroutine:
-            StartCoroutine(DashCoroutine(dashPoint));
-        }
-
-        public void SwitchPrevious(InputAction.CallbackContext context)
+        public void PreviousInput(InputAction.CallbackContext context)
         {
             int characterIndex = Mathf.Abs((int) --ActiveCharacter) % 2;
             ActiveCharacter = (Character) characterIndex;
@@ -491,7 +514,7 @@ namespace Entities.Player
             CharacterIndexChanged();
         }
 
-        public void SwitchNext(InputAction.CallbackContext context)
+        public void NextInput(InputAction.CallbackContext context)
         {
             int characterIndex = (int) ++ActiveCharacter % 2;
             ActiveCharacter = (Character) characterIndex;

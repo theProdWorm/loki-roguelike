@@ -5,11 +5,10 @@ namespace Abilities
     [CreateAssetMenu(fileName = "New Character Ability Set", menuName = "Abilities/Character Ability Set", order = 2)]
     public class CharacterAbilitySet : ScriptableObject
     {
-        public AttackAbility Attack;
-        public AttackAbility Special;
-        public Ability Dash;
+        public Ability Attack;
+        public Ability Special;
         
-        public AttackAbility Switch;
-        public AttackAbility Ultimate;
+        public Ability Switch;
+        public Ability Ultimate;
     }
 }

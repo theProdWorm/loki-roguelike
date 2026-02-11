@@ -14,18 +14,32 @@ namespace Abilities.Attacks
 
         private int _damage;
 
-        private AttackStats _stats;
+        protected AttackStats _stats;
 
-        private Entity _owner;
+        protected Entity _owner;
         private string _hostileTag;
 
-        public void SetStats(AttackStats stats) 
+        public static void Create(Entity owner, Vector3 position, Quaternion rotation, AttackStats stats)
+        {
+            var attackInstance = Instantiate(stats.Prefab, position, rotation)
+                .GetComponentInChildren<Attack>(true);
+
+            attackInstance.SetOwner(owner);
+            attackInstance.SetStats(stats);
+
+            if (attackInstance is AreaAttack areaAttack)
+                areaAttack.AreaSizeMultiplier = stats.AreaSizeMultiplier;
+
+            attackInstance.transform.parent.position = position;
+        }
+        
+        private void SetStats(AttackStats stats) 
         {
             _stats = stats;
             _damage = Mathf.CeilToInt(_stats.Damage * _damageMultiplier);
         }
 
-        public void SetOwner(Entity owner) 
+        private void SetOwner(Entity owner) 
         {
             _owner = owner;
             tag = owner.tag;
@@ -38,7 +52,7 @@ namespace Abilities.Attacks
                 _hostileTag = "Hostile";
         }
         
-        public virtual void DestroySelf() => Destroy(gameObject);
+        public virtual void DestroySelf() => Destroy(transform.parent.gameObject);
 
         protected Entity PerformAttack(Collider otherCollider)
         {

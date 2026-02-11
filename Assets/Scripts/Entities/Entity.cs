@@ -37,8 +37,6 @@ namespace Entities
         
         private bool _isDead;
 
-        private readonly List<Attack> _activeAttacks = new();
-
         protected virtual void Start()
         {
             InitializeBaseStats();
@@ -77,23 +75,6 @@ namespace Entities
             _isDead = true;
             
             OnDeath?.Invoke(this);
-        }
-
-        protected void InstantiateAttack(GameObject prefab, AttackStats stats)
-        {
-            var attackInstance = Instantiate(prefab, transform.position, transform.rotation)
-                .GetComponentInChildren<Attack>(true);
-            
-            attackInstance.SetOwner(this);
-            attackInstance.SetStats(stats);
-            
-            
-            if (attackInstance is AreaAttack areaAttack)
-                areaAttack.AreaSizeMultiplier = _areaSizeMultiplier;
-            
-            _activeAttacks.Add(attackInstance);
-            
-            attackInstance.transform.parent.position = transform.position;
         }
     }
 }
