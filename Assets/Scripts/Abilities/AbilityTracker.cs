@@ -10,25 +10,28 @@ namespace Abilities
 {
     public class AbilityTracker
     {
-        private Ability _ability;
+        private readonly Action _onAbilityUsed;
         
-        private Action _onAbilityUsed;
+        protected readonly Ability _ability;
         
-        private float _remainingCooldown;
-        private int   _remainingCharges;
+        private float   _remainingCooldown;
+        protected int   _remainingCharges;
 
-        private bool  _holdingInput;
-        private float _inputDuration;
+        protected bool  _holdingInput;
+        protected float _inputDuration;
         
         public AbilityTracker(Ability ability, Action onAbilityUsed)
         {
             _ability = ability;
             
             _onAbilityUsed = onAbilityUsed;
+            
+            _remainingCharges = ability.Charges;
         }
 
         protected AbilityTracker(Ability ability)
         {
+            
             _ability = ability;
         }
 
@@ -65,12 +68,9 @@ namespace Abilities
                 if (_remainingCharges == 0)
                     return;
 
-                if (_ability.AbilityStats.Count == 1)
+                if (_ability.AbilityStats.Count == 1 && TryUse())
                 {
-                    if (TryUse(out AbilityStats stats, out int useTimes))
-                    {
-                        _onAbilityUsed();
-                    }
+                    _onAbilityUsed();
                 }
                 else
                 {
@@ -81,31 +81,26 @@ namespace Abilities
             {
                 _holdingInput = false;
                 
-                if (TryUse(out AbilityStats stats, out int useTimes))
+                if (TryUse())
                     _onAbilityUsed();
                 
                 _inputDuration = 0;
             }
         }
         
-        private bool TryUse(out AbilityStats stats, out int useTimes)
+        private bool TryUse()
         {
-            stats = null;
-            useTimes = 0;
-            
             if (_remainingCharges == 0)
                 return false;
             
-            stats = _ability.GetStats(_inputDuration);
+            var stats = _ability.GetStats(_inputDuration);
             if (stats == null)
                 return false;
             
             if (stats.RequireMaxCharges && _remainingCharges != _ability.Charges)
                 return false;
 
-            useTimes = stats.Burst ? _ability.Charges : 1;
-            _remainingCharges -= useTimes;
-            
+            _remainingCharges--;
             return true;
         }
     }

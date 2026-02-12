@@ -10,15 +10,7 @@ namespace Abilities
 {
     public class AttackAbilityTracker : AbilityTracker
     {
-        private Ability _ability;
-        
-        private Action<AbilityStats, int> _onAbilityUsed;
-        
-        private float _remainingCooldown;
-        private int   _remainingCharges;
-
-        private bool  _holdingInput;
-        private float _inputDuration;
+        private readonly Action<AbilityStats, int> _onAbilityUsed;
         
         public AttackAbilityTracker(Ability ability, Action<AbilityStats, int> onAbilityUsed) 
             : base(ability)
@@ -28,22 +20,16 @@ namespace Abilities
 
         public override void RegisterInput(InputAction.CallbackContext context)
         {
+            
             if (context.started)
             {
                 if (_remainingCharges == 0)
                     return;
 
-                if (_ability.AbilityStats.Count == 1)
-                {
-                    if (TryUse(out AbilityStats stats, out int useTimes))
-                    {
-                        _onAbilityUsed(stats, useTimes);
-                    }
-                }
+                if (_ability.AbilityStats.Count == 1 && TryUse(out var stats, out int useTimes))
+                    _onAbilityUsed(stats, useTimes);
                 else
-                {
                     _holdingInput = true;
-                }
             }
             else if (context.canceled && _holdingInput)
             {

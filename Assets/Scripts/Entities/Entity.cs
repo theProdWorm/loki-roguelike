@@ -57,8 +57,6 @@ namespace Entities
         
         public virtual void TakeDamage(int amount, Entity attacker)
         {
-            Debug.Log(_currentHealth);
-            
             _currentHealth -= amount;
             
             OnDamageTaken?.Invoke(amount);

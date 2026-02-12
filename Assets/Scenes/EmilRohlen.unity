@@ -905,6 +905,50 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.5, y: 3.5, z: 3.5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1086478942
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1086478944}
+  - component: {fileID: 1086478943}
+  m_Layer: 0
+  m_Name: Rumble Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1086478943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1086478942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cc99bbb0e695114ea51d20cb9fef801, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1086478944
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1086478942}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1410152703
 GameObject:
   m_ObjectHideFlags: 0
@@ -1693,6 +1737,8 @@ MonoBehaviour:
   _holeLayer:
     serializedVersion: 2
     m_Bits: 512
+  _lookWeight: 0
+  _distanceWeight: 0
   _dashAbility: {fileID: 11400000, guid: 8555943e95a694c4d8ff2084bdf30825, type: 2}
   _dashPoint: {fileID: 1490689175}
   _dashDuration: 0.12
@@ -2117,6 +2163,18 @@ MonoBehaviour:
           m_StringArgument: Entity took damage
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1086478943}
+        m_TargetAssemblyTypeName: Gameplay.RumbleManager, Assembly-CSharp
+        m_MethodName: Rumble
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: d8484173cdd758348989d98dec886a1a, type: 2}
+          m_ObjectArgumentAssemblyTypeName: Gameplay.RumbleEvent, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Entity took damage
+          m_BoolArgument: 0
+        m_CallState: 2
   OnDamageDealt:
     m_PersistentCalls:
       m_Calls: []
@@ -2187,3 +2245,4 @@ SceneRoots:
   - {fileID: 80650351}
   - {fileID: 1576807419}
   - {fileID: 600580312}
+  - {fileID: 1086478944}
