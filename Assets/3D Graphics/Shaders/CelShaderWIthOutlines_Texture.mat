@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: CelShaderWithOutlines_Texture
-  m_Shader: {fileID: -6465566751694194690, guid: b19c5c946f1b08549bf73e69ea15e10c, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 3aa388a9386ed024a8a891aa100e75ef, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -41,6 +41,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: f287b9ea48ebd5846959347f0a83f92d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Texture:
+        m_Texture: {fileID: 2800000, guid: f287b9ea48ebd5846959347f0a83f92d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -56,14 +60,16 @@ Material:
     m_Ints: []
     m_Floats:
     - _Highlight_Base_Darkening: 0
-    - _Highlight_Strength: 0.04
+    - _Highlight_Strength: 0.05
     - _Outline_Thickness: 0.35
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Shadow_Strength: 0.25
+    - _Shadow_Strength: -0.22
     m_Colors:
+    - _Highlight_Camera_Influence: {r: 0.5, g: 0, b: 0.8, a: 0}
     - _Highlight_Color: {r: 1, g: 1, b: 1, a: 0}
     - _Outline_Color: {r: 0.22745098, g: 0.105882354, b: 0.105882354, a: 0}
+    - _Shadow_Camera_Influence: {r: 0.2, g: 0.7, b: 0, a: 0}
     - _Shadow_Color: {r: 0.509434, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
