@@ -17,7 +17,7 @@ namespace Abilities.Attacks
         protected AttackStats _stats;
 
         protected Entity _owner;
-        private string _hostileTag;
+        protected string _hostileTag;
 
         public static void Create(Entity owner, Vector3 position, Quaternion rotation, AttackStats stats)
         {
@@ -50,15 +50,13 @@ namespace Abilities.Attacks
                 _hostileTag = "Hostile";
             else if (_owner.CompareTag("Hostile"))
                 _hostileTag = "Player";
-            else if (_owner.CompareTag("Charmed"))
-                _hostileTag = "Hostile";
         }
         
         public virtual void DestroySelf() => Destroy(transform.parent.gameObject);
 
         protected Entity PerformAttack(Collider otherCollider)
         {
-            if (!otherCollider.CompareTag(_hostileTag) && !otherCollider.CompareTag("Charmed"))
+            if (!otherCollider.CompareTag(_hostileTag))
                 return null;
             
             var entity = otherCollider.gameObject.GetComponent<Entity>();

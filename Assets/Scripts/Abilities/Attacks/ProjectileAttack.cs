@@ -24,9 +24,9 @@ namespace Abilities.Attacks
             _rigidbody.linearVelocity = transform.forward * _speed;
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
-            _distanceTraveled += _rigidbody.linearVelocity.magnitude * Time.deltaTime;
+            _distanceTraveled += _rigidbody.linearVelocity.magnitude * Time.fixedDeltaTime;
             
             if (_distanceTraveled >= _range)
                 Die();
@@ -46,10 +46,16 @@ namespace Abilities.Attacks
             if (_isDead)
                 return;
             
-            var entity = PerformAttack(otherCollider);
-            if (!entity)
+            if (!otherCollider.CompareTag("Player") && !otherCollider.CompareTag("Hostile"))
+            {
                 Die();
+                return;
+            }
+
+            if (!otherCollider.CompareTag(_hostileTag))
+                return;
             
+            PerformAttack(otherCollider);
             _remainingHits--;
             
             if (_remainingHits == 0)
