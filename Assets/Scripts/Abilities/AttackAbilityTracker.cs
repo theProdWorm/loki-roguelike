@@ -60,6 +60,9 @@ namespace Abilities
             useTimes = stats.Burst ? _ability.Charges : 1;
             _remainingCharges -= useTimes;
             
+            if (_remainingCooldown <= 0)
+                _remainingCooldown = stats.RechargeTime;
+            
             return true;
         }
     }

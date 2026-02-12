@@ -14,7 +14,7 @@ namespace Abilities
         
         protected readonly Ability _ability;
         
-        private float   _remainingCooldown;
+        protected float _remainingCooldown;
         protected int   _remainingCharges;
 
         protected bool  _holdingInput;
@@ -42,22 +42,24 @@ namespace Abilities
                 _inputDuration += Time.deltaTime;
                 return;
             }
+
+            if (_remainingCharges == _ability.Charges)
+                return;
             
             _remainingCooldown -= Time.deltaTime;
-
-            if (_remainingCooldown <= 0)
+            if (_remainingCooldown > 0)
+                return;
+            
+            if (_ability.SimultaneousRecharge)
             {
-                if (_ability.SimultaneousRecharge)
-                {
-                    _remainingCharges = _ability.Charges;
-                }
-                else
-                {
-                    _remainingCharges++;
+                _remainingCharges = _ability.Charges;
+            }
+            else
+            {
+                _remainingCharges++;
 
-                    if (_remainingCharges != _ability.Charges)
-                        _remainingCooldown = _ability.AbilityStats[0].Stats.RechargeTime;
-                }
+                if (_remainingCharges != _ability.Charges)
+                    _remainingCooldown = _ability.AbilityStats[0].Stats.RechargeTime;
             }
         }
 
