@@ -41,6 +41,8 @@ namespace Abilities.Attacks
 
         private void SetOwner(Entity owner) 
         {
+            OnHitEntity.AddListener(owner.OnDamageDealt.Invoke);
+            
             _owner = owner;
             tag = owner.tag;
             

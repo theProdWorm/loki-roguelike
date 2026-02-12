@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using Abilities.Attacks;
 using Stats;
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,7 +11,6 @@ namespace Entities
 
         public UnityEvent<Entity> OnDeath;
         
-        [Tooltip("Referenced entity DEALT damage")]
         public UnityEvent<int> OnDamageTaken;
         
         [Tooltip("Referenced entity TOOK damage")]
