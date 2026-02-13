@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Abilities;
 using Abilities.Attacks;
+using StatusEffects;
 using Items;
 using Stats;
+using StatusEffects;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -80,7 +82,6 @@ namespace Entities.Player
         protected float _damageReduction = 0f;
         
         private readonly List<IItem> _items = new();
-        private readonly List<Effect> _effects = new();
 
         private float _originalDashDistance;
 
@@ -144,8 +145,10 @@ namespace Entities.Player
             _forwardDirection = (cameraForward - downProjection).normalized;
         }
         
-        private void Update()
+        protected override void Update()
         {
+            base.Update();
+            
             foreach (var abilityTracker in _attackAbilityTrackers)
                 abilityTracker.Update();
             foreach (var abilityTracker in _specialAbilityTrackers)

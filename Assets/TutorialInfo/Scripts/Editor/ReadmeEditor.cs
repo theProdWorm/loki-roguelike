@@ -5,10 +5,11 @@ using UnityEditor;
 using System;
 using System.IO;
 using System.Reflection;
+using TutorialInfo.Scripts;
 
 [CustomEditor(typeof(Readme))]
 [InitializeOnLoad]
-public class ReadmeEditor : Editor
+public class ReadmeEditor : UnityEditor.Editor
 {
     static string s_ShowedReadmeSessionStateName = "ReadmeEditor.showedReadme";
     

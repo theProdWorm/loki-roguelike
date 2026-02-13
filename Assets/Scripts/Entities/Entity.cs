@@ -1,4 +1,6 @@
+using System;
 using Stats;
+using StatusEffects;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -33,10 +35,22 @@ namespace Entities
         protected int _currentHealth;
         
         private bool _isDead;
+        
+        private StatusEffectList _statusEffects;
+
+        protected virtual void Awake()
+        {
+            _statusEffects = new StatusEffectList(this, Debug.Log);
+        }
 
         protected virtual void Start()
         {
             InitializeBaseStats();
+        }
+
+        protected virtual void Update()
+        {
+            _statusEffects.Update();
         }
         
         protected virtual void InitializeBaseStats()
@@ -61,6 +75,13 @@ namespace Entities
             if (_currentHealth <= 0)
                 Die();
         }
+
+        public void ApplyStatusEffect(StatusEffect effect) => 
+            _statusEffects.Add(effect);
+        public void RemoveAllStatusEffectsOfType(StatusEffect sampleEffect, int max = int.MaxValue) => 
+            _statusEffects.RemoveAll(sampleEffect, max);
+        public int  CountStatusEffectsOfType(StatusEffect sampleEffect) => 
+            _statusEffects.GetCount(sampleEffect);
         
         private void Die()
         {

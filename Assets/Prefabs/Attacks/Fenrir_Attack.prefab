@@ -62,6 +62,7 @@ GameObject:
   - component: {fileID: 8267127521781958097}
   - component: {fileID: 1328665524708898018}
   - component: {fileID: 8533316008396667747}
+  - component: {fileID: 3142874581535102987}
   m_Layer: 0
   m_Name: Fenrir_Attack
   m_TagString: Untagged
@@ -173,6 +174,9 @@ MonoBehaviour:
   OnHitEntity:
     m_PersistentCalls:
       m_Calls: []
+  OnHitEntityWithDamage:
+    m_PersistentCalls:
+      m_Calls: []
   OnAttackFinished:
     m_PersistentCalls:
       m_Calls:
@@ -189,3 +193,23 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   _damageMultiplier: 1
+--- !u!114 &3142874581535102987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4780944361335970149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 447d6403f5524f8d906c95c52e239182, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stacksToApply: 1
+  _duration: 2.5
+  _stackable: 1
+  _refresh: 1
+  _maxWounds: 5
+  _vulnerableDuration: 5
+  _vulnerableStackable: 0
+  _vulnerableRefresh: 0

@@ -8,6 +8,7 @@ namespace Abilities.Attacks
     public abstract class Attack : MonoBehaviour
     {
         public UnityEvent<Entity> OnHitEntity;
+        public UnityEvent<Entity, int> OnHitEntityWithDamage;
         public UnityEvent OnAttackFinished;
 
         [SerializeField] private float _damageMultiplier;
