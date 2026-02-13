@@ -1,6 +1,7 @@
 using System;
 using Unity.Behavior;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Entities
 {
@@ -10,20 +11,28 @@ public class TestEnemy : Entity
 
     private Rigidbody rb;
     
-    private BehaviorGraphAgent agent;
+    private BehaviorGraphAgent AiAgent;
+    private NavMeshAgent navAgent;
 
+    [SerializeField] private BehaviorGraph behaviorGraph;
     public float attackCooldown;
 
-    void Start()
+    private void Awake()
     {
+        InitializeBaseStats();
         rb = GetComponent<Rigidbody>();
-        agent = GetComponent<BehaviorGraphAgent>();
+        AiAgent = GetComponent<BehaviorGraphAgent>();
+        navAgent = GetComponent<NavMeshAgent>();
+        if(!_player)
+            _player = GameObject.FindGameObjectWithTag("Player");
         
-        if(!_player) _player = GameObject.FindGameObjectWithTag("Player");
-        
-        agent.SetVariableValue("Target", _player);
-        agent.SetVariableValue("AttackDelay", attackCooldown);
+        AiAgent.Graph = behaviorGraph;
+        AiAgent.Start();
+        AiAgent.SetVariableValue("Target", _player);
+        AiAgent.SetVariableValue("AttackDelay", attackCooldown);
+        navAgent.speed = _moveSpeed;
     }
+    
 
     private void Update()
     {
@@ -31,6 +40,21 @@ public class TestEnemy : Entity
         transform.LookAt(_player.transform,Vector3.up);
         var rot = transform.eulerAngles;
         transform.eulerAngles = new Vector3(0, rot.y, 0);
+    }
+
+    public void Destroy()
+    {
+        AiAgent.End();
+        navAgent.enabled = false;
+        rb.constraints = RigidbodyConstraints.None;
+        Destroy(this);
+    }
+
+
+    public override void TakeDamage(int amount, Entity attacker)
+    {
+        base.TakeDamage(amount, attacker);
+        Debug.Log($"Took {amount} damage and now has {_currentHealth} health");
     }
 }
 }

@@ -21,7 +21,6 @@ namespace Unity.Behavior
 
         [SerializeReference] public BlackboardVariable<GameObject> Agent;
         [SerializeReference] public BlackboardVariable<GameObject> Target;
-        [SerializeReference] public BlackboardVariable<float> Speed = new BlackboardVariable<float>(1.0f);
         [SerializeReference] public BlackboardVariable<float> DistanceThreshold = new BlackboardVariable<float>(0.2f);
 
         [SerializeReference]
@@ -41,10 +40,7 @@ namespace Unity.Behavior
         private Animator _animator;
         private Vector3 _lastTargetPosition;
         private Vector3 _colliderAdjustedTargetPosition;
-        [CreateProperty] private float _originalStoppingDistance = -1f;
-        [CreateProperty] private float _originalSpeed = -1f;
         private float _colliderOffset;
-        private float _currentSpeed;
 
         protected override Status OnStart()
         {
@@ -102,9 +98,6 @@ namespace Unity.Behavior
                 {
                     _navMeshAgent.ResetPath();
                 }
-
-                _navMeshAgent.speed = _originalSpeed;
-                _navMeshAgent.stoppingDistance = _originalStoppingDistance;
             }
 
             _navMeshAgent = null;
@@ -117,11 +110,6 @@ namespace Unity.Behavior
             _navMeshAgent = Agent.Value.GetComponentInChildren<NavMeshAgent>();
             if (_navMeshAgent)
             {
-                if (_originalSpeed >= 0f)
-                    _navMeshAgent.speed = _originalSpeed;
-                if (_originalStoppingDistance >= 0f)
-                    _navMeshAgent.stoppingDistance = _originalStoppingDistance;
-
                 _navMeshAgent.Warp(Agent.Value.transform.position);
             }
 
@@ -155,11 +143,6 @@ namespace Unity.Behavior
                 {
                     _navMeshAgent.ResetPath();
                 }
-
-                _originalSpeed = _navMeshAgent.speed;
-                _navMeshAgent.speed = Speed;
-                _originalStoppingDistance = _navMeshAgent.stoppingDistance;
-                _navMeshAgent.stoppingDistance = DistanceThreshold + _colliderOffset;
                 _navMeshAgent.SetDestination(_colliderAdjustedTargetPosition);
             }
             else return Status.Failure;
