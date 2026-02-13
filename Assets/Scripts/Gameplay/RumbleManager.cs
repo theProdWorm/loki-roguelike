@@ -18,6 +18,9 @@ namespace Gameplay
 
         public void Rumble(RumbleEvent rumbleEvent)
         {
+            if (Gamepad.current == null)
+                return;
+            
             StartCoroutine(RumbleCoroutine(rumbleEvent));
         }
 
