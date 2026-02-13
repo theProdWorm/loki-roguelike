@@ -102,7 +102,12 @@ namespace Abilities
             if (stats.RequireMaxCharges && _remainingCharges != _ability.Charges)
                 return false;
 
-            _remainingCharges--;
+            int useTimes = stats.Burst ? _ability.Charges : 1;
+            _remainingCharges -= useTimes;
+            
+            if (_ability.SimultaneousRecharge || _remainingCooldown <= 0)
+                _remainingCooldown = stats.RechargeTime;
+            
             return true;
         }
     }

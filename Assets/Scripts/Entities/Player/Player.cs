@@ -322,7 +322,6 @@ namespace Entities.Player
             yield return new WaitForSeconds(dashDuration);
             
             _rigidbody.linearVelocity = Vector3.zero;
-            _rigidbody.position = dashPoint;
             
             stop:
             _hasControl = true;
@@ -485,7 +484,7 @@ namespace Entities.Player
 
         public void InteractInput(InputAction.CallbackContext context)
         {
-            if(!context.performed) 
+            if(!context.performed || !_hasControl) 
                 return;
 
             if (_currentInteractable == null)
@@ -499,18 +498,36 @@ namespace Entities.Player
             _interactables.Remove(_currentInteractable);
             _currentInteractable = null;
         }
-        
-        public void AttackInput(InputAction.CallbackContext context) =>
+
+        public void AttackInput(InputAction.CallbackContext context)
+        {
+            if (!_hasControl) 
+                return;
+            
             _attackAbilityTrackers[(int) ActiveCharacter].RegisterInput(context);
-        
-        public void SpecialInput(InputAction.CallbackContext context) =>
-             _specialAbilityTrackers[(int) ActiveCharacter].RegisterInput(context);
-        
-        public void DashInput(InputAction.CallbackContext context) =>
+        }
+
+        public void SpecialInput(InputAction.CallbackContext context)
+        {
+            if (!_hasControl) 
+                return;
+            
+            _specialAbilityTrackers[(int) ActiveCharacter].RegisterInput(context);
+        }
+
+        public void DashInput(InputAction.CallbackContext context)
+        {
+            if (!_hasControl) 
+                return;
+            
             _dashAbilityTracker.RegisterInput(context);
+        }
 
         public void PreviousInput(InputAction.CallbackContext context)
         {
+            if (!_hasControl) 
+                return;
+            
             int characterIndex = Mathf.Abs((int) --ActiveCharacter) % 2;
             ActiveCharacter = (Character) characterIndex;
             
@@ -519,6 +536,9 @@ namespace Entities.Player
 
         public void NextInput(InputAction.CallbackContext context)
         {
+            if (!_hasControl) 
+                return;
+            
             int characterIndex = (int) ++ActiveCharacter % 2;
             ActiveCharacter = (Character) characterIndex;
             
