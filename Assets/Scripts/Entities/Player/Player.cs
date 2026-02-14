@@ -39,6 +39,8 @@ namespace Entities.Player
 
         [Range(0.01f, 0.5f)]
         [SerializeField] private float _dashDuration;
+        [Range(0f, 0.5f)]
+        [SerializeField] private float _dashFadeDuration;
 
         [Tooltip("The fraction cutoff for dashing OVER holes")]
         [Range(0.5f, 1f)]
@@ -74,6 +76,8 @@ namespace Entities.Player
         private Vector3 _forwardDirection;
         
         private Vector2 _moveInput;
+        private Vector2 _lastMoveInput;
+        private Vector2 _dashInputSnapshot;
         private Vector2 _aimInput;
         
         private float _critChance;
@@ -157,8 +161,7 @@ namespace Entities.Player
             _dashAbilityTracker.Update();
             //_jörmungandrAbilityRecord.Update();
             
-            if (_hasControl)
-                MoveAndRotate();
+            MoveAndRotate();
             
             _rigidbody.angularVelocity = Vector3.zero;
             
@@ -168,8 +171,10 @@ namespace Entities.Player
 
         private void MoveAndRotate()
         {
-            Vector3 movementX = _moveInput.x * _rightDirection;
-            Vector3 movementZ = _moveInput.y * _forwardDirection;
+            Vector2 moveVector = _hasControl ? _moveInput : _dashInputSnapshot;
+            
+            Vector3 movementX = moveVector.x * _rightDirection;
+            Vector3 movementZ = moveVector.y * _forwardDirection;
             
             Vector3 movement = _moveSpeed * (movementX + movementZ);
             
@@ -298,6 +303,7 @@ namespace Entities.Player
         private IEnumerator DashCoroutine(Vector3 dashPoint)
         {
             _hasControl = false;
+            _dashInputSnapshot = _lastMoveInput;
 
             int defaultPlayerLayer = gameObject.layer;
             
@@ -309,23 +315,37 @@ namespace Entities.Player
             gameObject.layer = dashLayer;
 
             float actualDashDistance = Vector3.Distance(_rigidbody.position, dashPoint);
-            
             float dashDistanceFraction = actualDashDistance / _originalDashDistance;
-            float dashDuration = _dashDuration * dashDistanceFraction;
-            float dashSpeed = actualDashDistance / dashDuration;
-
-            if (dashDuration < 0.01f)
-                goto stop;
             
-            _rigidbody.linearVelocity = dashSpeed * transform.forward;
+            float dashDuration = _dashDuration * dashDistanceFraction;
+            
+            float dashSpeed = actualDashDistance / dashDuration;
+            float defaultMoveSpeed = _moveSpeed;
+            _moveSpeed = dashSpeed;
 
             yield return new WaitForSeconds(dashDuration);
             
-            _rigidbody.linearVelocity = Vector3.zero;
-            
-            stop:
             _hasControl = true;
             gameObject.layer = defaultPlayerLayer;
+            
+            _dashInputSnapshot = Vector2.zero;
+
+            if (_dashFadeDuration <= 0)
+            {
+                _moveSpeed = defaultMoveSpeed;
+                yield break;
+            }
+            
+            float elapsedTime = 0;
+            while (elapsedTime < _dashFadeDuration)
+            {
+                elapsedTime += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsedTime / _dashFadeDuration);
+                
+                _moveSpeed = Mathf.Lerp(dashSpeed, defaultMoveSpeed, t);
+                
+                yield return null;
+            }
         }
         
         public override void TakeDamage(int amount, Entity attacker)
@@ -475,6 +495,8 @@ namespace Entities.Player
         public void MoveInput(InputAction.CallbackContext context)
         {
             _moveInput = context.ReadValue<Vector2>();
+            if (_moveInput.sqrMagnitude > 0.5f)
+                _lastMoveInput = _moveInput;
         }
 
         public void AimInput(InputAction.CallbackContext context)
