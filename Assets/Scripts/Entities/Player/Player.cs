@@ -39,8 +39,8 @@ namespace Entities.Player
 
         [Range(0.01f, 0.5f)]
         [SerializeField] private float _dashDuration;
-        [Range(0f, 0.5f)]
-        [SerializeField] private float _dashFadeDuration;
+        [Range(0f, 1f), Tooltip("Fraction of dash duration to fade back to normal speed.")]
+        [SerializeField] private float _dashFade;
 
         [Tooltip("The fraction cutoff for dashing OVER holes")]
         [Range(0.5f, 1f)]
@@ -88,6 +88,8 @@ namespace Entities.Player
         private readonly List<IItem> _items = new();
 
         private float _originalDashDistance;
+        private float _originalMoveSpeed;
+        private Coroutine _dashCoroutine;
 
         private bool _hasControl = true;
         
@@ -297,7 +299,12 @@ namespace Entities.Player
             }
 
             coroutine:
-            StartCoroutine(DashCoroutine(dashPoint));
+            if (_dashCoroutine != null)
+            {
+                StopCoroutine(_dashCoroutine);
+                _moveSpeed = _originalMoveSpeed;
+            }
+            _dashCoroutine = StartCoroutine(DashCoroutine(dashPoint));
         }
         
         private IEnumerator DashCoroutine(Vector3 dashPoint)
@@ -314,13 +321,13 @@ namespace Entities.Player
             
             gameObject.layer = dashLayer;
 
-            float actualDashDistance = Vector3.Distance(_rigidbody.position, dashPoint);
+            float actualDashDistance = Vector3.Distance(transform.position, dashPoint);
             float dashDistanceFraction = actualDashDistance / _originalDashDistance;
             
             float dashDuration = _dashDuration * dashDistanceFraction;
             
             float dashSpeed = actualDashDistance / dashDuration;
-            float defaultMoveSpeed = _moveSpeed;
+            _originalMoveSpeed = _moveSpeed;
             _moveSpeed = dashSpeed;
 
             yield return new WaitForSeconds(dashDuration);
@@ -330,19 +337,21 @@ namespace Entities.Player
             
             _dashInputSnapshot = Vector2.zero;
 
-            if (_dashFadeDuration <= 0)
+            float dashFadeDuration = dashDuration * _dashFade;
+            
+            if (dashFadeDuration <= 0)
             {
-                _moveSpeed = defaultMoveSpeed;
+                _moveSpeed = _originalMoveSpeed;
                 yield break;
             }
             
             float elapsedTime = 0;
-            while (elapsedTime < _dashFadeDuration)
+            while (elapsedTime < dashFadeDuration)
             {
                 elapsedTime += Time.deltaTime;
-                float t = Mathf.Clamp01(elapsedTime / _dashFadeDuration);
+                float t = Mathf.Clamp01(elapsedTime / dashFadeDuration);
                 
-                _moveSpeed = Mathf.Lerp(dashSpeed, defaultMoveSpeed, t);
+                _moveSpeed = Mathf.Lerp(dashSpeed, _originalMoveSpeed, t);
                 
                 yield return null;
             }
