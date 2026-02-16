@@ -15,6 +15,11 @@ namespace Entities.Player
     [RequireComponent(typeof(Rigidbody))]
     public class Player : Entity
     {
+        private static readonly int IS_MOVING = Animator.StringToHash("isMoving");
+        private static readonly int DASH      = Animator.StringToHash("dash");
+        private static readonly int ATTACK    = Animator.StringToHash("attack");
+        private static readonly int SPECIAL   = Animator.StringToHash("special");
+
         public enum Character { Fenrir, Hel, Jörmungandr }
         
         [SerializeField] private Transform _characterContainer;
@@ -61,6 +66,7 @@ namespace Entities.Player
         [SerializeField] private Animator _jörmungandrAnimator;
 
         private Animator[] _animators;
+        private Animator CurrentAnimator => _animators[(int) ActiveCharacter];
         
         public Character ActiveCharacter;
         
@@ -309,6 +315,8 @@ namespace Entities.Player
         
         private IEnumerator DashCoroutine(Vector3 dashPoint)
         {
+            CurrentAnimator.SetTrigger(DASH);
+            
             _hasControl = false;
             _dashInputSnapshot = _lastMoveInput;
 
@@ -504,8 +512,12 @@ namespace Entities.Player
         public void MoveInput(InputAction.CallbackContext context)
         {
             _moveInput = context.ReadValue<Vector2>();
-            if (_moveInput.sqrMagnitude > 0.5f)
+            
+            bool isMoving = _moveInput.sqrMagnitude > 0.5f;
+            if (isMoving)
                 _lastMoveInput = _moveInput;
+            
+            CurrentAnimator.SetBool(IS_MOVING, isMoving);
         }
 
         public void AimInput(InputAction.CallbackContext context)
