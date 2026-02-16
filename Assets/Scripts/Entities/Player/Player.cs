@@ -193,7 +193,7 @@ namespace Entities.Player
 
         private void MoveAndRotate()
         {
-            Vector2 moveVector = _isDashing ? _dashInputSnapshot : _moveInput;
+            Vector2 moveVector = _moveSpeed * (_isDashing ? _dashInputSnapshot : _moveInput);
             
             Vector3 movementX = moveVector.x * _rightDirection;
             Vector3 movementZ = moveVector.y * _forwardDirection;
