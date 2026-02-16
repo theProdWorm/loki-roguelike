@@ -76,6 +76,14 @@ namespace Entities
                 Die();
         }
 
+        public virtual void Heal(int amount)
+        {
+            _currentHealth += amount;
+
+            if (_currentHealth > _maxHealth)
+                _currentHealth = _maxHealth;
+        }
+
         public void ApplyStatusEffect(StatusEffect effect) => 
             _statusEffects.Add(effect);
         public void RemoveAllStatusEffectsOfType(StatusEffect sampleEffect, int max = int.MaxValue) => 

@@ -1,13 +1,14 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Abilities;
 using Abilities.Attacks;
-using StatusEffects;
 using Items;
 using Stats;
 using StatusEffects;
+using StatusEffects;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 namespace Entities.Player
@@ -20,6 +21,8 @@ namespace Entities.Player
         private static readonly int ATTACK    = Animator.StringToHash("attack");
         private static readonly int SPECIAL   = Animator.StringToHash("special");
         private static readonly int SWITCH    = Animator.StringToHash("switch");
+
+        public UnityEvent<int, int> OnHealthUpdate;
 
         public enum Character { Fenrir, Hel, Jörmungandr }
         
@@ -136,9 +139,13 @@ namespace Entities.Player
             InitializeBaseStats();
             InitializeMovement();
             
+            CharacterIndexChanged();
+
+            //Sync the health UI at the start
+            OnHealthUpdate?.Invoke(_currentHealth, _maxHealth);
             CharacterIndexChanged(false);
         }
-        
+
         protected override void InitializeBaseStats()
         {
             base.InitializeBaseStats();
@@ -371,10 +378,17 @@ namespace Entities.Player
         
         public override void TakeDamage(int amount, Entity attacker)
         {
+            OnHealthUpdate?.Invoke(_currentHealth, _maxHealth);
             int reducedDamage = Mathf.CeilToInt(amount * (1 - _damageReduction));
             base.TakeDamage(reducedDamage, attacker);
         }
-        
+
+        public override void Heal(int amount)
+        {
+            OnHealthUpdate?.Invoke(_currentHealth, _maxHealth);
+            base.Heal(amount);
+        }
+
         public void AddItem(IItem item)
         {
             _items.Add(item);
