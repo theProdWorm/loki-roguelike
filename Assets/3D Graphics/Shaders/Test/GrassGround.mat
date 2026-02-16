@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: GrassGround
-  m_Shader: {fileID: -6465566751694194690, guid: 10be65f0ba16199409908550164c8420, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 653da5397687e3b4ebacc9aa3f769af8, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -37,6 +37,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _Texture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -51,8 +55,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _Ambient_Occlusion: 1
     - _Highlight_Base_Darkening: 0
     - _Highlight_Strength: 0.05
+    - _Outline_Thickness: 0
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Shadow_Strength: -5
@@ -60,7 +66,9 @@ Material:
     - _Base_Color: {r: 0.18474188, g: 0.3509434, b: 0.18742256, a: 0}
     - _Highlight_Camera_Influence: {r: 0.2, g: 0.2, b: 0.5, a: 0}
     - _Highlight_Color: {r: 0.7735849, g: 0.7735849, b: 0.7735849, a: 0}
+    - _Outline_Color: {r: 0.26415086, g: 0.23798496, b: 0.23798496, a: 0}
     - _Shadow_Camera_Influence: {r: 0, g: 0, b: 0, a: 0}
     - _Shadow_Color: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 0}
+    - _Specular_Color: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
