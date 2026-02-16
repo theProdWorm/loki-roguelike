@@ -22,8 +22,8 @@ namespace Entities.Player
 
         private void UpdateHealthUI(int _currentHealth, int _maxHealth)
         {
-            _healthBar.value = (float)_currentHealth / _maxHealth;
-
+            _healthBar.maxValue = _maxHealth;
+            _healthBar.value = _currentHealth;
         }
     }
 }
