@@ -19,6 +19,7 @@ namespace Entities.Player
         private static readonly int DASH      = Animator.StringToHash("dash");
         private static readonly int ATTACK    = Animator.StringToHash("attack");
         private static readonly int SPECIAL   = Animator.StringToHash("special");
+        private static readonly int SWITCH    = Animator.StringToHash("switch");
 
         public enum Character { Fenrir, Hel, Jörmungandr }
         
@@ -98,6 +99,7 @@ namespace Entities.Player
         private Coroutine _dashCoroutine;
 
         private bool _hasControl = true;
+        private bool _isDashing;
         
         private List<IInteractable> _interactables = new();
         private IInteractable _currentInteractable;
@@ -134,7 +136,7 @@ namespace Entities.Player
             InitializeBaseStats();
             InitializeMovement();
             
-            CharacterIndexChanged();
+            CharacterIndexChanged(false);
         }
         
         protected override void InitializeBaseStats()
@@ -179,7 +181,7 @@ namespace Entities.Player
 
         private void MoveAndRotate()
         {
-            Vector2 moveVector = _hasControl ? _moveInput : _dashInputSnapshot;
+            Vector2 moveVector = _isDashing ? _moveInput : _dashInputSnapshot;
             
             Vector3 movementX = moveVector.x * _rightDirection;
             Vector3 movementZ = moveVector.y * _forwardDirection;
@@ -318,6 +320,7 @@ namespace Entities.Player
             CurrentAnimator.SetTrigger(DASH);
             
             _hasControl = false;
+            _isDashing = true;
             _dashInputSnapshot = _lastMoveInput;
 
             int defaultPlayerLayer = gameObject.layer;
@@ -341,6 +344,7 @@ namespace Entities.Player
             yield return new WaitForSeconds(dashDuration);
             
             _hasControl = true;
+            _isDashing = false;
             gameObject.layer = defaultPlayerLayer;
             
             _dashInputSnapshot = Vector2.zero;
@@ -378,7 +382,7 @@ namespace Entities.Player
             item.Apply(this);
         }
 
-        private void CharacterIndexChanged()
+        private void CharacterIndexChanged(bool triggerSwitch = true)
         {
             for (int i = 0; i < _characterContainer.childCount; i++)
             {
@@ -387,6 +391,12 @@ namespace Entities.Player
                 var character = _characterContainer.GetChild(i);
                 character.gameObject.SetActive(activeState);
             }
+
+            if (!triggerSwitch)
+                return;
+            
+            CurrentAnimator.SetTrigger(SWITCH);
+            
         }
 
         #region Stat Modification
