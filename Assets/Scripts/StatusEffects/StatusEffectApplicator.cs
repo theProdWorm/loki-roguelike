@@ -11,10 +11,10 @@ namespace StatusEffects
         [Tooltip("Sets the amount of stacks to apply on hit.")]
         [SerializeField] protected int _stacksToApply = 1;
         
-        [SerializeField] protected float _duration;
-        [SerializeField] protected bool  _stackable;
+        [SerializeField] protected float _duration = 2f;
+        [SerializeField] protected bool  _stackable = true;
         [Tooltip("Whether to reset the duration of all other stacks when a new one is applied.")]
-        [SerializeField] protected bool  _refresh;
+        [SerializeField] protected bool  _refresh = true;
         
         private void Awake()
         {
