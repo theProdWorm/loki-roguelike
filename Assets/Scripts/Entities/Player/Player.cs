@@ -166,6 +166,11 @@ namespace Entities.Player
             _forwardDirection = (cameraForward - downProjection).normalized;
         }
         
+        public void LoseControl() => _hasControl = false;
+        public void GainControl() => _hasControl = true;
+        
+        public void SetDashing(bool isDashing) => _isDashing = isDashing;
+        
         protected override void Update()
         {
             base.Update();
@@ -188,7 +193,7 @@ namespace Entities.Player
 
         private void MoveAndRotate()
         {
-            Vector2 moveVector = _isDashing ? _moveInput : _dashInputSnapshot;
+            Vector2 moveVector = _isDashing ? _dashInputSnapshot : _moveInput;
             
             Vector3 movementX = moveVector.x * _rightDirection;
             Vector3 movementZ = moveVector.y * _forwardDirection;
@@ -326,8 +331,6 @@ namespace Entities.Player
         {
             CurrentAnimator.SetTrigger(DASH);
             
-            _hasControl = false;
-            _isDashing = true;
             _dashInputSnapshot = _lastMoveInput;
 
             int defaultPlayerLayer = gameObject.layer;
@@ -350,8 +353,6 @@ namespace Entities.Player
 
             yield return new WaitForSeconds(dashDuration);
             
-            _hasControl = true;
-            _isDashing = false;
             gameObject.layer = defaultPlayerLayer;
             
             _dashInputSnapshot = Vector2.zero;
