@@ -82,9 +82,6 @@ namespace Entities.Player
         
         private Camera _camera;
         
-        private Vector3 _rightDirection;
-        private Vector3 _forwardDirection;
-        
         private Vector2 _moveInput;
         private Vector2 _lastMoveInput;
         private Vector2 _dashInputSnapshot;
@@ -137,7 +134,7 @@ namespace Entities.Player
             _playerBaseStats = (PlayerBaseStats) EntityBaseStats;
             
             InitializeBaseStats();
-            InitializeMovement();
+            _camera = Camera.main!;
             
             CharacterIndexChanged();
 
@@ -152,18 +149,6 @@ namespace Entities.Player
 
             _critChance = _playerBaseStats.CritChance;
             _critDamage = _playerBaseStats.CritDamage;
-        }
-        
-        private void InitializeMovement()
-        {
-            _camera = Camera.main!;
-            
-            _rightDirection = _camera.transform.right.normalized;
-
-            var cameraForward = _camera.transform.forward;
-            var downProjection = Vector3.Project(cameraForward, Vector3.up);
-            
-            _forwardDirection = (cameraForward - downProjection).normalized;
         }
         
         public void LoseControl() => _hasControl = false;
@@ -193,10 +178,16 @@ namespace Entities.Player
 
         private void MoveAndRotate()
         {
+            var cameraForward = _camera.transform.forward;
+            var downProjection = Vector3.Project(cameraForward, Vector3.up);
+            
+            var forwardDirection = (cameraForward - downProjection).normalized;
+            var rightDirection = _camera.transform.right.normalized;
+            
             Vector2 moveVector = _isDashing ? _dashInputSnapshot : _moveInput;
             
-            Vector3 movementX = moveVector.x * _rightDirection;
-            Vector3 movementZ = moveVector.y * _forwardDirection;
+            Vector3 movementX = moveVector.x * rightDirection;
+            Vector3 movementZ = moveVector.y * forwardDirection;
             
             Vector3 movement = _moveSpeed * (movementX + movementZ).normalized;
             
