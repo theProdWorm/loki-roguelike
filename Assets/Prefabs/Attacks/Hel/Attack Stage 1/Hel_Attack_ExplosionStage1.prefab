@@ -62,6 +62,7 @@ GameObject:
   - component: {fileID: 8563545104430096562}
   - component: {fileID: 6053327314866844602}
   - component: {fileID: 5806422220629585387}
+  - component: {fileID: 4727639633508098525}
   m_Layer: 0
   m_Name: Hel_Attack_Explosion
   m_TagString: Untagged
@@ -173,7 +174,28 @@ MonoBehaviour:
   OnHitEntity:
     m_PersistentCalls:
       m_Calls: []
+  OnHitEntityWithDamage:
+    m_PersistentCalls:
+      m_Calls: []
   OnAttackFinished:
     m_PersistentCalls:
       m_Calls: []
   _damageMultiplier: 0.5
+--- !u!114 &4727639633508098525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7876606381110907858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b151258000a4411da18bb98945267b85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stacksToApply: 1
+  _duration: 2
+  _stackable: 1
+  _refresh: 1
+  _movementSlowdown: 0.05
+  _attackSpeedSlowdown: 0.05

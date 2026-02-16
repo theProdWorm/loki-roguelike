@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 6053327314866844602}
   - component: {fileID: 4595377270003104509}
   - component: {fileID: 4426517948747591340}
+  - component: {fileID: 1226080234451587313}
   m_Layer: 0
   m_Name: Hel_Attack_Projectile
   m_TagString: Untagged
@@ -184,6 +185,9 @@ MonoBehaviour:
   OnHitEntity:
     m_PersistentCalls:
       m_Calls: []
+  OnHitEntityWithDamage:
+    m_PersistentCalls:
+      m_Calls: []
   OnAttackFinished:
     m_PersistentCalls:
       m_Calls:
@@ -205,3 +209,21 @@ MonoBehaviour:
   _range: 10
   _rigidbody: {fileID: 4595377270003104509}
   _explosionPrefab: {fileID: 7724940127870247890, guid: 66d96417a625c9b418bc79126685ae89, type: 3}
+--- !u!114 &1226080234451587313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7876606381110907858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b151258000a4411da18bb98945267b85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stacksToApply: 1
+  _duration: 2
+  _stackable: 1
+  _refresh: 1
+  _movementSlowdown: 0.05
+  _attackSpeedSlowdown: 0.05
