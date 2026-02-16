@@ -22,8 +22,7 @@ namespace Abilities.Attacks
 
         public static void Create(Entity owner, Vector3 position, Quaternion rotation, AttackStats stats)
         {
-            var attackInstance = Instantiate(stats.Prefab, position, rotation)
-                .GetComponentInChildren<Attack>(true);
+            var attackInstance = Instantiate(stats.Prefab, position, rotation).GetComponent<Attack>();
 
             attackInstance.SetOwner(owner);
             attackInstance.SetStats(stats);
@@ -31,7 +30,7 @@ namespace Abilities.Attacks
             if (attackInstance is AreaAttack areaAttack)
                 areaAttack.AreaSizeMultiplier = stats.AreaSizeMultiplier;
 
-            attackInstance.transform.parent.position = position;
+            attackInstance.transform.position = position;
         }
         
         private void SetStats(AttackStats stats) 
@@ -53,7 +52,7 @@ namespace Abilities.Attacks
                 _hostileTag = "Player";
         }
         
-        public virtual void DestroySelf() => Destroy(transform.parent.gameObject);
+        public virtual void DestroySelf() => Destroy(transform.gameObject);
 
         protected Entity PerformAttack(Collider otherCollider)
         {

@@ -24,7 +24,7 @@ namespace Entities.Player
 
         public UnityEvent<int, int> OnHealthUpdate;
 
-        public enum Character { Fenrir, Hel, Jörmungandr }
+        public enum Character { Fenrir, Hel }
         
         [SerializeField] private Transform _characterContainer;
         [SerializeField] private PlayerInput _playerInput;
@@ -59,16 +59,16 @@ namespace Entities.Player
         
         [Header("Fenrir")]
         [SerializeField] private CharacterAbilitySet _fenrirAbilities;
-        [SerializeField] private Animator _fenrirAnimator;
+        [SerializeField] private Animator  _fenrirAnimator;
+        [SerializeField] private Transform _fenrirAttackPosition;
+        [SerializeField] private Transform _fenrirSpecialPosition;
         
         [Header("Hel")]
         [SerializeField] private CharacterAbilitySet _helAbilities;
-        [SerializeField] private Animator _helAnimator;
+        [SerializeField] private Animator  _helAnimator;
+        [SerializeField] private Transform _helAttackPosition;
+        [SerializeField] private Transform _helSpecialPosition;
         
-        [Header("Jörmungandr")]
-        [SerializeField] private CharacterAbilitySet _jörmungandrAbilities;
-        [SerializeField] private Animator _jörmungandrAnimator;
-
         private Animator[] _animators;
         private Animator CurrentAnimator => _animators[(int) ActiveCharacter];
         
@@ -77,6 +77,9 @@ namespace Entities.Player
         private AttackAbilityTracker[] _attackAbilityTrackers;
         private AttackAbilityTracker[] _specialAbilityTrackers;
         private AbilityTracker _dashAbilityTracker;
+
+        private Transform[] _attackPositions;
+        private Transform[] _specialPositions;
         
         private PlayerBaseStats _playerBaseStats;
         
@@ -85,7 +88,6 @@ namespace Entities.Player
         private Vector2 _moveInput;
         private Vector2 _lastMoveInput;
         private Vector2 _dashInputSnapshot;
-        private Vector2 _aimInput;
         
         private float _critChance;
         private float _critDamage;
@@ -111,25 +113,34 @@ namespace Entities.Player
             _animators = new[]
             {
                 _fenrirAnimator,
-                _helAnimator,
-                _jörmungandrAnimator
+                _helAnimator
             };
             
             _attackAbilityTrackers = new AttackAbilityTracker[]
             {
                 new(_fenrirAbilities.Attack, PerformAttack),
-                new(_helAbilities.Attack, PerformAttack),
-                //new(_jörmungandrAbilities.Attack, PerformAttack)
+                new(_helAbilities.Attack, PerformAttack)
             };
             
             _specialAbilityTrackers = new AttackAbilityTracker[]
             {
                 // new(_fenrirAbilities.Special, PerformAttack),
-                // new(_helAbilities.Special, PerformAttack),
-                // new(_jörmungandrAbilities.Special, PerformAttack)
+                // new(_helAbilities.Special, PerformAttack)
             };
             
             _dashAbilityTracker = new(_dashAbility, PerformDash);
+
+            _attackPositions = new Transform[]
+            {
+                _fenrirAttackPosition,
+                _helAttackPosition
+            };
+
+            _specialPositions = new Transform[]
+            {
+                _fenrirSpecialPosition,
+                _helSpecialPosition
+            };
             
             _playerBaseStats = (PlayerBaseStats) EntityBaseStats;
             
@@ -166,7 +177,6 @@ namespace Entities.Player
                 abilityTracker.Update();
             
             _dashAbilityTracker.Update();
-            //_jörmungandrAbilityRecord.Update();
             
             MoveAndRotate();
             
@@ -205,13 +215,32 @@ namespace Entities.Player
                 _critDamage, 
                 _areaSizeMultiplier);
 
+            var position = _attackPositions[(int) ActiveCharacter].position;
+            
             if (stats.Burst)
-                StartCoroutine(AttackCoroutine(attackStats, useTimes, stats.BurstDelay, stats.SpreadAngle));
+                StartCoroutine(AttackCoroutine(attackStats, useTimes, stats.BurstDelay, stats.SpreadAngle, position));
             else
-                Attack.Create(this, transform.position, transform.rotation, attackStats);
+                Attack.Create(this, position, transform.rotation, attackStats);
         }
 
-        private IEnumerator AttackCoroutine(AttackStats stats, int times, float delay, float spreadAngle)
+        private void PerformSpecial(AbilityStats stats, int useTimes)
+        {
+            var specialStats = new AttackStats(
+                stats.AttackPrefab, 
+                _damage, 
+                _critChance, 
+                _critDamage, 
+                _areaSizeMultiplier);
+
+            var position = _specialPositions[(int) ActiveCharacter].position;
+
+            if (stats.Burst)
+                StartCoroutine(AttackCoroutine(specialStats, useTimes, stats.BurstDelay, stats.SpreadAngle, position));
+            else
+                Attack.Create(this, position, transform.rotation, specialStats);
+        }
+
+        private IEnumerator AttackCoroutine(AttackStats stats, int times, float delay, float spreadAngle, Vector3 position)
         {
             float halfAngle = spreadAngle * (times - 1) * 0.5f;
             
@@ -220,7 +249,7 @@ namespace Entities.Player
                 float angle = spreadAngle * i - halfAngle;
                 Quaternion rotation = transform.rotation * Quaternion.AngleAxis(angle, Vector3.up);
                 
-                Attack.Create(this, transform.position, rotation, stats);
+                Attack.Create(this, position, rotation, stats);
 
                 if (i != times - 1)
                     yield return new WaitForSeconds(delay);
@@ -534,11 +563,6 @@ namespace Entities.Player
                 _lastMoveInput = _moveInput;
             
             CurrentAnimator.SetBool(IS_MOVING, isMoving);
-        }
-
-        public void AimInput(InputAction.CallbackContext context)
-        {
-            _aimInput = context.ReadValue<Vector2>();
         }
 
         public void InteractInput(InputAction.CallbackContext context)
