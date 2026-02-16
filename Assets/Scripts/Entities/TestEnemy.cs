@@ -12,6 +12,7 @@ namespace Entities
         private UIEnemyHealth _healthbar;
 
         private Rigidbody rb;
+        private Animator animator;
 
         private BehaviorGraphAgent AiAgent;
         private NavMeshAgent navAgent;
@@ -30,6 +31,7 @@ namespace Entities
             rb = GetComponent<Rigidbody>();
             AiAgent = GetComponent<BehaviorGraphAgent>();
             navAgent = GetComponent<NavMeshAgent>();
+            animator = GetComponent<Animator>();
             if (!_player)
                 _player = GameObject.FindGameObjectWithTag("Player");
 
@@ -69,6 +71,7 @@ namespace Entities
             navAgent.enabled = false;
             rb.constraints = RigidbodyConstraints.None;
             tag = "Untagged";
+            animator.enabled = false;
             this.enabled = false;
         }
 
