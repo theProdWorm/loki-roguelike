@@ -27,9 +27,6 @@ namespace Abilities.Attacks
             attackInstance.SetOwner(owner);
             attackInstance.SetStats(stats);
 
-            if (attackInstance is AreaAttack areaAttack)
-                areaAttack.AreaSizeMultiplier = stats.AreaSizeMultiplier;
-
             attackInstance.transform.position = position;
         }
         
@@ -60,7 +57,10 @@ namespace Abilities.Attacks
                 return null;
             
             var entity = otherCollider.gameObject.GetComponent<Entity>();
-            entity.TakeDamage(_damage, _owner);
+            
+            bool crit = Random.Range(0f, 100f) <= _stats.CritChance;
+            int damage = Mathf.CeilToInt(_damage * (crit ? _stats.CritDamage : 1));
+            entity.TakeDamage(damage, _owner);
             
             OnHitEntity?.Invoke(entity);
             
