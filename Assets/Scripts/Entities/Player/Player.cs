@@ -2,11 +2,9 @@ using Abilities;
 using Abilities.Attacks;
 using Items;
 using Stats;
-using StatusEffects;
-using StatusEffects;
-using System;
 using System.Collections;
 using System.Collections.Generic;
+using Entities.Stats;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -60,14 +58,15 @@ namespace Entities.Player
         [Header("Fenrir")]
         [SerializeField] private CharacterAbilitySet _fenrirAbilities;
         [SerializeField] private Animator  _fenrirAnimator;
-        [SerializeField] private Transform _fenrirAttackPosition;
-        [SerializeField] private Transform _fenrirSpecialPosition;
+        [SerializeField] private Transform _fenrirAttackPoint;
+        [SerializeField] private Transform _fenrirSpecialPoint;
+        [SerializeField] private Transform _fenrirAttackDashPoint;
         
         [Header("Hel")]
         [SerializeField] private CharacterAbilitySet _helAbilities;
         [SerializeField] private Animator  _helAnimator;
-        [SerializeField] private Transform _helAttackPosition;
-        [SerializeField] private Transform _helSpecialPosition;
+        [SerializeField] private Transform _helAttackPoint;
+        [SerializeField] private Transform _helSpecialPoint;
         
         private Animator[] _animators;
         private Animator CurrentAnimator => _animators[(int) ActiveCharacter];
@@ -77,9 +76,17 @@ namespace Entities.Player
         private AttackAbilityTracker[] _attackAbilityTrackers;
         private AttackAbilityTracker[] _specialAbilityTrackers;
         private AbilityTracker _dashAbilityTracker;
+        private AttackAbilityTracker AttackAbilityTracker => _attackAbilityTrackers[(int) ActiveCharacter];
+        private AttackAbilityTracker SpecialAbilityTracker => _specialAbilityTrackers[(int) ActiveCharacter];
 
-        private Transform[] _attackPositions;
-        private Transform[] _specialPositions;
+        private Transform[] _attackPoints;
+        private Transform[] _specialPoint;
+
+        private Vector3 AttackPosition => _attackPoints[(int) ActiveCharacter].position;
+        private Vector3 SpecialPosition => _specialPoint[(int) ActiveCharacter].position;
+        
+        private AbilityStats _currentAttackStats;
+        private int          _currentAttackUseTimes;
         
         private PlayerBaseStats _playerBaseStats;
         
@@ -122,28 +129,32 @@ namespace Entities.Player
             
             _attackAbilityTrackers = new AttackAbilityTracker[]
             {
-                new(_fenrirAbilities.Attack, PerformAttack),
-                new(_helAbilities.Attack, PerformAttack)
+                new(_fenrirAbilities.Attack, (ability, action) =>
+                    StartAttack(ability, action, ATTACK)),
+                new(_helAbilities.Attack, (ability, action) =>
+                    StartAttack(ability, action, ATTACK))
             };
             
             _specialAbilityTrackers = new AttackAbilityTracker[]
             {
-                // new(_fenrirAbilities.Special, PerformAttack),
-                // new(_helAbilities.Special, PerformAttack)
-            };
-            
-            _dashAbilityTracker = new(_dashAbility, PerformDash);
-
-            _attackPositions = new Transform[]
-            {
-                _fenrirAttackPosition,
-                _helAttackPosition
+                // new(_fenrirAbilities.Special, (ability, action) =>
+                //     StartAttack(ability, action, SPECIAL)),
+                // new(_helAbilities.Special, (ability, action) =>
+                //     StartAttack(ability, action, SPECIAL))
             };
 
-            _specialPositions = new Transform[]
+            _dashAbilityTracker = new(_dashAbility, () => PerformDash(_dashPoint.position));
+
+            _attackPoints = new []
             {
-                _fenrirSpecialPosition,
-                _helSpecialPosition
+                _fenrirAttackPoint,
+                _helAttackPoint
+            };
+
+            _specialPoint = new []
+            {
+                _fenrirSpecialPoint,
+                _helSpecialPoint
             };
             
             _playerBaseStats = (PlayerBaseStats) EntityBaseStats;
@@ -210,8 +221,18 @@ namespace Entities.Player
             transform.LookAt(transform.position + movement);
         }
 
-        private void PerformAttack(AbilityStats stats, int useTimes)
+        private void StartAttack(AbilityStats stats, int useTimes, int animatorHash)
         {
+            _currentAttackStats = stats;
+            _currentAttackUseTimes = useTimes;
+            
+            CurrentAnimator.SetTrigger(animatorHash);
+        }
+        
+        public void PerformAttack()
+        {
+            var stats = _currentAttackStats;
+            
             var attackStats = new AttackStats(
                 stats.AttackPrefab, 
                 _damage, 
@@ -219,16 +240,19 @@ namespace Entities.Player
                 _critDamage, 
                 _areaSizeMultiplier);
 
-            var position = _attackPositions[(int) ActiveCharacter].position;
-            
+            var position = AttackPosition;
+
             if (stats.Burst)
-                StartCoroutine(AttackCoroutine(attackStats, useTimes, stats.BurstDelay, stats.SpreadAngle, position));
+                StartCoroutine(AttackCoroutine(attackStats, _currentAttackUseTimes, 
+                    stats.BurstDelay, stats.SpreadAngle, position));
             else
                 Attack.Create(this, position, transform.rotation, attackStats);
         }
 
-        private void PerformSpecial(AbilityStats stats, int useTimes)
+        public void PerformSpecial()
         {
+            var stats = _currentAttackStats;
+            
             var specialStats = new AttackStats(
                 stats.AttackPrefab, 
                 _damage, 
@@ -236,10 +260,11 @@ namespace Entities.Player
                 _critDamage, 
                 _areaSizeMultiplier);
 
-            var position = _specialPositions[(int) ActiveCharacter].position;
+            var position = _specialPoint[(int) ActiveCharacter].position;
 
             if (stats.Burst)
-                StartCoroutine(AttackCoroutine(specialStats, useTimes, stats.BurstDelay, stats.SpreadAngle, position));
+                StartCoroutine(AttackCoroutine(specialStats, _currentAttackUseTimes, 
+                    stats.BurstDelay, stats.SpreadAngle, position));
             else
                 Attack.Create(this, position, transform.rotation, specialStats);
         }
@@ -260,10 +285,10 @@ namespace Entities.Player
             }
         }
 
-        private void PerformDash()
+        public void PerformAttackDash() => PerformDash(_fenrirAttackDashPoint.position);
+        
+        private void PerformDash(Vector3 dashPoint)
         {
-            Vector3 dashPoint = _dashPoint.position;
-            
             // Projected dash vector using the calculated offset from player center to front
             Vector3 dashVector = dashPoint - _rigidbody.position;
             float distance = dashVector.magnitude;
@@ -435,7 +460,6 @@ namespace Entities.Player
                 return;
             
             CurrentAnimator.SetTrigger(SWITCH);
-            
         }
 
         #region Stat Modification
@@ -589,7 +613,7 @@ namespace Entities.Player
             if (!_hasControl) 
                 return;
             
-            _attackAbilityTrackers[(int) ActiveCharacter].RegisterInput(context);
+            AttackAbilityTracker.RegisterInput(context);
         }
 
         public void SpecialInput(InputAction.CallbackContext context)
@@ -597,7 +621,7 @@ namespace Entities.Player
             if (!_hasControl) 
                 return;
             
-            _specialAbilityTrackers[(int) ActiveCharacter].RegisterInput(context);
+            SpecialAbilityTracker.RegisterInput(context);
         }
 
         public void DashInput(InputAction.CallbackContext context)
@@ -608,18 +632,7 @@ namespace Entities.Player
             _dashAbilityTracker.RegisterInput(context);
         }
 
-        public void PreviousInput(InputAction.CallbackContext context)
-        {
-            if (!_hasControl) 
-                return;
-            
-            int characterIndex = Mathf.Abs((int) --ActiveCharacter) % 2;
-            ActiveCharacter = (Character) characterIndex;
-            
-            CharacterIndexChanged();
-        }
-
-        public void NextInput(InputAction.CallbackContext context)
+        public void SwitchInput(InputAction.CallbackContext context)
         {
             if (!_hasControl) 
                 return;

@@ -20,7 +20,6 @@ namespace Abilities
 
         public override void RegisterInput(InputAction.CallbackContext context)
         {
-            
             if (context.started)
             {
                 if (_remainingCharges == 0)
