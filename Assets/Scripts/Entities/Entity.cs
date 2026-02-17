@@ -1,4 +1,5 @@
 using System;
+using Entities.Stats;
 using Stats;
 using StatusEffects;
 using UnityEngine;
