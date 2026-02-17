@@ -817,6 +817,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8de1e24f4ae8dc041ba67a9657235fc2, type: 3}
   m_PrefabInstance: {fileID: 2062420229}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &15909129 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3005494553857760625, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
+  m_PrefabInstance: {fileID: 571377167}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &19301352 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: cbcfd516cb81f164ea98a3b46a1ba1f5, type: 3}
@@ -23372,6 +23377,10 @@ PrefabInstance:
       value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 3904859379294053273, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
+      propertyPath: _helAttackPoint
+      value: 
+      objectReference: {fileID: 15909129}
+    - target: {fileID: 3904859379294053273, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
       propertyPath: _dashFadeDuration
       value: 0.1
       objectReference: {fileID: 0}
@@ -23558,6 +23567,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8529854266878059645, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1214373710}
+    - targetCorrespondingSourceObject: {fileID: 6918790195796099130, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1769953183}
   m_SourcePrefab: {fileID: 100100000, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
 --- !u!1001 &571741370
 PrefabInstance:
@@ -71279,6 +71291,77 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71621a98eff187349a75dedf80cabe68, type: 3}
+--- !u!1 &1769953178 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6918790195796099130, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
+  m_PrefabInstance: {fileID: 571377167}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1769953183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1769953178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91fa38b5812a9b34c949554d8a3cc66a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnAttackStarted:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 241418812}
+        m_TargetAssemblyTypeName: Entities.Player.Player, Assembly-CSharp
+        m_MethodName: LoseControl
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 241418812}
+        m_TargetAssemblyTypeName: Entities.Player.Player, Assembly-CSharp
+        m_MethodName: PerformAttack
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnAttackPerformed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 241418812}
+        m_TargetAssemblyTypeName: Entities.Player.Player, Assembly-CSharp
+        m_MethodName: GainControl
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnSpecialStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSpecialPerformed:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSwitch:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1771105845 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8de1e24f4ae8dc041ba67a9657235fc2, type: 3}
