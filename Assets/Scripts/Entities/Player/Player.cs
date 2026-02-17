@@ -143,7 +143,7 @@ namespace Entities.Player
                 //     StartAttack(ability, action, SPECIAL))
             };
 
-            _dashAbilityTracker = new(_dashAbility, () => PerformDash(_dashPoint.position));
+            _dashAbilityTracker = new(_dashAbility, () => PerformDash(_dashPoint.position, true));
 
             _attackPoints = new []
             {
@@ -177,8 +177,14 @@ namespace Entities.Player
             _critDamage = _playerBaseStats.CritDamage;
         }
         
-        public void LoseControl() => _hasControl = false;
-        public void GainControl() => _hasControl = true;
+        public void LoseControl()  {
+            print("lost control");
+            _hasControl = false;
+        }
+        public void GainControl() {
+            print("gained control");
+            _hasControl = true;
+        }
         
         public void SetDashing(bool isDashing) => _isDashing = isDashing;
         
@@ -209,7 +215,7 @@ namespace Entities.Player
             var forwardDirection = (cameraForward - downProjection).normalized;
             var rightDirection = _camera.transform.right.normalized;
             
-            Vector2 moveVector = _isDashing ? _dashInputSnapshot : _moveInput;
+            Vector2 moveVector = _isDashing ? _dashInputSnapshot : _hasControl ? _moveInput : Vector2.zero;
             
             Vector3 movementX = moveVector.x * rightDirection;
             Vector3 movementZ = moveVector.y * forwardDirection;
@@ -285,9 +291,9 @@ namespace Entities.Player
             }
         }
 
-        public void PerformAttackDash() => PerformDash(_fenrirAttackDashPoint.position);
+        public void PerformAttackDash() => PerformDash(_fenrirAttackDashPoint.position, false);
         
-        private void PerformDash(Vector3 dashPoint)
+        private void PerformDash(Vector3 dashPoint, bool animate)
         {
             // Projected dash vector using the calculated offset from player center to front
             Vector3 dashVector = dashPoint - _rigidbody.position;
@@ -373,13 +379,16 @@ namespace Entities.Player
                 StopCoroutine(_dashCoroutine);
                 _moveSpeed = _originalMoveSpeed;
             }
-            _dashCoroutine = StartCoroutine(DashCoroutine(dashPoint));
+            _dashCoroutine = StartCoroutine(DashCoroutine(dashPoint, animate));
         }
         
-        private IEnumerator DashCoroutine(Vector3 dashPoint)
+        private IEnumerator DashCoroutine(Vector3 dashPoint, bool animate)
         {
-            CurrentAnimator.SetTrigger(DASH);
+            if (animate)
+                CurrentAnimator.SetTrigger(DASH);
             
+            _isDashing = true;
+            _hasControl = false;
             _dashInputSnapshot = _lastMoveInput;
 
             int defaultPlayerLayer = gameObject.layer;
@@ -404,6 +413,8 @@ namespace Entities.Player
             
             gameObject.layer = defaultPlayerLayer;
             
+            _isDashing = false;
+            _hasControl = true;
             _dashInputSnapshot = Vector2.zero;
 
             float dashFadeDuration = dashDuration * _dashFade;
