@@ -108,6 +108,10 @@ namespace Entities.Player
 
         protected override void Start()
         {
+            _playerInput.SwitchCurrentActionMap("Dialogue");
+            _playerInput.SwitchCurrentActionMap("UI");
+            _playerInput.SwitchCurrentActionMap("Player");
+            
             _originalDashDistance = Vector3.Distance(transform.position, _dashPoint.position);
 
             _animators = new[]
@@ -570,10 +574,8 @@ namespace Entities.Player
             if(!context.performed || !_hasControl) 
                 return;
 
-            if (_currentInteractable == null)
+            if (_interactables.Count == 0 || _currentInteractable == null)
                 return;
-        
-            print("interacted!");
             
             _currentInteractable.Interacted();
             _currentInteractable.Highlighted = false;
