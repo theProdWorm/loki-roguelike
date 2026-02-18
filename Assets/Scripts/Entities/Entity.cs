@@ -35,13 +35,20 @@ namespace Entities
         
         protected int _currentHealth;
         
-        private bool _isDead;
+        public bool IsDead = false;
         
         private StatusEffectList _statusEffects;
 
         protected virtual void Awake()
         {
             _statusEffects = new StatusEffectList(this, Debug.Log);
+            IsDead = false;
+        }
+
+        //TODO: delete test
+        protected virtual void OnEnable()
+        {
+            IsDead = false;
         }
 
         protected virtual void Start()
@@ -94,10 +101,10 @@ namespace Entities
         
         private void Die()
         {
-            if (_isDead)
+            if (IsDead)
                 return;
-            
-            _isDead = true;
+
+            IsDead = true;
             
             OnDeath?.Invoke(this);
         }

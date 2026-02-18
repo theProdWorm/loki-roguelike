@@ -103,11 +103,11 @@ public class DungeonGeneration : MonoBehaviour
     {
         for (int i = 0; i < _generalRoomsOnFloor.Count; i++)
         {
-            foreach (Doorway doorway in _generalRoomsOnFloor[i].Doorways)
+            foreach (LegacyDoorway doorway in _generalRoomsOnFloor[i].Doorways)
             {
                 for (int j = i + 1; j < _generalRoomsOnFloor.Count; j++)
                 {
-                    foreach (Doorway targetDoorway in _generalRoomsOnFloor[j].Doorways)
+                    foreach (LegacyDoorway targetDoorway in _generalRoomsOnFloor[j].Doorways)
                     {
                         Corridor corridor = ConnectDoors(doorway, targetDoorway);
                         _generalRoomsOnFloor[i].ConnectedCorridors.Add(corridor);
@@ -146,11 +146,11 @@ public class DungeonGeneration : MonoBehaviour
 
     private void ConnectStartRoom()
     {
-        List<Doorway> availableDoorways = new();
+        List<LegacyDoorway> availableDoorways = new();
 
         foreach (Room room in _generalRoomsOnFloor)
         {
-            foreach (Doorway doorway in room.Doorways)
+            foreach (LegacyDoorway doorway in room.Doorways)
             {
                 if (!doorway.IsConnected)
                 {
@@ -169,17 +169,17 @@ public class DungeonGeneration : MonoBehaviour
         if (_likelinessOfExtraConnections <= 0) return;
         foreach (Room room in _generalRoomsOnFloor)
         {
-            foreach (Doorway doorway in room.Doorways)
+            foreach (LegacyDoorway doorway in room.Doorways)
             {
                 if (!doorway.IsConnected)
                 {
                     if (Random.value <= _likelinessOfExtraConnections)
                     {
-                        List<Doorway> availableDoorways = new();
+                        List<LegacyDoorway> availableDoorways = new();
                         foreach (Room targetRoom in _generalRoomsOnFloor)
                         {
                             if (targetRoom == room) continue;
-                            foreach (Doorway targetDoorway in targetRoom.Doorways)
+                            foreach (LegacyDoorway targetDoorway in targetRoom.Doorways)
                             {
                                 if (!targetDoorway.IsConnected)
                                 {
@@ -213,7 +213,7 @@ public class DungeonGeneration : MonoBehaviour
                 Debug.Log(room.ConnectedCorridors.Count);
             }
 
-            foreach (Doorway door in room.Doorways)
+            foreach (LegacyDoorway door in room.Doorways)
             {
                 if (door.IsConnected)
                 {
@@ -239,11 +239,11 @@ public class DungeonGeneration : MonoBehaviour
     {
         //There's already an unoccupied doorway far enough from the start room, so we can just connect the boss room to it
         #region Try Connect
-        List<Doorway> availableDoorways = new();
+        List<LegacyDoorway> availableDoorways = new();
 
         foreach (Room room in _generalRoomsOnFloor)
         {
-            foreach (Doorway doorway in room.Doorways)
+            foreach (LegacyDoorway doorway in room.Doorways)
             {
                 if (!doorway.IsConnected && room.DistanceFromStart >= _minDistanceFromStartToBoss)
                 {
@@ -263,10 +263,10 @@ public class DungeonGeneration : MonoBehaviour
 
         //There are no free doorways far enough from the start room, so we find a random door far enough away and hijack it
         #region Try Hijack
-        List<Doorway> occupiedDoorways = new();
+        List<LegacyDoorway> occupiedDoorways = new();
         foreach (Room room in _generalRoomsOnFloor)
         {
-            foreach (Doorway doorway in room.Doorways)
+            foreach (LegacyDoorway doorway in room.Doorways)
             {
                 if (room.DistanceFromStart >= _minDistanceFromStartToBoss)
                 {
@@ -274,12 +274,12 @@ public class DungeonGeneration : MonoBehaviour
                 }
             }
         }
-        Doorway targetDoorway;
+        LegacyDoorway targetDoorway;
         Corridor oldCorridor;
         Room targetRoom;
 
         bool continueLoop = true;
-        List<Doorway> triedDoorways = new();
+        List<LegacyDoorway> triedDoorways = new();
 
         while (continueLoop)
         {
@@ -338,7 +338,7 @@ public class DungeonGeneration : MonoBehaviour
 
         foreach (Room room in openlist)
         {
-            foreach (Doorway doorway in room.Doorways)
+            foreach (LegacyDoorway doorway in room.Doorways)
             {
                 if (doorway.IsConnected)
                 {
@@ -394,7 +394,7 @@ public class DungeonGeneration : MonoBehaviour
         return weightedList;
     }
 
-    private Corridor ConnectDoors(Doorway doorA, Doorway doorB)
+    private Corridor ConnectDoors(LegacyDoorway doorA, LegacyDoorway doorB)
     {
         Vector3 distance = doorA.transform.position - doorB.transform.position;
         GameObject corridorObject = Instantiate(_corridorPrefab, Vector3.Lerp(doorA.transform.position, doorB.transform.position, 0.5f), Quaternion.Euler(distance), _corridorsParent);

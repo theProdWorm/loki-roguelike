@@ -5,7 +5,7 @@ public class Room : MonoBehaviour
 {
     #region Dungeon Generation Variables
     public int Weight;
-    public List<Doorway> Doorways = new();
+    public List<LegacyDoorway> Doorways = new();
 
     [/*HideInInspector,*/ Tooltip("Only used for connecting all doors before pruning the connections with Prim's algorithm, creating a minimum spanning tree")]
     public List<Corridor> ConnectedCorridors;

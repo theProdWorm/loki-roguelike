@@ -22,6 +22,9 @@ public class UIEnemyHealth : MonoBehaviour
     public void UpdateHealth(int _currentHealth, int _maxHealth)
     {
         //TODO: Consider adding an effect when hit
+        if (_healthSlider == null)
+            return;
+            //_healthSlider = GetComponentInChildren<Slider>();
 
         _healthSlider.maxValue = _maxHealth;
         _healthSlider.value = _currentHealth;

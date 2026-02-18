@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class Doorway : MonoBehaviour
+public class LegacyDoorway : MonoBehaviour
 {
     public Corridor ConnectedCorridor;
 

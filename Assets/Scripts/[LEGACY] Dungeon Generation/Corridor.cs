@@ -2,8 +2,8 @@
 
 public class Corridor : MonoBehaviour
 {
-    public Doorway DoorwayA;
-    public Doorway DoorwayB;
+    public LegacyDoorway DoorwayA;
+    public LegacyDoorway DoorwayB;
 
     public float weight = 1;
 }
