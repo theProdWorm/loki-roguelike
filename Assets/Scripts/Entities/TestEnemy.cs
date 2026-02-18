@@ -25,6 +25,7 @@ namespace Entities
 
         public GameObject attackPrefab;
         public AttackStats attackStats;
+        public Transform ragdollRoot;
 
         protected override void Awake()
         {
@@ -98,10 +99,17 @@ namespace Entities
         {
             AiAgent.End();
             navAgent.enabled = false;
-            rb.constraints = RigidbodyConstraints.None;
             tag = "Untagged";
             animator.enabled = false;
+            GetComponent<Collider>().enabled = false;
             this.enabled = false;
+            Destroy(_healthbar);
+            
+            foreach (Rigidbody rbC in GetComponentsInChildren<Rigidbody>())
+            {
+                rbC.isKinematic = false;
+            }
+            //ragdollRoot.parent = null;
         }
 
 
