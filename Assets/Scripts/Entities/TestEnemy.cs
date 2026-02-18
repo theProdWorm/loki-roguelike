@@ -62,6 +62,7 @@ namespace Entities
 
         
         private Vector3 prevPos = Vector3.zero;
+        private float prevDot = 0;
         private void Update()
         {
             var pos = transform.position;
@@ -70,12 +71,25 @@ namespace Entities
             var rot = transform.eulerAngles;
             transform.eulerAngles = new Vector3(0, rot.y, 0);
             
+            if(Vector3.Distance(pos, prevPos) < 0.1f) return;
             var between = (pos - prevPos);
             var distance = between.magnitude;
             var direction = between/distance;
             var dot = Vector3.Dot(transform.forward, direction);
+            float velocity = .1f;
+
+            float smoothed = 0;
+            smoothed = Mathf.SmoothDamp(
+                prevDot,
+                dot,
+                ref velocity,
+                .05f
+            );
             
-            animator.SetFloat(MoveDir, dot);
+            prevDot = smoothed;
+            
+            animator.SetFloat(MoveDir, smoothed);
+            
             
             prevPos = transform.position;
         }
