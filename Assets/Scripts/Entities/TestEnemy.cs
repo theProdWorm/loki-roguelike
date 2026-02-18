@@ -8,6 +8,7 @@ namespace Entities
 {
     public class TestEnemy : Entity
     {
+        private static readonly int MoveDir = Animator.StringToHash("MoveDir");
         private static GameObject _player;
         private UIEnemyHealth _healthbar;
 
@@ -46,6 +47,7 @@ namespace Entities
 
             _healthbar = GetComponentInChildren<UIEnemyHealth>();
             _healthbar.UpdateHealth(_currentHealth, _maxHealth);
+            
         }
 
         public void Attack()
@@ -58,12 +60,24 @@ namespace Entities
             AiAgent.SetVariableValue("Attacking", false);
         }
 
+        
+        private Vector3 prevPos = Vector3.zero;
         private void Update()
         {
+            var pos = transform.position;
             //var rotation = Quaternion.LookRotation(Player.transform.position - transform.position, Vector3.up);
             transform.LookAt(_player.transform, Vector3.up);
             var rot = transform.eulerAngles;
             transform.eulerAngles = new Vector3(0, rot.y, 0);
+            
+            var between = (pos - prevPos);
+            var distance = between.magnitude;
+            var direction = between/distance;
+            var dot = Vector3.Dot(transform.forward, direction);
+            
+            animator.SetFloat(MoveDir, dot);
+            
+            prevPos = transform.position;
         }
 
         public void Destroy()

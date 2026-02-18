@@ -33,6 +33,8 @@ public class DamageNumbers : MonoBehaviour
             actionOnDestroy: DestroyText
         );
         numbers = new List<numberInfo>();
+        var text = textPool.Get();
+        textPool.Release(text);
     }
 
     void Start()
@@ -109,18 +111,16 @@ public class DamageNumbers : MonoBehaviour
         var info = new numberInfo
         {
             text = text,
-            number = damage,
             timeLeft = 1,
             target = position.position
         };
-        info.text.text = info.number.ToString();
+        info.text.text = damage.ToString();
         numbers.Add(info);
     }
 
     private struct numberInfo
     {
         public TextMeshProUGUI text;
-        public int number;
         public float timeLeft;
         public Vector3 target;
     }
