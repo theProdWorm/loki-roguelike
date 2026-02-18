@@ -44,7 +44,7 @@ namespace Entities
             AiAgent.SetVariableValue("AttackDelay", attackCooldown);
             AiAgent.SetVariableValue("Animator", GetComponent<Animator>());
             navAgent.speed = _moveSpeed;
-            attackStats = new AttackStats(attackPrefab, 5, 0, 0, 1);
+            attackStats = new AttackStats(attackPrefab, _damage, 0, 0, 1);
 
             _healthbar = GetComponentInChildren<UIEnemyHealth>();
             _healthbar.UpdateHealth(_currentHealth, _maxHealth);
