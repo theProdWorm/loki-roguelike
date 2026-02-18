@@ -434,15 +434,15 @@ namespace Entities.Player
         
         public override void TakeDamage(int amount, Entity attacker)
         {
-            OnHealthUpdate?.Invoke(_currentHealth, _maxHealth);
             int reducedDamage = Mathf.CeilToInt(amount * (1 - _damageReduction));
             base.TakeDamage(reducedDamage, attacker);
+            OnHealthUpdate?.Invoke(_currentHealth, _maxHealth);
         }
 
         public override void Heal(int amount)
         {
-            OnHealthUpdate?.Invoke(_currentHealth, _maxHealth);
             base.Heal(amount);
+            OnHealthUpdate?.Invoke(_currentHealth, _maxHealth);
         }
 
         public void AddItem(IItem item)
