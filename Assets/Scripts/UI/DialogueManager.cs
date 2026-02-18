@@ -23,26 +23,11 @@ public class DialogueManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
         _playerInput = playerInput;
         dPanel = diagloguePanel;
         dText = diaglogueText;
         nIndicator = nextIndicator;
         dPanel.SetActive(false);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void OnEnable()
-    {
-    }
-
-    private void OnDisable()
-    {
     }
 
     public static void StartDialogue(string[] dialogue)

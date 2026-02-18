@@ -17,6 +17,7 @@ namespace Entities
         private BehaviorGraphAgent AiAgent;
         private NavMeshAgent navAgent;
 
+        public Transform attackPoint;
         [SerializeField] private Blackboard blackboard;
         [SerializeField] private BehaviorGraph behaviorGraph;
         public float attackCooldown;
@@ -49,7 +50,7 @@ namespace Entities
 
         public void Attack()
         {
-            Abilities.Attacks.Attack.Create(this, transform.position, transform.rotation, attackStats);
+            Abilities.Attacks.Attack.Create(this, attackPoint.position, transform.rotation, attackStats);
         }
 
         public void AttackFinished()
@@ -79,7 +80,7 @@ namespace Entities
         public override void TakeDamage(int amount, Entity attacker)
         {
             base.TakeDamage(amount, attacker);
-            Debug.Log($"Took {amount} damage and now has {_currentHealth} health");
+            DamageNumbers.CreateDamageNumber(transform,amount);
             _healthbar.UpdateHealth(_currentHealth, _maxHealth);
         }
 

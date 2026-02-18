@@ -27,7 +27,7 @@ public class UIEnemyHealth : MonoBehaviour
         _healthSlider.value = _currentHealth;
 
         //TODO: Consider adding a fade out effect instead of just deactivating the game object when health is full. This would make it look smoother and more polished.
-        if (_currentHealth >= _maxHealth || _currentHealth == 0)
+        if (_currentHealth >= _maxHealth || _currentHealth <= 0)
         {
             _healthSlider.gameObject.SetActive(false);
         }
