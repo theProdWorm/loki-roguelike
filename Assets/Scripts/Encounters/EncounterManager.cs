@@ -106,27 +106,27 @@ public class EncounterManager : MonoBehaviour
 
     private void EnemyDied(Entity enemy)
     {
-        //TODO: Add a father enemy class and put that here instead of the test enemy
-        Debug.Log(enemy.name + " Died");
-        if (enemy is TestEnemy)
-        {
-            _enemiesAlive.Remove(enemy);
-            Debug.Log("Enemy Died, " + _enemiesAlive.Count + " Enemies Left");
-        }
-        _currentAmountOfEnemiesAlive = _enemiesAlive.Count;
+        ////TODO: Add a father enemy class and put that here instead of the test enemy
+        //Debug.Log(enemy.name + " Died");
+        //if (enemy is TestEnemy)
+        //{
+        //    _enemiesAlive.Remove(enemy);
+        //    Debug.Log("Enemy Died, " + _enemiesAlive.Count + " Enemies Left");
+        //}
+        //_currentAmountOfEnemiesAlive = _enemiesAlive.Count;
     }
 
     private void CountAliveEnemies()
     {
-        //    int i = 0;
-        //    foreach (Entity enemy in _enemiesAlive)
-        //    {
-        //        if (!enemy.IsDead)
-        //            i++;
-        //    }
+            int i = 0;
+            foreach (Entity enemy in _enemiesAlive)
+            {
+                if (!enemy.IsDead)
+                    i++;
+            }
 
-        //    _currentAmountOfEnemiesAlive = i;
-        //    Debug.Log("Current Enemies Alive: " + i);
+            _currentAmountOfEnemiesAlive = i;
+            Debug.Log("Current Enemies Alive: " + i);
     }
 
     private void NextWave()
