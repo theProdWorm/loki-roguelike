@@ -23363,7 +23363,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2428499358251321693, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
       propertyPath: OnAttackStarted.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2428499358251321693, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
       propertyPath: OnAttackPerformed.m_PersistentCalls.m_Calls.Array.size
@@ -23371,7 +23371,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2428499358251321693, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
       propertyPath: OnAttackStarted.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2428499358251321693, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
       propertyPath: OnAttackPerformed.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
@@ -23380,7 +23380,7 @@ PrefabInstance:
     - target: {fileID: 2428499358251321693, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
       propertyPath: OnAttackStarted.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 798084334}
+      objectReference: {fileID: 1453321043}
     - target: {fileID: 2428499358251321693, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
       propertyPath: OnAttackPerformed.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
@@ -23391,7 +23391,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2428499358251321693, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
       propertyPath: OnAttackStarted.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: Print
+      value: PlayMeleeSound
       objectReference: {fileID: 0}
     - target: {fileID: 2428499358251321693, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
       propertyPath: OnAttackPerformed.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
@@ -23403,15 +23403,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2428499358251321693, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
       propertyPath: OnAttackStarted.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: Helpers.Printer, Assembly-CSharp
+      value: FMODEvents, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2428499358251321693, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
       propertyPath: OnAttackPerformed.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
       value: Helpers.Printer, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2428499358251321693, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
+      propertyPath: OnAttackStarted.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 1794032624}
+    - target: {fileID: 2428499358251321693, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
       propertyPath: OnAttackStarted.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
-      value: attack start
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2428499358251321693, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
       propertyPath: OnAttackPerformed.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
@@ -23419,7 +23423,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2428499358251321693, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
       propertyPath: OnAttackStarted.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
+      value: UnityEngine.Transform, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 2428499358251321693, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
       propertyPath: OnAttackPerformed.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -58307,6 +58311,57 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbcfd516cb81f164ea98a3b46a1ba1f5, type: 3}
+--- !u!1 &1453321042
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1453321044}
+  - component: {fileID: 1453321043}
+  m_Layer: 7
+  m_Name: FMODEvents
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1453321043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1453321042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc735212b3709144999a8940cfa0f913, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <meleeAttack>k__BackingField:
+    Guid:
+      Data1: 1611689188
+      Data2: 1100488490
+      Data3: 1702189464
+      Data4: 1251997565
+    Path: event:/Dave/SFX/Oneshots/Player/Pleyer_Meele
+--- !u!4 &1453321044
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1453321042}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 108.676094, y: 1, z: 31.052076}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1453514462 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8de1e24f4ae8dc041ba67a9657235fc2, type: 3}
@@ -71948,6 +72003,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8de1e24f4ae8dc041ba67a9657235fc2, type: 3}
   m_PrefabInstance: {fileID: 332785522}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1794032624 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2648887578403456948, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
+  m_PrefabInstance: {fileID: 571377167}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1794676945
 PrefabInstance:
@@ -86284,3 +86344,4 @@ SceneRoots:
   - {fileID: 571377167}
   - {fileID: 5844992059073328450}
   - {fileID: 798084335}
+  - {fileID: 1453321044}

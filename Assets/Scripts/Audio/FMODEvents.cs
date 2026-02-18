@@ -19,4 +19,7 @@ public class FMODEvents : MonoBehaviour
         }
         instance = this;
     }
+    
+    public void PlayMeleeSound(Transform point) =>
+        RuntimeManager.PlayOneShot(meleeAttack, point.position);
 }
