@@ -107,6 +107,7 @@ namespace Entities.Player
         private float _originalMoveSpeed;
         private Coroutine _dashCoroutine;
 
+        private bool _charging;
         private bool _hasControl = true;
         private bool _isDashing;
         
@@ -177,14 +178,8 @@ namespace Entities.Player
             _critDamage = _playerBaseStats.CritDamage;
         }
         
-        public void LoseControl()  {
-            print("lost control");
-            _hasControl = false;
-        }
-        public void GainControl() {
-            print("gained control");
-            _hasControl = true;
-        }
+        public void LoseControl() => _hasControl = false;
+        public void GainControl() => _hasControl = true;
         
         public void SetDashing(bool isDashing) => _isDashing = isDashing;
         
@@ -222,7 +217,7 @@ namespace Entities.Player
             
             Vector3 movement = _moveSpeed * (movementX + movementZ).normalized;
             
-            _rigidbody.linearVelocity = movement;
+            _rigidbody.linearVelocity = _charging ? Vector3.zero : movement;
             
             transform.LookAt(transform.position + movement);
         }
@@ -624,7 +619,8 @@ namespace Entities.Player
             if (!_hasControl) 
                 return;
             
-            AttackAbilityTracker.RegisterInput(context);
+            _charging = AttackAbilityTracker.RegisterInput(context);
+            print(_charging);
         }
 
         public void SpecialInput(InputAction.CallbackContext context)
@@ -632,7 +628,7 @@ namespace Entities.Player
             if (!_hasControl) 
                 return;
             
-            SpecialAbilityTracker.RegisterInput(context);
+            _charging = SpecialAbilityTracker.RegisterInput(context);
         }
 
         public void DashInput(InputAction.CallbackContext context)

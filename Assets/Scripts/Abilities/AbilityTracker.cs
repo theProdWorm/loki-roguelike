@@ -63,31 +63,29 @@ namespace Abilities
             }
         }
 
-        public virtual void RegisterInput(InputAction.CallbackContext context)
+        public virtual bool RegisterInput(InputAction.CallbackContext context)
         {
             if (context.started)
             {
                 if (_remainingCharges == 0)
-                    return;
+                    return _holdingInput;
 
                 if (_ability.AbilityStats.Count == 1 && TryUse())
-                {
                     _onAbilityUsed();
-                }
                 else
-                {
                     _holdingInput = true;
-                }
             }
             else if (context.canceled && _holdingInput)
             {
-                _holdingInput = false;
-                
                 if (TryUse())
                     _onAbilityUsed();
                 
                 _inputDuration = 0;
+                
+                _holdingInput = false;
             }
+
+            return _holdingInput;
         }
         
         private bool TryUse()

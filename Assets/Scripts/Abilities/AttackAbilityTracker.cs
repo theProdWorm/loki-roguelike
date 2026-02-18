@@ -18,12 +18,12 @@ namespace Abilities
             _onAbilityUsed = onAbilityUsed;
         }
 
-        public override void RegisterInput(InputAction.CallbackContext context)
+        public override bool RegisterInput(InputAction.CallbackContext context)
         {
             if (context.started)
             {
                 if (_remainingCharges == 0)
-                    return;
+                    return _holdingInput;
 
                 if (_ability.AbilityStats.Count == 1 && TryUse(out var stats, out int useTimes))
                     _onAbilityUsed(stats, useTimes);
@@ -32,13 +32,15 @@ namespace Abilities
             }
             else if (context.canceled && _holdingInput)
             {
-                _holdingInput = false;
-                
                 if (TryUse(out AbilityStats stats, out int useTimes))
                     _onAbilityUsed(stats, useTimes);
                 
                 _inputDuration = 0;
+                
+                _holdingInput = false;
             }
+
+            return _holdingInput;
         }
         
         private bool TryUse(out AbilityStats stats, out int useTimes)
