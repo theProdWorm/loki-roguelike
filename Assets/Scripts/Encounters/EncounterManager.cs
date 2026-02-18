@@ -70,7 +70,9 @@ public class EncounterManager : MonoBehaviour
         _isEncounterActive = true;
         _player = FindFirstObjectByType<Player>();
         CloseDoors();
-        ActivateFirstWave();
+        //TODO: REMOVE TEST
+        //ActivateFirstWave();
+        NextWave();
     }
 
     private void Update()
@@ -221,14 +223,15 @@ public class EncounterManager : MonoBehaviour
 
             for (int i = 0; i < _draugrSpawnPoints.Count; i++)
             {
-                r = Random.Range(0, _draugrSpawnPoints.Count);
+                r = Random.Range(0, _draugrSpawnPoints.Count-1);
 
                 //Check distance availability
                 if (_tooCloseSpawnPoints.Contains(_draugrSpawnPoints[r]) || _tooFarSpawnPoints.Contains(_draugrSpawnPoints[r]))
                     continue;
 
                 _draugrSpawnPoints.RemoveAt(r);
-                return _draugrSpawnPoints[r].GetComponent<SpawnPoint>().Spawn(); ;
+                return _draugrSpawnPoints[r].GetComponent<SpawnPoint>().Spawn();
+                Debug.Log(r);
             }
 
             #endregion
@@ -237,7 +240,7 @@ public class EncounterManager : MonoBehaviour
 
             for (int i = 0; i < _draugrSpawnPoints.Count; i++)
             {
-                r = Random.Range(0, _draugrSpawnPoints.Count);
+                r = Random.Range(0, _draugrSpawnPoints.Count-1);
 
                 //Check distance availability
                 if (_tooCloseSpawnPoints.Contains(_draugrSpawnPoints[r]))
@@ -251,7 +254,7 @@ public class EncounterManager : MonoBehaviour
 
             #region Search everywhere
 
-            r = Random.Range(0, _draugrSpawnPoints.Count);
+            r = Random.Range(0, _draugrSpawnPoints.Count-1);
 
             _draugrSpawnPoints.RemoveAt(r);
             return _draugrSpawnPoints[r].GetComponent<SpawnPoint>().Spawn(); ;
@@ -280,7 +283,7 @@ public class EncounterManager : MonoBehaviour
             _availableDoorways = _doors;
 
         if (_availableDoorways.Count == 0)
-            return null;
+            //return null;
 
         r = Random.Range(0, _availableDoorways.Count);
 
