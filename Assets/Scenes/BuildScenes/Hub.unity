@@ -11213,6 +11213,50 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 92703582}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &93123522
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 93123524}
+  - component: {fileID: 93123523}
+  m_Layer: 0
+  m_Name: Rumble Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &93123523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 93123522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cc99bbb0e695114ea51d20cb9fef801, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &93123524
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 93123522}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 112.239395, y: 3.3148613, z: 119.0147}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &93743489 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 65b1d8df62cec7f4a94bedc033c2e0ae, type: 3}
@@ -40955,6 +40999,92 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 384207695}
   m_Mesh: {fileID: -2576880024519324526, guid: 4e40befed2105f54abc70c0eabf391cf, type: 3}
+--- !u!1 &384412498
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 384412499}
+  - component: {fileID: 384412501}
+  - component: {fileID: 384412500}
+  m_Layer: 0
+  m_Name: Indicator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &384412499
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384412498}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 5.98, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 534761971}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &384412500
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384412498}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: dcdfa3d98823c9b46a0542e2073446ee, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &384412501
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384412498}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &384688701
 GameObject:
   m_ObjectHideFlags: 0
@@ -265583,13 +265713,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Runestone1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 88e54e677f8b23c49b0053def099cae5, type: 3}
+      propertyPath: m_TagString
+      value: Interactable
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 88e54e677f8b23c49b0053def099cae5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 384412499}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 88e54e677f8b23c49b0053def099cae5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 534761973}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 88e54e677f8b23c49b0053def099cae5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 534761976}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 88e54e677f8b23c49b0053def099cae5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 534761977}
   m_SourcePrefab: {fileID: 100100000, guid: 88e54e677f8b23c49b0053def099cae5, type: 3}
 --- !u!4 &534761971 stripped
 Transform:
@@ -265623,6 +265766,50 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6927347771005792261, guid: 88e54e677f8b23c49b0053def099cae5, type: 3}
+--- !u!114 &534761976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534761972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cdd1c6f6203178409de95432885bc10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _indicator: {fileID: 384412498}
+  Dialogue:
+  - "The player character, the Lie, is told by Sigyn that they are to \u201Cdestroy
+    Odin\u2019s guardians\u201D to free their father. That is their purpose which
+    you shall achieve. They quickly meet the Aesir Bragi, god of poets. He serves
+    as the game\u2019s narrator and is enamoured with the story of the Lie. He guides
+    the Lie towards their ultimate goal of freeing Loki."
+  - "Odin\u2019s guardians are his ravens, Huginn and Muninn, who are keeping watch
+    over Loki so he remains in captivity. As the Lie meets them, they warn that freeing
+    Loki will cause Ragnar\xF6k, but the Lie pushes on. After defeating both of the
+    Ravens, the path to freeing Loki is clear."
+--- !u!135 &534761977
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534761972}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 11
+  m_Center: {x: -0.15505823, y: 2.124267, z: 0.104842655}
 --- !u!1 &535206218
 GameObject:
   m_ObjectHideFlags: 0
@@ -273673,9 +273860,11 @@ GameObject:
   - component: {fileID: 624205743}
   - component: {fileID: 624205742}
   - component: {fileID: 624205741}
+  - component: {fileID: 624205745}
+  - component: {fileID: 624205744}
   m_Layer: 0
   m_Name: runestone1
-  m_TagString: Untagged
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -273692,7 +273881,8 @@ Transform:
   m_LocalPosition: {x: 92.19478, y: -1.4098854, z: -13.4509535}
   m_LocalScale: {x: 6.5715265, y: 3.31, z: 6.5715275}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 941887226}
   m_Father: {fileID: 1639299405}
   m_LocalEulerAnglesHint: {x: -117.124, y: -35.944, z: 270}
 --- !u!64 &624205741
@@ -273771,6 +273961,53 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 624205739}
   m_Mesh: {fileID: 1049520004239280017, guid: d90b94335bdcae442acde05d3a962f85, type: 3}
+--- !u!135 &624205744
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 624205739}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 2
+  m_Center: {x: -0.0000010845264, y: -0.029811507, z: 0.88111395}
+--- !u!114 &624205745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 624205739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cdd1c6f6203178409de95432885bc10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _indicator: {fileID: 941887225}
+  Dialogue:
+  - In the middle of all this, Bragi, the narrator, does not wish for this world
+    to end. He is torn; he loves the story as it is laid out for him, a tragic tale
+    of a child struggling to find their identity while freeing their father from
+    the tyranny and torture of the All-Father, but he knows that if he lets the story
+    reach its conclusion he, alongside the rest of the worlds, will die, so he has
+    to fight you.
+  - "The Lie is given the choice to walk away, left unsatisfied and unable to complete
+    their purpose, but now given the ability to live their own life. Roll credits.
+    Alternatively, they have to fight their way through Bragi to free Loki. Bragi
+    acts as the final boss of the game. Should you defeat him, the Lie may free their
+    father and unite with him and Sigyn. They have completed their purpose, but at
+    the cost of Ragnar\xF6k being set in motion."
 --- !u!1 &624586716
 GameObject:
   m_ObjectHideFlags: 0
@@ -306623,6 +306860,92 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 411017548396362803, guid: 82f06847b3adc774ab154320bf75733a, type: 3}
   m_PrefabInstance: {fileID: 941470308}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &941887225
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 941887226}
+  - component: {fileID: 941887228}
+  - component: {fileID: 941887227}
+  m_Layer: 0
+  m_Name: Indicator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &941887226
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941887225}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.5095149, y: -0.6649767, z: -0.49476266, w: -0.23110715}
+  m_LocalPosition: {x: 0.48541048, y: 0.18372695, z: 1.6014174}
+  m_LocalScale: {x: 0.25690615, y: 0.15217745, z: 0.1669642}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 624205740}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &941887227
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941887225}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: dcdfa3d98823c9b46a0542e2073446ee, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &941887228
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941887225}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &943012337
 GameObject:
   m_ObjectHideFlags: 0
@@ -418248,36 +418571,6 @@ MonoBehaviour:
     As the Wolf, they are strong, masculine and protective. As the Sorceress they
     are regal, feminine and capable of witchcraft. These forms do slightly change
     their personalities, but they are not different personalities on their own."
-  - "The player character, the Lie, is told by Sigyn that they are to \u201Cdestroy
-    Odin\u2019s guardians\u201D to free their father. That is their purpose which
-    you shall achieve. They quickly meet the Aesir Bragi, god of poets. He serves
-    as the game\u2019s narrator and is enamoured with the story of the Lie. He guides
-    the Lie towards their ultimate goal of freeing Loki.\r\n"
-  - "Odin\u2019s guardians are his ravens, Huginn and Muninn, who are keeping watch
-    over Loki so he remains in captivity. As the Lie meets them, they warn that freeing
-    Loki will cause Ragnar\xF6k, but the Lie pushes on. After defeating both of the
-    Ravens, the path to freeing Loki is clear."
-  - "The player character, the Lie, is told by Sigyn that they are to \u201Cdestroy
-    Odin\u2019s guardians\u201D to free their father. That is their purpose which
-    you shall achieve. They quickly meet the Aesir Bragi, god of poets. He serves
-    as the game\u2019s narrator and is enamoured with the story of the Lie. He guides
-    the Lie towards their ultimate goal of freeing Loki.\r\n"
-  - "Odin\u2019s guardians are his ravens, Huginn and Muninn, who are keeping watch
-    over Loki so he remains in captivity. As the Lie meets them, they warn that freeing
-    Loki will cause Ragnar\xF6k, but the Lie pushes on. After defeating both of the
-    Ravens, the path to freeing Loki is clear."
-  - In the middle of all this, Bragi, the narrator, does not wish for this world
-    to end. He is torn; he loves the story as it is laid out for him, a tragic tale
-    of a child struggling to find their identity while freeing their father from
-    the tyranny and torture of the All-Father, but he knows that if he lets the story
-    reach its conclusion he, alongside the rest of the worlds, will die, so he has
-    to fight you.
-  - "The Lie is given the choice to walk away, left unsatisfied and unable to complete
-    their purpose, but now given the ability to live their own life. Roll credits.
-    Alternatively, they have to fight their way through Bragi to free Loki. Bragi
-    acts as the final boss of the game. Should you defeat him, the Lie may free their
-    father and unite with him and Sigyn. They have completed their purpose, but at
-    the cost of Ragnar\xF6k being set in motion."
 --- !u!64 &1936416983
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -418319,7 +418612,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 7
+  m_Radius: 10
   m_Center: {x: -0.15502778, y: 2.124267, z: 0.10485795}
 --- !u!4 &1938031594 stripped
 Transform:
@@ -440275,3 +440568,4 @@ SceneRoots:
   - {fileID: 1251844301}
   - {fileID: 674973997}
   - {fileID: 13044742}
+  - {fileID: 93123524}
