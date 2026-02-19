@@ -43,7 +43,7 @@ namespace Abilities.Attacks
         
         protected override void OnTriggerEnter(Collider otherCollider)
         {
-            if (_isDead)
+            if (_isDead || otherCollider.isTrigger)
                 return;
             
             if (!otherCollider.CompareTag("Player") && !otherCollider.CompareTag("Hostile"))
