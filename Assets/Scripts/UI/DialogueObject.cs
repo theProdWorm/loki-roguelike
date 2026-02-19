@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class DialogueObject : MonoBehaviour, IInteractable
 {
+    [SerializeField] private GameObject _indicator;
+    
     public bool Highlighted { get; set; }
     
     public Vector3 Position { get; private set; }
@@ -20,6 +22,8 @@ public class DialogueObject : MonoBehaviour, IInteractable
     void Update()
     {
         Position = transform.position;
+        
+        _indicator.SetActive(Highlighted);
     }
 
     public void Interacted()
