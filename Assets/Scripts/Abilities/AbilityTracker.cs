@@ -59,7 +59,7 @@ namespace Abilities
                 _remainingCharges++;
 
                 if (_remainingCharges != _ability.Charges)
-                    _remainingCooldown = _ability.AbilityStats[0].Stats.RechargeTime;
+                    _remainingCooldown = _ability.Stages[0].Stats.RechargeTime;
             }
         }
 
@@ -70,7 +70,7 @@ namespace Abilities
                 if (_remainingCharges == 0)
                     return _holdingInput;
 
-                if (_ability.AbilityStats.Count == 1 && TryUse())
+                if (_ability.Stages.Count == 1 && TryUse())
                     _onAbilityUsed();
                 else
                     _holdingInput = true;

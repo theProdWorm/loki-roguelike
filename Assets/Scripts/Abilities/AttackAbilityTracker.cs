@@ -25,7 +25,7 @@ namespace Abilities
                 if (_remainingCharges == 0)
                     return _holdingInput;
 
-                if (_ability.AbilityStats.Count == 1 && TryUse(out var stats, out int useTimes))
+                if (_ability.Stages.Count == 1 && TryUse(out var stats, out int useTimes))
                     _onAbilityUsed(stats, useTimes);
                 else
                     _holdingInput = true;

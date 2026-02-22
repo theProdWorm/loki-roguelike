@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Abilities
 {
@@ -10,14 +11,15 @@ namespace Abilities
         public bool SimultaneousRecharge;
         public int  Charges;
         
-        public List<AbilitySelector> AbilityStats;
+        [FormerlySerializedAs("AbilityStats")]
+        public List<AbilitySelector> Stages;
 
         public AbilityStats GetStats(float inputDuration)
         {
-            for (int i = AbilityStats.Count - 1; i >= 0; i--)
+            for (int i = Stages.Count - 1; i >= 0; i--)
             {
-                if (inputDuration >= AbilityStats[i].InputTime)
-                    return AbilityStats[i].Stats;
+                if (inputDuration >= Stages[i].InputTime)
+                    return Stages[i].Stats;
             }
 
             return null;
