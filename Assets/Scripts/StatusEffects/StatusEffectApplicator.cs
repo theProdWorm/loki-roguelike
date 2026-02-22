@@ -1,6 +1,5 @@
 using Abilities.Attacks;
 using Entities;
-using StatusEffects.Enums;
 using UnityEngine;
 
 namespace StatusEffects
