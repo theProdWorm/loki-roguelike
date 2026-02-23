@@ -22,7 +22,7 @@ namespace Entities
         [SerializeField] private Blackboard blackboard;
         [SerializeField] private BehaviorGraph behaviorGraph;
         public float attackCooldown;
-
+        public float rotationSpeed = 5;
         public GameObject attackPrefab;
         public AttackStats attackStats;
 
@@ -66,10 +66,13 @@ namespace Entities
         private void Update()
         {
             var pos = transform.position;
-            //var rotation = Quaternion.LookRotation(Player.transform.position - transform.position, Vector3.up);
-            transform.LookAt(_player.transform, Vector3.up);
-            var rot = transform.eulerAngles;
+            var rotation = Quaternion.LookRotation(_player.transform.position - transform.position, Vector3.up);
+            var lerpRot = Quaternion.Lerp(transform.rotation,rotation , Time.deltaTime * rotationSpeed);
+            var rot = lerpRot.eulerAngles;
             transform.eulerAngles = new Vector3(0, rot.y, 0);
+            //transform.LookAt(_player.transform, Vector3.up);
+            //var rot = transform.eulerAngles;
+            //transform.eulerAngles = new Vector3(0, rot.y, 0);
             
             if(Vector3.Distance(pos, prevPos) < 0.1f) return;
             var between = (pos - prevPos);
