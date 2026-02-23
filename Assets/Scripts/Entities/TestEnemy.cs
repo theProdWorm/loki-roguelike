@@ -25,7 +25,6 @@ namespace Entities
 
         public GameObject attackPrefab;
         public AttackStats attackStats;
-        public Transform ragdollRoot;
 
         protected override void Awake()
         {
