@@ -1,7 +1,8 @@
-using UnityEngine;
-using System.Collections.Generic;
-using Entities.Player;
 using Entities;
+using Entities.Player;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.ProBuilder.Shapes;
 
 public class EncounterManager : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class EncounterManager : MonoBehaviour
         Wolf
     }
 
-    [SerializeField] List<GameObject> _doors = new();
+    [SerializeField] List<GameObject> _gates = new();
 
     [Header("Enemy Spawn Points")]
     [SerializeField, Tooltip("Represented in percentage form"), Range(0, 100)]
@@ -51,7 +52,7 @@ public class EncounterManager : MonoBehaviour
 
     private bool _isEncounterActive = false;
     private bool _isEncounterCompleted = false;
-    bool _isSpawning = false;
+    private bool _isSpawning = false;
 
     private float _timeBetweenChecks = .25f;
     private float _t = 0f;
@@ -70,9 +71,11 @@ public class EncounterManager : MonoBehaviour
         _isEncounterActive = true;
         _player = FindFirstObjectByType<Player>();
         CloseDoors();
-        //TODO: REMOVE TEST
-        //ActivateFirstWave();
-        NextWave();
+
+        if (_wave0.Count > 0)
+            ActivateFirstWave();
+        else
+            NextWave();
     }
 
     private void Update()
@@ -84,7 +87,6 @@ public class EncounterManager : MonoBehaviour
         if (_t >= _timeBetweenChecks)
         {
             _t = 0;
-            CountAliveEnemies();
 
             if (_timeBetweenWaves != -1)
             {
@@ -93,12 +95,10 @@ public class EncounterManager : MonoBehaviour
                 if (_timeSinceLastWave >= _timeBetweenWaves)
                 {
                     NextWave();
-                    Debug.Log("Time Check");
                 }
             }
 
             float _percentageOfEnemiesLeft = (float)(_currentAmountOfEnemiesAlive / _amountOfEnemiesThisWave);
-            Debug.Log("Percentage Check: " + _percentageOfEnemiesLeft + ", " + _currentAmountOfEnemiesAlive + "/" + _amountOfEnemiesThisWave);
             if (_percentageOfEnemiesLeft <= _percentageOfEnemiesToSpawnNextWave && _isSpawning == false)
             {
                 NextWave();
@@ -108,48 +108,32 @@ public class EncounterManager : MonoBehaviour
 
     private void EnemyDied(Entity enemy)
     {
-        ////TODO: Add a father enemy class and put that here instead of the test enemy
-        //Debug.Log(enemy.name + " Died");
-        //if (enemy is TestEnemy)
-        //{
-        //    _enemiesAlive.Remove(enemy);
-        //    Debug.Log("Enemy Died, " + _enemiesAlive.Count + " Enemies Left");
-        //}
-        //_currentAmountOfEnemiesAlive = _enemiesAlive.Count;
-    }
-
-    private void CountAliveEnemies()
-    {
-            int i = 0;
-            foreach (Entity enemy in _enemiesAlive)
-            {
-                if (!enemy.IsDead)
-                    i++;
-            }
-
-            _currentAmountOfEnemiesAlive = i;
-            Debug.Log("Current Enemies Alive: " + i);
+        //TODO: Add a father enemy class and put that here instead of the test enemy
+        if (enemy is TestEnemy)
+        {
+            _enemiesAlive.Remove(enemy);
+        }
+        _currentAmountOfEnemiesAlive = _enemiesAlive.Count;
     }
 
     private void NextWave()
     {
-        Debug.Log(_currentWaveIndex + ", " + _enemyWaves.Count);
         if (_currentWaveIndex >= _enemyWaves.Count)
         {
-            _isEncounterCompleted = true;
-            OpenDoors();
-            Debug.Log("Encounter Completed");
+            if (_enemiesAlive.Count <= 0)
+            {
+                _isEncounterCompleted = true;
+                OpenDoors();
+            }
             return;
         }
         _isSpawning = true;
-        Debug.Log("Spawning Next Wave");
 
         List<EnemyTypes> nextWaveEnemies = _enemyWaves[_currentWaveIndex].Enemies;
 
         _amountOfEnemiesThisWave = nextWaveEnemies.Count + (int)_currentAmountOfEnemiesAlive;
 
         SpawnWave(nextWaveEnemies);
-        CountAliveEnemies();
         _currentAmountOfEnemiesAlive = _enemiesAlive.Count;
 
         _currentWaveIndex++;
@@ -161,43 +145,58 @@ public class EncounterManager : MonoBehaviour
         foreach (GameObject enemy in _wave0)
         {
             Entity script = enemy.GetComponent<Entity>();
+            script.OnDeath.AddListener(EnemyDied);
             _enemiesAlive.Add(script);
         }
-        CountAliveEnemies();
         _currentAmountOfEnemiesAlive = _enemiesAlive.Count;
     }
 
     private void SpawnWave(List<EnemyTypes> wave)
     {
-        foreach (EnemyTypes enemy in wave)
+        for (int i = 0; i < wave.Count; i++)
         {
-            switch (enemy)
+            Entity entity = null;
+            switch (wave[i])
             {
                 case EnemyTypes.Draugr:
-                    Entity draugr = SpawnDraugr();
-                    draugr.OnDeath.AddListener(EnemyDied);
+                    entity = SpawnDraugr();
                     break;
                 case EnemyTypes.BirdOnBird:
-                    Entity birdOnBird = SpawnBirdOnBird();
-                    birdOnBird.OnDeath.AddListener(EnemyDied);
+                    entity = SpawnBirdOnBird();
                     break;
                 case EnemyTypes.Wolf:
-                    Entity wolf = SpawnWolf();
-                    wolf.OnDeath.AddListener(EnemyDied);
+                    entity = SpawnWolf();
                     break;
             }
+
+            if (entity != null)
+            {
+                entity.OnDeath.AddListener(EnemyDied);
+                _enemiesAlive.Add(entity);
+            }
+
+            else
+                i--;
         }
         _isSpawning = false;
     }
 
     private void CloseDoors()
     {
-        //TODO: Close doors when encounter starts
+        foreach (GameObject gate in _gates)
+        {
+            //TODO: Maybe put in a encounter start sound effect or something?
+            gate.GetComponent<Gateway>().Close();
+        }
     }
 
     private void OpenDoors()
     {
-        //TODO: Open doors when encounter is completed
+        foreach (GameObject gate in _gates)
+        {
+            //TODO: Maybe put in a encounter completed sound effect or something here before opening the doors?
+            gate.GetComponent<Gateway>().Open();
+        }
     }
 
     private Entity SpawnDraugr()
@@ -223,15 +222,15 @@ public class EncounterManager : MonoBehaviour
 
             for (int i = 0; i < _draugrSpawnPoints.Count; i++)
             {
-                r = Random.Range(0, _draugrSpawnPoints.Count-1);
+                r = Random.Range(0, _draugrSpawnPoints.Count - 1);
 
                 //Check distance availability
                 if (_tooCloseSpawnPoints.Contains(_draugrSpawnPoints[r]) || _tooFarSpawnPoints.Contains(_draugrSpawnPoints[r]))
                     continue;
 
+                SpawnPoint spawnPointScript = _draugrSpawnPoints[r].GetComponent<SpawnPoint>();
                 _draugrSpawnPoints.RemoveAt(r);
-                return _draugrSpawnPoints[r].GetComponent<SpawnPoint>().Spawn();
-                Debug.Log(r);
+                return spawnPointScript.Spawn();
             }
 
             #endregion
@@ -240,21 +239,22 @@ public class EncounterManager : MonoBehaviour
 
             for (int i = 0; i < _draugrSpawnPoints.Count; i++)
             {
-                r = Random.Range(0, _draugrSpawnPoints.Count-1);
+                r = Random.Range(0, _draugrSpawnPoints.Count - 1);
 
                 //Check distance availability
                 if (_tooCloseSpawnPoints.Contains(_draugrSpawnPoints[r]))
                     continue;
 
+                SpawnPoint spawnPointScript = _draugrSpawnPoints[r].GetComponent<SpawnPoint>();
                 _draugrSpawnPoints.RemoveAt(r);
-                return _draugrSpawnPoints[r].GetComponent<SpawnPoint>().Spawn(); ;
+                return spawnPointScript.Spawn();
             }
 
             #endregion
 
             #region Search everywhere
 
-            r = Random.Range(0, _draugrSpawnPoints.Count-1);
+            r = Random.Range(0, _draugrSpawnPoints.Count - 1);
 
             _draugrSpawnPoints.RemoveAt(r);
             return _draugrSpawnPoints[r].GetComponent<SpawnPoint>().Spawn(); ;
@@ -279,16 +279,15 @@ public class EncounterManager : MonoBehaviour
 
 
 
-        if (_tooCloseDoorways.Count == _doors.Count)
-            _availableDoorways = _doors;
+        if (_tooCloseDoorways.Count == _gates.Count)
+            _availableDoorways = _gates;
 
         if (_availableDoorways.Count == 0)
-            //return null;
+            return null;
 
         r = Random.Range(0, _availableDoorways.Count);
 
         Entity draugr = _availableDoorways[r].GetComponentInChildren<SpawnPoint>().Spawn();
-        _enemiesAlive.Add(draugr);
         return draugr;
 
         #endregion

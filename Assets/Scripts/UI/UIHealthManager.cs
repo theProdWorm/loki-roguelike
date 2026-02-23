@@ -5,25 +5,25 @@ namespace Entities.Player
 {
     public class UIHealthManager : MonoBehaviour
     {
-        static Player player;
+        private static Player _player;
 
         [SerializeField] private Slider _healthBar;
 
         private void OnEnable()
         {
-            player = FindAnyObjectByType<Player>();
-            player.OnHealthUpdate.AddListener(UpdateHealthUI);
+            _player = FindAnyObjectByType<Player>();
+            _player.OnHealthUpdate.AddListener(UpdateHealthUI);
         }
 
         private void OnDisable()
         {
-            player.OnHealthUpdate.RemoveListener(UpdateHealthUI);
+            _player.OnHealthUpdate.RemoveListener(UpdateHealthUI);
         }
 
-        private void UpdateHealthUI(int _currentHealth, int _maxHealth)
+        private void UpdateHealthUI(int currentHealth, int maxHealth)
         {
-            _healthBar.maxValue = _maxHealth;
-            _healthBar.value = _currentHealth;
+            _healthBar.maxValue = maxHealth;
+            _healthBar.value = currentHealth;
         }
     }
 }

@@ -4,14 +4,14 @@ using Entities;
 public class SpawnPoint : MonoBehaviour
 {
     [SerializeField, Tooltip("The sort of enemy that spawns here")]
-    EncounterManager.EnemyTypes _enemyType;
+    private EncounterManager.EnemyTypes _enemyType;
 
     [SerializeField]
-    GameObject _draugrPrefab;
+    private GameObject _draugrPrefab;
     [SerializeField]
-    GameObject _bbPrefab;
+    private GameObject _bbPrefab;
     [SerializeField]
-    GameObject _wolfPrefab;
+    private GameObject _wolfPrefab;
 
     public Entity Spawn()
     {
@@ -44,7 +44,6 @@ public class SpawnPoint : MonoBehaviour
 
         Entity _entity = _draugr.GetComponent<Entity>();
 
-        Debug.Log(_entity);
         return _entity;
     }
 

@@ -3,7 +3,7 @@ using UnityEngine;
 public class Doorway : MonoBehaviour
 {
     [SerializeField] 
-    EncounterManager _encounterHandler;
+    private EncounterManager _encounterHandler;
 
     private void OnTriggerEnter(Collider other)
     {
