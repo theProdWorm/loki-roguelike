@@ -11,6 +11,7 @@ namespace Helpers
         public UnityEvent OnSpecialPerformed;
         public UnityEvent OnSwitch;
         public UnityEvent OnDeath;
+        public UnityEvent OnIdle;
         
         private void InvokeAttackStarted() => OnAttackStarted?.Invoke();
         private void InvokeAttackPerformed() => OnAttackPerformed?.Invoke();
@@ -18,5 +19,6 @@ namespace Helpers
         private void InvokeSpecialPerformed() => OnSpecialPerformed?.Invoke();
         private void InvokeSwitch() => OnSwitch?.Invoke();
         private void InvokeDeath() => OnDeath?.Invoke();
+        private void InvokeIdle() => OnIdle?.Invoke();
     }
 }
