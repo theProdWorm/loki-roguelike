@@ -78,11 +78,6 @@ public class DamageNumbers : MonoBehaviour
     }
     #endregion
     
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     
     void LateUpdate()
     {
@@ -100,7 +95,7 @@ public class DamageNumbers : MonoBehaviour
             
             Vector3 screenPos = cam.WorldToScreenPoint(number.target + offset);
             
-            screenPos.y = screenPos.y + floatCurve.Evaluate(1-Mathf.Clamp01(number.timeLeft/number.lifetime))*floatStrength;
+            screenPos.y += floatCurve.Evaluate(1-Mathf.Clamp01(number.timeLeft/number.lifetime))*floatStrength;
             bool visible = screenPos.z > 0 &&
                            screenPos.x >= 0 && screenPos.x <= Screen.width &&
                            screenPos.y >= 0 && screenPos.y <= Screen.height;
@@ -154,9 +149,9 @@ public class DamageNumbers : MonoBehaviour
             return HashCode.Combine(timeLeft, lifetime, target);
         }
 
-        public override bool Equals(object obj)
-        {
-            return obj is numberInfo other && Equals(other);
-        }
+        // public override bool Equals(object obj)
+        // {
+        //     return obj is numberInfo other && Equals(other);
+        // }
     }
 }
