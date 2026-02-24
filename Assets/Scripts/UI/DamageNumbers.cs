@@ -8,14 +8,16 @@ using Vector3 = UnityEngine.Vector3;
 
 public class DamageNumbers : MonoBehaviour
 {
-
+    [Tooltip("Parent object of the numbers, has to be under a canvas")]
     [SerializeField]private GameObject parentObject;
     [SerializeField]private TextMeshProUGUI textPrefab;
     [Tooltip("Static offset for damage numbers")]
     [SerializeField]private Vector3 offset;
-    [Tooltip("How far the random offset will be")]
+    [Tooltip("How far the random offset can be")]
     [SerializeField]private float randomOffsetStrength;
+    [Tooltip("Curve controlling how the points float up or down")]
     [SerializeField]private AnimationCurve floatCurve;
+    [Tooltip("The amplitude of the Float Curve")]
     [SerializeField]private float floatStrength;
 
     [SerializeField]private float numberLifetime;
