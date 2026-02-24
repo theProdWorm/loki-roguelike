@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7563703970026604816}
   - component: {fileID: 3141242580079820945}
   - component: {fileID: 237410692103871855}
+  - component: {fileID: 4400618606056853338}
   m_Layer: 10
   m_Name: Attack Trail
   m_TagString: Untagged
@@ -194,7 +195,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 0.5
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -4892,3 +4893,15 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &4400618606056853338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5208845677806752308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f84747727140b5488fc413155996b1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
