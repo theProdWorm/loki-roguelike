@@ -1,7 +1,9 @@
+using Entities;
+using Entities.Player;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Entities.Player
+namespace UI
 {
     public class UIHealthManager : MonoBehaviour
     {
@@ -19,7 +21,7 @@ namespace Entities.Player
             _player = FindAnyObjectByType<Player>();
             _player.OnHealthUpdate.AddListener(UpdateHealthUI);
             _player.OnDamageDealt.AddListener(UpdateGobletCharge);
-            _gobletBar.maxValue = _player._gobletCost;
+            _gobletBar.maxValue = _player.GobletCost;
         }
 
         private void OnDisable()

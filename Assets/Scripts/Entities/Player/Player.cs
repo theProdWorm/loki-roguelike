@@ -43,8 +43,7 @@ namespace Entities.Player
 
         [Header("Healing")]
         [SerializeField] private int _gobletHealAmount;
-        public int _gobletCost;
-        
+        [SerializeField] public int  GobletCost;
         
         [Header("Dash")]
         [SerializeField] private Ability _dashAbility;

@@ -1,43 +1,45 @@
-using Unity.AppUI.UI;
 using UnityEngine;
 
-public class DialogueObject : MonoBehaviour, IInteractable
+namespace UI
 {
-    [SerializeField] private GameObject _indicator;
+    public class DialogueObject : MonoBehaviour, IInteractable
+    {
+        [SerializeField] private GameObject _indicator;
     
-    public bool Highlighted { get; set; }
+        public bool Highlighted { get; set; }
     
-    public Vector3 Position { get; private set; }
+        public Vector3 Position { get; private set; }
     
-    [TextArea]
-    public string[] Dialogue;
+        [TextArea]
+        public string[] Dialogue;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        Position = transform.position;
-        
-        _indicator.SetActive(Highlighted);
-    }
-
-    public void Interacted()
-    {
-        DialogueManager.StartDialogue(Dialogue);
-    }
-    
-    private void OnDrawGizmos()
-    {
-        if (Highlighted)
+        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        void Start()
         {
-            var pos = transform.position;
-            Gizmos.DrawLine(pos, new Vector3(pos.x,5,pos.z)); 
+        
         }
+
+        // Update is called once per frame
+        void Update()
+        {
+            Position = transform.position;
+        
+            _indicator.SetActive(Highlighted);
+        }
+
+        public void Interacted()
+        {
+            DialogueManager.StartDialogue(Dialogue);
+        }
+    
+        private void OnDrawGizmos()
+        {
+            if (Highlighted)
+            {
+                var pos = transform.position;
+                Gizmos.DrawLine(pos, new Vector3(pos.x,5,pos.z)); 
+            }
             
+        }
     }
 }

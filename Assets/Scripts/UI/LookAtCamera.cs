@@ -1,9 +1,12 @@
 using UnityEngine;
 
-public class LookAtCamera : MonoBehaviour
+namespace UI
 {
-    private void LateUpdate()
+    public class LookAtCamera : MonoBehaviour
     {
-        gameObject.transform.LookAt(Camera.main.transform);
+        private void LateUpdate()
+        {
+            gameObject.transform.LookAt(Camera.main.transform);
+        }
     }
 }
