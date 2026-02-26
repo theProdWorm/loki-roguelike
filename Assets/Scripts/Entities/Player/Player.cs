@@ -40,6 +40,11 @@ namespace Entities.Player
         [Header("Interaction")]
         [SerializeField] private float _lookWeight;
         [SerializeField] private float _distanceWeight;
+
+        [Header("Healing")]
+        [SerializeField] private int _gobletHealAmount;
+        public int _gobletCost;
+        
         
         [Header("Dash")]
         [SerializeField] private Ability _dashAbility;
@@ -637,7 +642,7 @@ namespace Entities.Player
         {
             if (!_hasControl || !GobletReady) return;
             
-            Heal(50);
+            Heal(_gobletHealAmount);
             GobletReady = false;
         }
 
