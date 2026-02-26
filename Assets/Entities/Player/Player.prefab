@@ -46,7 +46,6 @@ GameObject:
   - component: {fileID: 6627249077266683080}
   - component: {fileID: 3904859379294053273}
   - component: {fileID: 3960114018095941365}
-  - component: {fileID: 1506556944393689023}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -172,6 +171,7 @@ MonoBehaviour:
   OnHealthUpdate:
     m_PersistentCalls:
       m_Calls: []
+  GobletReady: 0
   _characterContainer: {fileID: 8848846395872390570}
   _playerInput: {fileID: 3960114018095941365}
   _collider: {fileID: 6590917616300736346}
@@ -185,6 +185,8 @@ MonoBehaviour:
     m_Bits: 512
   _lookWeight: 0
   _distanceWeight: 0
+  _gobletHealAmount: 0
+  _gobletCost: 0
   _dashAbility: {fileID: 11400000, guid: 8555943e95a694c4d8ff2084bdf30825, type: 2}
   _dashPoint: {fileID: 3132654603202236795}
   _dashDuration: 0.1
@@ -376,27 +378,15 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 0d7d1c1b-a232-4c5a-9532-42c1bbae62ba
     m_ActionName: UI/Cancel
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2d2698f8-9ac6-4e81-a9c2-073cb7811ec6
+    m_ActionName: 'Player/Heal[/Keyboard/q]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: 
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!208 &1506556944393689023
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2235485402927944585}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 0
-  m_Extents: {x: 0.5, y: 1, z: 0.5}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.2
 --- !u!1 &4098193976521252551
 GameObject:
   m_ObjectHideFlags: 0
