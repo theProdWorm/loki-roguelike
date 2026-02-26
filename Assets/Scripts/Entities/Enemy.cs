@@ -6,47 +6,41 @@ using UnityEngine.AI;
 
 namespace Entities
 {
-    public class TestEnemy : Entity
+    public class Enemy : Entity
     {
         private static readonly int MoveDir = Animator.StringToHash("MoveDir");
         private static GameObject _player;
-        private UIEnemyHealth _healthbar;
-
-        private Rigidbody rb;
+        private UIEnemyHealth _healthBar;
         private Animator animator;
-
+        private Vector3 prevPos = Vector3.zero;
+        private float prevDot = 0;
         private BehaviorGraphAgent AiAgent;
         private NavMeshAgent navAgent;
+        private AttackStats attackStats;
 
-        public Transform attackPoint;
-        [SerializeField] private Blackboard blackboard;
-        [SerializeField] private BehaviorGraph behaviorGraph;
-        public float attackCooldown;
-        public float rotationSpeed = 5;
-        public GameObject attackPrefab;
-        public AttackStats attackStats;
-
+        [SerializeField] private Transform attackPoint;
+        [SerializeField] private float rotationSpeed = 5;
+        [SerializeField] private GameObject attackPrefab;
+        
         protected override void Awake()
         {
             base.Awake();
             InitializeBaseStats();
-            rb = GetComponent<Rigidbody>();
             AiAgent = GetComponent<BehaviorGraphAgent>();
             navAgent = GetComponent<NavMeshAgent>();
             animator = GetComponent<Animator>();
             if (!_player)
                 _player = GameObject.FindGameObjectWithTag("Player");
-
-            AiAgent.Graph = behaviorGraph;
-            AiAgent.Start();
+            
             AiAgent.SetVariableValue("Target", _player);
-            AiAgent.SetVariableValue("AttackDelay", attackCooldown);
             AiAgent.SetVariableValue("Animator", GetComponent<Animator>());
+            AiAgent.Start();
             navAgent.speed = _moveSpeed;
             attackStats = new AttackStats(attackPrefab, _damage, 0, 0, 1);
 
-            _healthbar = GetComponentInChildren<UIEnemyHealth>();
-            _healthbar.UpdateHealth(_currentHealth, _maxHealth);
+            _healthBar = GetComponentInChildren<UIEnemyHealth>();
+            _healthBar.UpdateHealth(_currentHealth, _maxHealth);
+            
             
         }
 
@@ -61,10 +55,10 @@ namespace Entities
         }
 
         
-        private Vector3 prevPos = Vector3.zero;
-        private float prevDot = 0;
-        private void Update()
+        
+        protected override void Update()
         {
+            base.Update();
             var pos = transform.position;
             var rotation = Quaternion.LookRotation(_player.transform.position - transform.position, Vector3.up);
             var lerpRot = Quaternion.Lerp(transform.rotation,rotation , Time.deltaTime * rotationSpeed);
@@ -104,14 +98,13 @@ namespace Entities
             tag = "Untagged";
             animator.enabled = false;
             GetComponent<Collider>().enabled = false;
-            this.enabled = false;
-            Destroy(_healthbar);
+            enabled = false;
+            Destroy(_healthBar);
             
             foreach (Rigidbody rbC in GetComponentsInChildren<Rigidbody>())
             {
                 rbC.isKinematic = false;
             }
-            //ragdollRoot.parent = null;
         }
 
 
@@ -119,14 +112,13 @@ namespace Entities
         {
             base.TakeDamage(amount, attacker);
             DamageNumbers.CreateDamageNumber(transform,amount);
-            _healthbar.UpdateHealth(_currentHealth, _maxHealth);
+            _healthBar.UpdateHealth(_currentHealth, _maxHealth);
         }
 
         public override void Heal(int amount)
         {
             base.Heal(amount);
-            Debug.Log($"Healed {amount} health and now has {_currentHealth} health");
-            _healthbar.UpdateHealth(_currentHealth, _maxHealth);
+            _healthBar.UpdateHealth(_currentHealth, _maxHealth);
         }
     }
 }

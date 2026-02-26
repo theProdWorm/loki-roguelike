@@ -109,7 +109,7 @@ public class EncounterManager : MonoBehaviour
     private void EnemyDied(Entity enemy)
     {
         //TODO: Add a father enemy class and put that here instead of the test enemy
-        if (enemy is TestEnemy)
+        if (enemy is Enemy)
         {
             _enemiesAlive.Remove(enemy);
         }
