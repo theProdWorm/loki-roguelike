@@ -33,6 +33,92 @@ Transform:
   - {fileID: 7732587832074672768}
   m_Father: {fileID: 8628447524896632596}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2180854458878897747
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2831690899154861772}
+  - component: {fileID: 3391020225448125776}
+  - component: {fileID: 6504297217886932879}
+  m_Layer: 0
+  m_Name: Full Charge Effect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &2831690899154861772
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2180854458878897747}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1.182}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 7732587832074672768}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &3391020225448125776
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2180854458878897747}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &6504297217886932879
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2180854458878897747}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 005715f8e03990749b315fe135f48a94, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &2235485402927944585
 GameObject:
   m_ObjectHideFlags: 0
@@ -186,7 +272,7 @@ MonoBehaviour:
   _lookWeight: 0
   _distanceWeight: 0
   _gobletHealAmount: 0
-  _gobletCost: 0
+  GobletCost: 0
   _dashAbility: {fileID: 11400000, guid: 8555943e95a694c4d8ff2084bdf30825, type: 2}
   _dashPoint: {fileID: 3132654603202236795}
   _dashDuration: 0.1
@@ -204,6 +290,51 @@ MonoBehaviour:
   _helAnimator: {fileID: 64676538123976817}
   _helAttackPoint: {fileID: 3005494553857760625}
   _helSpecialPoint: {fileID: 0}
+  OnHelAttackStageChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 415982103338417701}
+        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnHelAttackFullyCharged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2180854458878897747}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  OnHelAttackReleased:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2180854458878897747}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   ActiveCharacter: 1
 --- !u!114 &3960114018095941365
 MonoBehaviour:
@@ -372,16 +503,16 @@ MonoBehaviour:
     m_ActionName: 'Player/Pause[/XInputControllerWindows/start,/XInputControllerWindows1/start,/Keyboard/escape]'
   - m_PersistentCalls:
       m_Calls: []
+    m_ActionId: 2d2698f8-9ac6-4e81-a9c2-073cb7811ec6
+    m_ActionName: 'Player/Heal[/Keyboard/q]'
+  - m_PersistentCalls:
+      m_Calls: []
     m_ActionId: 57997243-072c-4d5f-8dbb-76987fa90833
     m_ActionName: UI/Accept
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 0d7d1c1b-a232-4c5a-9532-42c1bbae62ba
     m_ActionName: UI/Cancel
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 2d2698f8-9ac6-4e81-a9c2-073cb7811ec6
-    m_ActionName: 'Player/Heal[/Keyboard/q]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: 
@@ -846,6 +977,73 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8628447524896632596}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &4869134776738692564
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7732587832074672768}
+    m_Modifications:
+    - target: {fileID: 3878606897271893904, guid: 90b0718037148d54190136267575f6c9, type: 3}
+      propertyPath: m_Name
+      value: Charge Up Effect
+      objectReference: {fileID: 0}
+    - target: {fileID: 6580175673928828795, guid: 90b0718037148d54190136267575f6c9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6580175673928828795, guid: 90b0718037148d54190136267575f6c9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6580175673928828795, guid: 90b0718037148d54190136267575f6c9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.182
+      objectReference: {fileID: 0}
+    - target: {fileID: 6580175673928828795, guid: 90b0718037148d54190136267575f6c9, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6580175673928828795, guid: 90b0718037148d54190136267575f6c9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6580175673928828795, guid: 90b0718037148d54190136267575f6c9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6580175673928828795, guid: 90b0718037148d54190136267575f6c9, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6580175673928828795, guid: 90b0718037148d54190136267575f6c9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6580175673928828795, guid: 90b0718037148d54190136267575f6c9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6580175673928828795, guid: 90b0718037148d54190136267575f6c9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 90b0718037148d54190136267575f6c9, type: 3}
+--- !u!198 &415982103338417701 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 5068653826020819953, guid: 90b0718037148d54190136267575f6c9, type: 3}
+  m_PrefabInstance: {fileID: 4869134776738692564}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1784514663110900399 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6580175673928828795, guid: 90b0718037148d54190136267575f6c9, type: 3}
+  m_PrefabInstance: {fileID: 4869134776738692564}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7837691443080396139
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -928,6 +1126,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8b8cac71bdd82d840a8190ee696326b6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3005494553857760625}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8b8cac71bdd82d840a8190ee696326b6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1784514663110900399}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8b8cac71bdd82d840a8190ee696326b6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2831690899154861772}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8b8cac71bdd82d840a8190ee696326b6, type: 3}
       insertIndex: -1

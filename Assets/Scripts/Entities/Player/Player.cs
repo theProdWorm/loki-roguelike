@@ -73,6 +73,9 @@ namespace Entities.Player
         [SerializeField] private Animator  _helAnimator;
         [SerializeField] private Transform _helAttackPoint;
         [SerializeField] private Transform _helSpecialPoint;
+        public UnityEvent OnHelAttackStageChanged;
+        public UnityEvent OnHelAttackFullyCharged;
+        public UnityEvent OnHelAttackReleased;
         
         private Animator[] _animators;
         private Animator CurrentAnimator => _animators[(int) ActiveCharacter];
@@ -139,8 +142,15 @@ namespace Entities.Player
                 new(_fenrirAbilities.Attack, (ability, action) =>
                     StartAttack(ability, action, ATTACK)),
                 new(_helAbilities.Attack, (ability, action) =>
-                    StartAttack(ability, action, ATTACK))
+                {
+                    StartAttack(ability, action, ATTACK);
+                    OnHelAttackReleased?.Invoke();
+                })
             };
+
+            // Subscribe to Hel's attack input change
+            _attackAbilityTrackers[1].OnInputStageChanged += () => OnHelAttackStageChanged?.Invoke();
+            _attackAbilityTrackers[1].OnFullyCharged += () => OnHelAttackFullyCharged?.Invoke();
             
             _specialAbilityTrackers = new AttackAbilityTracker[]
             {

@@ -26,9 +26,17 @@ namespace Abilities
                     return _holdingInput;
 
                 if (_ability.Stages.Count == 1 && TryUse(out var stats, out int useTimes))
+                {
                     _onAbilityUsed(stats, useTimes);
+                }
                 else
+                {
                     _holdingInput = true;
+                    
+                    OnInputStageChanged?.Invoke();
+                    _nextInputIndex = 1;
+                    _nextInputTime = _ability.Stages[_nextInputIndex].InputTime;
+                }
             }
             else if (context.canceled && _holdingInput)
             {

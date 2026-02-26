@@ -1,8 +1,4 @@
 using System;
-using System.Collections.Generic;
-using Entities.Player;
-using Items;
-using Stats;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,6 +6,9 @@ namespace Abilities
 {
     public class AbilityTracker
     {
+        public Action OnInputStageChanged;
+        public Action OnFullyCharged;
+        
         private readonly Action _onAbilityUsed;
         
         protected readonly Ability _ability;
@@ -19,6 +18,9 @@ namespace Abilities
 
         protected bool  _holdingInput;
         protected float _inputDuration;
+
+        protected float _nextInputTime;
+        protected int   _nextInputIndex;
         
         public AbilityTracker(Ability ability, Action onAbilityUsed)
         {
@@ -31,7 +33,6 @@ namespace Abilities
 
         protected AbilityTracker(Ability ability)
         {
-            
             _ability = ability;
         }
 
@@ -40,6 +41,19 @@ namespace Abilities
             if (_holdingInput)
             {
                 _inputDuration += Time.deltaTime;
+
+                if (_inputDuration >= _nextInputTime)
+                {
+                    if (_nextInputIndex < _ability.Stages.Count - 1)
+                        OnInputStageChanged?.Invoke();
+                    else
+                        OnFullyCharged?.Invoke();
+
+                    _nextInputTime = _nextInputIndex < _ability.Stages.Count - 2
+                        ? _ability.Stages[++_nextInputIndex].InputTime
+                        : int.MaxValue;
+                }
+                
                 return;
             }
 
@@ -71,9 +85,17 @@ namespace Abilities
                     return _holdingInput;
 
                 if (_ability.Stages.Count == 1 && TryUse())
+                {
                     _onAbilityUsed();
+                }
                 else
+                {
                     _holdingInput = true;
+                    
+                    OnInputStageChanged?.Invoke();
+                    _nextInputIndex = 1;
+                    _nextInputTime = _ability.Stages[_nextInputIndex].InputTime;
+                }
             }
             else if (context.canceled && _holdingInput)
             {
