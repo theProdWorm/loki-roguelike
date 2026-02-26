@@ -21,6 +21,8 @@ namespace Entities.Player
         private static readonly int SWITCH    = Animator.StringToHash("switch");
 
         public UnityEvent<int, int> OnHealthUpdate;
+        
+        public bool GobletReady;
 
         public enum Character { Fenrir, Hel }
         
@@ -629,6 +631,14 @@ namespace Entities.Player
                 return;
             
             _charging = SpecialAbilityTracker.RegisterInput(context);
+        }
+
+        public void HealInput(InputAction.CallbackContext context)
+        {
+            if (!_hasControl || !GobletReady) return;
+            
+            Heal(50);
+            GobletReady = false;
         }
 
         public void DashInput(InputAction.CallbackContext context)
