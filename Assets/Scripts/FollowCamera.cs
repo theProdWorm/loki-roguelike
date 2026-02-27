@@ -46,6 +46,7 @@ public class FollowCamera : MonoBehaviour
 
     private void Update()
     {
+        if (MenuManager.Paused) return;
         transform.position = _target.position;
         
         float yawDelta = _rotateInput.x * _rotationSpeed * Time.deltaTime;
