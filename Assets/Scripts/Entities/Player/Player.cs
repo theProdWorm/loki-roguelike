@@ -254,8 +254,7 @@ namespace Entities.Player
                 stats.AttackPrefab, 
                 _damage, 
                 _critChance, 
-                _critDamage, 
-                _areaSizeMultiplier);
+                _critDamage);
 
             var position = AttackPosition;
 
@@ -274,8 +273,7 @@ namespace Entities.Player
                 stats.AttackPrefab, 
                 _damage, 
                 _critChance, 
-                _critDamage, 
-                _areaSizeMultiplier);
+                _critDamage);
 
             var position = _specialPoint[(int) ActiveCharacter].position;
 
@@ -483,71 +481,6 @@ namespace Entities.Player
             
             CurrentAnimator.SetTrigger(SWITCH);
         }
-
-        #region Stat Modification
-        public void AddBaseMaxHealth(int amount)
-        {
-            _baseMaxHealth += amount;
-            UpdateStats();
-        }
-
-        public void AddBaseDamage(int amount)
-        {
-            _baseDamage += amount;
-            UpdateStats();
-        }
-
-        public void AddBaseMoveSpeed(float amount)
-        {
-            _baseMoveSpeed += amount;
-            UpdateStats();
-        }
-        
-        public void AddMaxHealthMultiplier(float amount)
-        {
-            _maxHealthMultiplier += amount;
-            UpdateStats();
-        }
-
-        public void AddDamageMultiplier(float amount)
-        {
-            _damageMultiplier += amount;
-            UpdateStats();
-        }
-        
-        public void AddMoveSpeedMultiplier(float amount)
-        {
-            _moveSpeedMultiplier += amount;
-            UpdateStats();
-        }
-
-        public void AddAreaSizeMultiplier(float amount)
-        {
-            _areaSizeMultiplier += amount;
-        }
-        
-        public void AddCritChanceMultiplier(float amount)
-        {
-            _critChance += amount;
-        }
-
-        public void AddCritDamageMultiplier(float amount)
-        {
-            _critDamage += amount;
-        }
-
-        public void AddDamageReductionMultiplier(float amount)
-        {
-            _damageReduction += amount;
-        }
-
-        private void UpdateStats()
-        {
-            _maxHealth = Mathf.CeilToInt(_baseMaxHealth * _maxHealthMultiplier);
-            _damage = Mathf.CeilToInt(_baseDamage * _damageMultiplier);
-            _moveSpeed = _baseMoveSpeed * _moveSpeedMultiplier;
-        }
-        #endregion
 
         #region Collision
 

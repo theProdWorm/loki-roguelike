@@ -20,20 +20,15 @@ namespace Entities
         public UnityEvent<Entity> OnDamageDealt;
         
         protected int _baseMaxHealth;
-        protected int _baseDamage;
         protected float _baseMoveSpeed;
-        
-        protected float _maxHealthMultiplier;
-        protected float _damageMultiplier;
-        protected float _moveSpeedMultiplier;
-        
+
         protected int _maxHealth;
         protected int _damage;
         protected float _moveSpeed;
         
-        protected float _areaSizeMultiplier = 1f;
-        
         protected int _currentHealth;
+        
+        protected float _damageTakenMultiplier = 1f;
         
         public bool IsDead = false;
         
@@ -64,14 +59,11 @@ namespace Entities
         protected virtual void InitializeBaseStats()
         {
             _baseMaxHealth = EntityBaseStats.MaxHealth;
-            _baseDamage = EntityBaseStats.Damage;
+            _damage = EntityBaseStats.Damage;
             _baseMoveSpeed = EntityBaseStats.MoveSpeed;
-            
-            _maxHealth = _baseMaxHealth;
-            _damage = _baseDamage;
             _moveSpeed = _baseMoveSpeed;
             
-            _currentHealth = _maxHealth;
+            _currentHealth = _baseMaxHealth;
         }
         
         public virtual void TakeDamage(int amount, Entity attacker)
@@ -98,6 +90,11 @@ namespace Entities
             _statusEffects.RemoveAll(sampleEffect, max);
         public int  CountStatusEffectsOfType(StatusEffect sampleEffect) => 
             _statusEffects.GetCount(sampleEffect);
+
+        public float AddDamageTakenMultiplier(float amount) =>
+            _damageTakenMultiplier += amount;
+        public float RemoveDamageTakenMultiplier(float amount) =>
+            _damageTakenMultiplier -= amount;
         
         private void Die()
         {

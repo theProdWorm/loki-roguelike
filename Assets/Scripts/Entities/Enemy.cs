@@ -37,7 +37,7 @@ namespace Entities
             AiAgent.SetVariableValue("Animator", GetComponent<Animator>());
             AiAgent.Start();
             navAgent.speed = _moveSpeed;
-            attackStats = new AttackStats(attackPrefab, _damage, 0, 0, 1);
+            attackStats = new AttackStats(attackPrefab, _damage, 0, 0);
 
             _healthBar = GetComponentInChildren<UIEnemyHealth>();
             _healthBar.UpdateHealth(_currentHealth, _maxHealth);
