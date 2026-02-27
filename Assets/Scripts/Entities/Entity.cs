@@ -53,7 +53,10 @@ namespace Entities
         protected virtual void InitializeBaseStats()
         {
             _baseMaxHealth = EntityBaseStats.MaxHealth;
+            _maxHealth = _baseMaxHealth;
+            
             _damage = EntityBaseStats.Damage;
+            
             _baseMoveSpeed = EntityBaseStats.MoveSpeed;
             _moveSpeed = _baseMoveSpeed;
             

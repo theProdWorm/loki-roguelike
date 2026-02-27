@@ -451,8 +451,6 @@ namespace Entities.Player
             int reducedDamage = Mathf.CeilToInt(amount * (1 - _damageReduction));
             int realDamage = base.TakeDamage(reducedDamage, attacker);
             
-            base.TakeDamage(realDamage, attacker);
-            
             OnHealthUpdate?.Invoke(_currentHealth, _maxHealth);
             
             return realDamage;
