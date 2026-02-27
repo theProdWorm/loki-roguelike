@@ -8,7 +8,7 @@ namespace StatusEffects.Applicators
     {
         [SerializeField] private float _slowAmount = 0.05f;
         
-        protected override void ApplyEffect(Entity entity)
+        protected override void ApplyEffect(Entity entity, int _)
         {
             var chillEffect = new StatusEffect_Chill(_duration, _stackable, _refresh, _slowAmount);
             entity.ApplyStatusEffect(chillEffect);

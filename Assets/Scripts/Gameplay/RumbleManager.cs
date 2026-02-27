@@ -37,8 +37,6 @@ namespace Gameplay
                 
                 Gamepad.current.SetMotorSpeeds(low, high);
                 
-                Debug.Log($"Rumble: ({low}, {high})");
-                
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }

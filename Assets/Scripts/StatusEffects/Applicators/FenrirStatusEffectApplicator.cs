@@ -15,7 +15,7 @@ namespace StatusEffects.Applicators
         [SerializeField] private bool  _vulnerableRefresh;
         [SerializeField] private float _vulnerableDamageIncrease = 0.5f;
         
-        protected override void ApplyEffect(Entity entity)
+        protected override void ApplyEffect(Entity entity, int _)
         {
             for (int i = 0; i < _stacksToApply; i++)
             {

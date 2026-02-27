@@ -10,50 +10,38 @@ namespace UI
         private static Player _player;
 
         [SerializeField] private Slider _healthBar;
-        [SerializeField] private Slider _gobletBar;
-        private int gobletCharge;
-        
+        [SerializeField] private Slider _potionBar;
 
         private int oldHealth = -1;
 
         private void OnEnable()
         {
             _player = FindAnyObjectByType<Player>();
-            _player.OnHealthUpdate.AddListener(UpdateHealthUI);
-            _player.OnDamageDealt.AddListener(UpdateGobletCharge);
-            _gobletBar.maxValue = _player.GobletCost;
+            _player.OnHealthChanged.AddListener(UpdateHealthUI);
+            _player.OnPotionChargesChanged.AddListener(UpdateGobletCharge);
         }
 
         private void OnDisable()
         {
-            _player.OnHealthUpdate.RemoveListener(UpdateHealthUI);
-            _player.OnDamageDealt.RemoveListener(UpdateGobletCharge);
+            _player.OnHealthChanged.RemoveListener(UpdateHealthUI);
+            _player.OnPotionChargesChanged.RemoveListener(UpdateGobletCharge);
         }
 
         private void UpdateHealthUI(int currentHealth, int maxHealth)
         {
-            if(oldHealth == -1) oldHealth = currentHealth;
+            if(oldHealth == -1) 
+                oldHealth = currentHealth;
+            
             _healthBar.maxValue = maxHealth;
             _healthBar.value = currentHealth;
 
-            if (currentHealth > oldHealth)
-            {
-                gobletCharge = 0;
-                _gobletBar.value = gobletCharge;
-            }
             oldHealth = currentHealth;
         }
 
-        private void UpdateGobletCharge(Entity _)
+        private void UpdateGobletCharge(int currentCharges, int maxCharges)
         {
-            if (_player.GobletReady) return;
-            gobletCharge++;
-            _gobletBar.value = gobletCharge;
-
-            if (gobletCharge >= _gobletBar.maxValue)
-            {
-                _player.GobletReady = true;
-            }
+            _potionBar.maxValue = maxCharges;
+            _potionBar.value = currentCharges;
         }
     }
 }

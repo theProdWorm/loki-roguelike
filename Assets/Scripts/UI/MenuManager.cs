@@ -13,17 +13,20 @@ public class MenuManager : MonoBehaviour
     public static bool Paused = false;
 
     public static GameObject PreviousSelected;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Start()
     {
         _SettingsCanvasGroup = SettingsCanvasGroup;
         _SettingsCanvasGroup.gameObject.SetActive(false);
         _PauseCanvasGroup = PauseCanvasGroup;
         _PauseCanvasGroup.gameObject.SetActive(false);
+        
+        UnpauseGame();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         
     }

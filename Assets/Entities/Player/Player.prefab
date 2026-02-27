@@ -254,10 +254,12 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   IsDead: 0
-  OnHealthUpdate:
+  OnHealthChanged:
     m_PersistentCalls:
       m_Calls: []
-  GobletReady: 0
+  OnPotionChargesChanged:
+    m_PersistentCalls:
+      m_Calls: []
   _characterContainer: {fileID: 8848846395872390570}
   _playerInput: {fileID: 3960114018095941365}
   _collider: {fileID: 6590917616300736346}
@@ -271,8 +273,9 @@ MonoBehaviour:
     m_Bits: 512
   _lookWeight: 0.2
   _distanceWeight: 3
-  _gobletHealAmount: 30
-  GobletCost: 15
+  _potionHealAmount: 0
+  _potionCost: 0
+  _maxPotionCharges: 0
   _dashAbility: {fileID: 11400000, guid: 8555943e95a694c4d8ff2084bdf30825, type: 2}
   _dashPoint: {fileID: 3132654603202236795}
   _dashDuration: 0.1
@@ -513,6 +516,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 0d7d1c1b-a232-4c5a-9532-42c1bbae62ba
     m_ActionName: UI/Cancel
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6a59ab4d-8980-4846-938f-ac33f333f69f
+    m_ActionName: 'UI/ExitUI[/XInputControllerWindows/start,/Keyboard/escape]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: 
@@ -820,8 +827,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -9103484930961366303, guid: 5066ffa8465985846ac4d045e203e9fb, type: 3}
-  - {fileID: -4288583467269203127, guid: 5066ffa8465985846ac4d045e203e9fb, type: 3}
+  - {fileID: 2100000, guid: 4aa098719123c6948a4f98032908778f, type: 2}
+  - {fileID: 2100000, guid: 1b43ecb4750d8f5498c79d4508f7359f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

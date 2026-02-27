@@ -20,10 +20,9 @@ namespace Entities.Player
         private static readonly int SPECIAL   = Animator.StringToHash("special");
         private static readonly int SWITCH    = Animator.StringToHash("switch");
 
-        public UnityEvent<int, int> OnHealthUpdate;
+        public UnityEvent<int, int> OnHealthChanged;
+        public UnityEvent<int, int> OnPotionChargesChanged;
         
-        public bool GobletReady;
-
         public enum Character { Fenrir, Hel }
         
         [SerializeField] private Transform _characterContainer;
@@ -42,8 +41,9 @@ namespace Entities.Player
         [SerializeField] private float _distanceWeight;
 
         [Header("Healing")]
-        [SerializeField] private int _gobletHealAmount;
-        [SerializeField] public int  GobletCost;
+        [SerializeField] private int _potionHealAmount;
+        [SerializeField] private int _potionCost;
+        [SerializeField] private int _maxPotionCharges;
         
         [Header("Dash")]
         [SerializeField] private Ability _dashAbility;
@@ -110,7 +110,8 @@ namespace Entities.Player
         
         protected float _damageReduction = 0f;
         
-        private readonly List<IItem> _items = new();
+        private int _potionCharges;
+        private bool PotionReady => _potionCharges >= _potionCost;
 
         private float _originalDashDistance;
         private float _originalMoveSpeed;
@@ -129,14 +130,28 @@ namespace Entities.Player
             _playerInput.SwitchCurrentActionMap("UI");
             _playerInput.SwitchCurrentActionMap("Player");
             
+            _camera = Camera.main!;
+            
             _originalDashDistance = Vector3.Distance(transform.position, _dashPoint.position);
 
-            _animators = new[]
-            {
-                _fenrirAnimator,
-                _helAnimator
-            };
+            _playerBaseStats = (PlayerBaseStats) EntityBaseStats;
+            InitializeBaseStats();
             
+            InitializeAbilityTrackers();
+            InitializeAttackPoints();
+            InitializeAnimators();
+            
+            OnDamageDealt.AddListener(AddPotionCharges);
+            
+            CharacterIndexChanged();
+
+            //Sync the health UI at the start
+            OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
+            CharacterIndexChanged(false);
+        }
+
+        private void InitializeAbilityTrackers()
+        {
             _attackAbilityTrackers = new AttackAbilityTracker[]
             {
                 new(_fenrirAbilities.Attack, (ability, action) =>
@@ -161,7 +176,10 @@ namespace Entities.Player
             };
 
             _dashAbilityTracker = new(_dashAbility, () => PerformDash(_dashPoint.position, true));
+        }
 
+        private void InitializeAttackPoints()
+        {
             _attackPoints = new []
             {
                 _fenrirAttackPoint,
@@ -173,19 +191,17 @@ namespace Entities.Player
                 _fenrirSpecialPoint,
                 _helSpecialPoint
             };
-            
-            _playerBaseStats = (PlayerBaseStats) EntityBaseStats;
-            
-            InitializeBaseStats();
-            _camera = Camera.main!;
-            
-            CharacterIndexChanged();
-
-            //Sync the health UI at the start
-            OnHealthUpdate?.Invoke(_currentHealth, _maxHealth);
-            CharacterIndexChanged(false);
         }
 
+        private void InitializeAnimators()
+        {
+            _animators = new[]
+            {
+                _fenrirAnimator,
+                _helAnimator
+            };
+        }
+        
         protected override void InitializeBaseStats()
         {
             base.InitializeBaseStats();
@@ -335,8 +351,6 @@ namespace Entities.Player
             }
             else // May dash over holes
             {
-                print("didn't hit wall");
-                
                 var holeColliders = Physics.OverlapSphere(dashPoint, _collider.radius, _holeLayer);
                 if (holeColliders.Length > 0)
                 {
@@ -451,7 +465,7 @@ namespace Entities.Player
             int reducedDamage = Mathf.CeilToInt(amount * (1 - _damageReduction));
             int realDamage = base.TakeDamage(reducedDamage, attacker);
             
-            OnHealthUpdate?.Invoke(_currentHealth, _maxHealth);
+            OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
             
             return realDamage;
         }
@@ -459,14 +473,18 @@ namespace Entities.Player
         public override void Heal(int amount)
         {
             base.Heal(amount);
-            OnHealthUpdate?.Invoke(_currentHealth, _maxHealth);
+            OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
         }
 
-        public void AddItem(IItem item)
+        public void AddPotionCharges(Entity _, int damage)
         {
-            _items.Add(item);
+            if (_potionCharges >= _maxPotionCharges)
+                return;
             
-            item.Apply(this);
+            Debug.Log($"Added {damage} potion charges");
+            
+            _potionCharges += damage;
+            OnPotionChargesChanged?.Invoke(_potionCharges, _maxPotionCharges);
         }
 
         private void CharacterIndexChanged(bool triggerSwitch = true)
@@ -572,7 +590,6 @@ namespace Entities.Player
                 return;
             
             _charging = AttackAbilityTracker.RegisterInput(context);
-            print(_charging);
         }
 
         public void SpecialInput(InputAction.CallbackContext context)
@@ -585,10 +602,13 @@ namespace Entities.Player
 
         public void HealInput(InputAction.CallbackContext context)
         {
-            if (!_hasControl || !GobletReady) return;
+            if (!context.performed || !_hasControl || !PotionReady || _currentHealth >= _maxHealth)
+                return;
             
-            Heal(_gobletHealAmount);
-            GobletReady = false;
+            Heal(_potionHealAmount);
+            
+            _potionCharges -= _potionCost;
+            OnPotionChargesChanged?.Invoke(_potionCharges, _maxPotionCharges);
         }
 
         public void DashInput(InputAction.CallbackContext context)

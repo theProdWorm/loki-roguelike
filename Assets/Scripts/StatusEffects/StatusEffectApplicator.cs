@@ -21,6 +21,6 @@ namespace StatusEffects
             attack.OnHitEntity.AddListener(ApplyEffect);
         }
 
-        protected abstract void ApplyEffect(Entity entity);
+        protected abstract void ApplyEffect(Entity entity, int _);
     }
 }

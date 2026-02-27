@@ -7,8 +7,7 @@ namespace Abilities.Attacks
 {
     public abstract class Attack : MonoBehaviour
     {
-        public UnityEvent<Entity> OnHitEntity;
-        public UnityEvent<Entity, int> OnHitEntityWithDamage;
+        public UnityEvent<Entity, int> OnHitEntity;
         public UnityEvent OnAttackFinished;
 
         [SerializeField] private float _damageMultiplier;
@@ -62,7 +61,7 @@ namespace Abilities.Attacks
             int damage = Mathf.CeilToInt(_damage * (crit ? _stats.CritDamage : 1));
             entity.TakeDamage(damage, _owner);
             
-            OnHitEntity?.Invoke(entity);
+            OnHitEntity?.Invoke(entity, damage);
             
             return entity;
         }

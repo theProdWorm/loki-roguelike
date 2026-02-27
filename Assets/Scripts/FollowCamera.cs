@@ -30,7 +30,8 @@ public class FollowCamera : MonoBehaviour
     [Tooltip("Maximum rotation value on the x-axis (pitch).")]
     [SerializeField] private float _maxPitch = 80f;
     
-    private float   _offset;
+    private float   _upwardOffset;
+    private float   _backwardOffset;
     private Vector3 _rotationEuler;
 
     private Vector2 _rotateInput;
@@ -40,8 +41,13 @@ public class FollowCamera : MonoBehaviour
     private void Start()
     {
         _camera = GetComponent<Camera>();
-        _offset = (transform.position - _target.position).magnitude;
         _rotationEuler = transform.rotation.eulerAngles;
+        
+        var toTarget = transform.position - _target.position;
+        var projection = Vector3.Project(toTarget, transform.forward);
+
+        _upwardOffset = (toTarget - projection).magnitude;
+        _backwardOffset = projection.magnitude;
     }
 
     private void Update()
@@ -59,7 +65,8 @@ public class FollowCamera : MonoBehaviour
         
         transform.rotation = Quaternion.Euler(_rotationEuler);
         
-        transform.position -= transform.forward * _offset;
+        transform.position -= transform.forward * _backwardOffset;
+        transform.position += transform.up * _upwardOffset;
         
         //transform.position = _lerpPosition ? LerpPosition() : _target.position + _offset;
         

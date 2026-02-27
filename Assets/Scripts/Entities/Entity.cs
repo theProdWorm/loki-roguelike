@@ -13,9 +13,7 @@ namespace Entities
         public UnityEvent<Entity> OnDeath;
         
         public UnityEvent<int> OnDamageTaken;
-        
-        [Tooltip("Referenced entity TOOK damage")]
-        public UnityEvent<Entity> OnDamageDealt;
+        public UnityEvent<Entity, int> OnDamageDealt;
         
         protected int _baseMaxHealth;
         protected float _baseMoveSpeed;
@@ -99,13 +97,11 @@ namespace Entities
         public void AddSpeedMultiplier(float amount)
         {
             _speedMultiplier += amount;
-            Debug.Log(_speedMultiplier);
             _moveSpeed = _baseMoveSpeed * _speedMultiplier;
         }
         public void RemoveSpeedMultiplier(float amount)
         {
             _speedMultiplier -= amount;
-            Debug.Log(_speedMultiplier);
             _moveSpeed = _baseMoveSpeed * _speedMultiplier;
         }
 
