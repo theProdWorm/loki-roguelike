@@ -27,7 +27,7 @@ namespace StatusEffects.Applicators
                     continue;
                 
                 var vulnerableEffect = new StatusEffect_Vulnerable(
-                    _vulnerableDuration, _vulnerableStackable, _vulnerableRefresh);
+                    _vulnerableDuration, _vulnerableStackable, _vulnerableRefresh, _vulnerableDamageIncrease);
                 entity.ApplyStatusEffect(vulnerableEffect);
                 
                 entity.RemoveAllStatusEffectsOfType(woundEffect);

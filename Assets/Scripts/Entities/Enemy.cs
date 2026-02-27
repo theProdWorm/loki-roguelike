@@ -60,6 +60,9 @@ namespace Entities
         protected override void Update()
         {
             base.Update();
+         
+            navAgent.speed = _moveSpeed;
+            
             var pos = transform.position;
             var rotation = Quaternion.LookRotation(_player.transform.position - transform.position, Vector3.up);
             var lerpRot = Quaternion.Lerp(transform.rotation,rotation , Time.deltaTime * rotationSpeed);
@@ -88,7 +91,6 @@ namespace Entities
             
             animator.SetFloat(MoveDir, smoothed);
             
-            
             prevPos = transform.position;
         }
 
@@ -109,11 +111,13 @@ namespace Entities
         }
 
 
-        public override void TakeDamage(int amount, Entity attacker)
+        public override int TakeDamage(int amount)
         {
-            base.TakeDamage(amount, attacker);
-            DamageNumbers.CreateDamageNumber(transform,amount);
+            int realDamage = base.TakeDamage(amount);
+            DamageNumbers.CreateDamageNumber(transform, realDamage);
             _healthBar.UpdateHealth(_currentHealth, _maxHealth);
+
+            return realDamage;
         }
 
         public override void Heal(int amount)

@@ -2,9 +2,10 @@ namespace Entities
 {
     public class DestroyableWall : Entity
     {
-        public override void TakeDamage(int _, Entity attacker)
+        public override int TakeDamage(int _)
         {
             _currentHealth--;
+            return 1;
         }
     }
 }

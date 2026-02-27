@@ -1,6 +1,4 @@
-using System;
 using Entities.Stats;
-using Stats;
 using StatusEffects;
 using UnityEngine;
 using UnityEngine.Events;
@@ -22,6 +20,8 @@ namespace Entities
         protected int _baseMaxHealth;
         protected float _baseMoveSpeed;
 
+        protected float _speedMultiplier = 1f;
+        
         protected int _maxHealth;
         protected int _damage;
         protected float _moveSpeed;
@@ -66,11 +66,13 @@ namespace Entities
             _currentHealth = _baseMaxHealth;
         }
         
-        public virtual void TakeDamage(int amount, Entity attacker)
+        public virtual int TakeDamage(int amount)
         {
-            _currentHealth -= amount;
+            int realDamage = Mathf.CeilToInt(amount * _damageTakenMultiplier);
+            _currentHealth -= realDamage;
             
-            OnDamageTaken?.Invoke(amount);
+            OnDamageTaken?.Invoke(realDamage);
+            return realDamage;
             
             if (_currentHealth <= 0)
                 Die();
@@ -91,11 +93,24 @@ namespace Entities
         public int  CountStatusEffectsOfType(StatusEffect sampleEffect) => 
             _statusEffects.GetCount(sampleEffect);
 
-        public float AddDamageTakenMultiplier(float amount) =>
+        public void AddDamageTakenMultiplier(float amount) =>
             _damageTakenMultiplier += amount;
-        public float RemoveDamageTakenMultiplier(float amount) =>
+        public void RemoveDamageTakenMultiplier(float amount) =>
             _damageTakenMultiplier -= amount;
-        
+
+        public void AddSpeedMultiplier(float amount)
+        {
+            _speedMultiplier += amount;
+            Debug.Log(_speedMultiplier);
+            _moveSpeed = _baseMoveSpeed * _speedMultiplier;
+        }
+        public void RemoveSpeedMultiplier(float amount)
+        {
+            _speedMultiplier -= amount;
+            Debug.Log(_speedMultiplier);
+            _moveSpeed = _baseMoveSpeed * _speedMultiplier;
+        }
+
         private void Die()
         {
             if (IsDead)

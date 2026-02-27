@@ -85,8 +85,6 @@ namespace StatusEffects
             
             _effects[Count++] = effect;
             effect.Apply(_entity);
-            
-            _print?.Invoke($"Added {effect.GetType().Name}");
         }
         
         public void Remove(StatusEffect effect)
@@ -103,8 +101,6 @@ namespace StatusEffects
             
             Rebuild();
             Count--;
-            
-            _print?.Invoke($"Removed {effect.GetType().Name}");
         }
 
         public void RemoveAll(StatusEffect sampleEffect, int max = int.MaxValue)

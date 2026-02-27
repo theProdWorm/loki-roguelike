@@ -446,11 +446,13 @@ namespace Entities.Player
             }
         }
         
-        public override void TakeDamage(int amount, Entity attacker)
+        public override int TakeDamage(int amount)
         {
             int reducedDamage = Mathf.CeilToInt(amount * (1 - _damageReduction));
-            base.TakeDamage(reducedDamage, attacker);
+            int realDamage = base.TakeDamage(reducedDamage);
             OnHealthUpdate?.Invoke(_currentHealth, _maxHealth);
+            
+            return realDamage;
         }
 
         public override void Heal(int amount)
