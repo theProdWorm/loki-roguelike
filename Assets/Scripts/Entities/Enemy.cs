@@ -111,9 +111,10 @@ namespace Entities
         }
 
 
-        public override int TakeDamage(int amount)
+        public override int TakeDamage(int amount, Entity attacker)
         {
-            int realDamage = base.TakeDamage(amount);
+            int realDamage = base.TakeDamage(amount, attacker);
+            base.TakeDamage(realDamage, attacker);
             DamageNumbers.CreateDamageNumber(transform, realDamage);
             _healthBar.UpdateHealth(_currentHealth, _maxHealth);
 

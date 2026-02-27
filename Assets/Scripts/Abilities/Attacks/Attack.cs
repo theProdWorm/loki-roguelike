@@ -60,7 +60,7 @@ namespace Abilities.Attacks
             
             bool crit = Random.Range(0f, 100f) <= _stats.CritChance;
             int damage = Mathf.CeilToInt(_damage * (crit ? _stats.CritDamage : 1));
-            entity.TakeDamage(damage);
+            entity.TakeDamage(damage, _owner);
             
             OnHitEntity?.Invoke(entity);
             

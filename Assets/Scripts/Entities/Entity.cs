@@ -36,13 +36,7 @@ namespace Entities
 
         protected virtual void Awake()
         {
-            _statusEffects = new StatusEffectList(this, Debug.Log);
-            IsDead = false;
-        }
-
-        //TODO: delete test
-        protected virtual void OnEnable()
-        {
+            _statusEffects = new StatusEffectList(this);
             IsDead = false;
         }
 
@@ -66,16 +60,17 @@ namespace Entities
             _currentHealth = _baseMaxHealth;
         }
         
-        public virtual int TakeDamage(int amount)
+        public virtual int TakeDamage(int amount, Entity attacker)
         {
             int realDamage = Mathf.CeilToInt(amount * _damageTakenMultiplier);
             _currentHealth -= realDamage;
             
             OnDamageTaken?.Invoke(realDamage);
-            return realDamage;
             
             if (_currentHealth <= 0)
                 Die();
+            
+            return realDamage;
         }
 
         public virtual void Heal(int amount)

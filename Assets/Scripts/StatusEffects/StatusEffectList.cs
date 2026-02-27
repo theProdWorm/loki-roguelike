@@ -13,18 +13,14 @@ namespace StatusEffects
         private int _capacity = 4;
         
         public int Count;
-
-        private Action<string> _print;
         
         public StatusEffect this[int index] => _effects[index];
         
-        public StatusEffectList(Entity entity, Action<string> print)
+        public StatusEffectList(Entity entity)
         {
             _entity = entity;
             
             _effects = new StatusEffect[_capacity];
-            
-            _print = print;
         }
         
         public void Update()
