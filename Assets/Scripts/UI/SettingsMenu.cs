@@ -2,15 +2,12 @@ using UnityEngine;
 
 public class SettingsMenu : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    [SerializeField] private GameObject[] _panels;
+    
+    public void openTab(int index)
     {
-        
+        for (int i = 0; i < _panels.Length; i++)
+            _panels[i].SetActive(i == index);
     }
 }

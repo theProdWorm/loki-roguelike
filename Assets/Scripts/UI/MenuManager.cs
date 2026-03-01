@@ -19,6 +19,7 @@ public class MenuManager : MonoBehaviour
     {
         _SettingsCanvasGroup = SettingsCanvasGroup;
         _SettingsCanvasGroup.gameObject.SetActive(false);
+        if (!PauseCanvasGroup) return;
         _PauseCanvasGroup = PauseCanvasGroup;
         _PauseCanvasGroup.gameObject.SetActive(false);
         
@@ -49,7 +50,7 @@ public class MenuManager : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(PreviousSelected);
         }
-        else if (_PauseCanvasGroup.gameObject.activeSelf)
+        else if (_PauseCanvasGroup && _PauseCanvasGroup.gameObject.activeSelf)
         {
             UnpauseGame();
         }
