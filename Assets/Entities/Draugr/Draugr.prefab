@@ -294,15 +294,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1b751bf4cf0ded94d910e3ff85daeccb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 111.922295
+      value: 0.51
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1b751bf4cf0ded94d910e3ff85daeccb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.26000023
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1b751bf4cf0ded94d910e3ff85daeccb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 78.4837
+      value: 6.33
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1b751bf4cf0ded94d910e3ff85daeccb, type: 3}
       propertyPath: m_LocalRotation.w
@@ -630,6 +630,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1b751bf4cf0ded94d910e3ff85daeccb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8249896195418412244}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1b751bf4cf0ded94d910e3ff85daeccb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7698947119894745415}
     - targetCorrespondingSourceObject: {fileID: 9108334920173996033, guid: 1b751bf4cf0ded94d910e3ff85daeccb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 9042621753452005633}
@@ -1602,6 +1605,32 @@ MonoBehaviour:
   OnIdle:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7698947119894745415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5482984775687511474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f323d797b52382449695d657338ed9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyType: 0
+  _sittingStatue: 0
+  hasSpawned: 0
+  _componentsToTurnOffAndOn:
+  - {fileID: 8249896195418412244}
+  - {fileID: 4266521783088354748}
+  - {fileID: 4597063657687429147}
+  - {fileID: 7980494178090952449}
+  _enemyScript: {fileID: 7980494178090952449}
+  _behaviourAgentComponent: {fileID: 4597063657687429147}
+  _navMeshAgentComponent: {fileID: 4266521783088354748}
+  _animationEventListenerScript: {fileID: 8249896195418412244}
+  _bbPrefab: {fileID: 0}
+  _wolfPrefab: {fileID: 0}
 --- !u!1 &7581720995881411033 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -6205468422934478534, guid: 1b751bf4cf0ded94d910e3ff85daeccb, type: 3}
