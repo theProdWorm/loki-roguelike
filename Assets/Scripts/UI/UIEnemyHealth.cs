@@ -7,12 +7,13 @@ namespace UI
     public class UIEnemyHealth : MonoBehaviour
     {
         private static List<UIEnemyHealth> BARS = new List<UIEnemyHealth>();
+        private static bool ALLENABLED = true;
         
         Slider _healthSlider;
 
         private int _storedMax = 1;
         private int _storedCurrent = 1;
-
+        
         private bool _enabled = true;
 
         public static void SlidersEnabled(bool value)
@@ -21,6 +22,7 @@ namespace UI
             {
                 bar.SetSlider(value);
             }
+            ALLENABLED = value;
         }
 
         private void SetSlider(bool value)
@@ -34,6 +36,10 @@ namespace UI
             _healthSlider = GetComponentInChildren<Slider>();
             BARS.Add(this);
             UpdateHealth(_storedCurrent, _storedMax);
+            if (!ALLENABLED)
+            {
+                SetSlider(false);
+            }
         }
 
         private void OnDisable()
