@@ -522,6 +522,7 @@ MonoBehaviour:
   _rotationSpeed: 20
   _minPitch: 30
   _maxPitch: 80
+  _shakeIntensity: 1
 --- !u!114 &315106764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1090,7 +1091,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 28d29c4503f1f5c4e8ba8210fc5c063a, type: 2}
+  - {fileID: 2100000, guid: 55bd7606a021c704384d8d9f4538c4fa, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1817,7 +1818,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   IsDead: 0
-  OnHealthUpdate:
+  OnHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPotionChargesChanged:
     m_PersistentCalls:
       m_Calls: []
   _characterContainer: {fileID: 0}
@@ -1833,6 +1837,9 @@ MonoBehaviour:
     m_Bits: 0
   _lookWeight: 0
   _distanceWeight: 0
+  _potionHealAmount: 0
+  _potionCost: 0
+  _maxPotionCharges: 0
   _dashAbility: {fileID: 0}
   _dashPoint: {fileID: 0}
   _dashDuration: 0
@@ -1850,6 +1857,15 @@ MonoBehaviour:
   _helAnimator: {fileID: 0}
   _helAttackPoint: {fileID: 0}
   _helSpecialPoint: {fileID: 0}
+  OnHelAttackStageChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHelAttackFullyCharged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHelAttackReleased:
+    m_PersistentCalls:
+      m_Calls: []
   ActiveCharacter: 0
 --- !u!136 &1618135399
 CapsuleCollider:
