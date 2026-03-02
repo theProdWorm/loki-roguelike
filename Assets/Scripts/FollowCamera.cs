@@ -1,3 +1,5 @@
+using System.Collections;
+using Gameplay;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -32,11 +34,17 @@ public class FollowCamera : MonoBehaviour
     
     private float   _upwardOffset;
     private float   _backwardOffset;
+    [Header("Screen Shake")]
+    [SerializeField] private float _shakeIntensity = 1f;
+    
     private Vector3 _rotationEuler;
 
     private Vector2 _rotateInput;
     
     private Camera _camera;
+    
+    private Coroutine _shakeCoroutine;
+    private Vector3 _shakeOffset;
 
     private void Start()
     {
@@ -67,6 +75,7 @@ public class FollowCamera : MonoBehaviour
         
         transform.position -= transform.forward * _backwardOffset;
         transform.position += transform.up * _upwardOffset;
+        transform.position += _shakeOffset;
         
         //transform.position = _lerpPosition ? LerpPosition() : _target.position + _offset;
         
@@ -93,6 +102,44 @@ public class FollowCamera : MonoBehaviour
         float lerpSpeed = zoomOut ? _zoomOutLerpSpeed : _zoomInLerpSpeed;
         
         return Mathf.Lerp(_camera.fieldOfView, targetFOV, lerpSpeed);
+    }
+
+    public void Shake(ScreenShakeEvent shakeEvent)
+    {
+        if (_shakeCoroutine != null)
+        {
+            StopCoroutine(_shakeCoroutine);
+            _shakeCoroutine = null;
+            _shakeOffset = Vector3.zero;
+        }
+        
+        _shakeCoroutine = StartCoroutine(ShakeCoroutine(shakeEvent));
+    }
+
+    private IEnumerator ShakeCoroutine(ScreenShakeEvent shakeEvent)
+    {
+        print("start shake");
+        
+        float elapsedTime = 0;
+
+        while (elapsedTime < shakeEvent.Duration)
+        {
+            float t = Mathf.Clamp01(elapsedTime / shakeEvent.Duration);
+            float intensity = _shakeIntensity * shakeEvent.IntensityMultiplier * shakeEvent.IntensityCurve.Evaluate(t);
+
+            print(intensity);
+            
+            Vector3 shakeDir = Random.insideUnitSphere;
+            Vector3 projection = Vector3.Project(shakeDir, transform.forward);
+
+            _shakeOffset = intensity * (shakeDir - projection);
+            
+            yield return null;
+            
+            elapsedTime += Time.deltaTime;
+        }
+        
+        print("end shake");
     }
 
     public void RotateInput(InputAction.CallbackContext context)
