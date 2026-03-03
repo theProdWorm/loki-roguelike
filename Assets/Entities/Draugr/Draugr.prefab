@@ -165,6 +165,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5142170927920498440}
     m_Modifications:
+    - target: {fileID: 2812726928528972914, guid: 1eeea867e843cb64492cd128b09993e6, type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2959753238816352930, guid: 1eeea867e843cb64492cd128b09993e6, type: 3}
       propertyPath: m_PropertySheet.m_Float.m_Array.Array.size
       value: 2
@@ -1506,7 +1510,6 @@ MonoBehaviour:
   OnDamageDealt:
     m_PersistentCalls:
       m_Calls: []
-  IsDead: 0
   attackPoint: {fileID: 8592872152765374276}
   rotationSpeed: 3
   attackPrefab: {fileID: 6175426701053642483, guid: e495763dd1db0f44caf2c873374580e7, type: 3}
