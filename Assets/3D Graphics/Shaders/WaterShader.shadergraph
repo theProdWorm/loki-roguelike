@@ -14,6 +14,9 @@
         },
         {
             "m_Id": "ace609896b474ba089d322bff7a28d4e"
+        },
+        {
+            "m_Id": "2738e3d7bdc343f0927e86f43a6fcd32"
         }
     ],
     "m_Keywords": [],
@@ -284,6 +287,9 @@
         },
         {
             "m_Id": "361eeacd01344dd5b196581d80e978a1"
+        },
+        {
+            "m_Id": "5ee11320d6064133959a1b45aca8a9f6"
         }
     ],
     "m_GroupDatas": [],
@@ -957,6 +963,20 @@
             "m_InputSlot": {
                 "m_Node": {
                     "m_Id": "2a3150c116d342e790957695d9799b34"
+                },
+                "m_SlotId": 1
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "5ee11320d6064133959a1b45aca8a9f6"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "11f84b5806fa4e03b78f445dcdb67dec"
                 },
                 "m_SlotId": 1
             }
@@ -1940,6 +1960,21 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "066e0668be2648aaa608c7aec15c1a8c",
+    "m_Id": 0,
+    "m_DisplayName": "Sheen Power",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.DynamicValueMaterialSlot",
     "m_ObjectId": "0741bd93cc00462bbe260634b9d3abe8",
     "m_Id": 0,
@@ -2799,6 +2834,9 @@
         },
         {
             "m_Id": "ace609896b474ba089d322bff7a28d4e"
+        },
+        {
+            "m_Id": "2738e3d7bdc343f0927e86f43a6fcd32"
         }
     ]
 }
@@ -3368,6 +3406,34 @@
         "y": 0.0,
         "z": 0.0,
         "w": 0.0
+    }
+}
+
+{
+    "m_SGVersion": 1,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
+    "m_ObjectId": "2738e3d7bdc343f0927e86f43a6fcd32",
+    "m_Guid": {
+        "m_GuidSerialized": "6001b3cc-a1c1-4f72-9183-b05bb876d54a"
+    },
+    "m_Name": "Sheen Power",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "Sheen Power",
+    "m_DefaultReferenceName": "_Sheen_Power",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": 0.10000000149011612,
+    "m_FloatType": 0,
+    "m_RangeValues": {
+        "x": 0.0,
+        "y": 1.0
     }
 }
 
@@ -6220,6 +6286,42 @@
         "e31": 0.0,
         "e32": 0.0,
         "e33": 1.0
+    }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "5ee11320d6064133959a1b45aca8a9f6",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 1084.8001708984375,
+            "y": -1136.0001220703125,
+            "width": 151.199951171875,
+            "height": 33.60009765625
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "066e0668be2648aaa608c7aec15c1a8c"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "2738e3d7bdc343f0927e86f43a6fcd32"
     }
 }
 
