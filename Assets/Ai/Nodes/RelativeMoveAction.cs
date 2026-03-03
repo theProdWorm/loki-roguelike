@@ -14,6 +14,7 @@ namespace Unity.Behavior
         [SerializeReference] public BlackboardVariable<GameObject> Target;
         [SerializeReference] public BlackboardVariable<float> StepDistance = new BlackboardVariable<float>(2.0f);
         [SerializeReference] public BlackboardVariable<float> DirectionAngle = new BlackboardVariable<float>(0f);
+        [SerializeReference] public BlackboardVariable<bool> SucceedOnDistance = new BlackboardVariable<bool>(false);
         private NavMeshAgent _navMeshAgent;
 
         protected override Status OnStart()
@@ -23,7 +24,6 @@ namespace Unity.Behavior
         }
 
         private bool wait;
-        private int waiter;
 
         protected override Status OnUpdate()
         {
@@ -39,6 +39,7 @@ namespace Unity.Behavior
             if (wait && _navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
             {
                 wait = false;
+                if (SucceedOnDistance.Value) return Status.Success;
             }
 
             return Status.Running;

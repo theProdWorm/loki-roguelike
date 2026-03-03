@@ -10,7 +10,9 @@ namespace Entities
     public class Enemy : Entity
     {
         private static readonly int MoveDir = Animator.StringToHash("MoveDir");
-        private static GameObject _player;
+        private static int ENEMYAMOUNT = 0;
+        private static GameObject PLAYER;
+        
         private UIEnemyHealth _healthBar;
         private Animator animator;
         private Vector3 prevPos = Vector3.zero;
@@ -30,10 +32,10 @@ namespace Entities
             AiAgent = GetComponent<BehaviorGraphAgent>();
             navAgent = GetComponent<NavMeshAgent>();
             animator = GetComponent<Animator>();
-            if (!_player)
-                _player = GameObject.FindGameObjectWithTag("Player");
+            if (!PLAYER)
+                PLAYER = GameObject.FindGameObjectWithTag("Player");
             
-            AiAgent.SetVariableValue("Target", _player);
+            AiAgent.SetVariableValue("Target", PLAYER);
             AiAgent.SetVariableValue("Animator", GetComponent<Animator>());
             AiAgent.Start();
             navAgent.speed = _moveSpeed;
@@ -41,8 +43,8 @@ namespace Entities
 
             _healthBar = GetComponentInChildren<UIEnemyHealth>();
             _healthBar.UpdateHealth(_currentHealth, _maxHealth);
-            
-            
+
+            ENEMYAMOUNT++;
         }
 
         public void Attack()
@@ -61,13 +63,13 @@ namespace Entities
         {
             base.Update();
          
-            navAgent.speed = _moveSpeed;
+            //navAgent.speed = _moveSpeed;
             
             var pos = transform.position;
-            var rotation = Quaternion.LookRotation(_player.transform.position - transform.position, Vector3.up);
-            var lerpRot = Quaternion.Lerp(transform.rotation,rotation , Time.deltaTime * rotationSpeed);
-            var rot = lerpRot.eulerAngles;
-            transform.eulerAngles = new Vector3(0, rot.y, 0);
+            // var rotation = Quaternion.LookRotation(PLAYER.transform.position - transform.position, Vector3.up);
+            // var lerpRot = Quaternion.Lerp(transform.rotation,rotation , Time.deltaTime * rotationSpeed);
+            // var rot = lerpRot.eulerAngles;
+            // transform.eulerAngles = new Vector3(0, rot.y, 0);
             //transform.LookAt(_player.transform, Vector3.up);
             //var rot = transform.eulerAngles;
             //transform.eulerAngles = new Vector3(0, rot.y, 0);
@@ -96,16 +98,21 @@ namespace Entities
 
         public void Destroy()
         {
+            ENEMYAMOUNT--;
             AiAgent.End();
             navAgent.enabled = false;
             tag = "Untagged";
-            animator.enabled = false;
-            GetComponent<Collider>().enabled = false;
             enabled = false;
-            Destroy(_healthBar);
+            //TODO Destroy upon ragdoll deletion
+            Destroy(AiAgent);
+            Destroy(navAgent);
+            Destroy(animator);
+            Destroy(GetComponent<Collider>());
+            Destroy(_healthBar.gameObject);
             
-            foreach (Rigidbody rbC in GetComponentsInChildren<Rigidbody>())
+            foreach (Rigidbody rbC in GetComponentsInChildren<Rigidbody>(true))
             {
+                rbC.gameObject.SetActive(true);
                 rbC.isKinematic = false;
             }
         }
