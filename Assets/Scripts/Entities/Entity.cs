@@ -28,14 +28,14 @@ namespace Entities
         
         protected float _damageTakenMultiplier = 1f;
         
-        public bool IsDead = false;
+        private bool _isDead;
         
         private StatusEffectList _statusEffects;
 
         protected virtual void Awake()
         {
             _statusEffects = new StatusEffectList(this);
-            IsDead = false;
+            _isDead = false;
         }
 
         protected virtual void Start()
@@ -107,10 +107,10 @@ namespace Entities
 
         private void Die()
         {
-            if (IsDead)
+            if (_isDead)
                 return;
 
-            IsDead = true;
+            _isDead = true;
             
             OnDeath?.Invoke(this);
         }

@@ -253,7 +253,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  IsDead: 0
   OnHealthChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -262,6 +261,8 @@ MonoBehaviour:
       m_Calls: []
   _characterContainer: {fileID: 8848846395872390570}
   _playerInput: {fileID: 3960114018095941365}
+  _inputBufferMargin: 0.05
+  _animationLockMoveSpeedFadeDuration: 0.05
   _collider: {fileID: 6590917616300736346}
   _rigidbody: {fileID: 6627249077266683080}
   _frontCollisionPoint: {fileID: 3849344189515138746}
@@ -490,7 +491,7 @@ MonoBehaviour:
     m_ActionName: 'Dialogue/AdvanceDialogue[/Keyboard/e,/Mouse/rightButton]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3904859379294053273}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Entities.Player.Player, Assembly-CSharp
         m_MethodName: PauseInput
         m_Mode: 0

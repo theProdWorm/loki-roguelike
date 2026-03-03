@@ -12,22 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a339d3ecfd147ad8b0481484e1356c5, type: 3}
   m_Name: Hel_AttackAbility
   m_EditorClassIdentifier: 
+  AttackPrefab: {fileID: 477759728259082672, guid: 93b79fb79f9fd5d44817db44c6b07df1, type: 3}
+  MaxCharges: 1
+  RechargeTime: 0.2
   SimultaneousRecharge: 1
-  Charges: 1
-  Stages:
-  - InputTime: 0
-    Stats:
-      AttackPrefab: {fileID: 477759728259082672, guid: 93b79fb79f9fd5d44817db44c6b07df1, type: 3}
-      RequireMaxCharges: 1
-      RechargeTime: 0.5
-      Burst: 1
-      BurstDelay: 0.15
-      SpreadAngle: 0
-  - InputTime: 0.5
-    Stats:
-      AttackPrefab: {fileID: 477759728259082672, guid: 0329ff66ebcefbc428b13777c9b1acff, type: 3}
-      RequireMaxCharges: 1
-      RechargeTime: 0.5
-      Burst: 1
-      BurstDelay: 0
-      SpreadAngle: 30
+  RequireMaxCharges: 0
+  Burst: 0
+  BurstDelay: 0
+  SpreadAngle: 0

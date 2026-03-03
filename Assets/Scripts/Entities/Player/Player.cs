@@ -5,6 +5,7 @@ using Stats;
 using System.Collections;
 using System.Collections.Generic;
 using Entities.Stats;
+using Gameplay.Input;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -25,10 +26,11 @@ namespace Entities.Player
         public UnityEvent<int, int> OnHealthChanged;
         public UnityEvent<int, int> OnPotionChargesChanged;
         
-        
         [SerializeField] private Transform _characterContainer;
         [SerializeField] private PlayerInput _playerInput;
 
+        [SerializeField] private float _inputBufferMargin;
+        
         [Header("Movement")]
         [SerializeField] private float _animationLockMoveSpeedFadeDuration;
         
@@ -125,6 +127,8 @@ namespace Entities.Player
         private bool  _hasControl = true;
         private float _controlLossDuration;
         
+        private InputBuffer _inputBuffer;
+        
         private List<IInteractable> _interactables = new();
         private IInteractable _currentInteractable;
 
@@ -135,6 +139,8 @@ namespace Entities.Player
             _playerInput.SwitchCurrentActionMap("Player");
             
             _camera = Camera.main!;
+            
+            _inputBuffer = new(_inputBufferMargin);
             
             _playerBaseStats = (PlayerBaseStats) EntityBaseStats;
             InitializeBaseStats();
@@ -216,6 +222,10 @@ namespace Entities.Player
         protected override void Update()
         {
             base.Update();
+            
+            _inputBuffer.Update();
+            if (_hasControl)
+                _inputBuffer.NextInput();
             
             foreach (var abilityTracker in _attackAbilityTrackers)
                 abilityTracker.Update();
@@ -590,7 +600,7 @@ namespace Entities.Player
 
         public void InteractInput(InputAction.CallbackContext context)
         {
-            if(!context.performed || !_hasControl) 
+            if(!_hasControl || !context.performed) 
                 return;
 
             if (_interactables.Count == 0 || _currentInteractable == null)
@@ -605,37 +615,43 @@ namespace Entities.Player
 
         public void AttackInput(InputAction.CallbackContext context)
         {
-            if (!_hasControl || !context.performed)
+            if (!context.performed)
                 return;
-            
-            AttackAbilityTracker.TryUse();
+
+            _inputBuffer.Add(AttackAbilityTracker.TryUse);
+
         }
 
         public void SpecialInput(InputAction.CallbackContext context)
         {
-            if (!_hasControl) 
+            if (!context.performed) 
                 return;
             
-            SpecialAbilityTracker.TryUse();
+            _inputBuffer.Add(SpecialAbilityTracker.TryUse);
         }
 
         public void HealInput(InputAction.CallbackContext context)
         {
-            if (!context.performed || !_hasControl || !PotionReady || _currentHealth >= _maxHealth)
+            if (!context.performed || !PotionReady || _currentHealth >= _maxHealth)
                 return;
             
-            Heal(_potionHealAmount);
-            
-            _potionCharges -= _potionCost;
-            OnPotionChargesChanged?.Invoke(_potionCharges, _maxPotionCharges);
+            _inputBuffer.Add(() =>
+            {
+                Heal(_potionHealAmount);
+                
+                _potionCharges -= _potionCost;
+                OnPotionChargesChanged?.Invoke(_potionCharges, _maxPotionCharges);
+
+                return true;
+            });
         }
 
         public void DashInput(InputAction.CallbackContext context)
         {
-            if (!_hasControl) 
+            if (!context.performed) 
                 return;
             
-            _dashAbilityTracker.TryUse();
+            _inputBuffer.Add(_dashAbilityTracker.TryUse);
         }
 
         public void SwitchInput(InputAction.CallbackContext context)

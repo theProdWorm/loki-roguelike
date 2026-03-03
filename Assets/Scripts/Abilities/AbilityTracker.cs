@@ -49,13 +49,13 @@ namespace Abilities
             }
         }
 
-        public virtual void TryUse()
+        public virtual bool TryUse()
         {
             if (_remainingCharges == 0)
-                return;
+                return false;
             
             if (_ability.RequireMaxCharges && _remainingCharges != _ability.MaxCharges)
-                return;
+                return false;
 
             int useTimes = _ability.Burst ? _ability.MaxCharges : 1;
             _remainingCharges -= useTimes;
@@ -64,6 +64,8 @@ namespace Abilities
                 _remainingCooldown = _ability.RechargeTime;
             
             _onAbilityUsed?.Invoke();
+
+            return true;
         }
     }
 }

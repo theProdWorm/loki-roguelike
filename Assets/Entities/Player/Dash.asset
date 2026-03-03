@@ -12,14 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a339d3ecfd147ad8b0481484e1356c5, type: 3}
   m_Name: Dash
   m_EditorClassIdentifier: 
+  AttackPrefab: {fileID: 0}
+  MaxCharges: 2
+  RechargeTime: 0.5
   SimultaneousRecharge: 1
-  Charges: 2
-  AbilityStats:
-  - InputTime: 0
-    Stats:
-      AttackPrefab: {fileID: 0}
-      RequireMaxCharges: 0
-      RechargeTime: 0.8
-      Burst: 0
-      BurstDelay: 0
-      SpreadAngle: 0
+  RequireMaxCharges: 0
+  Burst: 0
+  BurstDelay: 0
+  SpreadAngle: 0

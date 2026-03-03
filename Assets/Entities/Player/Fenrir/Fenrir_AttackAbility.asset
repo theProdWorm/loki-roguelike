@@ -12,14 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a339d3ecfd147ad8b0481484e1356c5, type: 3}
   m_Name: Fenrir_AttackAbility
   m_EditorClassIdentifier: 
+  AttackPrefab: {fileID: 6444237028025776807, guid: 74039dc3078a84b488544b3fc09d2906, type: 3}
+  MaxCharges: 1
+  RechargeTime: 0.2
   SimultaneousRecharge: 0
-  Charges: 1
-  AbilityStats:
-  - InputTime: 0
-    Stats:
-      AttackPrefab: {fileID: 6444237028025776807, guid: 74039dc3078a84b488544b3fc09d2906, type: 3}
-      RequireMaxCharges: 0
-      RechargeTime: 0.2
-      Burst: 0
-      BurstDelay: 0
-      SpreadAngle: 0
+  RequireMaxCharges: 0
+  Burst: 0
+  BurstDelay: 0
+  SpreadAngle: 0

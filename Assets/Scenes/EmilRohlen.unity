@@ -12482,7 +12482,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 0
-  _draugrPrefab: {fileID: 5482984775687511474, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
+  _sittingStatue: 0
+  hasSpawned: 0
+  _componentsToTurnOffAndOn: []
+  _enemyScript: {fileID: 0}
+  _behaviourAgentComponent: {fileID: 0}
+  _navMeshAgentComponent: {fileID: 0}
+  _animationEventListenerScript: {fileID: 0}
   _bbPrefab: {fileID: 0}
   _wolfPrefab: {fileID: 0}
 --- !u!65 &112116292
@@ -14707,69 +14713,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2078383021}
     - target: {fileID: 3904859379294053273, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
+      propertyPath: _inputBufferMargin
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 3904859379294053273, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
       propertyPath: _animationLockMoveSpeedFadeDuration
-      value: 0.1
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 3904859379294053273, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
       propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1002335975}
     - target: {fileID: 3904859379294053273, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
-      propertyPath: OnHelAttackStageChanged.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3904859379294053273, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
       propertyPath: OnDamageDealt.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 93123523}
-    - target: {fileID: 3904859379294053273, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
-      propertyPath: OnHelAttackStageChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3904859379294053273, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
-      propertyPath: OnHelAttackStageChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1951062328}
-    - target: {fileID: 3904859379294053273, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
-      propertyPath: OnHelAttackStageChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3904859379294053273, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
-      propertyPath: OnHelAttackStageChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Play
-      objectReference: {fileID: 0}
-    - target: {fileID: 3904859379294053273, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
-      propertyPath: OnHelAttackStageChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UnityEngine.ParticleSystem, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 3904859379294053273, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
-      propertyPath: OnHelAttackStageChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 3960114018095941365, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
-      propertyPath: m_ActionEvents.Array.data[11].m_ActionId
-      value: 2d2698f8-9ac6-4e81-a9c2-073cb7811ec6
-      objectReference: {fileID: 0}
-    - target: {fileID: 3960114018095941365, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
-      propertyPath: m_ActionEvents.Array.data[12].m_ActionId
-      value: 57997243-072c-4d5f-8dbb-76987fa90833
-      objectReference: {fileID: 0}
-    - target: {fileID: 3960114018095941365, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
-      propertyPath: m_ActionEvents.Array.data[13].m_ActionId
-      value: 0d7d1c1b-a232-4c5a-9532-42c1bbae62ba
-      objectReference: {fileID: 0}
-    - target: {fileID: 3960114018095941365, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
-      propertyPath: m_ActionEvents.Array.data[11].m_ActionName
-      value: 'Player/Heal[/Keyboard/q]'
-      objectReference: {fileID: 0}
-    - target: {fileID: 3960114018095941365, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
-      propertyPath: m_ActionEvents.Array.data[12].m_ActionName
-      value: UI/Accept
-      objectReference: {fileID: 0}
-    - target: {fileID: 3960114018095941365, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
-      propertyPath: m_ActionEvents.Array.data[13].m_ActionName
-      value: UI/Cancel
-      objectReference: {fileID: 0}
     - target: {fileID: 3960114018095941365, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
       propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -24929,7 +24887,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 0
-  _draugrPrefab: {fileID: 5482984775687511474, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
+  _sittingStatue: 0
+  hasSpawned: 0
+  _componentsToTurnOffAndOn: []
+  _enemyScript: {fileID: 0}
+  _behaviourAgentComponent: {fileID: 0}
+  _navMeshAgentComponent: {fileID: 0}
+  _animationEventListenerScript: {fileID: 0}
   _bbPrefab: {fileID: 0}
   _wolfPrefab: {fileID: 0}
 --- !u!65 &234337174
@@ -28611,7 +28575,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 0
-  _draugrPrefab: {fileID: 5482984775687511474, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
+  _sittingStatue: 0
+  hasSpawned: 0
+  _componentsToTurnOffAndOn: []
+  _enemyScript: {fileID: 0}
+  _behaviourAgentComponent: {fileID: 0}
+  _navMeshAgentComponent: {fileID: 0}
+  _animationEventListenerScript: {fileID: 0}
   _bbPrefab: {fileID: 0}
   _wolfPrefab: {fileID: 0}
 --- !u!65 &270125529
@@ -36037,7 +36007,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 0
-  _draugrPrefab: {fileID: 5482984775687511474, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
+  _sittingStatue: 0
+  hasSpawned: 0
+  _componentsToTurnOffAndOn: []
+  _enemyScript: {fileID: 0}
+  _behaviourAgentComponent: {fileID: 0}
+  _navMeshAgentComponent: {fileID: 0}
+  _animationEventListenerScript: {fileID: 0}
   _bbPrefab: {fileID: 0}
   _wolfPrefab: {fileID: 0}
 --- !u!65 &350329365
@@ -44819,7 +44795,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 0
-  _draugrPrefab: {fileID: 5482984775687511474, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
+  _sittingStatue: 0
+  hasSpawned: 0
+  _componentsToTurnOffAndOn: []
+  _enemyScript: {fileID: 0}
+  _behaviourAgentComponent: {fileID: 0}
+  _navMeshAgentComponent: {fileID: 0}
+  _animationEventListenerScript: {fileID: 0}
   _bbPrefab: {fileID: 0}
   _wolfPrefab: {fileID: 0}
 --- !u!65 &437825133
@@ -280847,7 +280829,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 0
-  _draugrPrefab: {fileID: 5482984775687511474, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
+  _sittingStatue: 0
+  hasSpawned: 0
+  _componentsToTurnOffAndOn: []
+  _enemyScript: {fileID: 0}
+  _behaviourAgentComponent: {fileID: 0}
+  _navMeshAgentComponent: {fileID: 0}
+  _animationEventListenerScript: {fileID: 0}
   _bbPrefab: {fileID: 0}
   _wolfPrefab: {fileID: 0}
 --- !u!65 &720338785
@@ -289041,7 +289029,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 0
-  _draugrPrefab: {fileID: 5482984775687511474, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
+  _sittingStatue: 0
+  hasSpawned: 0
+  _componentsToTurnOffAndOn: []
+  _enemyScript: {fileID: 0}
+  _behaviourAgentComponent: {fileID: 0}
+  _navMeshAgentComponent: {fileID: 0}
+  _animationEventListenerScript: {fileID: 0}
   _bbPrefab: {fileID: 0}
   _wolfPrefab: {fileID: 0}
 --- !u!65 &800655181
@@ -295816,7 +295810,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 0
-  _draugrPrefab: {fileID: 5482984775687511474, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
+  _sittingStatue: 0
+  hasSpawned: 0
+  _componentsToTurnOffAndOn: []
+  _enemyScript: {fileID: 0}
+  _behaviourAgentComponent: {fileID: 0}
+  _navMeshAgentComponent: {fileID: 0}
+  _animationEventListenerScript: {fileID: 0}
   _bbPrefab: {fileID: 0}
   _wolfPrefab: {fileID: 0}
 --- !u!65 &863482094
@@ -307267,7 +307267,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 0
-  _draugrPrefab: {fileID: 5482984775687511474, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
+  _sittingStatue: 0
+  hasSpawned: 0
+  _componentsToTurnOffAndOn: []
+  _enemyScript: {fileID: 0}
+  _behaviourAgentComponent: {fileID: 0}
+  _navMeshAgentComponent: {fileID: 0}
+  _animationEventListenerScript: {fileID: 0}
   _bbPrefab: {fileID: 0}
   _wolfPrefab: {fileID: 0}
 --- !u!65 &975246902
@@ -312070,7 +312076,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 0
-  _draugrPrefab: {fileID: 5482984775687511474, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
+  _sittingStatue: 0
+  hasSpawned: 0
+  _componentsToTurnOffAndOn: []
+  _enemyScript: {fileID: 0}
+  _behaviourAgentComponent: {fileID: 0}
+  _navMeshAgentComponent: {fileID: 0}
+  _animationEventListenerScript: {fileID: 0}
   _bbPrefab: {fileID: 0}
   _wolfPrefab: {fileID: 0}
 --- !u!65 &1013873759
@@ -312281,7 +312293,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 0
-  _draugrPrefab: {fileID: 5482984775687511474, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
+  _sittingStatue: 0
+  hasSpawned: 0
+  _componentsToTurnOffAndOn: []
+  _enemyScript: {fileID: 0}
+  _behaviourAgentComponent: {fileID: 0}
+  _navMeshAgentComponent: {fileID: 0}
+  _animationEventListenerScript: {fileID: 0}
   _bbPrefab: {fileID: 0}
   _wolfPrefab: {fileID: 0}
 --- !u!65 &1015196079
@@ -327542,7 +327560,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 0
-  _draugrPrefab: {fileID: 5482984775687511474, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
+  _sittingStatue: 0
+  hasSpawned: 0
+  _componentsToTurnOffAndOn: []
+  _enemyScript: {fileID: 0}
+  _behaviourAgentComponent: {fileID: 0}
+  _navMeshAgentComponent: {fileID: 0}
+  _animationEventListenerScript: {fileID: 0}
   _bbPrefab: {fileID: 0}
   _wolfPrefab: {fileID: 0}
 --- !u!65 &1160057442
@@ -332163,7 +332187,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 0
-  _draugrPrefab: {fileID: 5482984775687511474, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
+  _sittingStatue: 0
+  hasSpawned: 0
+  _componentsToTurnOffAndOn: []
+  _enemyScript: {fileID: 0}
+  _behaviourAgentComponent: {fileID: 0}
+  _navMeshAgentComponent: {fileID: 0}
+  _animationEventListenerScript: {fileID: 0}
   _bbPrefab: {fileID: 0}
   _wolfPrefab: {fileID: 0}
 --- !u!65 &1214637588
@@ -340177,7 +340207,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 0
-  _draugrPrefab: {fileID: 5482984775687511474, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
+  _sittingStatue: 0
+  hasSpawned: 0
+  _componentsToTurnOffAndOn: []
+  _enemyScript: {fileID: 0}
+  _behaviourAgentComponent: {fileID: 0}
+  _navMeshAgentComponent: {fileID: 0}
+  _animationEventListenerScript: {fileID: 0}
   _bbPrefab: {fileID: 0}
   _wolfPrefab: {fileID: 0}
 --- !u!65 &1297960333
@@ -351768,7 +351804,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 0
-  _draugrPrefab: {fileID: 5482984775687511474, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
+  _sittingStatue: 0
+  hasSpawned: 0
+  _componentsToTurnOffAndOn: []
+  _enemyScript: {fileID: 0}
+  _behaviourAgentComponent: {fileID: 0}
+  _navMeshAgentComponent: {fileID: 0}
+  _animationEventListenerScript: {fileID: 0}
   _bbPrefab: {fileID: 0}
   _wolfPrefab: {fileID: 0}
 --- !u!65 &1423974014
@@ -352848,7 +352890,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 0
-  _draugrPrefab: {fileID: 5482984775687511474, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
+  _sittingStatue: 0
+  hasSpawned: 0
+  _componentsToTurnOffAndOn: []
+  _enemyScript: {fileID: 0}
+  _behaviourAgentComponent: {fileID: 0}
+  _navMeshAgentComponent: {fileID: 0}
+  _animationEventListenerScript: {fileID: 0}
   _bbPrefab: {fileID: 0}
   _wolfPrefab: {fileID: 0}
 --- !u!65 &1432069124
@@ -353850,7 +353898,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 0
-  _draugrPrefab: {fileID: 5482984775687511474, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
+  _sittingStatue: 0
+  hasSpawned: 0
+  _componentsToTurnOffAndOn: []
+  _enemyScript: {fileID: 0}
+  _behaviourAgentComponent: {fileID: 0}
+  _navMeshAgentComponent: {fileID: 0}
+  _animationEventListenerScript: {fileID: 0}
   _bbPrefab: {fileID: 0}
   _wolfPrefab: {fileID: 0}
 --- !u!65 &1438783663
@@ -356058,7 +356112,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 0
-  _draugrPrefab: {fileID: 5482984775687511474, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
+  _sittingStatue: 0
+  hasSpawned: 0
+  _componentsToTurnOffAndOn: []
+  _enemyScript: {fileID: 0}
+  _behaviourAgentComponent: {fileID: 0}
+  _navMeshAgentComponent: {fileID: 0}
+  _animationEventListenerScript: {fileID: 0}
   _bbPrefab: {fileID: 0}
   _wolfPrefab: {fileID: 0}
 --- !u!65 &1450113968
@@ -357882,7 +357942,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 0
-  _draugrPrefab: {fileID: 5482984775687511474, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
+  _sittingStatue: 0
+  hasSpawned: 0
+  _componentsToTurnOffAndOn: []
+  _enemyScript: {fileID: 0}
+  _behaviourAgentComponent: {fileID: 0}
+  _navMeshAgentComponent: {fileID: 0}
+  _animationEventListenerScript: {fileID: 0}
   _bbPrefab: {fileID: 0}
   _wolfPrefab: {fileID: 0}
 --- !u!65 &1467553822
@@ -372550,7 +372616,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 0
-  _draugrPrefab: {fileID: 5482984775687511474, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
+  _sittingStatue: 0
+  hasSpawned: 0
+  _componentsToTurnOffAndOn: []
+  _enemyScript: {fileID: 0}
+  _behaviourAgentComponent: {fileID: 0}
+  _navMeshAgentComponent: {fileID: 0}
+  _animationEventListenerScript: {fileID: 0}
   _bbPrefab: {fileID: 0}
   _wolfPrefab: {fileID: 0}
 --- !u!65 &1590077256
@@ -388757,7 +388829,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 0
-  _draugrPrefab: {fileID: 5482984775687511474, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
+  _sittingStatue: 0
+  hasSpawned: 0
+  _componentsToTurnOffAndOn: []
+  _enemyScript: {fileID: 0}
+  _behaviourAgentComponent: {fileID: 0}
+  _navMeshAgentComponent: {fileID: 0}
+  _animationEventListenerScript: {fileID: 0}
   _bbPrefab: {fileID: 0}
   _wolfPrefab: {fileID: 0}
 --- !u!65 &1746678497
@@ -397751,7 +397829,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 0
-  _draugrPrefab: {fileID: 5482984775687511474, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
+  _sittingStatue: 0
+  hasSpawned: 0
+  _componentsToTurnOffAndOn: []
+  _enemyScript: {fileID: 0}
+  _behaviourAgentComponent: {fileID: 0}
+  _navMeshAgentComponent: {fileID: 0}
+  _animationEventListenerScript: {fileID: 0}
   _bbPrefab: {fileID: 0}
   _wolfPrefab: {fileID: 0}
 --- !u!65 &1808108641
@@ -402045,7 +402129,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 0
-  _draugrPrefab: {fileID: 5482984775687511474, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
+  _sittingStatue: 0
+  hasSpawned: 0
+  _componentsToTurnOffAndOn: []
+  _enemyScript: {fileID: 0}
+  _behaviourAgentComponent: {fileID: 0}
+  _navMeshAgentComponent: {fileID: 0}
+  _animationEventListenerScript: {fileID: 0}
   _bbPrefab: {fileID: 0}
   _wolfPrefab: {fileID: 0}
 --- !u!65 &1844930646
@@ -407557,7 +407647,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 0
-  _draugrPrefab: {fileID: 5482984775687511474, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
+  _sittingStatue: 0
+  hasSpawned: 0
+  _componentsToTurnOffAndOn: []
+  _enemyScript: {fileID: 0}
+  _behaviourAgentComponent: {fileID: 0}
+  _navMeshAgentComponent: {fileID: 0}
+  _animationEventListenerScript: {fileID: 0}
   _bbPrefab: {fileID: 0}
   _wolfPrefab: {fileID: 0}
 --- !u!65 &1890912211
@@ -411643,7 +411739,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 0
-  _draugrPrefab: {fileID: 5482984775687511474, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
+  _sittingStatue: 0
+  hasSpawned: 0
+  _componentsToTurnOffAndOn: []
+  _enemyScript: {fileID: 0}
+  _behaviourAgentComponent: {fileID: 0}
+  _navMeshAgentComponent: {fileID: 0}
+  _animationEventListenerScript: {fileID: 0}
   _bbPrefab: {fileID: 0}
   _wolfPrefab: {fileID: 0}
 --- !u!65 &1933835290
@@ -413040,11 +413142,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 65b1d8df62cec7f4a94bedc033c2e0ae, type: 3}
   m_PrefabInstance: {fileID: 506605254}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &1951062328 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 415982103338417701, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
-  m_PrefabInstance: {fileID: 139670027}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1951333415
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -413228,7 +413325,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 0
-  _draugrPrefab: {fileID: 5482984775687511474, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
+  _sittingStatue: 0
+  hasSpawned: 0
+  _componentsToTurnOffAndOn: []
+  _enemyScript: {fileID: 0}
+  _behaviourAgentComponent: {fileID: 0}
+  _navMeshAgentComponent: {fileID: 0}
+  _animationEventListenerScript: {fileID: 0}
   _bbPrefab: {fileID: 0}
   _wolfPrefab: {fileID: 0}
 --- !u!65 &1952254113
@@ -428450,7 +428553,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 0
-  _draugrPrefab: {fileID: 5482984775687511474, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
+  _sittingStatue: 0
+  hasSpawned: 0
+  _componentsToTurnOffAndOn: []
+  _enemyScript: {fileID: 0}
+  _behaviourAgentComponent: {fileID: 0}
+  _navMeshAgentComponent: {fileID: 0}
+  _animationEventListenerScript: {fileID: 0}
   _bbPrefab: {fileID: 0}
   _wolfPrefab: {fileID: 0}
 --- !u!65 &2105938565
@@ -430692,7 +430801,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 0
-  _draugrPrefab: {fileID: 5482984775687511474, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
+  _sittingStatue: 0
+  hasSpawned: 0
+  _componentsToTurnOffAndOn: []
+  _enemyScript: {fileID: 0}
+  _behaviourAgentComponent: {fileID: 0}
+  _navMeshAgentComponent: {fileID: 0}
+  _animationEventListenerScript: {fileID: 0}
   _bbPrefab: {fileID: 0}
   _wolfPrefab: {fileID: 0}
 --- !u!65 &2124988353
@@ -430970,7 +431085,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 0
-  _draugrPrefab: {fileID: 5482984775687511474, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
+  _sittingStatue: 0
+  hasSpawned: 0
+  _componentsToTurnOffAndOn: []
+  _enemyScript: {fileID: 0}
+  _behaviourAgentComponent: {fileID: 0}
+  _navMeshAgentComponent: {fileID: 0}
+  _animationEventListenerScript: {fileID: 0}
   _bbPrefab: {fileID: 0}
   _wolfPrefab: {fileID: 0}
 --- !u!65 &2127233037

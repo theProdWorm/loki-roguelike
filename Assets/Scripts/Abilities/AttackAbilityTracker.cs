@@ -18,13 +18,13 @@ namespace Abilities
             _onAbilityUsed = onAbilityUsed;
         }
         
-        public override void TryUse()
+        public override bool TryUse()
         {
             if (_remainingCharges == 0)
-                return;
+                return false;
             
             if (_ability.RequireMaxCharges && _remainingCharges != _ability.MaxCharges)
-                return;
+                return false;
 
             int useTimes = _ability.Burst ? _ability.MaxCharges : 1;
             _remainingCharges -= useTimes;
@@ -33,6 +33,8 @@ namespace Abilities
                 _remainingCooldown = _ability.RechargeTime;
             
             _onAbilityUsed?.Invoke(_ability, useTimes);
+
+            return true;
         }
     }
 }
