@@ -238,6 +238,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 716418234235547627, guid: 7163adf2fa6c83e438a45d9a94e20a9c, type: 3}
   m_PrefabInstance: {fileID: 7409391163278084301}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &662485371 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6614262599961802294, guid: 8baf5fc89ebd34ebf84c2db016947b07, type: 3}
+  m_PrefabInstance: {fileID: 1639482283}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &666373075 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5482984775687511474, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
@@ -779,6 +784,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4597063657687429147, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
+      propertyPath: m_Graph
+      value: 
+      objectReference: {fileID: 8969039357860955026, guid: 265c3b15048d01a44a23768837f9fcd9, type: 2}
+    - target: {fileID: 4597063657687429147, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
+      propertyPath: m_BlackboardVariableOverridesList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5142170927920498440, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.66
@@ -1038,6 +1051,26 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6063700123519586618, guid: 8baf5fc89ebd34ebf84c2db016947b07, type: 3}
   m_PrefabInstance: {fileID: 1639482283}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1618642629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 662485371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 1
+  m_ApplyToChildren: 0
+  m_AffectedAgents: ffffffff
 --- !u!1001 &1620793274
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1131,6 +1164,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3630883098429402339, guid: 8baf5fc89ebd34ebf84c2db016947b07, type: 3}
+      propertyPath: m_NavMeshData
+      value: 
+      objectReference: {fileID: 23800000, guid: 0b07799c29adccc4e91f6f50e8ab0d93, type: 2}
     - target: {fileID: 6063700123519586618, guid: 8baf5fc89ebd34ebf84c2db016947b07, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.6234026
@@ -1188,7 +1225,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6063700123519586618, guid: 8baf5fc89ebd34ebf84c2db016947b07, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1338268997}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6614262599961802294, guid: 8baf5fc89ebd34ebf84c2db016947b07, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1618642629}
   m_SourcePrefab: {fileID: 100100000, guid: 8baf5fc89ebd34ebf84c2db016947b07, type: 3}
 --- !u!1 &1690590015
 GameObject:
@@ -1675,7 +1715,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09c5db9f2aa409b43a3c8d5293759230, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Enemies: 0000000000000000000000000000000000000000
+  Enemies: 000000000000000000000000
 --- !u!1 &2112481182
 GameObject:
   m_ObjectHideFlags: 0

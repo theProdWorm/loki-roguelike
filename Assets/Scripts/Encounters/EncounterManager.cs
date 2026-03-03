@@ -176,7 +176,10 @@ public class EncounterManager : MonoBehaviour
             }
 
             else
+            {
                 i--;
+                Debug.Log("entity returned null");
+            }
         }
         _isSpawning = false;
     }
@@ -201,7 +204,9 @@ public class EncounterManager : MonoBehaviour
 
     private Entity SpawnDraugr()
     {
+        Entity entity = null;
         int r = Random.Range(1, 101);
+        Debug.Log(r + ", " + _draugrSpawnPoints.Count);
         if (r > _chanceForDraugrToRunThroughDoor) //If Draugr chooses to rather not run through door then run this code. Otherwise go directly to the Force Door region
         {
             #region Distance Checks
@@ -254,10 +259,11 @@ public class EncounterManager : MonoBehaviour
 
             #region Search everywhere
 
-            r = Random.Range(0, _draugrSpawnPoints.Count - 1);
-
+            r = Random.Range(0, _draugrSpawnPoints.Count);
+            Debug.Log(r + ", " + _draugrSpawnPoints.Count);
+            entity = _draugrSpawnPoints[r].GetComponent<SpawnPoint>().Spawn();
             _draugrSpawnPoints.RemoveAt(r);
-            return _draugrSpawnPoints[r].GetComponent<SpawnPoint>().Spawn(); ;
+            return entity;
 
             #endregion
         }

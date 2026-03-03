@@ -48,8 +48,8 @@ public class SpawnPoint : MonoBehaviour
     {
         switch (_enemyType)
         {
-            //case EncounterManager.EnemyTypes.Draugr:
-            //    return SpawnDraugr();
+            case EncounterManager.EnemyTypes.Draugr:
+                return SpawnDraugr();
             case EncounterManager.EnemyTypes.BirdOnBird:
                 return SpawnBirdOnBird();
             case EncounterManager.EnemyTypes.Wolf:
@@ -78,6 +78,9 @@ public class SpawnPoint : MonoBehaviour
         _animatorSpeed = animator.speed;
         animator.speed = 0f;
 
+        Enemy enemyScript = GetComponent<Enemy>();
+        enemyScript.HasSpawned = false;
+
         //TODO: Pick a random frame in the animation
     }
 
@@ -87,9 +90,6 @@ public class SpawnPoint : MonoBehaviour
         if (hasSpawned) return null;
         hasSpawned = true;
 
-        GetComponent<MeshRenderer>().enabled = false;
-        GetComponent<Collider>().enabled = false;
-
         Entity _entity = GetComponent<Entity>();
 
         #region Ugly solution
@@ -98,6 +98,13 @@ public class SpawnPoint : MonoBehaviour
         _navMeshAgentComponent.enabled = true;
         _animationEventListenerScript.enabled = true;
         #endregion
+
+        animator.SetBool("HasSpawned", true);
+
+        animator.speed = _animatorSpeed;
+
+        Enemy enemyScript = GetComponent<Enemy>();
+        enemyScript.HasSpawned = true;
 
         return _entity;
     }
