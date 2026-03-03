@@ -6,9 +6,6 @@ namespace Abilities
     public class CharacterAbilitySet : ScriptableObject
     {
         public Ability Attack;
-        public Ability Special;
-        
         public Ability Switch;
-        public Ability Ultimate;
     }
 }

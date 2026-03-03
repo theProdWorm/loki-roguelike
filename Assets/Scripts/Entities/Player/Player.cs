@@ -14,6 +14,8 @@ namespace Entities.Player
     [RequireComponent(typeof(Rigidbody))]
     public class Player : Entity
     {
+        public enum Character { Fenrir, Hel }
+        
         private static readonly int IS_MOVING = Animator.StringToHash("isMoving");
         private static readonly int DASH      = Animator.StringToHash("dash");
         private static readonly int ATTACK    = Animator.StringToHash("attack");
@@ -23,10 +25,12 @@ namespace Entities.Player
         public UnityEvent<int, int> OnHealthChanged;
         public UnityEvent<int, int> OnPotionChargesChanged;
         
-        public enum Character { Fenrir, Hel }
         
         [SerializeField] private Transform _characterContainer;
         [SerializeField] private PlayerInput _playerInput;
+
+        [Header("Movement")]
+        [SerializeField] private float _animationLockMoveSpeedFadeDuration;
         
         [Header("Collision")]
         [SerializeField] private CapsuleCollider _collider;
@@ -94,8 +98,8 @@ namespace Entities.Player
         private Vector3 AttackPosition => _attackPoints[(int) ActiveCharacter].position;
         private Vector3 SpecialPosition => _specialPoint[(int) ActiveCharacter].position;
         
-        private AbilityStats _currentAttackStats;
-        private int          _currentAttackUseTimes;
+        private Ability _currentAbility;
+        private int     _currentAbilityUseTimes;
         
         private PlayerBaseStats _playerBaseStats;
         
@@ -117,9 +121,9 @@ namespace Entities.Player
         private float _originalMoveSpeed;
         private Coroutine _dashCoroutine;
 
-        private bool _charging;
-        private bool _hasControl = true;
-        private bool _isDashing;
+        private bool  _isDashing;
+        private bool  _hasControl = true;
+        private float _controlLossDuration;
         
         private List<IInteractable> _interactables = new();
         private IInteractable _currentInteractable;
@@ -132,10 +136,11 @@ namespace Entities.Player
             
             _camera = Camera.main!;
             
-            _originalDashDistance = Vector3.Distance(transform.position, _dashPoint.position);
-
             _playerBaseStats = (PlayerBaseStats) EntityBaseStats;
             InitializeBaseStats();
+            
+            _originalMoveSpeed = _moveSpeed;
+            _originalDashDistance = Vector3.Distance(transform.position, _dashPoint.position);
             
             InitializeAbilityTrackers();
             InitializeAttackPoints();
@@ -157,16 +162,9 @@ namespace Entities.Player
                 new(_fenrirAbilities.Attack, (ability, action) =>
                     StartAttack(ability, action, ATTACK)),
                 new(_helAbilities.Attack, (ability, action) =>
-                {
-                    StartAttack(ability, action, ATTACK);
-                    OnHelAttackReleased?.Invoke();
-                })
+                    StartAttack(ability, action, ATTACK))
             };
 
-            // Subscribe to Hel's attack input change
-            _attackAbilityTrackers[1].OnInputStageChanged += () => OnHelAttackStageChanged?.Invoke();
-            _attackAbilityTrackers[1].OnFullyCharged += () => OnHelAttackFullyCharged?.Invoke();
-            
             _specialAbilityTrackers = new AttackAbilityTracker[]
             {
                 // new(_fenrirAbilities.Special, (ability, action) =>
@@ -225,6 +223,23 @@ namespace Entities.Player
                 abilityTracker.Update();
             
             _dashAbilityTracker.Update();
+
+            if (!_hasControl && !_isDashing)
+            {
+                if (_animationLockMoveSpeedFadeDuration == 0)
+                {
+                    _moveSpeed = 0;
+                }
+                else
+                {
+                    float t = Mathf.Clamp01(_controlLossDuration / _animationLockMoveSpeedFadeDuration);
+                    _moveSpeed = Mathf.Lerp(_originalMoveSpeed, 0, t);
+                }
+            }
+            else if (!_isDashing)
+            {
+                _moveSpeed = _originalMoveSpeed;
+            }
             
             MoveAndRotate();
             
@@ -232,6 +247,11 @@ namespace Entities.Player
             
             if(_interactables.Count > 0)
                 FindMainInteractable();
+            
+            if (!_hasControl)
+                _controlLossDuration += Time.deltaTime;
+            else
+                _controlLossDuration = 0;
         }
 
         private void MoveAndRotate()
@@ -242,29 +262,29 @@ namespace Entities.Player
             var forwardDirection = (cameraForward - downProjection).normalized;
             var rightDirection = _camera.transform.right.normalized;
             
-            Vector2 moveVector = _isDashing ? _dashInputSnapshot : _hasControl ? _moveInput : Vector2.zero;
+            Vector2 moveVector = _isDashing ? _dashInputSnapshot : _moveInput;
             
             Vector3 movementX = moveVector.x * rightDirection;
             Vector3 movementZ = moveVector.y * forwardDirection;
             
             Vector3 movement = _moveSpeed * (movementX + movementZ).normalized;
             
-            _rigidbody.linearVelocity = _charging ? Vector3.zero : movement;
+            _rigidbody.linearVelocity = movement;
             
             transform.LookAt(transform.position + movement);
         }
 
-        private void StartAttack(AbilityStats stats, int useTimes, int animatorHash)
+        private void StartAttack(Ability ability, int useTimes, int animatorHash)
         {
-            _currentAttackStats = stats;
-            _currentAttackUseTimes = useTimes;
+            _currentAbility = ability;
+            _currentAbilityUseTimes = useTimes;
             
             CurrentAnimator.SetTrigger(animatorHash);
         }
         
         public void PerformAttack()
         {
-            var stats = _currentAttackStats;
+            var stats = _currentAbility;
             
             var attackStats = new AttackStats(
                 stats.AttackPrefab, 
@@ -275,7 +295,7 @@ namespace Entities.Player
             var position = AttackPosition;
 
             if (stats.Burst)
-                StartCoroutine(AttackCoroutine(attackStats, _currentAttackUseTimes, 
+                StartCoroutine(AttackCoroutine(attackStats, _currentAbilityUseTimes, 
                     stats.BurstDelay, stats.SpreadAngle, position));
             else
                 Attack.Create(this, position, transform.rotation, attackStats);
@@ -283,7 +303,7 @@ namespace Entities.Player
 
         public void PerformSpecial()
         {
-            var stats = _currentAttackStats;
+            var stats = _currentAbility;
             
             var specialStats = new AttackStats(
                 stats.AttackPrefab, 
@@ -294,7 +314,7 @@ namespace Entities.Player
             var position = _specialPoint[(int) ActiveCharacter].position;
 
             if (stats.Burst)
-                StartCoroutine(AttackCoroutine(specialStats, _currentAttackUseTimes, 
+                StartCoroutine(AttackCoroutine(specialStats, _currentAbilityUseTimes, 
                     stats.BurstDelay, stats.SpreadAngle, position));
             else
                 Attack.Create(this, position, transform.rotation, specialStats);
@@ -429,7 +449,6 @@ namespace Entities.Player
             float dashDuration = _dashDuration * dashDistanceFraction;
             
             float dashSpeed = actualDashDistance / dashDuration;
-            _originalMoveSpeed = _moveSpeed;
             _moveSpeed = dashSpeed;
 
             yield return new WaitForSeconds(dashDuration);
@@ -586,10 +605,10 @@ namespace Entities.Player
 
         public void AttackInput(InputAction.CallbackContext context)
         {
-            if (!_hasControl) 
+            if (!_hasControl || !context.performed)
                 return;
             
-            _charging = AttackAbilityTracker.RegisterInput(context);
+            AttackAbilityTracker.TryUse();
         }
 
         public void SpecialInput(InputAction.CallbackContext context)
@@ -597,7 +616,7 @@ namespace Entities.Player
             if (!_hasControl) 
                 return;
             
-            _charging = SpecialAbilityTracker.RegisterInput(context);
+            SpecialAbilityTracker.TryUse();
         }
 
         public void HealInput(InputAction.CallbackContext context)
@@ -616,7 +635,7 @@ namespace Entities.Player
             if (!_hasControl) 
                 return;
             
-            _dashAbilityTracker.RegisterInput(context);
+            _dashAbilityTracker.TryUse();
         }
 
         public void SwitchInput(InputAction.CallbackContext context)

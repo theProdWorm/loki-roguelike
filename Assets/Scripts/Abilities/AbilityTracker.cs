@@ -6,9 +6,6 @@ namespace Abilities
 {
     public class AbilityTracker
     {
-        public Action OnInputStageChanged;
-        public Action OnFullyCharged;
-        
         private readonly Action _onAbilityUsed;
         
         protected readonly Ability _ability;
@@ -16,19 +13,13 @@ namespace Abilities
         protected float _remainingCooldown;
         protected int   _remainingCharges;
 
-        protected bool  _holdingInput;
-        protected float _inputDuration;
-
-        protected float _nextInputTime;
-        protected int   _nextInputIndex;
-        
         public AbilityTracker(Ability ability, Action onAbilityUsed)
         {
             _ability = ability;
             
             _onAbilityUsed = onAbilityUsed;
             
-            _remainingCharges = ability.Charges;
+            _remainingCharges = ability.MaxCharges;
         }
 
         protected AbilityTracker(Ability ability)
@@ -38,26 +29,7 @@ namespace Abilities
 
         public void Update()
         {
-            if (_holdingInput)
-            {
-                _inputDuration += Time.deltaTime;
-
-                if (_inputDuration >= _nextInputTime)
-                {
-                    if (_nextInputIndex < _ability.Stages.Count - 1)
-                        OnInputStageChanged?.Invoke();
-                    else
-                        OnFullyCharged?.Invoke();
-
-                    _nextInputTime = _nextInputIndex < _ability.Stages.Count - 2
-                        ? _ability.Stages[++_nextInputIndex].InputTime
-                        : int.MaxValue;
-                }
-                
-                return;
-            }
-
-            if (_remainingCharges == _ability.Charges)
+            if (_remainingCharges == _ability.MaxCharges)
                 return;
             
             _remainingCooldown -= Time.deltaTime;
@@ -66,69 +38,32 @@ namespace Abilities
             
             if (_ability.SimultaneousRecharge)
             {
-                _remainingCharges = _ability.Charges;
+                _remainingCharges = _ability.MaxCharges;
             }
             else
             {
                 _remainingCharges++;
 
-                if (_remainingCharges != _ability.Charges)
-                    _remainingCooldown = _ability.Stages[0].Stats.RechargeTime;
+                if (_remainingCharges != _ability.MaxCharges)
+                    _remainingCooldown = _ability.RechargeTime;
             }
         }
 
-        public virtual bool RegisterInput(InputAction.CallbackContext context)
-        {
-            if (context.started)
-            {
-                if (_remainingCharges == 0)
-                    return _holdingInput;
-
-                if (_ability.Stages.Count == 1 && TryUse())
-                {
-                    _onAbilityUsed();
-                }
-                else
-                {
-                    _holdingInput = true;
-                    
-                    OnInputStageChanged?.Invoke();
-                    _nextInputIndex = 1;
-                    _nextInputTime = _ability.Stages[_nextInputIndex].InputTime;
-                }
-            }
-            else if (context.canceled && _holdingInput)
-            {
-                if (TryUse())
-                    _onAbilityUsed();
-                
-                _inputDuration = 0;
-                
-                _holdingInput = false;
-            }
-
-            return _holdingInput;
-        }
-        
-        private bool TryUse()
+        public virtual void TryUse()
         {
             if (_remainingCharges == 0)
-                return false;
+                return;
             
-            var stats = _ability.GetStats(_inputDuration);
-            if (stats == null)
-                return false;
-            
-            if (stats.RequireMaxCharges && _remainingCharges != _ability.Charges)
-                return false;
+            if (_ability.RequireMaxCharges && _remainingCharges != _ability.MaxCharges)
+                return;
 
-            int useTimes = stats.Burst ? _ability.Charges : 1;
+            int useTimes = _ability.Burst ? _ability.MaxCharges : 1;
             _remainingCharges -= useTimes;
             
             if (_ability.SimultaneousRecharge || _remainingCooldown <= 0)
-                _remainingCooldown = stats.RechargeTime;
+                _remainingCooldown = _ability.RechargeTime;
             
-            return true;
+            _onAbilityUsed?.Invoke();
         }
     }
 }

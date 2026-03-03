@@ -7,22 +7,24 @@ namespace Abilities
     [CreateAssetMenu(fileName = "New Ability", menuName = "Abilities/Ability")]
     public class Ability : ScriptableObject
     {
+        public GameObject AttackPrefab;
+        
+        [Header("Charges")]
+        public int  MaxCharges = 1;
+        [Tooltip("Time between charges in seconds.")]
+        public float RechargeTime;
         [Tooltip("If enabled, regains all charges at once when cooldown ends.")]
         public bool SimultaneousRecharge;
-        public int  Charges;
-        
-        [FormerlySerializedAs("AbilityStats")]
-        public List<AbilitySelector> Stages;
+        [Tooltip("Disallows using the ability unless max amount of charges are available.")]
+        public bool  RequireMaxCharges;
 
-        public AbilityStats GetStats(float inputDuration)
-        {
-            for (int i = Stages.Count - 1; i >= 0; i--)
-            {
-                if (inputDuration >= Stages[i].InputTime)
-                    return Stages[i].Stats;
-            }
+        [Header("Burst")]
+        [Tooltip("Whether to use all charges at once.")]
+        public bool  Burst;
+        [Tooltip("Time between charge uses in a burst.")]
+        public float BurstDelay;
 
-            return null;
-        }
+        [Tooltip("Angle in degrees between each attack in a spread.")]
+        public float SpreadAngle;
     }
 }

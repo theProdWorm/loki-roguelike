@@ -14707,6 +14707,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2078383021}
     - target: {fileID: 3904859379294053273, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
+      propertyPath: _animationLockMoveSpeedFadeDuration
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3904859379294053273, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
       propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1002335975}
@@ -293087,6 +293091,7 @@ MonoBehaviour:
   _rotationSpeed: 200
   _minPitch: 40
   _maxPitch: 65
+  _shakeIntensity: 1
 --- !u!1001 &835037071
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -392911,6 +392916,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3606328734726754602, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5142170927920498440, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 111.922295
@@ -392961,6 +392970,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5535045179516462661, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8275266778632475921, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8275266778632475921, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8275266778632475921, guid: a2bbad947ceb3ea4d978f65ea34e08a3, type: 3}
+      propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
