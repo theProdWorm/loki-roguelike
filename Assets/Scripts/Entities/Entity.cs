@@ -33,7 +33,7 @@ namespace Entities
         protected Vector3 _knockbackForce;
         private Coroutine _knockbackCoroutine;
         
-        private bool _isDead;
+        protected bool _isDead;
         
         private StatusEffectList _statusEffects;
 

@@ -20,7 +20,10 @@ namespace Entities
         private BehaviorGraphAgent AiAgent;
         private NavMeshAgent navAgent;
         private AttackStats attackStats;
-
+        private bool ragdollAcive;
+        private float ragdollTimeLeft;
+        
+        [SerializeField] private float ragdollDuration;
         [SerializeField] private Transform attackPoint;
         [SerializeField] private float rotationSpeed = 5;
         [SerializeField] private GameObject attackPrefab;
@@ -61,6 +64,22 @@ namespace Entities
 
         protected override void Update()
         {
+            if (_isDead)
+            {
+                if (ragdollAcive)
+                {
+                    if (ragdollTimeLeft > 0)
+                    {
+                        ragdollTimeLeft -= Time.deltaTime;
+                    }
+                    else
+                    {
+                        ragdollAcive = false;
+                        Destroy(gameObject);
+                    }
+                }
+                return;
+            }
             base.Update();
 
             //navAgent.speed = _moveSpeed;
@@ -102,7 +121,7 @@ namespace Entities
             AiAgent.End();
             navAgent.enabled = false;
             tag = "Untagged";
-            enabled = false;
+            //enabled = false;
             //TODO Destroy upon ragdoll deletion
             Destroy(AiAgent);
             Destroy(navAgent);
@@ -115,6 +134,9 @@ namespace Entities
                 rbC.gameObject.SetActive(true);
                 rbC.isKinematic = false;
             }
+
+            ragdollAcive = true;
+            ragdollTimeLeft = ragdollDuration;
         }
 
         public override int TakeDamage(int amount, Entity attacker)
