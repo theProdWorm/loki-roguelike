@@ -29,6 +29,7 @@ namespace Entities.Player
         [SerializeField] private Transform _characterContainer;
         [SerializeField] private PlayerInput _playerInput;
 
+        [Tooltip("Amount of time (in seconds) in advance the player can press an input for it to count.")]
         [SerializeField] private float _inputBufferMargin;
         
         [Header("Movement")]
@@ -36,7 +37,6 @@ namespace Entities.Player
         
         [Header("Collision")]
         [SerializeField] private CapsuleCollider _collider;
-        [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private Transform _frontCollisionPoint;
 
         [SerializeField] private LayerMask _wallLayer;
@@ -214,7 +214,7 @@ namespace Entities.Player
             _critDamage = _playerBaseStats.CritDamage;
         }
         
-        public void LoseControl() => _hasControl = false;
+        public void LoseControl() => _hasControl = true;
         public void GainControl() => _hasControl = true;
         
         public void SetDashing(bool isDashing) => _isDashing = isDashing;
@@ -279,9 +279,9 @@ namespace Entities.Player
             
             Vector3 movement = _moveSpeed * (movementX + movementZ).normalized;
             
-            _rigidbody.linearVelocity = movement;
+            _rigidbody.linearVelocity = movement + _knockbackForce;
             
-            transform.LookAt(transform.position + movement);
+            transform.LookAt(transform.position + _rigidbody.linearVelocity);
         }
 
         private void StartAttack(Ability ability, int useTimes, int animatorHash)
@@ -441,7 +441,7 @@ namespace Entities.Player
                 CurrentAnimator.SetTrigger(DASH);
             
             _isDashing = true;
-            _hasControl = false;
+            _hasControl = true;
             _dashInputSnapshot = _lastMoveInput;
 
             int defaultPlayerLayer = gameObject.layer;

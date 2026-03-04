@@ -1,3 +1,4 @@
+using System.Collections;
 using Entities.Stats;
 using StatusEffects;
 using UnityEngine;
@@ -8,6 +9,7 @@ namespace Entities
     [RequireComponent(typeof(Rigidbody))]
     public abstract class Entity : MonoBehaviour
     {
+        [SerializeField] protected Rigidbody _rigidbody;
         [SerializeField] public EntityBaseStats EntityBaseStats;
 
         public UnityEvent<Entity> OnDeath;
@@ -27,6 +29,9 @@ namespace Entities
         protected int _currentHealth;
         
         protected float _damageTakenMultiplier = 1f;
+
+        protected Vector3 _knockbackForce;
+        private Coroutine _knockbackCoroutine;
         
         private bool _isDead;
         
@@ -47,7 +52,7 @@ namespace Entities
         {
             _statusEffects.Update();
         }
-        
+
         protected virtual void InitializeBaseStats()
         {
             _baseMaxHealth = EntityBaseStats.MaxHealth;
@@ -113,6 +118,36 @@ namespace Entities
             _isDead = true;
             
             OnDeath?.Invoke(this);
+        }
+
+        public void KnockBack(Vector3 direction, float force, float duration)
+        {
+            if (_knockbackCoroutine != null)
+            {
+                StopCoroutine(_knockbackCoroutine);
+                _knockbackCoroutine = null;
+            }
+            
+            _knockbackForce = direction * force;
+            _knockbackCoroutine = StartCoroutine(KnockBackFadeCoroutine(direction, force, duration));
+        }
+
+        private IEnumerator KnockBackFadeCoroutine(Vector3 direction, float originalForce, float duration)
+        {
+            float elapsedTime = 0;
+            while (elapsedTime < duration)
+            {
+                elapsedTime += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsedTime / duration);
+
+                float force = originalForce * Mathf.Abs(Mathf.Pow(t, 3) - 1);
+                _knockbackForce = force * direction;
+                
+                yield return null;
+            }
+            
+            _knockbackForce = Vector3.zero;
+            _knockbackCoroutine = null;
         }
     }
 }

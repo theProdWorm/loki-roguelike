@@ -11,7 +11,8 @@ namespace Abilities.Attacks
         public UnityEvent OnAttackFinished;
 
         [SerializeField] private float _damageMultiplier;
-
+        [SerializeField] private float _knockbackForce;
+        
         private int _damage;
 
         protected AttackStats _stats;
@@ -60,6 +61,9 @@ namespace Abilities.Attacks
             bool crit = Random.Range(0f, 100f) <= _stats.CritChance;
             int damage = Mathf.CeilToInt(_damage * (crit ? _stats.CritDamage : 1));
             entity.TakeDamage(damage, _owner);
+            
+            Vector3 knockbackDirection = (entity.transform.position - _owner.transform.position).normalized;
+            entity.KnockBack(knockbackDirection, _knockbackForce, 0.1f);
             
             OnHitEntity?.Invoke(entity, damage);
             

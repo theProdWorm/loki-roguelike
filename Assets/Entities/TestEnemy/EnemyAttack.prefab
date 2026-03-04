@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7535881081912902303}
-  - component: {fileID: 2174380459656263597}
+  - component: {fileID: 1483233948092608136}
   - component: {fileID: 9004534221801598423}
   - component: {fileID: 5988789041793878006}
   m_Layer: 10
@@ -34,8 +34,8 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &2174380459656263597
-BoxCollider:
+--- !u!135 &1483233948092608136
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -53,7 +53,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &9004534221801598423
 MonoBehaviour:
@@ -68,9 +68,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OnHitEntity:
-    m_PersistentCalls:
-      m_Calls: []
-  OnHitEntityWithDamage:
     m_PersistentCalls:
       m_Calls: []
   OnAttackFinished:
@@ -89,6 +86,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   _damageMultiplier: 1
+  _knockbackForce: 50
 --- !u!114 &5988789041793878006
 MonoBehaviour:
   m_ObjectHideFlags: 0
