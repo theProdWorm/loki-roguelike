@@ -22,7 +22,7 @@ namespace Abilities
         {
             if (_remainingCharges == 0)
                 return false;
-            
+
             if (_ability.RequireMaxCharges && _remainingCharges != _ability.MaxCharges)
                 return false;
 

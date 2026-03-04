@@ -94,9 +94,11 @@ namespace Entities.Player
         
         private AttackAbilityTracker[] _attackAbilityTrackers;
         private AttackAbilityTracker[] _specialAbilityTrackers;
+        private AttackAbilityTracker[] _switchAbilityTrackers;
         private AbilityTracker _dashAbilityTracker;
         private AttackAbilityTracker AttackAbilityTracker => _attackAbilityTrackers[(int) ActiveCharacter];
         private AttackAbilityTracker SpecialAbilityTracker => _specialAbilityTrackers[(int) ActiveCharacter];
+        private AttackAbilityTracker SwitchAbilityTracker => _switchAbilityTrackers[(int) ActiveCharacter];
 
         private Transform[] _attackPoints;
         private Transform[] _specialPoint;
@@ -158,11 +160,9 @@ namespace Entities.Player
             
             OnDamageDealt.AddListener(AddPotionCharges);
             
-            CharacterIndexChanged();
-
             //Sync the health UI at the start
             OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
-            CharacterIndexChanged(false);
+            CharacterIndexChanged();
         }
 
         private void InitializeAbilityTrackers()
@@ -175,12 +175,12 @@ namespace Entities.Player
                     StartAttack(ability, action, ATTACK))
             };
 
-            _specialAbilityTrackers = new AttackAbilityTracker[]
+            _switchAbilityTrackers = new AttackAbilityTracker[]
             {
-                // new(_fenrirAbilities.Special, (ability, action) =>
-                //     StartAttack(ability, action, SPECIAL)),
-                // new(_helAbilities.Special, (ability, action) =>
-                //     StartAttack(ability, action, SPECIAL))
+                new(_fenrirAbilities.Switch, (ability, action) =>
+                    StartAttack(ability, action, SWITCH)),
+                new(_helAbilities.Switch, (ability, action) =>
+                    StartAttack(ability, action, SWITCH))
             };
 
             _dashAbilityTracker = new(_dashAbility, () => PerformDash(_dashPoint.position, true));
@@ -231,10 +231,10 @@ namespace Entities.Player
             if (_hasControl)
                 _inputBuffer.NextInput();
             
-            foreach (var abilityTracker in _attackAbilityTrackers)
-                abilityTracker.Update();
-            foreach (var abilityTracker in _specialAbilityTrackers)
-                abilityTracker.Update();
+            foreach (var attackAbilityTracker in _attackAbilityTrackers)
+                attackAbilityTracker.Update();
+            foreach (var switchAbilityTracker in _switchAbilityTrackers)
+                switchAbilityTracker.Update();
             
             _dashAbilityTracker.Update();
 
@@ -292,29 +292,28 @@ namespace Entities.Player
 
         private void StartAttack(Ability ability, int useTimes, int animatorHash)
         {
-            PerformAttackLunge();
-            
             _currentAbility = ability;
             _currentAbilityUseTimes = useTimes;
             
             CurrentAnimator.SetTrigger(animatorHash);
         }
         
-        public void PerformAttack()
+        public void PerformAttack(Transform attackPoint)
         {
-            var stats = _currentAbility;
+            if (!_currentAbility)
+                return;
             
             var attackStats = new AttackStats(
-                stats.AttackPrefab, 
+                _currentAbility.AttackPrefab, 
                 _damage, 
                 _critChance, 
                 _critDamage);
 
-            var position = AttackPosition;
-
-            if (stats.Burst)
+            var position = attackPoint.position;
+            
+            if (_currentAbility.Burst)
                 StartCoroutine(AttackCoroutine(attackStats, _currentAbilityUseTimes, 
-                    stats.BurstDelay, stats.SpreadAngle, position));
+                    _currentAbility.BurstDelay, _currentAbility.SpreadAngle, position));
             else
                 Attack.Create(this, position, transform.rotation, attackStats);
         }
@@ -332,26 +331,7 @@ namespace Entities.Player
                     break;
             }
         }
-
-        public void PerformSpecial()
-        {
-            var stats = _currentAbility;
-            
-            var specialStats = new AttackStats(
-                stats.AttackPrefab, 
-                _damage, 
-                _critChance, 
-                _critDamage);
-
-            var position = _specialPoint[(int) ActiveCharacter].position;
-
-            if (stats.Burst)
-                StartCoroutine(AttackCoroutine(specialStats, _currentAbilityUseTimes, 
-                    stats.BurstDelay, stats.SpreadAngle, position));
-            else
-                Attack.Create(this, position, transform.rotation, specialStats);
-        }
-
+        
         private IEnumerator AttackCoroutine(AttackStats stats, int times, float delay, float spreadAngle, Vector3 position)
         {
             float halfAngle = spreadAngle * (times - 1) * 0.5f;
@@ -536,7 +516,7 @@ namespace Entities.Player
             OnPotionChargesChanged?.Invoke(_potionCharges, _maxPotionCharges);
         }
 
-        private void CharacterIndexChanged(bool triggerSwitch = true)
+        private void CharacterIndexChanged()
         {
             for (int i = 0; i < _characterContainer.childCount; i++)
             {
@@ -545,11 +525,6 @@ namespace Entities.Player
                 var character = _characterContainer.GetChild(i);
                 character.gameObject.SetActive(activeState);
             }
-
-            if (!triggerSwitch)
-                return;
-            
-            CurrentAnimator.SetTrigger(SWITCH);
         }
 
         #region Collision
@@ -639,7 +614,6 @@ namespace Entities.Player
                 return;
 
             _inputBuffer.Add(AttackAbilityTracker.TryUse);
-
         }
 
         public void SpecialInput(InputAction.CallbackContext context)
@@ -676,13 +650,25 @@ namespace Entities.Player
 
         public void SwitchInput(InputAction.CallbackContext context)
         {
-            if (!_hasControl) 
+            if (!context.performed) 
                 return;
             
-            int characterIndex = (int) ++ActiveCharacter % 2;
-            ActiveCharacter = (Character) characterIndex;
-            
-            CharacterIndexChanged();
+            _inputBuffer.Add(() =>
+            {
+                ActiveCharacter = (Character) ((int) ++ActiveCharacter % 2);
+
+                if (!SwitchAbilityTracker.TryUse())
+                {
+                    ActiveCharacter = (Character) ((int) ++ActiveCharacter % 2);
+                    return false;
+                }
+
+                foreach (var tracker in _switchAbilityTrackers)
+                    tracker.Reset();
+                
+                CharacterIndexChanged();
+                return true;
+            });
         }
         #endregion
     }

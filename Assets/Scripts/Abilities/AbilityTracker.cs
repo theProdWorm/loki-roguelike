@@ -25,6 +25,14 @@ namespace Abilities
         protected AbilityTracker(Ability ability)
         {
             _ability = ability;
+            
+            _remainingCharges = ability.MaxCharges;
+        }
+
+        public void Reset()
+        {
+            _remainingCooldown = _ability.RechargeTime;
+            _remainingCharges  = 0;
         }
 
         public void Update()
