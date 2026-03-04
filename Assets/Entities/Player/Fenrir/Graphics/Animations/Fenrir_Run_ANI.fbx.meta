@@ -15,16 +15,14 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
-    motionNodeName: 
+    motionNodeName: Root_Jnt
     animationImportErrors: 
     animationImportWarnings: "\nClip 'Run_ANI' has import animation warnings that
       might lower retargeting quality:\nNote: Activate translation DOF on avatar
-      to improve retargeting quality.\n\t'L_Foot_Jnt' is inbetween humanoid transforms
-      and has rotation animation that will be discarded.\n\t'Spine_Jnt' has translation
-      animation that will be discarded.\n\t'R_Foot_Jnt' is inbetween humanoid transforms
-      and has rotation animation that will be discarded.\n"
+      to improve retargeting quality.\n\t'Spine_Jnt' has translation animation that
+      will be discarded.\n"
     animationRetargetingWarnings: 
-    animationDoRetargetingWarnings: 0
+    animationDoRetargetingWarnings: 1
     importAnimatedCustomProperties: 0
     importConstraints: 0
     animationCompression: 0
@@ -50,11 +48,11 @@ ModelImporter:
       loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 1
-      keepOriginalPositionY: 0
-      keepOriginalPositionXZ: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
       heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
@@ -258,7 +256,7 @@ ModelImporter:
         value: {x: 0, y: 0, z: 0}
         length: 0
         modified: 0
-    - boneName: L_Toe_Jnt
+    - boneName: L_Foot_Jnt
       humanName: LeftToes
       limit:
         min: {x: 0, y: 0, z: 0}
@@ -266,7 +264,7 @@ ModelImporter:
         value: {x: 0, y: 0, z: 0}
         length: 0
         modified: 0
-    - boneName: R_Toe_Jnt
+    - boneName: R_Foot_Jnt
       humanName: RightToes
       limit:
         min: {x: 0, y: 0, z: 0}
