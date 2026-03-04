@@ -72,13 +72,17 @@ namespace Entities.Player
         [SerializeField] private Animator  _fenrirAnimator;
         [SerializeField] private Transform _fenrirAttackPoint;
         [SerializeField] private Transform _fenrirSpecialPoint;
-        [SerializeField] private Transform _fenrirAttackDashPoint;
+        [SerializeField] private float     _fenrirLungeForce;
+        [SerializeField] private float     _fenrirLungeDuration;
         
         [Header("Hel")]
         [SerializeField] private CharacterAbilitySet _helAbilities;
         [SerializeField] private Animator  _helAnimator;
         [SerializeField] private Transform _helAttackPoint;
         [SerializeField] private Transform _helSpecialPoint;
+        [SerializeField] private float     _helLungeForce;
+        [SerializeField] private float     _helLungeDuration;
+            
         public UnityEvent OnHelAttackStageChanged;
         public UnityEvent OnHelAttackFullyCharged;
         public UnityEvent OnHelAttackReleased;
@@ -279,13 +283,17 @@ namespace Entities.Player
             
             Vector3 movement = _moveSpeed * (movementX + movementZ).normalized;
             
-            _rigidbody.linearVelocity = movement + _knockbackForce;
+            _rigidbody.linearVelocity = movement;
             
-            transform.LookAt(transform.position + _rigidbody.linearVelocity);
+            transform.LookAt(transform.position + movement);
+
+            _rigidbody.linearVelocity += _knockbackForce;
         }
 
         private void StartAttack(Ability ability, int useTimes, int animatorHash)
         {
+            PerformAttackLunge();
+            
             _currentAbility = ability;
             _currentAbilityUseTimes = useTimes;
             
@@ -309,6 +317,20 @@ namespace Entities.Player
                     stats.BurstDelay, stats.SpreadAngle, position));
             else
                 Attack.Create(this, position, transform.rotation, attackStats);
+        }
+        
+        public void PerformAttackLunge()
+        {
+            switch (ActiveCharacter)
+            {
+                default:
+                case Character.Fenrir:
+                    KnockBack(transform.forward, _fenrirLungeForce, _fenrirLungeDuration);
+                    break;
+                case Character.Hel:
+                    KnockBack(-transform.forward, _helLungeForce, _helLungeDuration);
+                    break;
+            }
         }
 
         public void PerformSpecial()
@@ -345,8 +367,6 @@ namespace Entities.Player
                     yield return new WaitForSeconds(delay);
             }
         }
-
-        public void PerformAttackDash() => PerformDash(_fenrirAttackDashPoint.position, false);
         
         private void PerformDash(Vector3 dashPoint, bool animate)
         {

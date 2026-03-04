@@ -14644,6 +14644,22 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2078383021}
     - target: {fileID: 3904859379294053273, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
+      propertyPath: _helLungeForce
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 3904859379294053273, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
+      propertyPath: _fenrirLungeForce
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 3904859379294053273, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
+      propertyPath: _helLungeDuration
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3904859379294053273, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
+      propertyPath: _fenrirLungeDuration
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3904859379294053273, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
       propertyPath: _animationLockMoveSpeedFadeDuration
       value: 0.05
       objectReference: {fileID: 0}
@@ -14667,6 +14683,10 @@ PrefabInstance:
       propertyPath: m_ActionEvents.Array.data[10].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1002335975}
+    - target: {fileID: 7316355394387542278, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
+      propertyPath: m_Name
+      value: Lunge Point
+      objectReference: {fileID: 0}
     - target: {fileID: 8628447524896632596, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
       propertyPath: m_LocalPosition.x
       value: 113.04
@@ -14708,7 +14728,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7316355394387542278, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
