@@ -1,9 +1,11 @@
 using System;
+using System.Linq;
 using Stats;
 using UI;
 using Unity.Behavior;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.VFX;
 
 namespace Entities
 {
@@ -22,6 +24,8 @@ namespace Entities
         private AttackStats attackStats;
         private bool ragdollAcive;
         private float ragdollTimeLeft;
+        private SkinnedMeshRenderer _skinnedMeshRenderer;
+        private Material[] materials;
         
         [SerializeField] private float ragdollDuration;
         [SerializeField] private Transform attackPoint;
@@ -37,6 +41,8 @@ namespace Entities
             AiAgent = GetComponent<BehaviorGraphAgent>();
             navAgent = GetComponent<NavMeshAgent>();
             animator = GetComponent<Animator>();
+            _skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+            materials = _skinnedMeshRenderer.materials;
             if (!PLAYER)
                 PLAYER = GameObject.FindGameObjectWithTag("Player");
 
@@ -48,6 +54,7 @@ namespace Entities
 
             _healthBar = GetComponentInChildren<UIEnemyHealth>();
             _healthBar.UpdateHealth(_currentHealth, _maxHealth);
+            
 
             ENEMYAMOUNT++;
         }
@@ -62,6 +69,7 @@ namespace Entities
             AiAgent.SetVariableValue("Attacking", false);
         }
 
+        private float dissolveValue;
         protected override void Update()
         {
             if (_isDead)
@@ -70,6 +78,9 @@ namespace Entities
                 {
                     if (ragdollTimeLeft > 0)
                     {
+                        dissolveValue = materials[0].GetFloat("_Cutoff_Height");
+                        dissolveValue -= Time.deltaTime*2;
+                        materials[0].SetFloat("_Cutoff_Height", dissolveValue);
                         ragdollTimeLeft -= Time.deltaTime;
                     }
                     else
