@@ -317,6 +317,26 @@ namespace Entities.Player
             else
                 Attack.Create(this, position, transform.rotation, attackStats);
         }
+
+        public void PerformAttackParented(Transform attackPoint)
+        {
+            if (!_currentAbility)
+                return;
+            
+            var attackStats = new AttackStats(
+                _currentAbility.AttackPrefab, 
+                _damage, 
+                _critChance, 
+                _critDamage);
+
+            var position = attackPoint.position;
+            
+            if (_currentAbility.Burst)
+                StartCoroutine(AttackCoroutine(attackStats, _currentAbilityUseTimes, 
+                    _currentAbility.BurstDelay, _currentAbility.SpreadAngle, position));
+            else
+                Attack.Create(this, attackPoint, attackStats);
+        }
         
         public void PerformAttackLunge()
         {

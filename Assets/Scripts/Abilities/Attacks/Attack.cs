@@ -26,8 +26,14 @@ namespace Abilities.Attacks
 
             attackInstance.SetOwner(owner);
             attackInstance.SetStats(stats);
+        }
 
-            attackInstance.transform.position = position;
+        public static void Create(Entity owner, Transform parent, AttackStats stats)
+        {
+            var attackInstance = Instantiate(stats.Prefab, parent).GetComponent<Attack>();
+
+            attackInstance.SetOwner(owner);
+            attackInstance.SetStats(stats);
         }
         
         private void SetStats(AttackStats stats) 
