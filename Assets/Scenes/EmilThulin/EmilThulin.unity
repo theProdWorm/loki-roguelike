@@ -261,7 +261,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!156049354 &166137448
 Grid:
   m_ObjectHideFlags: 0
@@ -1045,7 +1045,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &1003349820
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1376,6 +1376,67 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 95c3ea071b5e14a47879dc29ad948abe, type: 3}
+--- !u!1001 &1345370112
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 5066ffa8465985846ac4d045e203e9fb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -5.370493
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5066ffa8465985846ac4d045e203e9fb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5066ffa8465985846ac4d045e203e9fb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 8.3692875
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5066ffa8465985846ac4d045e203e9fb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5066ffa8465985846ac4d045e203e9fb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5066ffa8465985846ac4d045e203e9fb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5066ffa8465985846ac4d045e203e9fb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5066ffa8465985846ac4d045e203e9fb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5066ffa8465985846ac4d045e203e9fb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5066ffa8465985846ac4d045e203e9fb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5066ffa8465985846ac4d045e203e9fb, type: 3}
+      propertyPath: m_Name
+      value: Fenrir
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 5066ffa8465985846ac4d045e203e9fb, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 371cf6293291e9747bbb84b81c42da4c, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5066ffa8465985846ac4d045e203e9fb, type: 3}
 --- !u!1001 &1363015179
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1807,6 +1868,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da6ea2dd4c882574c94b9624656835d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rigidbody: {fileID: 1618135396}
   EntityBaseStats: {fileID: 0}
   OnDeath:
     m_PersistentCalls:
@@ -1817,7 +1879,6 @@ MonoBehaviour:
   OnDamageDealt:
     m_PersistentCalls:
       m_Calls: []
-  IsDead: 0
   OnHealthChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1826,8 +1887,9 @@ MonoBehaviour:
       m_Calls: []
   _characterContainer: {fileID: 0}
   _playerInput: {fileID: 0}
+  _inputBufferMargin: 0
+  _animationLockMoveSpeedFadeDuration: 0
   _collider: {fileID: 0}
-  _rigidbody: {fileID: 1618135396}
   _frontCollisionPoint: {fileID: 0}
   _wallLayer:
     serializedVersion: 2
@@ -1852,11 +1914,14 @@ MonoBehaviour:
   _fenrirAnimator: {fileID: 0}
   _fenrirAttackPoint: {fileID: 0}
   _fenrirSpecialPoint: {fileID: 0}
-  _fenrirAttackDashPoint: {fileID: 0}
+  _fenrirLungeForce: 0
+  _fenrirLungeDuration: 0
   _helAbilities: {fileID: 0}
   _helAnimator: {fileID: 0}
   _helAttackPoint: {fileID: 0}
   _helSpecialPoint: {fileID: 0}
+  _helLungeForce: 0
+  _helLungeDuration: 0
   OnHelAttackStageChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2222,7 +2287,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1935508627
 Transform:
   m_ObjectHideFlags: 0
@@ -212786,3 +212851,4 @@ SceneRoots:
   - {fileID: 4759899902414639112}
   - {fileID: 1115728428}
   - {fileID: 166137449}
+  - {fileID: 1345370112}
