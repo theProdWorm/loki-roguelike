@@ -99,8 +99,8 @@ public class EncounterManager : MonoBehaviour
                     NextWave();
                 }
             }
-
-            float _percentageOfEnemiesLeft = (float)(_currentAmountOfEnemiesAlive / _amountOfEnemiesThisWave);
+            Debug.Log(_amountOfEnemiesThisWave + ", " + _currentAmountOfEnemiesAlive);
+            float _percentageOfEnemiesLeft = _currentAmountOfEnemiesAlive / _amountOfEnemiesThisWave;
             if (_percentageOfEnemiesLeft <= _percentageOfEnemiesToSpawnNextWave && _isSpawning == false)
             {
                 NextWave();
@@ -114,8 +114,9 @@ public class EncounterManager : MonoBehaviour
         if (enemy is Enemy)
         {
             _enemiesAlive.Remove(enemy);
+            _currentAmountOfEnemiesAlive = _enemiesAlive.Count;
+            Debug.Log("Enemy died, " + _currentAmountOfEnemiesAlive + " enemies left alive");
         }
-        _currentAmountOfEnemiesAlive = _enemiesAlive.Count;
     }
 
     private void NextWave()
@@ -143,8 +144,11 @@ public class EncounterManager : MonoBehaviour
 
     private void ActivateFirstWave()
     {
+        List<EnemyTypes> nextWaveEnemies = _wave0.Enemies;
         //if (_spawnRandomLocationsForWave0)
-            SpawnWave(_wave0.Enemies);
+        _amountOfEnemiesThisWave = nextWaveEnemies.Count;
+        _currentAmountOfEnemiesAlive = _amountOfEnemiesThisWave;
+        SpawnWave(nextWaveEnemies);
         //else
         //{
         //    _amountOfEnemiesThisWave = _wave0.Count;
@@ -184,7 +188,6 @@ public class EncounterManager : MonoBehaviour
                 entity.OnDeath.AddListener(EnemyDied);
                 _enemiesAlive.Add(entity);
             }
-
             else
             {
                 i--;
@@ -216,7 +219,6 @@ public class EncounterManager : MonoBehaviour
     {
         Entity entity = null;
         int r = Random.Range(1, 101);
-        Debug.Log(r + ", " + _draugrSpawnPoints.Count);
         if (r > _chanceForDraugrToRunThroughDoor) //If Draugr chooses to rather not run through door then run this code. Otherwise go directly to the Force Door region
         {
             #region Distance Checks
