@@ -555,22 +555,22 @@ MonoBehaviour:
         m_CallState: 2
   OnDamageTaken:
     m_PersistentCalls:
-      m_Calls: []
-  OnDamageDealt:
-    m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Gameplay.RumbleManager, Assembly-CSharp
-        m_MethodName: Rumble
-        m_Mode: 2
+      - m_Target: {fileID: 1481859176649239221, guid: a29a8c69a59c59548b20128aba734163, type: 3}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: d8484173cdd758348989d98dec886a1a, type: 2}
-          m_ObjectArgumentAssemblyTypeName: Gameplay.RumbleEvent, Assembly-CSharp
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnDamageDealt:
+    m_PersistentCalls:
+      m_Calls: []
   OnHealthChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -591,9 +591,9 @@ MonoBehaviour:
     m_Bits: 512
   _lookWeight: 0.2
   _distanceWeight: 3
-  _potionHealAmount: 0
-  _potionCost: 0
-  _maxPotionCharges: 0
+  _potionHealAmount: 25
+  _potionCost: 40
+  _maxPotionCharges: 100
   _dashAbility: {fileID: 11400000, guid: 8555943e95a694c4d8ff2084bdf30825, type: 2}
   _dashPoint: {fileID: 3132654603202236795}
   _dashDuration: 0.1
@@ -659,7 +659,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  ActiveCharacter: 1
+  ActiveCharacter: 0
 --- !u!114 &3960114018095941365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -812,9 +812,9 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Entities.Player.Player, Assembly-CSharp
-        m_MethodName: PauseInput
-        m_Mode: 0
+        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+        m_MethodName: PauseGame
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -826,7 +826,19 @@ MonoBehaviour:
     m_ActionId: c095f656-8f29-4358-b1e4-eb2fcff8e05e
     m_ActionName: 'Player/Pause[/XInputControllerWindows/start,/XInputControllerWindows1/start,/Keyboard/escape]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3904859379294053273}
+        m_TargetAssemblyTypeName: Entities.Player.Player, Assembly-CSharp
+        m_MethodName: HealInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 2d2698f8-9ac6-4e81-a9c2-073cb7811ec6
     m_ActionName: 'Player/Heal[/Keyboard/q]'
   - m_PersistentCalls:
@@ -838,17 +850,21 @@ MonoBehaviour:
     m_ActionId: 0d7d1c1b-a232-4c5a-9532-42c1bbae62ba
     m_ActionName: UI/Cancel
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+        m_MethodName: MenuExitInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 6a59ab4d-8980-4846-938f-ac33f333f69f
     m_ActionName: 'UI/ExitUI[/XInputControllerWindows/start,/Keyboard/escape]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 000bb941-35cc-40f1-bd60-1bcabe7e92f8
-    m_ActionName: 'UI/Click[/Mouse/leftButton,/Pen/tip]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 7b966cb1-70bd-41b8-b36f-a1b0d7421678
-    m_ActionName: 'UI/Submit[/Keyboard/enter,/XInputControllerWindows/buttonSouth]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: 
@@ -1801,7 +1817,7 @@ Transform:
   m_GameObject: {fileID: 5941621964298093964}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -0.428}
+  m_LocalPosition: {x: 0, y: 1, z: 0.53}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3052,6 +3068,22 @@ PrefabInstance:
     - target: {fileID: 3878606897271893904, guid: 90b0718037148d54190136267575f6c9, type: 3}
       propertyPath: m_Name
       value: Charge Up Effect
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068653826020819953, guid: 90b0718037148d54190136267575f6c9, type: 3}
+      propertyPath: InitialModule.rotation3D
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068653826020819953, guid: 90b0718037148d54190136267575f6c9, type: 3}
+      propertyPath: InitialModule.startRotation.scalar
+      value: 0.08726646
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068653826020819953, guid: 90b0718037148d54190136267575f6c9, type: 3}
+      propertyPath: InitialModule.startRotationX.scalar
+      value: 0.08726646
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068653826020819953, guid: 90b0718037148d54190136267575f6c9, type: 3}
+      propertyPath: InitialModule.startRotationY.scalar
+      value: 0.08726646
       objectReference: {fileID: 0}
     - target: {fileID: 6580175673928828795, guid: 90b0718037148d54190136267575f6c9, type: 3}
       propertyPath: m_LocalPosition.x
