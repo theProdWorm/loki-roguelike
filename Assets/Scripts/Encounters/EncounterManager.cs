@@ -147,6 +147,8 @@ public class EncounterManager : MonoBehaviour
             Entity script = enemy.GetComponent<Entity>();
             script.OnDeath.AddListener(EnemyDied);
             _enemiesAlive.Add(script);
+            SpawnPoint spawnPoint = enemy.GetComponent<SpawnPoint>();
+            spawnPoint.Spawn();
         }
         _currentAmountOfEnemiesAlive = _enemiesAlive.Count;
     }
