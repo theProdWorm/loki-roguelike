@@ -33,7 +33,9 @@ public class EncounterManager : MonoBehaviour
     private List<GameObject> _wolfSpawnPoints = new(); //TODO: Maybe just have wolves run in through the doors instead of having spawn points for them?
 
     [Header("Enemy Waves"), SerializeField, Tooltip("These are the enemies that are supposed to already be in the room")]
-    private List<GameObject> _wave0 = new();
+    private EnemyWave _wave0;
+    //[SerializeField]
+    //private bool _spawnRandomLocationsForWave0 = false;
     [SerializeField, Tooltip("Just add the EnemyWave script as a component below to edit it, then drag and drop that component to add it to the list")]
     private List<EnemyWave> _enemyWaves = new();
 
@@ -72,7 +74,7 @@ public class EncounterManager : MonoBehaviour
         _player = FindFirstObjectByType<Player>();
         CloseDoors();
 
-        if (_wave0.Count > 0)
+        if (_wave0 != null)
             ActivateFirstWave();
         else
             NextWave();
@@ -141,16 +143,22 @@ public class EncounterManager : MonoBehaviour
 
     private void ActivateFirstWave()
     {
-        _amountOfEnemiesThisWave = _wave0.Count;
-        foreach (GameObject enemy in _wave0)
-        {
-            Entity script = enemy.GetComponent<Entity>();
-            script.OnDeath.AddListener(EnemyDied);
-            _enemiesAlive.Add(script);
-            SpawnPoint spawnPoint = enemy.GetComponent<SpawnPoint>();
-            spawnPoint.Spawn();
-        }
-        _currentAmountOfEnemiesAlive = _enemiesAlive.Count;
+        //if (_spawnRandomLocationsForWave0)
+            SpawnWave(_wave0.Enemies);
+        //else
+        //{
+        //    _amountOfEnemiesThisWave = _wave0.Count;
+        //    foreach (GameObject enemy in _wave0)
+        //    {
+        //        Entity script = enemy.GetComponent<Entity>();
+        //        script.OnDeath.AddListener(EnemyDied);
+        //        _enemiesAlive.Add(script);
+        //        SpawnPoint spawnPoint = enemy.GetComponent<SpawnPoint>();
+        //        spawnPoint.Spawn();
+        //    }
+        //    _currentAmountOfEnemiesAlive = _enemiesAlive.Count;
+        //}
+
     }
 
     private void SpawnWave(List<EnemyTypes> wave)

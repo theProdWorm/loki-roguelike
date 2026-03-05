@@ -171,7 +171,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3177905934812834723, guid: 32f6a838a7312ed49b19642398ff701c, type: 3}
       propertyPath: m_Name
-      value: Draugr
+      value: Draugr (4)
       objectReference: {fileID: 0}
     - target: {fileID: 3549900117588000265, guid: 32f6a838a7312ed49b19642398ff701c, type: 3}
       propertyPath: hasSpawned
@@ -498,7 +498,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3177905934812834723, guid: 32f6a838a7312ed49b19642398ff701c, type: 3}
       propertyPath: m_Name
-      value: Draugr (3)
+      value: Draugr (5)
       objectReference: {fileID: 0}
     - target: {fileID: 3549900117588000265, guid: 32f6a838a7312ed49b19642398ff701c, type: 3}
       propertyPath: hasSpawned
@@ -1782,7 +1782,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3177905934812834723, guid: 32f6a838a7312ed49b19642398ff701c, type: 3}
       propertyPath: m_Name
-      value: Draugr (1)
+      value: Draugr (6)
       objectReference: {fileID: 0}
     - target: {fileID: 3549900117588000265, guid: 32f6a838a7312ed49b19642398ff701c, type: 3}
       propertyPath: hasSpawned
@@ -2146,7 +2146,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3177905934812834723, guid: 32f6a838a7312ed49b19642398ff701c, type: 3}
       propertyPath: m_Name
-      value: Draugr (2)
+      value: Draugr (7)
       objectReference: {fileID: 0}
     - target: {fileID: 3549900117588000265, guid: 32f6a838a7312ed49b19642398ff701c, type: 3}
       propertyPath: hasSpawned
@@ -2242,6 +2242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09c5db9f2aa409b43a3c8d5293759230, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _name: Second Wave
   Enemies: 000000000000000000000000
 --- !u!1 &2112481182
 GameObject:
@@ -2618,10 +2619,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3569038683568460616, guid: a95636678c3dddd40bae9701ea7ce26a, type: 3}
+      propertyPath: _name
+      value: First Wave
+      objectReference: {fileID: 0}
     - target: {fileID: 5231353859808227588, guid: a95636678c3dddd40bae9701ea7ce26a, type: 3}
       propertyPath: m_Name
       value: EncounterHandler
       objectReference: {fileID: 0}
+    - target: {fileID: 5448028266526155889, guid: a95636678c3dddd40bae9701ea7ce26a, type: 3}
+      propertyPath: _wave0
+      value: 
+      objectReference: {fileID: 2077885061}
     - target: {fileID: 5448028266526155889, guid: a95636678c3dddd40bae9701ea7ce26a, type: 3}
       propertyPath: _gates.Array.size
       value: 2
@@ -2665,14 +2674,14 @@ PrefabInstance:
     - target: {fileID: 5448028266526155889, guid: a95636678c3dddd40bae9701ea7ce26a, type: 3}
       propertyPath: '_enemyWaves.Array.data[0]'
       value: 
-      objectReference: {fileID: 2077885061}
+      objectReference: {fileID: 2077885062}
     - target: {fileID: 5448028266526155889, guid: a95636678c3dddd40bae9701ea7ce26a, type: 3}
       propertyPath: '_enemyWaves.Array.data[1]'
       value: 
       objectReference: {fileID: 2077885062}
     - target: {fileID: 5448028266526155889, guid: a95636678c3dddd40bae9701ea7ce26a, type: 3}
       propertyPath: _draugrSpawnPoints.Array.size
-      value: 4
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5448028266526155889, guid: a95636678c3dddd40bae9701ea7ce26a, type: 3}
       propertyPath: '_draugrSpawnPoints.Array.data[0]'
@@ -2693,19 +2702,19 @@ PrefabInstance:
     - target: {fileID: 5448028266526155889, guid: a95636678c3dddd40bae9701ea7ce26a, type: 3}
       propertyPath: '_draugrSpawnPoints.Array.data[4]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 426040434}
     - target: {fileID: 5448028266526155889, guid: a95636678c3dddd40bae9701ea7ce26a, type: 3}
       propertyPath: '_draugrSpawnPoints.Array.data[5]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 199742857}
     - target: {fileID: 5448028266526155889, guid: a95636678c3dddd40bae9701ea7ce26a, type: 3}
       propertyPath: '_draugrSpawnPoints.Array.data[6]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1219211021}
     - target: {fileID: 5448028266526155889, guid: a95636678c3dddd40bae9701ea7ce26a, type: 3}
       propertyPath: '_draugrSpawnPoints.Array.data[7]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1335549145}
     - target: {fileID: 5448028266526155889, guid: a95636678c3dddd40bae9701ea7ce26a, type: 3}
       propertyPath: '_draugrSpawnPoints.Array.data[8]'
       value: 
