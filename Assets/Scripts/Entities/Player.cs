@@ -135,6 +135,8 @@ namespace Entities
         private float _originalMoveSpeed;
         private Coroutine _dashCoroutine;
 
+        private Vector3 _targetPos;
+        
         private bool  _isDashing;
         private bool  _hasControl = true;
         private float _controlLossDuration;
@@ -282,7 +284,7 @@ namespace Entities
             var forwardDirection = (cameraForward - downProjection).normalized;
             var rightDirection = _camera.transform.right.normalized;
             
-            Vector2 moveVector = _isDashing ? _dashInputSnapshot : _moveInput;
+            Vector2 moveVector = _isDashing ? _dashInputSnapshot : _hasControl ? _moveInput : Vector2.zero;
             
             Vector3 movementX = moveVector.x * rightDirection;
             Vector3 movementZ = moveVector.y * forwardDirection;
@@ -350,6 +352,9 @@ namespace Entities
         private void StartAttack(Ability ability, int useTimes, int animatorHash)
         {
             LoseControl();
+            var target = FindTarget();
+            _targetPos = target ? target.position : transform.position + transform.forward;
+            _targetPos.y = transform.position.y;
             
             _currentAbility = ability;
             _currentAbilityUseTimes = useTimes;
@@ -370,14 +375,7 @@ namespace Entities
                 _critChance, 
                 _critDamage);
 
-            var target = FindTarget();
-            if (target)
-            {
-                var targetPos = target.position;
-                targetPos.y = transform.position.y;
-                
-                transform.LookAt(targetPos);
-            }
+            transform.LookAt(_targetPos);
             
             var position = attackPoint.position;
             
@@ -412,14 +410,16 @@ namespace Entities
         
         public void PerformAttackLunge()
         {
+            var direction = (_targetPos - transform.position).normalized;
+            
             switch (ActiveCharacter)
             {
                 default:
                 case Character.Fenrir:
-                    KnockBack(transform.forward, _fenrirLungeForce, _fenrirLungeDuration);
+                    KnockBack(direction, _fenrirLungeForce, _fenrirLungeDuration);
                     break;
                 case Character.Hel:
-                    KnockBack(-transform.forward, _helLungeForce, _helLungeDuration);
+                    KnockBack(direction, -_helLungeForce, _helLungeDuration);
                     break;
             }
         }
