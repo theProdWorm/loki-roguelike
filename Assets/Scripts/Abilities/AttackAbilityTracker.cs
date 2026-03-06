@@ -1,10 +1,4 @@
 using System;
-using System.Collections.Generic;
-using Entities.Player;
-using Items;
-using Stats;
-using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Abilities
 {
