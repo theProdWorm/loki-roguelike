@@ -1,9 +1,9 @@
 using Abilities;
 using Abilities.Attacks;
-using Items;
 using Stats;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Entities.Stats;
 using Gameplay.Input;
 using UnityEngine;
@@ -34,6 +34,12 @@ namespace Entities
         
         [Header("Movement")]
         [SerializeField] private float _animationLockMoveSpeedFadeDuration;
+        
+        [Header("Target Lock")]
+        [SerializeField] private float _targetLockAngle;
+        [SerializeField] private float _targetLockMaxDistance;
+        [SerializeField] private float _targetLockAngleWeight;
+        [SerializeField] private float _targetLockDistanceWeight;
         
         [Header("Collision")]
         [SerializeField] private CapsuleCollider _collider;
@@ -218,7 +224,7 @@ namespace Entities
             _critDamage = _playerBaseStats.CritDamage;
         }
         
-        public void LoseControl() => _hasControl = true;
+        public void LoseControl() => _hasControl = false;
         public void GainControl() => _hasControl = true;
         
         public void SetDashing(bool isDashing) => _isDashing = isDashing;
@@ -288,10 +294,63 @@ namespace Entities
             transform.LookAt(transform.position + movement);
 
             _rigidbody.linearVelocity += _knockbackForce;
+            
+            CurrentAnimator.SetBool(IS_MOVING, movement.magnitude > 0.01f);
         }
 
+        private Transform FindTarget()
+        {
+            var enemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None);
+            
+            List<float> distances = new();
+            List<float> angles = new();
+            
+            var validEnemies = enemies.Where(enemy =>
+            {
+                float distance = Vector3.Distance(enemy.transform.position, transform.position);
+                if (distance > _targetLockMaxDistance)
+                    return false;
+                
+                Vector3 toVector = enemy.transform.position - transform.position;
+                float angle = Mathf.Abs(Vector3.Angle(transform.forward, toVector));
+
+                if (angle > _targetLockAngle)
+                    return false;
+
+                distances.Add(distance);
+                angles.Add(angle);
+                
+                return true;
+            }).ToArray();
+
+            if (validEnemies.Length == 0)
+                return null;
+            
+            int targetIndex = 0;
+            float maxWeight = 0;
+            for (int i = 0; i < validEnemies.Length; i++)
+            {
+                float distanceWeight = _targetLockDistanceWeight * 
+                                       (1 - Mathf.Clamp01(distances[i] / _targetLockMaxDistance));
+                float angleWeight = _targetLockAngleWeight * 
+                                    (1 - Mathf.Clamp01(angles[i] / _targetLockAngle));
+                
+                float weight = distanceWeight * angleWeight;
+
+                if (weight <= maxWeight)
+                    continue;
+                
+                maxWeight = weight;
+                targetIndex = i;
+            }
+            
+            return validEnemies[targetIndex].transform;
+        }
+        
         private void StartAttack(Ability ability, int useTimes, int animatorHash)
         {
+            LoseControl();
+            
             _currentAbility = ability;
             _currentAbilityUseTimes = useTimes;
             
@@ -300,6 +359,8 @@ namespace Entities
         
         public void PerformAttack(Transform attackPoint)
         {
+            GainControl();
+            
             if (!_currentAbility)
                 return;
             
@@ -309,6 +370,15 @@ namespace Entities
                 _critChance, 
                 _critDamage);
 
+            var target = FindTarget();
+            if (target)
+            {
+                var targetPos = target.position;
+                targetPos.y = transform.position.y;
+                
+                transform.LookAt(targetPos);
+            }
+            
             var position = attackPoint.position;
             
             if (_currentAbility.Burst)
@@ -320,6 +390,8 @@ namespace Entities
 
         public void PerformAttackParented(Transform attackPoint)
         {
+            GainControl();
+            
             if (!_currentAbility)
                 return;
             
@@ -609,8 +681,6 @@ namespace Entities
             bool isMoving = _moveInput.sqrMagnitude > 0.5f;
             if (isMoving)
                 _lastMoveInput = _moveInput;
-            
-            CurrentAnimator.SetBool(IS_MOVING, isMoving);
         }
 
         public void InteractInput(InputAction.CallbackContext context)
