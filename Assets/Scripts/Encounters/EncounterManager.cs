@@ -1,5 +1,4 @@
 using Entities;
-using Entities.Player;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.ProBuilder.Shapes;
