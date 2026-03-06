@@ -10,7 +10,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-namespace Entities.Player
+namespace Entities
 {
     [RequireComponent(typeof(Rigidbody))]
     public class Player : Entity
