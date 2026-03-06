@@ -117,7 +117,9 @@ public class SpawnPoint : MonoBehaviour
 
     private Entity SpawnWolf()
     {
-        return null;
+        GameObject wolf = Instantiate(_wolfPrefab, transform.position, transform.rotation);
+        Entity entity = wolf.GetComponent<Entity>();
+        return entity;
         //TODO: OBJECTPOOL
     }
 }
