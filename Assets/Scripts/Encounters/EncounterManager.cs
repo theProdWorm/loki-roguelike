@@ -172,13 +172,13 @@ public class EncounterManager : MonoBehaviour
             switch (wave[i])
             {
                 case EnemyTypes.Draugr:
-                    entity = SpawnDraugr();
+                    entity = SpawnEnemy(_draugrSpawnPoints, true);
                     break;
                 case EnemyTypes.BirdOnBird:
-                    entity = SpawnBirdOnBird();
+                    entity = SpawnEnemy(_birdOnBirdSpawnPoints, false);
                     break;
                 case EnemyTypes.Wolf:
-                    entity = SpawnWolf();
+                    entity = SpawnEnemy(_wolfSpawnPoints, false);
                     break;
             }
 
@@ -214,111 +214,69 @@ public class EncounterManager : MonoBehaviour
         }
     }
 
-    private Entity SpawnDraugr()
+    private Entity SpawnEnemy(List<GameObject> spawnPoints, bool removePoint)
     {
         Entity entity = null;
         int r = Random.Range(1, 101);
-        if (r > _chanceForDraugrToRunThroughDoor) //If Draugr chooses to rather not run through door then run this code. Otherwise go directly to the Force Door region
+        #region Distance Checks
+        List<GameObject> _tooCloseSpawnPoints = new();
+        List<GameObject> _tooFarSpawnPoints = new();
+
+        foreach (GameObject statue in spawnPoints)
         {
-            #region Distance Checks
-            List<GameObject> _tooCloseSpawnPoints = new();
-            List<GameObject> _tooFarSpawnPoints = new();
-
-            foreach (GameObject statue in _draugrSpawnPoints)
-            {
-                float distance = Vector2.Distance(statue.transform.position, _player.transform.position);
-                if (distance < minimumDistanceFromPlayerToSpawnDraugr && minimumDistanceFromPlayerToSpawnDraugr != -1)
-                    _tooCloseSpawnPoints.Add(statue);
-                if (distance > maximumDistanceFromPlayerToSpawnDraugr && maximumDistanceFromPlayerToSpawnDraugr != -1)
-                    _tooFarSpawnPoints.Add(statue);
-            }
-            #endregion
-
-            #region Ideal Spawn Distance
-
-            for (int i = 0; i < _draugrSpawnPoints.Count; i++)
-            {
-                r = Random.Range(0, _draugrSpawnPoints.Count - 1);
-
-                //Check distance availability
-                if (_tooCloseSpawnPoints.Contains(_draugrSpawnPoints[r]) || _tooFarSpawnPoints.Contains(_draugrSpawnPoints[r]))
-                    continue;
-
-                SpawnPoint spawnPointScript = _draugrSpawnPoints[r].GetComponent<SpawnPoint>();
-                _draugrSpawnPoints.RemoveAt(r);
-                return spawnPointScript.Spawn();
-            }
-
-            #endregion
-
-            #region Search Far
-
-            for (int i = 0; i < _draugrSpawnPoints.Count; i++)
-            {
-                r = Random.Range(0, _draugrSpawnPoints.Count - 1);
-
-                //Check distance availability
-                if (_tooCloseSpawnPoints.Contains(_draugrSpawnPoints[r]))
-                    continue;
-
-                SpawnPoint spawnPointScript = _draugrSpawnPoints[r].GetComponent<SpawnPoint>();
-                _draugrSpawnPoints.RemoveAt(r);
-                return spawnPointScript.Spawn();
-            }
-
-            #endregion
-
-            #region Search everywhere
-
-            r = Random.Range(0, _draugrSpawnPoints.Count);
-            Debug.Log(r + ", " + _draugrSpawnPoints.Count);
-            entity = _draugrSpawnPoints[r].GetComponent<SpawnPoint>().Spawn();
-            _draugrSpawnPoints.RemoveAt(r);
-            return entity;
-
-            #endregion
-        }
-
-        #region Force Door
-
-        //Distance Check
-        List<GameObject> _availableDoorways = new();
-        List<GameObject> _tooCloseDoorways = new();
-
-        foreach (GameObject door in _draugrSpawnPoints)
-        {
-            float distance = Vector2.Distance(door.transform.position, _player.transform.position);
+            float distance = Vector2.Distance(statue.transform.position, _player.transform.position);
             if (distance < minimumDistanceFromPlayerToSpawnDraugr && minimumDistanceFromPlayerToSpawnDraugr != -1)
-                _tooCloseDoorways.Add(door);
-            else
-                _availableDoorways.Add(door);
+                _tooCloseSpawnPoints.Add(statue);
+            if (distance > maximumDistanceFromPlayerToSpawnDraugr && maximumDistanceFromPlayerToSpawnDraugr != -1)
+                _tooFarSpawnPoints.Add(statue);
         }
+        #endregion
 
+        #region Ideal Spawn Distance
 
+        for (int i = 0; i < spawnPoints.Count; i++)
+        {
+            r = Random.Range(0, spawnPoints.Count - 1);
 
-        if (_tooCloseDoorways.Count == _gates.Count)
-            _availableDoorways = _gates;
+            //Check distance availability
+            if (_tooCloseSpawnPoints.Contains(spawnPoints[r]) || _tooFarSpawnPoints.Contains(spawnPoints[r]))
+                continue;
 
-        if (_availableDoorways.Count == 0)
-            return null;
-
-        r = Random.Range(0, _availableDoorways.Count);
-
-        Entity draugr = _availableDoorways[r].GetComponentInChildren<SpawnPoint>().Spawn();
-        return draugr;
+            SpawnPoint spawnPointScript = spawnPoints[r].GetComponent<SpawnPoint>();
+            if (removePoint)
+                spawnPoints.RemoveAt(r);
+            return spawnPointScript.Spawn();
+        }
 
         #endregion
-    }
 
-    private Entity SpawnBirdOnBird()
-    {
-        //TODO: Fill out the spawning of the bird on bird enemy, they spawn from above trees and swoop in to the arena.
-        return null;
-    }
+        #region Search Far
 
-    private Entity SpawnWolf()
-    {
-        //TODO: Fill out the spawning of the wolf enemy, do they spawn from the doors and run into the arena?
-        return null;
+        for (int i = 0; i < spawnPoints.Count; i++)
+        {
+            r = Random.Range(0, spawnPoints.Count - 1);
+
+            //Check distance availability
+            if (_tooCloseSpawnPoints.Contains(spawnPoints[r]))
+                continue;
+
+            SpawnPoint spawnPointScript = spawnPoints[r].GetComponent<SpawnPoint>();
+            if (removePoint)
+                spawnPoints.RemoveAt(r);
+            return spawnPointScript.Spawn();
+        }
+
+        #endregion
+
+        #region Search everywhere
+
+        r = Random.Range(0, spawnPoints.Count);
+        Debug.Log(r + ", " + spawnPoints.Count);
+        entity = spawnPoints[r].GetComponent<SpawnPoint>().Spawn();
+        if (removePoint)
+            spawnPoints.RemoveAt(r);
+        return entity;
+
+        #endregion
     }
 }
