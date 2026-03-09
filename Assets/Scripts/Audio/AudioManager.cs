@@ -1,23 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using FMODUnity;
 using UnityEngine;
 
-public class AudioManager : MonoBehaviour
+namespace Audio
 {
-   public static AudioManager instance { get; private set; }
-
-   private void Awake()
+   public class AudioManager : MonoBehaviour
    {
-      if (instance != null)
+      
+      [SerializeField] private float _maxWaterDistance;
+      
+      private static AudioManager _instance;
+
+      private Vector3 _nextAudioPosition;
+   
+      private void Awake()
       {
-         Debug.LogError("Found more than one AudioManager in the scene!");
+         if (_instance != null)
+         {
+            Debug.LogError("Found more than one AudioManager in the scene!");
+            Destroy(gameObject);
+            return;
+         }
+      
+         _instance = this;
+         DontDestroyOnLoad(gameObject);
       }
-      instance = this;
-   }
 
-   public void PlayOneShot(EventReference sound, Vector3 worldPos)
-   {
-      RuntimeManager.PlayOneShot(sound, worldPos);
+      public void SetNextAudioPosition(Vector3 position) => _nextAudioPosition = position;
+      public void PlayOneShot(EventReference sound) => RuntimeManager.PlayOneShot(sound, _nextAudioPosition);
    }
 }
