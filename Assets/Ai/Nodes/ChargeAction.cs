@@ -15,7 +15,6 @@ public class ChargeAction : Action
     [SerializeReference] public BlackboardVariable<float> ChargeDistance;
     [SerializeReference] public BlackboardVariable<float> ChargeSpeed;
     [SerializeReference] public BlackboardVariable<bool> IsCharging;
-    [SerializeReference] public BlackboardVariable<bool> Success;
     
     protected BehaviorGraphCollisionEvents m_CollisionEvents { get; private set; }
 
