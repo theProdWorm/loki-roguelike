@@ -21,6 +21,8 @@ namespace UI.Narration
                 _indicator.SetActive(Highlighted);
         }
 
+        public void AddDialogue(DialogueSequence dialogue) => _dialogueQueue.Add(dialogue);
+        
         public void Interacted()
         {
             if (_dialogueQueue.Count == 0)

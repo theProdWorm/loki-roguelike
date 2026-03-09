@@ -126,7 +126,7 @@ namespace Entities
         private float _critChance;
         private float _critDamage;
         
-        protected float _damageReduction = 0f;
+        private float _damageReduction = 0f;
         
         private int _potionCharges;
         private bool PotionReady => _potionCharges >= _potionCost;
@@ -140,6 +140,9 @@ namespace Entities
         private bool  _isDashing;
         private bool  _hasControl = true;
         private float _controlLossDuration;
+
+        private Coroutine _lungeCoroutine;
+        private Vector3 _lungeForce;
         
         private InputBuffer _inputBuffer;
         
@@ -291,13 +294,43 @@ namespace Entities
             
             Vector3 movement = _moveSpeed * (movementX + movementZ).normalized;
             
-            _rigidbody.linearVelocity = movement;
+            _rigidbody.linearVelocity = movement + _lungeForce;
             
-            transform.LookAt(transform.position + movement);
+            transform.LookAt(transform.position + _rigidbody.linearVelocity);
 
             _rigidbody.linearVelocity += _knockbackForce;
             
             CurrentAnimator.SetBool(IS_MOVING, movement.magnitude > 0.01f);
+        }
+        
+        public void Lunge(Vector3 direction, float force, float duration)
+        {
+            if (_lungeCoroutine != null)
+            {
+                StopCoroutine(_lungeCoroutine);
+                _lungeCoroutine = null;
+            }
+            
+            _lungeForce = direction * force;
+            _lungeCoroutine = StartCoroutine(LungeFadeCoroutine(direction, force, duration));
+        }
+
+        private IEnumerator LungeFadeCoroutine(Vector3 direction, float originalForce, float duration)
+        {
+            float elapsedTime = 0;
+            while (elapsedTime < duration)
+            {
+                elapsedTime += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsedTime / duration);
+
+                float force = originalForce * Mathf.Abs(Mathf.Pow(t, 3) - 1);
+                _lungeForce = force * direction;
+                
+                yield return null;
+            }
+            
+            _lungeForce = Vector3.zero;
+            _lungeCoroutine = null;
         }
 
         private Transform FindTarget()
@@ -309,6 +342,9 @@ namespace Entities
             
             var validEnemies = enemies.Where(enemy =>
             {
+                if (!enemy.HasSpawned)
+                    return false;
+                
                 float distance = Vector3.Distance(enemy.transform.position, transform.position);
                 if (distance > _targetLockMaxDistance)
                     return false;
@@ -416,10 +452,10 @@ namespace Entities
             {
                 default:
                 case Character.Fenrir:
-                    KnockBack(direction, _fenrirLungeForce, _fenrirLungeDuration);
+                    Lunge(direction, _fenrirLungeForce, _fenrirLungeDuration);
                     break;
                 case Character.Hel:
-                    KnockBack(direction, -_helLungeForce, _helLungeDuration);
+                    Lunge(direction, -_helLungeForce, _helLungeDuration);
                     break;
             }
         }
@@ -692,10 +728,6 @@ namespace Entities
                 return;
             
             _currentInteractable.Interacted();
-            _currentInteractable.Highlighted = false;
-            
-            _interactables.Remove(_currentInteractable);
-            _currentInteractable = null;
         }
 
         public void AttackInput(InputAction.CallbackContext context)
