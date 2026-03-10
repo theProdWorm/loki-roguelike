@@ -16,11 +16,7 @@ namespace Entities
     [RequireComponent(typeof(Rigidbody))]
     public class Player : Entity
     {
-        public enum Character
-        {
-            Fenrir,
-            Hel
-        }
+        public enum Character { Fenrir, Hel }
 
         private static readonly int IS_MOVING = Animator.StringToHash("isMoving");
         private static readonly int DASH = Animator.StringToHash("dash");
@@ -35,47 +31,53 @@ namespace Entities
         [SerializeField] private PlayerInput _playerInput;
 
         [Tooltip("Amount of time (in seconds) in advance the player can press an input for it to count.")]
-        [SerializeField]
-        private float _inputBufferMargin;
+        [SerializeField] private float _inputBufferMargin;
 
-        [Header("Movement")] [SerializeField] private float _animationLockMoveSpeedFadeDuration;
+        [Header("Movement")]
+        [SerializeField] private float _animationLockMoveSpeedFadeDuration;
 
-        [Header("Target Lock")] [SerializeField]
-        private float _targetLockAngle;
+        [Header("Target Lock")] 
+        [SerializeField] private float _targetLockAngle;
 
         [SerializeField] private float _targetLockMaxDistance;
         [SerializeField] private float _targetLockAngleWeight;
         [SerializeField] private float _targetLockDistanceWeight;
 
-        [Header("Collision")] [SerializeField] private CapsuleCollider _collider;
+        [Header("Collision")]
+        [SerializeField] private CapsuleCollider _collider;
 
         [SerializeField] private LayerMask _wallLayer;
         [SerializeField] private LayerMask _holeLayer;
 
-        [Header("Interaction")] [SerializeField]
-        private float _lookWeight;
+        [Header("Interaction")] 
+        [SerializeField] private float _lookWeight;
 
         [SerializeField] private float _distanceWeight;
 
-        [Header("Healing")] [SerializeField] private int _potionHealAmount;
+        [Header("Healing")] 
+        [SerializeField] private int _potionHealAmount;
         [SerializeField] private int _potionCost;
         [SerializeField] private int _maxPotionCharges;
 
-        [Header("Dash")] [SerializeField] private Ability _dashAbility;
+        [Header("Dash")] 
+        [SerializeField] private Ability _dashAbility;
 
         [SerializeField] private Transform _dashPoint;
 
-        [Range(0.01f, 0.5f)] [SerializeField] private float _dashDuration;
+        [Range(0.01f, 0.5f)] 
+        [SerializeField] private float _dashDuration;
 
-        [Range(0f, 1f), Tooltip("Fraction of dash duration to fade back to normal speed.")] [SerializeField]
-        private float _dashFade;
+        [Range(0f, 1f), Tooltip("Fraction of dash duration to fade back to normal speed.")] 
+        [SerializeField] private float _dashFade;
 
-        [Tooltip("The fraction cutoff for dashing OVER holes")] [Range(0.5f, 1f)] [SerializeField]
-        private float _dashHoleSnapFraction;
+        [Tooltip("The fraction cutoff for dashing OVER holes")] 
+        [Range(0.5f, 1f)] 
+        [SerializeField] private float _dashHoleSnapFraction;
 
         [SerializeField] private LayerMask _dashingPlayerLayer;
 
-        [Header("Fenrir")] [SerializeField] private CharacterAbilitySet _fenrirAbilities;
+        [Header("Fenrir")] 
+        [SerializeField] private CharacterAbilitySet _fenrirAbilities;
         [SerializeField] private Animator _fenrirAnimator;
         [SerializeField] private Transform _fenrirAttackPoint;
         [SerializeField] private Transform _fenrirSpecialPoint;
