@@ -20,6 +20,7 @@ namespace Entities
         private Vector3 prevPos = Vector3.zero;
         private float prevDot = 0;
         private BehaviorGraphAgent AiAgent;
+        private BlackboardVariable<ChargePrep> ChargePrepEventChannel;
         private NavMeshAgent navAgent;
         private AttackStats attackStats;
         private bool ragdollAcive;
@@ -31,6 +32,7 @@ namespace Entities
         [SerializeField] private Transform attackPoint;
         [SerializeField] private float rotationSpeed = 5;
         [SerializeField] private GameObject attackPrefab;
+        [SerializeField] EncounterManager.EnemyTypes type;
 
         public bool HasSpawned = true;
 
@@ -57,6 +59,21 @@ namespace Entities
             
 
             ENEMYAMOUNT++;
+
+            if (type == EncounterManager.EnemyTypes.Wolf)
+            {
+                if (AiAgent.GetVariable("ChargePrep", out ChargePrepEventChannel))
+                {
+                   
+                }
+                else throw new NullReferenceException();
+
+            }
+        }
+
+        public void ChargeReady()
+        {
+            ChargePrepEventChannel.Value.SendEventMessage();
         }
 
         public void Attack()
