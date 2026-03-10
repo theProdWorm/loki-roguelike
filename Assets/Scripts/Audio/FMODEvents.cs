@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
 
@@ -5,21 +7,18 @@ namespace Audio
 {
     public class FMODEvents : MonoBehaviour
     {
-        [Header("Player SFX")] 
+        [Header("Player SFX")]
         [SerializeField] private EventReference _playerDeath;
         [SerializeField] private EventReference _playerHit;
         [SerializeField] private EventReference _playerMovement;
         [SerializeField] private EventReference _playerDash;
     
-        [Header("Fenrir SFX")]
-        [SerializeField] private EventReference _fenrirAttack;
-        [SerializeField] private EventReference _fenrirSwitchIn;
+        [SerializeField] private EventReference _playerAttack;
+        [SerializeField] private EventReference _playerSwitchIn;
 
         [Header("Hel SFX")]
-        [SerializeField] private EventReference _helAttack;
         [SerializeField] private EventReference _helProjectileTravel;
         [SerializeField] private EventReference _helProjectileHit;
-        [SerializeField] private EventReference _helSwitchIn;
     
         [Header("Enemy SFX")]
         [SerializeField] private EventReference _draugrDeath;
@@ -36,6 +35,12 @@ namespace Audio
         [SerializeField] private EventReference _combatMusic;
         [SerializeField] private EventReference _menuMusic;
 
+        private bool _isPlayerHel;
+        private bool _isPlayerLowHealth;
+
+        private Vector3 _nextPosition;
+        private readonly List<EventInstance> _eventInstances = new();
+        
         private static FMODEvents _instance;
 
         private void Awake()
@@ -50,6 +55,34 @@ namespace Audio
         
             _instance = this;
             DontDestroyOnLoad(gameObject);
+        }
+
+        private void Update()
+        {
+            for (int i = _eventInstances.Count - 1; i >= 0; i--)
+            {
+                var instance = _eventInstances[i];
+                if (!instance.isValid())
+                {
+                    _eventInstances.RemoveAt(i);
+                    continue;
+                }
+                
+                instance.setParameterByName("Player_Form", _isPlayerHel ? 1 : 0);
+                instance.setParameterByName("Player_LowHealth", _isPlayerLowHealth ? 1 : 0);
+            }
+        }
+
+        public static void SetCharacter(bool isPlayerHel) => _instance._isPlayerHel = isPlayerHel;
+        public static void SetLowHealth(bool isLowHealth) => _instance._isPlayerLowHealth = isLowHealth;
+        
+        public void SetNextPosition(Transform reference) => _nextPosition = reference.position;
+        public void SetNextPosition(Vector3 position) => _nextPosition = position;
+        public void PlayEvent(string eventName)
+        {
+            var instance = RuntimeManager.CreateInstance(eventName);
+            _eventInstances.Add(instance);
+            instance.start();
         }
     }
 }

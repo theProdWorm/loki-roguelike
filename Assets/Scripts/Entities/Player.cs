@@ -4,6 +4,7 @@ using Stats;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Audio;
 using Entities.Stats;
 using Gameplay.Input;
 using Unity.Collections;
@@ -33,6 +34,8 @@ namespace Entities
         [Tooltip("Amount of time (in seconds) in advance the player can press an input for it to count.")]
         [SerializeField] private float _inputBufferMargin;
 
+        [SerializeField] private float _lowHealthThreshold;
+        
         [Header("Movement")]
         [SerializeField] private float _animationLockMoveSpeedFadeDuration;
 
@@ -173,6 +176,9 @@ namespace Entities
 
             OnDamageDealt.AddListener(AddPotionCharges);
 
+            OnHealthChanged.AddListener((current, max) =>
+                FMODEvents.SetLowHealth((float) current / max <= _lowHealthThreshold));
+            
             //Sync the health UI at the start
             OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
             CharacterIndexChanged();
@@ -681,6 +687,8 @@ namespace Entities
                 var character = _characterContainer.GetChild(i);
                 character.gameObject.SetActive(activeState);
             }
+            
+            FMODEvents.SetCharacter(ActiveCharacter == Character.Hel);
         }
 
         #region Collision
