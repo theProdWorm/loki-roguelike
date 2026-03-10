@@ -7115,6 +7115,11 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!4 &533110075 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8791464560597120204, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
+  m_PrefabInstance: {fileID: 1582412123}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &533456343
 Mesh:
   m_ObjectHideFlags: 0
@@ -20510,7 +20515,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: event:/Anton/Musik/Loops/Combat/Combat2
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1867008575}
@@ -21936,6 +21941,70 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2428499358251321693, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
+      propertyPath: OnAttackPerformed.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2428499358251321693, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
+      propertyPath: OnAttackPerformed.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2428499358251321693, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
+      propertyPath: OnAttackPerformed.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2428499358251321693, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
+      propertyPath: OnAttackPerformed.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1867008575}
+    - target: {fileID: 2428499358251321693, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
+      propertyPath: OnAttackPerformed.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 1867008575}
+    - target: {fileID: 2428499358251321693, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
+      propertyPath: OnAttackPerformed.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2428499358251321693, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
+      propertyPath: OnAttackPerformed.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2428499358251321693, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
+      propertyPath: OnAttackPerformed.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetNextPosition
+      objectReference: {fileID: 0}
+    - target: {fileID: 2428499358251321693, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
+      propertyPath: OnAttackPerformed.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: PlayEvent
+      objectReference: {fileID: 0}
+    - target: {fileID: 2428499358251321693, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
+      propertyPath: OnAttackPerformed.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: Audio.FMODEvents, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2428499358251321693, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
+      propertyPath: OnAttackPerformed.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: Audio.FMODEvents, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2428499358251321693, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
+      propertyPath: OnAttackPerformed.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 533110075}
+    - target: {fileID: 2428499358251321693, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
+      propertyPath: OnAttackPerformed.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2428499358251321693, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
+      propertyPath: OnAttackPerformed.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
+      value: event:/Dave/SFX/Oneshots/Player/Pleyer_Meele
+      objectReference: {fileID: 0}
+    - target: {fileID: 2428499358251321693, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
+      propertyPath: OnAttackPerformed.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Transform, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 2428499358251321693, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
+      propertyPath: OnAttackPerformed.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3005494553857760625, guid: 57a9bc6340caa5249b76fd9e6393c519, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -23092,11 +23161,11 @@ MonoBehaviour:
     Path: 
   _playerAttack:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 1611689188
+      Data2: 1100488490
+      Data3: 1702189464
+      Data4: 1251997565
+    Path: event:/Dave/SFX/Oneshots/Player/Pleyer_Meele
   _playerSwitchIn:
     Guid:
       Data1: 0
