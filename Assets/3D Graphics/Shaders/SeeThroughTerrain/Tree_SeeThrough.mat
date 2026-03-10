@@ -1,5 +1,31 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7769466267669507975
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 639247ca83abc874e893eb93af2b5e44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 0
+--- !u!114 &-6695399137913731463
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 10
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -7,8 +33,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TreeTrunks
-  m_Shader: {fileID: -6465566751694194690, guid: 653da5397687e3b4ebacc9aa3f769af8, type: 3}
+  m_Name: Tree_SeeThrough
+  m_Shader: {fileID: -6465566751694194690, guid: 3880ac560a3dd9645939de700cc736f9, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -49,6 +75,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Main_Texture:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -94,6 +124,8 @@ Material:
     - _AlphaClip: 0
     - _AlphaToMask: 0
     - _Ambient_Occlusion: 1
+    - _BUILTIN_QueueControl: 0
+    - _BUILTIN_QueueOffset: 0
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
@@ -109,18 +141,19 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Highlight_Base_Darkening: 0
     - _Highlight_Size: 0.1
     - _Highlight_Strength: 0.05
     - _Metallic: 0
     - _OcclusionStrength: 1
+    - _Opacity: 1
     - _Parallax: 0.005
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Shadow_Size: 0
     - _Shadow_Strength: 0.27
-    - _Smoothness: 0.5
+    - _Size: 0
+    - _Smoothness: 0.331
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -129,29 +162,20 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.2830189, g: 0.17696097, b: 0.06274475, a: 1}
-    - _Base_Color: {r: 0.3207547, g: 0.21644378, b: 0.16794232, a: 0}
-    - _Color: {r: 0.28301886, g: 0.17696095, b: 0.06274473, a: 1}
+    - Position: {r: 0.5, g: 0.5, b: 0, a: 0}
+    - _BaseColor: {r: 1, g: 0.3726415, b: 0.3726415, a: 1}
+    - _Base_Color: {r: 0.32156864, g: 0.21568628, b: 0.16862746, a: 0}
+    - _Camera_Position: {r: 101.84919, g: 21.928425, b: 54.815796, a: 0}
+    - _Color: {r: 1, g: 0.37264147, b: 0.37264147, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Highlight_Camera_Influence: {r: 0, g: 0, b: 0.5, a: 0}
     - _Highlight_Color: {r: 1, g: 1, b: 1, a: 0}
+    - _Player_Position: {r: 107.88554, g: 1, b: 44.360542, a: 0}
+    - _Pos: {r: 0.5, g: 0.49967968, b: 0, a: 0}
     - _Shadow_Camera_Influence: {r: 0, g: 0, b: 0, a: 0}
     - _Shadow_Color: {r: 0.509434, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _Specular_Color: {r: 0, g: 0, b: 0, a: 0}
     - _Tiling: {r: 1, g: 1, b: 0, a: 0}
+    - _Tint: {r: 0.32156864, g: 0.21568628, b: 0.16862746, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &1793994223019274357
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 10
