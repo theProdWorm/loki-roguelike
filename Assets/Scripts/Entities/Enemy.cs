@@ -29,6 +29,7 @@ namespace Entities
         private Material[] materials;
         
         [SerializeField] private float ragdollDuration;
+        [SerializeField] private float dissolveSpeed;
         [SerializeField] private Transform attackPoint;
         [SerializeField] private float rotationSpeed = 5;
         [SerializeField] private GameObject attackPrefab;
@@ -96,9 +97,9 @@ namespace Entities
                     if (ragdollTimeLeft > 0)
                     {
                         dissolveValue = materials[0].GetFloat("_Cutoff_Height");
-                        dissolveValue -= Time.deltaTime*2;
+                        dissolveValue -= Time.deltaTime*dissolveSpeed;
                         materials[0].SetFloat("_Cutoff_Height", dissolveValue);
-                        ragdollTimeLeft -= Time.deltaTime;
+                        ragdollTimeLeft -= Time.deltaTime ;
                     }
                     else
                     {
