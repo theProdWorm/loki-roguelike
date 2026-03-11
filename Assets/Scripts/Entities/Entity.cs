@@ -109,7 +109,7 @@ namespace Entities
             _moveSpeed = _baseMoveSpeed * _speedMultiplier;
         }
 
-        protected void Die()
+        protected virtual void Die()
         {
             if (_isDead)
                 return;

@@ -28,7 +28,7 @@ namespace Entities
         public UnityEvent<int, int> OnHealthChanged;
         public UnityEvent<int, int> OnPotionChargesChanged;
         public UnityEvent OnPotionDrunk;
-        
+
         [SerializeField] private Transform _characterContainer;
         [SerializeField] private PlayerInput _playerInput;
 
@@ -36,11 +36,11 @@ namespace Entities
         [SerializeField] private float _inputBufferMargin;
 
         [SerializeField] private float _lowHealthThreshold;
-        
+
         [Header("Movement")]
         [SerializeField] private float _animationLockMoveSpeedFadeDuration;
 
-        [Header("Target Lock")] 
+        [Header("Target Lock")]
         [SerializeField] private float _targetLockAngle;
 
         [SerializeField] private float _targetLockMaxDistance;
@@ -53,34 +53,34 @@ namespace Entities
         [SerializeField] private LayerMask _wallLayer;
         [SerializeField] private LayerMask _holeLayer;
 
-        [Header("Interaction")] 
+        [Header("Interaction")]
         [SerializeField] private float _lookWeight;
 
         [SerializeField] private float _distanceWeight;
 
-        [Header("Healing")] 
+        [Header("Healing")]
         [SerializeField] private int _potionHealAmount;
         [SerializeField] private int _potionCost;
         [SerializeField] private int _maxPotionCharges;
 
-        [Header("Dash")] 
+        [Header("Dash")]
         [SerializeField] private Ability _dashAbility;
 
         [SerializeField] private Transform _dashPoint;
 
-        [Range(0.01f, 0.5f)] 
+        [Range(0.01f, 0.5f)]
         [SerializeField] private float _dashDuration;
 
-        [Range(0f, 1f), Tooltip("Fraction of dash duration to fade back to normal speed.")] 
+        [Range(0f, 1f), Tooltip("Fraction of dash duration to fade back to normal speed.")]
         [SerializeField] private float _dashFade;
 
-        [Tooltip("The fraction cutoff for dashing OVER holes")] 
-        [Range(0.5f, 1f)] 
+        [Tooltip("The fraction cutoff for dashing OVER holes")]
+        [Range(0.5f, 1f)]
         [SerializeField] private float _dashHoleSnapFraction;
 
         [SerializeField] private LayerMask _dashingPlayerLayer;
 
-        [Header("Fenrir")] 
+        [Header("Fenrir")]
         [SerializeField] private CharacterAbilitySet _fenrirAbilities;
         [SerializeField] private Animator _fenrirAnimator;
         [SerializeField] private Transform _fenrirAttackPoint;
@@ -88,7 +88,7 @@ namespace Entities
         [SerializeField] private float _fenrirLungeForce;
         [SerializeField] private float _fenrirLungeDuration;
 
-        [Header("Hel")] [SerializeField] private CharacterAbilitySet _helAbilities;
+        [Header("Hel")][SerializeField] private CharacterAbilitySet _helAbilities;
         [SerializeField] private Animator _helAnimator;
         [SerializeField] private Transform _helAttackPoint;
         [SerializeField] private Transform _helSpecialPoint;
@@ -127,9 +127,9 @@ namespace Entities
 
         private float _critChance;
         private float _critDamage;
-        
+
         private float _damageReduction = 0f;
-        
+
         private int _potionCharges;
         private bool PotionReady => _potionCharges >= _potionCost;
 
@@ -145,14 +145,41 @@ namespace Entities
 
         private Coroutine _lungeCoroutine;
         private Vector3 _lungeForce;
-        
+
         private InputBuffer _inputBuffer;
 
         private List<IInteractable> _interactables = new();
         private IInteractable _currentInteractable;
 
+        private StatsPersistence _statsPersistence;
+
         protected override void Start()
         {
+            #region StatsPersistence Initialization
+            StatsPersistence _statsPersistence = FindFirstObjectByType<StatsPersistence>();
+            if (_statsPersistence.isFenrir)
+                ActiveCharacter = Character.Fenrir;
+            else
+                ActiveCharacter = Character.Hel;
+
+            if (_statsPersistence.PlayerHealth > 0)
+                _currentHealth = _statsPersistence.PlayerHealth;
+
+            if (_statsPersistence.HealthItemAmount > 0)
+                _potionCharges = _statsPersistence.HealthItemAmount;
+
+            #endregion
+            SceneManager sceneManager = FindFirstObjectByType<SceneManager>();
+            Debug.Log(sceneManager);
+            if (sceneManager != null)
+                sceneManager.OnSceneLoaded.AddListener(() =>
+                {
+                    Debug.Log("Faggot");
+                    _statsPersistence.PlayerHealth = _currentHealth;
+                    _statsPersistence.HealthItemAmount = _potionCharges;
+                    _statsPersistence.isFenrir = ActiveCharacter == Character.Fenrir;
+                });
+
             _playerInput.SwitchCurrentActionMap("Dialogue");
             _playerInput.SwitchCurrentActionMap("UI");
             _playerInput.SwitchCurrentActionMap("Player");
@@ -174,11 +201,12 @@ namespace Entities
             OnDamageDealt.AddListener(AddPotionCharges);
 
             OnHealthChanged.AddListener((current, max) =>
-                FMODEvents.SetLowHealth((float) current / max <= _lowHealthThreshold));
-            
+                FMODEvents.SetLowHealth((float)current / max <= _lowHealthThreshold));
+
             //Sync the health UI at the start
             OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
             CharacterIndexChanged();
+
         }
 
         private void InitializeAbilityTrackers()
@@ -298,16 +326,16 @@ namespace Entities
             Vector3 movementZ = moveVector.y * forwardDirection;
 
             Vector3 movement = _moveSpeed * (movementX + movementZ).normalized;
-            
+
             _rigidbody.linearVelocity = movement + _lungeForce;
-            
+
             transform.LookAt(transform.position + _rigidbody.linearVelocity);
 
             _rigidbody.linearVelocity += _knockbackForce;
 
             CurrentAnimator.SetBool(IS_MOVING, movement.magnitude > 0.01f);
         }
-        
+
         public void Lunge(Vector3 direction, float force, float duration)
         {
             if (_lungeCoroutine != null)
@@ -315,7 +343,7 @@ namespace Entities
                 StopCoroutine(_lungeCoroutine);
                 _lungeCoroutine = null;
             }
-            
+
             _lungeForce = direction * force;
             _lungeCoroutine = StartCoroutine(LungeFadeCoroutine(direction, force, duration));
         }
@@ -330,10 +358,10 @@ namespace Entities
 
                 float force = originalForce * Mathf.Abs(Mathf.Pow(t, 3) - 1);
                 _lungeForce = force * direction;
-                
+
                 yield return null;
             }
-            
+
             _lungeForce = Vector3.zero;
             _lungeCoroutine = null;
         }
@@ -349,7 +377,7 @@ namespace Entities
             {
                 if (!enemy.HasSpawned)
                     return false;
-                
+
                 float distance = Vector3.Distance(enemy.transform.position, transform.position);
                 if (distance > _targetLockMaxDistance)
                     return false;
@@ -482,8 +510,8 @@ namespace Entities
             }
         }
 
-        
-        
+
+
         private void PerformDash(Vector3 dashPoint, bool animate)
         {
             // Projected dash vector using the calculated offset from player center to front
@@ -492,10 +520,10 @@ namespace Entities
 
             // Distance from center of player to the front collision point
             Vector3 collisionPointOffset =
-                dashVector.normalized * (0.02f + _collider.radius*2);
-            
+                dashVector.normalized * (0.02f + _collider.radius * 2);
+
             LayerMask holeAndWall = _wallLayer | _holeLayer;
-            
+
             var commands = new NativeArray<RaycastCommand>(1, Allocator.Persistent);
             var hits = new NativeArray<RaycastHit>(3, Allocator.Persistent);
             QueryParameters parameters =
@@ -503,9 +531,9 @@ namespace Entities
             commands[0] = new RaycastCommand(transform.position, dashVector.normalized, parameters,
                 distance);
             RaycastCommand.ScheduleBatch(commands, hits, 1, 3).Complete();
-            
+
             hits.Sort(Comparer<RaycastHit>.Create((a, b) => a.distance.CompareTo(b.distance)));
-            
+
             //int closestWall = -1;
             int firstHit = -1;
             int hitCount = 0;
@@ -513,8 +541,8 @@ namespace Entities
             List<Vector3> hitPoints = new List<Vector3>();
             for (int i = 1; i < hits.Length; i++)
             {
-                
-                if (hits[i].collider )
+
+                if (hits[i].collider)
                 {
                     if (!hitCollider)
                     {
@@ -531,10 +559,10 @@ namespace Entities
                     if (i % 2 == 0)
                     {
                         Debug.Log("Wall in hole");
-                        dashPoint = hits[i-1].point-collisionPointOffset;
+                        dashPoint = hits[i - 1].point - collisionPointOffset;
                         goto coroutine;
                     }
-                    dashPoint = hits[i].point-collisionPointOffset;
+                    dashPoint = hits[i].point - collisionPointOffset;
                     goto coroutine;
                 }
             }
@@ -553,11 +581,11 @@ namespace Entities
             }
             if (hitCount == 3)
             {
-                dashPoint = hitPoints[hitCount-1]-collisionPointOffset;
+                dashPoint = hitPoints[hitCount - 1] - collisionPointOffset;
             }
             else if (hitCount == 2)
             {
-                dashPoint = hitPoints[hitCount-1]+collisionPointOffset;
+                dashPoint = hitPoints[hitCount - 1] + collisionPointOffset;
             }
             else if (hitCount == 1)
             {
@@ -569,15 +597,15 @@ namespace Entities
                 }
                 Vector3 holeBack = hit.point;
                 float holeDiameter = Vector3.Distance(hitPoints[0], holeBack);
-                
-                if(holeDiameter > 300) goto coroutine;
+
+                if (holeDiameter > 300) goto coroutine;
                 float dashDistance = Vector3.Distance(hitPoints[0], dashPoint);
                 float fraction = dashDistance / holeDiameter;
                 Debug.LogWarning(fraction);
                 if (fraction > _dashHoleSnapFraction)
                 {
                     dashPoint = hit.point + collisionPointOffset;
-                    
+
                 }
                 else
                 {
@@ -586,7 +614,7 @@ namespace Entities
                 }
             }
 
-            coroutine:
+        coroutine:
             commands.Dispose();
             hits.Dispose();
             if (Vector3.Distance(transform.position, dashPoint) < 1f)
@@ -594,7 +622,7 @@ namespace Entities
                 Debug.LogWarning("Skipped dash");
                 return;
             }
-            
+
             if (_dashCoroutine != null)
             {
                 StopCoroutine(_dashCoroutine);
@@ -694,7 +722,7 @@ namespace Entities
                 var character = _characterContainer.GetChild(i);
                 character.gameObject.SetActive(activeState);
             }
-            
+
             FMODEvents.SetCharacter(ActiveCharacter == Character.Hel);
         }
 
@@ -802,7 +830,7 @@ namespace Entities
                 OnPotionChargesChanged?.Invoke(_potionCharges, _maxPotionCharges);
 
                 OnPotionDrunk?.Invoke();
-                
+
                 return true;
             });
         }
@@ -839,5 +867,12 @@ namespace Entities
         }
 
         #endregion
+
+        protected override void Die()
+        {
+            base.Die();
+            _statsPersistence.PlayerHealth = _maxHealth;
+            _statsPersistence.HealthItemAmount = 0;
+        }
     }
 }

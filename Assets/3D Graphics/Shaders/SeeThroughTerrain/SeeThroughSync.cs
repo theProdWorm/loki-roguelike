@@ -27,8 +27,10 @@ public class SeeThroughSync : MonoBehaviour
         _camera = Camera.main;
         if (!PLAYER)
             PLAYER = GameObject.FindGameObjectWithTag("Player");
-        _treeRadius = _treeMaterial.GetFloat("_Size");
-        _stoneRadius = _stoneMaterial.GetFloat("_Size");
+        //_treeRadius = _treeMaterial.GetFloat("_Size");
+        //_stoneRadius = _stoneMaterial.GetFloat("_Size");
+        _treeRadius = 3f;
+        _stoneRadius = 3f;
     }
 
     float size = 0;
