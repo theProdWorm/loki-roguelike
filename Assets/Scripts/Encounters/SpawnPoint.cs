@@ -13,8 +13,8 @@ public class SpawnPoint : MonoBehaviour
     private bool _sittingStatue = false;
     public bool hasSpawned = false;
 
-    [SerializeField, Tooltip("DEV TOOL. Designers don't touch")]
-    private Component[] _componentsToTurnOffAndOn; //TODO: Fix this ugly ass solution
+    //[SerializeField, Tooltip("DEV TOOL. Designers don't touch")]
+    //private Component[] _componentsToTurnOffAndOn; //TODO: Fix this ugly ass solution
 
     Animator animator;
 
