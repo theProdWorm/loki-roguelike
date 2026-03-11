@@ -45,13 +45,6 @@ namespace Audio
 
         private void Awake()
         {
-            if (_instance != null)
-            {
-                Destroy(_instance.gameObject);
-            }
-
-            _instance = this;
-
             // if (_instance != null)
             // {
             //     Debug.LogError("Found more than one FMOD Events instance in the scene");
