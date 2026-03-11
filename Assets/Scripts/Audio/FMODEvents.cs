@@ -47,14 +47,21 @@ namespace Audio
         {
             if (_instance != null)
             {
-                Debug.LogError("Found more than one FMOD Events instance in the scene");
-            
-                Destroy(gameObject);
-                return;
+                Destroy(_instance.gameObject);
             }
-        
+
             _instance = this;
-            DontDestroyOnLoad(gameObject);
+
+            // if (_instance != null)
+            // {
+            //     Debug.LogError("Found more than one FMOD Events instance in the scene");
+            //
+            //     Destroy(gameObject);
+            //     return;
+            // }
+            //
+            // _instance = this;
+            // DontDestroyOnLoad(gameObject);
         }
 
         private void Update()
