@@ -1,9 +1,13 @@
 using Entities;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EncounterManager : MonoBehaviour
 {
+    UnityEvent _encounterStart;
+    UnityEvent _encounterEnd;
+
     private static Player _player;
     public enum EnemyTypes
     {
@@ -199,7 +203,7 @@ public class EncounterManager : MonoBehaviour
     {
         foreach (GameObject gate in _gates)
         {
-            //TODO: Maybe put in a encounter start sound effect or something?
+            _encounterStart.Invoke();
             gate.GetComponent<Gateway>().Close();
         }
     }
@@ -208,7 +212,7 @@ public class EncounterManager : MonoBehaviour
     {
         foreach (GameObject gate in _gates)
         {
-            //TODO: Maybe put in a encounter completed sound effect or something here before opening the doors?
+            _encounterEnd.Invoke();
             gate.GetComponent<Gateway>().Open();
         }
     }
