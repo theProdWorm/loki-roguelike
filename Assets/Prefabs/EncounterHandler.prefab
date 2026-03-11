@@ -45,6 +45,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f32ffdae2b0e5934d80e7c2a83116bfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _encounterStart:
+    m_PersistentCalls:
+      m_Calls: []
+  _encounterEnd:
+    m_PersistentCalls:
+      m_Calls: []
   _gates: []
   _chanceForDraugrToRunThroughDoor: 0
   minimumDistanceFromPlayerToSpawnDraugr: 2
@@ -52,8 +58,7 @@ MonoBehaviour:
   _draugrSpawnPoints: []
   _birdOnBirdSpawnPoints: []
   _wolfSpawnPoints: []
-  _wave0:
-  - {fileID: 0}
+  _wave0: {fileID: 0}
   _enemyWaves: []
   _timeBetweenWaves: -1
   _percentageOfEnemiesToSpawnNextWave: 0
@@ -69,4 +74,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09c5db9f2aa409b43a3c8d5293759230, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _name: 
   Enemies: 000000000000000000000000
