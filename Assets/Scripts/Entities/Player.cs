@@ -558,8 +558,12 @@ namespace Entities
             }
             else if (hitCount == 1)
             {
-                Ray backRay = new(hitPoints[0] + dashVector.normalized * 100f, -dashVector.normalized);
-                hits[firstHit].collider.Raycast(backRay, out RaycastHit hit, 500);
+                Ray backRay = new(hitPoints[0] + dashVector.normalized * distance, -dashVector.normalized);
+                if (!hits[firstHit].collider.Raycast(backRay, out RaycastHit hit, 500))
+                {
+                    Debug.LogWarning("Skipped Dash 1");
+                    return;
+                }
                 Vector3 holeBack = hit.point;
                 float holeDiameter = Vector3.Distance(hitPoints[0], holeBack);
                 
@@ -574,7 +578,6 @@ namespace Entities
                 }
                 else
                 {
-                    Debug.LogWarning("AHH");
                     dashPoint = hitPoints[0] - collisionPointOffset;
                     goto coroutine;
                 }
@@ -583,7 +586,7 @@ namespace Entities
             coroutine:
             if (Vector3.Distance(transform.position, dashPoint) < 1f)
             {
-                Debug.LogWarning("Skipped dash");
+                Debug.LogWarning("Skipped dash 2");
                 return;
             }
             commands.Dispose();
