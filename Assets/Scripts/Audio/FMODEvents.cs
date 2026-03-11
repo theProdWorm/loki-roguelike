@@ -24,6 +24,10 @@ namespace Audio
         [SerializeField] private EventReference _draugrDeath;
         [SerializeField] private EventReference _draugrHit;
         [SerializeField] private EventReference _draugrSwing;
+        
+        [Header("Misc")]
+        [SerializeField] private EventReference _potionConsume;
+        [SerializeField] private EventReference _runestoneInteract;
     
         [Header("UI SFX")]
         [SerializeField] private EventReference _uiButtonClick;
