@@ -486,8 +486,7 @@ namespace Entities
         }
 
         
-        //public GameObject debugObject;
-
+        
         private void PerformDash(Vector3 dashPoint, bool animate)
         {
             // Projected dash vector using the calculated offset from player center to front
@@ -496,7 +495,7 @@ namespace Entities
 
             // Distance from center of player to the front collision point
             Vector3 collisionPointOffset =
-                dashVector.normalized * (0.02f + _collider.radius);
+                dashVector.normalized * (0.02f + _collider.radius*2);
             
             LayerMask holeAndWall = _wallLayer | _holeLayer;
             
@@ -552,40 +551,41 @@ namespace Entities
             if (hitCount == 3)
             {
                 dashPoint = hitPoints[hitCount-1]-collisionPointOffset;
-                //Destroy(Instantiate(debugObject,dashPoint, Quaternion.identity),15);
             }
             else if (hitCount == 2)
             {
                 dashPoint = hitPoints[hitCount-1]+collisionPointOffset;
-                //Destroy(Instantiate(debugObject,dashPoint, Quaternion.identity),15);
             }
             else if (hitCount == 1)
             {
-                Ray backRay = new(hitPoints[hitCount-1] + dashVector.normalized * 100f, -dashVector.normalized);
+                Ray backRay = new(hitPoints[0] + dashVector.normalized * 100f, -dashVector.normalized);
                 hits[firstHit].collider.Raycast(backRay, out RaycastHit hit, 500);
                 Vector3 holeBack = hit.point;
-                //Destroy(Instantiate(debugObject,hitPoints[hitCount-1], Quaternion.identity),15);
-                //Destroy(Instantiate(debugObject,holeBack, Quaternion.identity),15);
-                float holeDiameter = Vector3.Distance(hitPoints[hitCount-1], holeBack);
+                float holeDiameter = Vector3.Distance(hitPoints[0], holeBack);
                 
                 if(holeDiameter > 300) goto coroutine;
-                float dashDistance = Vector3.Distance(hitPoints[hitCount-1], dashPoint);
+                float dashDistance = Vector3.Distance(hitPoints[0], dashPoint);
                 float fraction = dashDistance / holeDiameter;
-                Debug.Log(fraction);
+                Debug.LogWarning(fraction);
                 if (fraction > _dashHoleSnapFraction)
                 {
                     dashPoint = hit.point + collisionPointOffset;
                     
                 }
-                else dashPoint = hitPoints[hitCount-1] - collisionPointOffset;
+                else
+                {
+                    Debug.LogWarning("AHH");
+                    dashPoint = hitPoints[0] - collisionPointOffset;
+                    goto coroutine;
+                }
             }
 
             coroutine:
-            /*if (Vector3.Distance(transform.position, dashPoint) < 0.05f)
+            if (Vector3.Distance(transform.position, dashPoint) < 1f)
             {
-                Debug.Log("Skipped dash");
+                Debug.LogWarning("Skipped dash");
                 return;
-            }*/
+            }
             commands.Dispose();
             hits.Dispose();
             if (_dashCoroutine != null)
@@ -603,7 +603,7 @@ namespace Entities
                 CurrentAnimator.SetTrigger(DASH);
 
             _isDashing = true;
-            _hasControl = true;
+            _hasControl = false;
             _dashInputSnapshot = _lastMoveInput;
 
             int defaultPlayerLayer = gameObject.layer;
