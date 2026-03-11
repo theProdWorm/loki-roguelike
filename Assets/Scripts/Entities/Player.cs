@@ -27,7 +27,8 @@ namespace Entities
 
         public UnityEvent<int, int> OnHealthChanged;
         public UnityEvent<int, int> OnPotionChargesChanged;
-
+        public UnityEvent OnPotionDrunk;
+        
         [SerializeField] private Transform _characterContainer;
         [SerializeField] private PlayerInput _playerInput;
 
@@ -93,10 +94,6 @@ namespace Entities
         [SerializeField] private Transform _helSpecialPoint;
         [SerializeField] private float _helLungeForce;
         [SerializeField] private float _helLungeDuration;
-
-        public UnityEvent OnHelAttackStageChanged;
-        public UnityEvent OnHelAttackFullyCharged;
-        public UnityEvent OnHelAttackReleased;
 
         private Animator[] _animators;
         private Animator CurrentAnimator => _animators[(int)ActiveCharacter];
@@ -804,6 +801,8 @@ namespace Entities
                 _potionCharges -= _potionCost;
                 OnPotionChargesChanged?.Invoke(_potionCharges, _maxPotionCharges);
 
+                OnPotionDrunk?.Invoke();
+                
                 return true;
             });
         }
