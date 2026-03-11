@@ -40,7 +40,7 @@ public class SpawnPoint : MonoBehaviour
 
     private void Start()
     {
-        if (!hasSpawned)
+        if (!hasSpawned && _enemyType is EncounterManager.EnemyTypes.Draugr)
             PrepareDraugrStatue();
     }
 

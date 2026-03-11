@@ -235,7 +235,7 @@ public class EncounterManager : MonoBehaviour
 
         for (int i = 0; i < spawnPoints.Count; i++)
         {
-            r = Random.Range(0, spawnPoints.Count - 1);
+            r = Random.Range(0, spawnPoints.Count);
 
             //Check distance availability
             if (_tooCloseSpawnPoints.Contains(spawnPoints[r]) || _tooFarSpawnPoints.Contains(spawnPoints[r]))
@@ -253,7 +253,7 @@ public class EncounterManager : MonoBehaviour
 
         for (int i = 0; i < spawnPoints.Count; i++)
         {
-            r = Random.Range(0, spawnPoints.Count - 1);
+            r = Random.Range(0, spawnPoints.Count);
 
             //Check distance availability
             if (_tooCloseSpawnPoints.Contains(spawnPoints[r]))
