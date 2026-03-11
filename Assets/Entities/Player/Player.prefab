@@ -681,7 +681,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 6627249077266683080}
   EntityBaseStats: {fileID: 11400000, guid: 201f19a15aeb70e41ba663d4e4487c31, type: 2}
-  _statusEffectUIContainer: {fileID: 0}
   OnDeath:
     m_PersistentCalls:
       m_Calls:
@@ -747,7 +746,19 @@ MonoBehaviour:
       m_Calls: []
   OnPotionDrunk:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Audio.FMODEvents, Assembly-CSharp
+        m_MethodName: PlayEvent
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: event:/Dave/SFX/Oneshots/Misc/Heal
+          m_BoolArgument: 0
+        m_CallState: 2
   _characterContainer: {fileID: 8848846395872390570}
   _playerInput: {fileID: 3960114018095941365}
   _inputBufferMargin: 0.05
@@ -1025,7 +1036,7 @@ MonoBehaviour:
   _mask:
     serializedVersion: 2
     m_Bits: 16384
-  _fadeSpeed: 4
+  _fadeSpeed: 10
 --- !u!1 &2246390398605080539
 GameObject:
   m_ObjectHideFlags: 0
@@ -3817,8 +3828,8 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 5172703747158286906, guid: 5066ffa8465985846ac4d045e203e9fb, type: 3}
-  - {fileID: -4288583467269203127, guid: 5066ffa8465985846ac4d045e203e9fb, type: 3}
+  - {fileID: 2100000, guid: 4aa098719123c6948a4f98032908778f, type: 2}
+  - {fileID: 2100000, guid: 1b43ecb4750d8f5498c79d4508f7359f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

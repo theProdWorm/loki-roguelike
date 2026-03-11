@@ -123,7 +123,7 @@ public class EncounterManager : MonoBehaviour
 
     private void NextWave()
     {
-        if (_currentWaveIndex >= _enemyWaves.Count)
+        if (_currentWaveIndex >= _enemyWaves.Count - 1)
         {
             if (_enemiesAlive.Count <= 0)
             {
@@ -192,7 +192,6 @@ public class EncounterManager : MonoBehaviour
             }
             else
             {
-                i--;
                 Debug.Log("entity returned null");
             }
         }
@@ -201,18 +200,18 @@ public class EncounterManager : MonoBehaviour
 
     private void CloseDoors()
     {
+        _encounterStart.Invoke();
         foreach (GameObject gate in _gates)
         {
-            _encounterStart.Invoke();
             gate.GetComponent<Gateway>().Close();
         }
     }
 
     private void OpenDoors()
     {
+        _encounterEnd.Invoke();
         foreach (GameObject gate in _gates)
         {
-            _encounterEnd.Invoke();
             gate.GetComponent<Gateway>().Open();
         }
     }
@@ -273,6 +272,9 @@ public class EncounterManager : MonoBehaviour
 
         #region Search everywhere
 
+        if (spawnPoints.Count == 0)
+            return null;
+        
         r = Random.Range(0, spawnPoints.Count);
         Debug.Log(r + ", " + spawnPoints.Count);
         entity = spawnPoints[r].GetComponent<SpawnPoint>().Spawn();

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using FMOD.Studio;
 using FMODUnity;
@@ -70,6 +71,14 @@ namespace Audio
             // DontDestroyOnLoad(gameObject);
         }
 
+        private void OnDestroy()
+        {
+            foreach (var instance in _eventInstances)
+            {
+                instance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            }
+        }
+
         private void Update()
         {
             for (int i = _eventInstances.Count - 1; i >= 0; i--)
@@ -103,6 +112,9 @@ namespace Audio
 
         public void StopEvent(string eventName)
         {
+            if (!_eventInstancesByName.ContainsKey(eventName))
+                return;
+            
             var reference = _eventInstancesByName[eventName];
             
             if (reference.isValid())
