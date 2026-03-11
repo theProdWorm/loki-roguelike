@@ -5,8 +5,8 @@ using UnityEngine.Events;
 
 public class EncounterManager : MonoBehaviour
 {
-    UnityEvent _encounterStart;
-    UnityEvent _encounterEnd;
+    public UnityEvent _encounterStart;
+    public UnityEvent _encounterEnd;
 
     private static Player _player;
     public enum EnemyTypes
