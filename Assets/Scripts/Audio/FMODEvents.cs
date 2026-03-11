@@ -44,6 +44,8 @@ namespace Audio
 
         private Vector3 _nextPosition;
         private readonly List<EventInstance> _eventInstances = new();
+        private Dictionary<string, EventInstance> _eventInstancesByName = new();
+        
         
         private static FMODEvents _instance;
 
@@ -85,8 +87,19 @@ namespace Audio
         public void PlayEvent(string eventName)
         {
             var instance = RuntimeManager.CreateInstance(eventName);
+            
             _eventInstances.Add(instance);
+            _eventInstancesByName[eventName] = instance;
+            
             instance.start();
+        }
+
+        public void StopEvent(string eventName)
+        {
+            var reference = _eventInstancesByName[eventName];
+            
+            if (reference.isValid())
+                reference.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         }
     }
 }
