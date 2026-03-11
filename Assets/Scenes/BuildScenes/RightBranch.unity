@@ -1812,6 +1812,10 @@ PrefabInstance:
       value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 9104400578989589687, guid: 2b44bc1ad9d4a4880af324c8fa92f767, type: 3}
+      propertyPath: _wave0
+      value: 
+      objectReference: {fileID: 1065444589}
+    - target: {fileID: 9104400578989589687, guid: 2b44bc1ad9d4a4880af324c8fa92f767, type: 3}
       propertyPath: _gates.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -1821,7 +1825,7 @@ PrefabInstance:
       objectReference: {fileID: 2049859077}
     - target: {fileID: 9104400578989589687, guid: 2b44bc1ad9d4a4880af324c8fa92f767, type: 3}
       propertyPath: _enemyWaves.Array.size
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 9104400578989589687, guid: 2b44bc1ad9d4a4880af324c8fa92f767, type: 3}
       propertyPath: '_enemyWaves.Array.data[0]'
@@ -1842,7 +1846,7 @@ PrefabInstance:
     - target: {fileID: 9104400578989589687, guid: 2b44bc1ad9d4a4880af324c8fa92f767, type: 3}
       propertyPath: '_enemyWaves.Array.data[4]'
       value: 
-      objectReference: {fileID: 1065444592}
+      objectReference: {fileID: 0}
     - target: {fileID: 9104400578989589687, guid: 2b44bc1ad9d4a4880af324c8fa92f767, type: 3}
       propertyPath: _wolfSpawnPoints.Array.size
       value: 14
@@ -2061,9 +2065,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 9032985410785104322, guid: 2b44bc1ad9d4a4880af324c8fa92f767, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1065444593}
-    - targetCorrespondingSourceObject: {fileID: 9032985410785104322, guid: 2b44bc1ad9d4a4880af324c8fa92f767, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1065444592}
   m_SourcePrefab: {fileID: 100100000, guid: 2b44bc1ad9d4a4880af324c8fa92f767, type: 3}
 --- !u!4 &84664977 stripped
 Transform:
@@ -9112,20 +9113,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f32ffdae2b0e5934d80e7c2a83116bfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &317874797
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 317874793}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09c5db9f2aa409b43a3c8d5293759230, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _name: 
-  Enemies: 02000000020000000000000002000000
 --- !u!114 &317874798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9139,7 +9126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: 
-  Enemies: 02000000000000000000000002000000
+  Enemies: 02000000020000000000000000000000
 --- !u!1001 &321476238
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11591,17 +11578,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d2d78769bf71ee1458e66d524f1d197e, type: 3}
   m_PrefabInstance: {fileID: 1543527744}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &423105118 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4933357040203959429, guid: 7dfab53da1c9443db81c70289bfd04b3, type: 3}
-  m_PrefabInstance: {fileID: 814894596}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &423105120 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4424939795579580105, guid: 7dfab53da1c9443db81c70289bfd04b3, type: 3}
   m_PrefabInstance: {fileID: 814894596}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 423105118}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 09c5db9f2aa409b43a3c8d5293759230, type: 3}
@@ -11612,26 +11594,12 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5148747277592910320, guid: 7dfab53da1c9443db81c70289bfd04b3, type: 3}
   m_PrefabInstance: {fileID: 814894596}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 423105118}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f32ffdae2b0e5934d80e7c2a83116bfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &423105122
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 423105118}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09c5db9f2aa409b43a3c8d5293759230, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _name: 
-  Enemies: 020000000200000002000000
 --- !u!1001 &423259956
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26444,6 +26412,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1823410275}
     - target: {fileID: 4532622375005140976, guid: 8e0164502a8b64333ad16715815ee77a, type: 3}
+      propertyPath: _wave0
+      value: 
+      objectReference: {fileID: 1284225146}
+    - target: {fileID: 4532622375005140976, guid: 8e0164502a8b64333ad16715815ee77a, type: 3}
       propertyPath: _gates.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -26458,11 +26430,11 @@ PrefabInstance:
     - target: {fileID: 4532622375005140976, guid: 8e0164502a8b64333ad16715815ee77a, type: 3}
       propertyPath: '_enemyWaves.Array.data[0]'
       value: 
-      objectReference: {fileID: 1284225144}
+      objectReference: {fileID: 1284225146}
     - target: {fileID: 4532622375005140976, guid: 8e0164502a8b64333ad16715815ee77a, type: 3}
       propertyPath: '_enemyWaves.Array.data[1]'
       value: 
-      objectReference: {fileID: 1284225144}
+      objectReference: {fileID: 1284225148}
     - target: {fileID: 4532622375005140976, guid: 8e0164502a8b64333ad16715815ee77a, type: 3}
       propertyPath: _draugrSpawnPoints.Array.size
       value: 7
@@ -26499,6 +26471,10 @@ PrefabInstance:
       propertyPath: '_draugrSpawnPoints.Array.data[7]'
       value: 
       objectReference: {fileID: 88686163}
+    - target: {fileID: 4532622375005140976, guid: 8e0164502a8b64333ad16715815ee77a, type: 3}
+      propertyPath: _percentageOfEnemiesToSpawnNextWave
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4587504676291049747, guid: 8e0164502a8b64333ad16715815ee77a, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -26821,7 +26797,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4460204380267995781, guid: 8e0164502a8b64333ad16715815ee77a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1284225144}
+      addedObject: {fileID: 1284225148}
     - targetCorrespondingSourceObject: {fileID: 6471521469487040756, guid: 8e0164502a8b64333ad16715815ee77a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1096662420}
@@ -31239,7 +31215,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2255915948677899241, guid: 7dfab53da1c9443db81c70289bfd04b3, type: 3}
       propertyPath: m_CastShadows
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2271113975521123408, guid: 7dfab53da1c9443db81c70289bfd04b3, type: 3}
       propertyPath: m_Mesh
@@ -31263,7 +31239,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 5b48a215a0517b54392f8474cac17a97, type: 2}
     - target: {fileID: 2703833980881115607, guid: 7dfab53da1c9443db81c70289bfd04b3, type: 3}
       propertyPath: m_CastShadows
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2764293120369800309, guid: 7dfab53da1c9443db81c70289bfd04b3, type: 3}
       propertyPath: m_Layer
@@ -31291,7 +31267,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3261569457623421115, guid: 7dfab53da1c9443db81c70289bfd04b3, type: 3}
       propertyPath: m_CastShadows
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3279425779435303960, guid: 7dfab53da1c9443db81c70289bfd04b3, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -31299,7 +31275,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 28d29c4503f1f5c4e8ba8210fc5c063a, type: 2}
     - target: {fileID: 3356963984071846632, guid: 7dfab53da1c9443db81c70289bfd04b3, type: 3}
       propertyPath: m_CastShadows
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3376711835095235932, guid: 7dfab53da1c9443db81c70289bfd04b3, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -31351,7 +31327,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 5b48a215a0517b54392f8474cac17a97, type: 2}
     - target: {fileID: 4424939795579580105, guid: 7dfab53da1c9443db81c70289bfd04b3, type: 3}
       propertyPath: Enemies.Array.size
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4438714788327887914, guid: 7dfab53da1c9443db81c70289bfd04b3, type: 3}
       propertyPath: m_Layer
@@ -31367,7 +31343,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4750973089812875371, guid: 7dfab53da1c9443db81c70289bfd04b3, type: 3}
       propertyPath: m_CastShadows
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4787119539303704754, guid: 7dfab53da1c9443db81c70289bfd04b3, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -31394,6 +31370,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 5b48a215a0517b54392f8474cac17a97, type: 2}
     - target: {fileID: 5148747277592910320, guid: 7dfab53da1c9443db81c70289bfd04b3, type: 3}
+      propertyPath: _wave0
+      value: 
+      objectReference: {fileID: 423105120}
+    - target: {fileID: 5148747277592910320, guid: 7dfab53da1c9443db81c70289bfd04b3, type: 3}
       propertyPath: _gates.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -31403,7 +31383,7 @@ PrefabInstance:
       objectReference: {fileID: 1351078242}
     - target: {fileID: 5148747277592910320, guid: 7dfab53da1c9443db81c70289bfd04b3, type: 3}
       propertyPath: _enemyWaves.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5148747277592910320, guid: 7dfab53da1c9443db81c70289bfd04b3, type: 3}
       propertyPath: '_enemyWaves.Array.data[0]'
@@ -31412,7 +31392,7 @@ PrefabInstance:
     - target: {fileID: 5148747277592910320, guid: 7dfab53da1c9443db81c70289bfd04b3, type: 3}
       propertyPath: '_enemyWaves.Array.data[1]'
       value: 
-      objectReference: {fileID: 423105122}
+      objectReference: {fileID: 0}
     - target: {fileID: 5148747277592910320, guid: 7dfab53da1c9443db81c70289bfd04b3, type: 3}
       propertyPath: _wolfSpawnPoints.Array.size
       value: 10
@@ -31499,7 +31479,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 5b48a215a0517b54392f8474cac17a97, type: 2}
     - target: {fileID: 5521885353953761114, guid: 7dfab53da1c9443db81c70289bfd04b3, type: 3}
       propertyPath: m_CastShadows
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5546801741278245581, guid: 7dfab53da1c9443db81c70289bfd04b3, type: 3}
       propertyPath: m_AnchorMax.x
@@ -31603,7 +31583,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6793126582445357801, guid: 7dfab53da1c9443db81c70289bfd04b3, type: 3}
       propertyPath: m_CastShadows
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6878652196787466747, guid: 7dfab53da1c9443db81c70289bfd04b3, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -31675,7 +31655,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7736504120374638360, guid: 7dfab53da1c9443db81c70289bfd04b3, type: 3}
       propertyPath: m_CastShadows
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7756120071468836759, guid: 7dfab53da1c9443db81c70289bfd04b3, type: 3}
       propertyPath: m_Layer
@@ -31807,9 +31787,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8731911744612259566, guid: 7dfab53da1c9443db81c70289bfd04b3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1446767840}
-    - targetCorrespondingSourceObject: {fileID: 4933357040203959429, guid: 7dfab53da1c9443db81c70289bfd04b3, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 423105122}
   m_SourcePrefab: {fileID: 100100000, guid: 7dfab53da1c9443db81c70289bfd04b3, type: 3}
 --- !u!1001 &815459829
 PrefabInstance:
@@ -39797,6 +39774,10 @@ PrefabInstance:
       value: 0.15719447
       objectReference: {fileID: 0}
     - target: {fileID: 6244821204517224826, guid: 81fcd9acd0f28492f8a9a8d13c789267, type: 3}
+      propertyPath: _wave0
+      value: 
+      objectReference: {fileID: 2010635376}
+    - target: {fileID: 6244821204517224826, guid: 81fcd9acd0f28492f8a9a8d13c789267, type: 3}
       propertyPath: _gates.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -39806,7 +39787,7 @@ PrefabInstance:
       objectReference: {fileID: 1679806715}
     - target: {fileID: 6244821204517224826, guid: 81fcd9acd0f28492f8a9a8d13c789267, type: 3}
       propertyPath: _enemyWaves.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6244821204517224826, guid: 81fcd9acd0f28492f8a9a8d13c789267, type: 3}
       propertyPath: '_enemyWaves.Array.data[0]'
@@ -39819,7 +39800,7 @@ PrefabInstance:
     - target: {fileID: 6244821204517224826, guid: 81fcd9acd0f28492f8a9a8d13c789267, type: 3}
       propertyPath: '_enemyWaves.Array.data[2]'
       value: 
-      objectReference: {fileID: 2010635379}
+      objectReference: {fileID: 0}
     - target: {fileID: 6244821204517224826, guid: 81fcd9acd0f28492f8a9a8d13c789267, type: 3}
       propertyPath: _wolfSpawnPoints.Array.size
       value: 13
@@ -40107,9 +40088,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6172402663921767439, guid: 81fcd9acd0f28492f8a9a8d13c789267, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2010635380}
-    - targetCorrespondingSourceObject: {fileID: 6172402663921767439, guid: 81fcd9acd0f28492f8a9a8d13c789267, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2010635379}
   m_SourcePrefab: {fileID: 100100000, guid: 81fcd9acd0f28492f8a9a8d13c789267, type: 3}
 --- !u!1001 &963937648
 PrefabInstance:
@@ -43551,20 +43529,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f32ffdae2b0e5934d80e7c2a83116bfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1065444592
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 524946520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09c5db9f2aa409b43a3c8d5293759230, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _name: 
-  Enemies: 000000000200000000000000
 --- !u!114 &1065444593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43578,7 +43542,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: 
-  Enemies: 00000000000000000000000002000000020000000200000000000000
+  Enemies: 0000000000000000020000000200000002000000
 --- !u!114 &1065444594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43606,7 +43570,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: 
-  Enemies: 000000000000000000000000020000000200000002000000
+  Enemies: 0000000000000000000000000200000002000000
 --- !u!43 &1065500166
 Mesh:
   m_ObjectHideFlags: 0
@@ -52862,6 +52826,10 @@ PrefabInstance:
       value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 3446672526223406988, guid: d49354773f670446ba763fcef8d184ed, type: 3}
+      propertyPath: _wave0
+      value: 
+      objectReference: {fileID: 317874795}
+    - target: {fileID: 3446672526223406988, guid: d49354773f670446ba763fcef8d184ed, type: 3}
       propertyPath: _gates.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -52871,7 +52839,7 @@ PrefabInstance:
       objectReference: {fileID: 899247335}
     - target: {fileID: 3446672526223406988, guid: d49354773f670446ba763fcef8d184ed, type: 3}
       propertyPath: _enemyWaves.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3446672526223406988, guid: d49354773f670446ba763fcef8d184ed, type: 3}
       propertyPath: '_enemyWaves.Array.data[0]'
@@ -52884,7 +52852,7 @@ PrefabInstance:
     - target: {fileID: 3446672526223406988, guid: d49354773f670446ba763fcef8d184ed, type: 3}
       propertyPath: '_enemyWaves.Array.data[2]'
       value: 
-      objectReference: {fileID: 317874797}
+      objectReference: {fileID: 0}
     - target: {fileID: 3446672526223406988, guid: d49354773f670446ba763fcef8d184ed, type: 3}
       propertyPath: _wolfSpawnPoints.Array.size
       value: 8
@@ -53313,9 +53281,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3231264765083656953, guid: d49354773f670446ba763fcef8d184ed, type: 3}
       insertIndex: -1
       addedObject: {fileID: 317874798}
-    - targetCorrespondingSourceObject: {fileID: 3231264765083656953, guid: d49354773f670446ba763fcef8d184ed, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 317874797}
   m_SourcePrefab: {fileID: 100100000, guid: d49354773f670446ba763fcef8d184ed, type: 3}
 --- !u!4 &1121503240 stripped
 Transform:
@@ -57388,7 +57353,18 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4460204380267995781, guid: 8e0164502a8b64333ad16715815ee77a, type: 3}
   m_PrefabInstance: {fileID: 667250384}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1284225144
+--- !u!114 &1284225146 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4970726159286714569, guid: 8e0164502a8b64333ad16715815ee77a, type: 3}
+  m_PrefabInstance: {fileID: 667250384}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1284225141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09c5db9f2aa409b43a3c8d5293759230, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1284225148
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -73702,6 +73678,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 467309948}
     - target: {fileID: 3872272068703144851, guid: 23f91b841d23448fe9d4ef573ffaaa2b, type: 3}
+      propertyPath: _wave0
+      value: 
+      objectReference: {fileID: 854972859}
+    - target: {fileID: 3872272068703144851, guid: 23f91b841d23448fe9d4ef573ffaaa2b, type: 3}
       propertyPath: _gates.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -73859,7 +73839,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5738043305793043626, guid: 23f91b841d23448fe9d4ef573ffaaa2b, type: 3}
       propertyPath: Enemies.Array.size
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5738043305793043626, guid: 23f91b841d23448fe9d4ef573ffaaa2b, type: 3}
       propertyPath: 'Enemies.Array.data[2]'
@@ -78395,20 +78375,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f32ffdae2b0e5934d80e7c2a83116bfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2010635379
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 869135836}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09c5db9f2aa409b43a3c8d5293759230, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _name: 
-  Enemies: 02000000020000000200000002000000
 --- !u!114 &2010635380
 MonoBehaviour:
   m_ObjectHideFlags: 0
