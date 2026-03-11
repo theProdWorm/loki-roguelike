@@ -750,10 +750,10 @@ MonoBehaviour:
   _characterContainer: {fileID: 8848846395872390570}
   _playerInput: {fileID: 3960114018095941365}
   _inputBufferMargin: 0.05
-  _lowHealthThreshold: 0
+  _lowHealthThreshold: 0.95
   _animationLockMoveSpeedFadeDuration: 0.05
-  _targetLockAngle: 60
-  _targetLockMaxDistance: 50
+  _targetLockAngle: 360
+  _targetLockMaxDistance: 15
   _targetLockAngleWeight: 1
   _targetLockDistanceWeight: 1
   _collider: {fileID: 6590917616300736346}
@@ -925,7 +925,7 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: DialogueManager, Assembly-CSharp
+        m_TargetAssemblyTypeName: UI.Narration.DialogueManager, Assembly-CSharp
         m_MethodName: AdvanceDialogue
         m_Mode: 0
         m_Arguments:
@@ -4724,6 +4724,30 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Audio.FMODEvents, Assembly-CSharp
+        m_MethodName: SetNextPosition
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8791464560597120204}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Audio.FMODEvents, Assembly-CSharp
+        m_MethodName: PlayEvent
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: event:/Dave/SFX/Oneshots/Player/Pleyer_Meele
           m_BoolArgument: 0
         m_CallState: 2
   OnSpecialStarted:
