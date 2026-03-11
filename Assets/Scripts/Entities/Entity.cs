@@ -6,7 +6,6 @@ using UnityEngine.Events;
 
 namespace Entities
 {
-    [RequireComponent(typeof(Rigidbody))]
     public abstract class Entity : MonoBehaviour
     {
         [SerializeField] protected Rigidbody _rigidbody;
@@ -110,7 +109,7 @@ namespace Entities
             _moveSpeed = _baseMoveSpeed * _speedMultiplier;
         }
 
-        private void Die()
+        protected void Die()
         {
             if (_isDead)
                 return;
