@@ -531,6 +531,12 @@ namespace Entities
                 if (1 << hits[i].collider.gameObject.layer == _wallLayer)
                 {
                     //closestWall = i;
+                    if (i % 2 == 0)
+                    {
+                        Debug.Log("Wall in hole");
+                        dashPoint = hits[i-1].point-collisionPointOffset;
+                        goto coroutine;
+                    }
                     dashPoint = hits[i].point-collisionPointOffset;
                     goto coroutine;
                 }
@@ -561,8 +567,8 @@ namespace Entities
                 Ray backRay = new(hitPoints[0] + dashVector.normalized * distance, -dashVector.normalized);
                 if (!hits[firstHit].collider.Raycast(backRay, out RaycastHit hit, 500))
                 {
-                    Debug.LogWarning("Skipped Dash 1");
-                    return;
+                    dashPoint = hitPoints[0] - collisionPointOffset;
+                    goto coroutine;
                 }
                 Vector3 holeBack = hit.point;
                 float holeDiameter = Vector3.Distance(hitPoints[0], holeBack);
@@ -584,19 +590,20 @@ namespace Entities
             }
 
             coroutine:
-            if (Vector3.Distance(transform.position, dashPoint) < 1f)
-            {
-                Debug.LogWarning("Skipped dash 2");
-                return;
-            }
             commands.Dispose();
             hits.Dispose();
+            if (Vector3.Distance(transform.position, dashPoint) < 1f)
+            {
+                Debug.LogWarning("Skipped dash");
+                return;
+            }
+            
             if (_dashCoroutine != null)
             {
                 StopCoroutine(_dashCoroutine);
                 _moveSpeed = _originalMoveSpeed;
             }
-
+            Debug.DrawLine(dashPoint, dashPoint + Vector3.up * 100, Color.magenta, 10f);
             _dashCoroutine = StartCoroutine(DashCoroutine(dashPoint, animate));
         }
 
