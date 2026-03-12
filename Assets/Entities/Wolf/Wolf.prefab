@@ -11517,6 +11517,7 @@ MonoBehaviour:
   OnDamageDealt:
     m_PersistentCalls:
       m_Calls: []
+  IsDead: 0
   ragdollDuration: 4
   dissolveSpeed: 3
   attackPoint: {fileID: 91000878631997636}
@@ -11670,10 +11671,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.3
+  m_Radius: 0.43844193
   m_Height: 2.34
   m_Direction: 2
-  m_Center: {x: 0, y: 0.59, z: 0.1}
+  m_Center: {x: 0.0011894227, y: 0.9699945, z: 0.1}
 --- !u!114 &2020504415741763339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12438,7 +12439,7 @@ VFXRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6707996464055152648}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
