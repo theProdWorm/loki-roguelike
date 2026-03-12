@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 namespace UI.Narration
@@ -13,6 +14,8 @@ namespace UI.Narration
         [SerializeField] private TextMeshProUGUI _speakerTMP;
         [SerializeField] private TextMeshProUGUI _nextIndicator;
     
+        public UnityEvent OnDialogueFinished;
+        
         private int _dialoguePage;
         private DialogueSequence _dialogue;
 
@@ -47,6 +50,8 @@ namespace UI.Narration
         {
             INSTANCE._dialoguePanel.SetActive(false);
             INSTANCE._playerInput.SwitchCurrentActionMap("Player");
+            
+            INSTANCE.OnDialogueFinished.Invoke();
         }
 
         public static void AdvanceDialogue(InputAction.CallbackContext context)
