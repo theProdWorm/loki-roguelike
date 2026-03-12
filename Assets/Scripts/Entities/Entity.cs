@@ -32,14 +32,14 @@ namespace Entities
         protected Vector3 _knockbackForce;
         private Coroutine _knockbackCoroutine;
         
-        protected bool _isDead;
+        public bool IsDead;
         
         private StatusEffectList _statusEffects;
 
         protected virtual void Awake()
         {
             _statusEffects = new StatusEffectList(this);
-            _isDead = false;
+            IsDead = false;
         }
 
         protected virtual void Start()
@@ -111,10 +111,10 @@ namespace Entities
 
         protected virtual void Die()
         {
-            if (_isDead)
+            if (IsDead)
                 return;
 
-            _isDead = true;
+            IsDead = true;
             
             OnDeath?.Invoke(this);
         }

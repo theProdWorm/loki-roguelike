@@ -699,18 +699,6 @@ MonoBehaviour:
   OnDamageTaken:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1481859176649239221, guid: a29a8c69a59c59548b20128aba734163, type: 3}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Audio.FMODEvents, Assembly-CSharp
         m_MethodName: PlayEvent
@@ -738,6 +726,7 @@ MonoBehaviour:
           m_StringArgument: event:/Dave/SFX/Oneshots/Player/Pleyer_Meele
           m_BoolArgument: 0
         m_CallState: 2
+  IsDead: 0
   OnHealthChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -764,7 +753,7 @@ MonoBehaviour:
   _inputBufferMargin: 0.05
   _lowHealthThreshold: 0.35
   _animationLockMoveSpeedFadeDuration: 0.05
-  _targetLockAngle: 360
+  _targetLockAngle: 40
   _targetLockMaxDistance: 15
   _targetLockAngleWeight: 1
   _targetLockDistanceWeight: 1

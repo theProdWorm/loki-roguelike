@@ -375,7 +375,7 @@ namespace Entities
 
             var validEnemies = enemies.Where(enemy =>
             {
-                if (!enemy.HasSpawned)
+                if (!enemy.HasSpawned || enemy.IsDead)
                     return false;
 
                 float distance = Vector3.Distance(enemy.transform.position, transform.position);

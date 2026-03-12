@@ -90,7 +90,7 @@ namespace Entities
         private float dissolveValue;
         protected override void Update()
         {
-            if (_isDead)
+            if (IsDead)
             {
                 if (ragdollAcive)
                 {
