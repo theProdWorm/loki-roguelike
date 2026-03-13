@@ -23,19 +23,24 @@ namespace Entities
         private BlackboardVariable<ChargePrep> ChargePrepEventChannel;
         private NavMeshAgent navAgent;
         private AttackStats attackStats;
-        private bool ragdollAcive;
+        private bool ragdollActive;
         private float ragdollTimeLeft;
+        private float dissolveTimeLeft;
         private SkinnedMeshRenderer _skinnedMeshRenderer;
         private Material[] materials;
         
-        [SerializeField] private float ragdollDuration;
-        [SerializeField] private float dissolveSpeed;
+        
         [SerializeField] private Transform attackPoint;
         [SerializeField] private float rotationSpeed = 5;
         [SerializeField] private GameObject attackPrefab;
         [SerializeField] EncounterManager.EnemyTypes type;
-
         public bool HasSpawned = true;
+        
+        [Header("Death")]
+        [SerializeField] private float ragdollDuration = 1f;
+        [SerializeField] private float dissolveDuration = 1f;
+
+        
 
         protected override void Awake()
         {
@@ -92,20 +97,20 @@ namespace Entities
         {
             if (IsDead)
             {
-                if (ragdollAcive)
+                if (!ragdollActive) return;
+                if (ragdollTimeLeft > 0)
                 {
-                    if (ragdollTimeLeft > 0)
-                    {
-                        dissolveValue = materials[0].GetFloat("_Cutoff_Height");
-                        dissolveValue -= Time.deltaTime*dissolveSpeed;
-                        materials[0].SetFloat("_Cutoff_Height", dissolveValue);
-                        ragdollTimeLeft -= Time.deltaTime ;
-                    }
-                    else
-                    {
-                        ragdollAcive = false;
-                        Destroy(gameObject);
-                    }
+                        
+                    ragdollTimeLeft -= Time.deltaTime ;
+                }
+                else
+                {
+                    dissolveTimeLeft -= Time.deltaTime;
+                    Debug.Log(Mathf.InverseLerp(0,dissolveDuration,dissolveTimeLeft));
+                    materials[0].SetFloat("_Cutoff_Height", Mathf.InverseLerp(0,dissolveDuration,dissolveTimeLeft));
+                    if (!(dissolveTimeLeft <= 0)) return;
+                    ragdollActive = false;
+                    Destroy(gameObject);
                 }
                 return;
             }
@@ -164,8 +169,9 @@ namespace Entities
                 rbC.isKinematic = false;
             }
 
-            ragdollAcive = true;
+            ragdollActive = true;
             ragdollTimeLeft = ragdollDuration;
+            dissolveTimeLeft = dissolveDuration;
         }
 
         public override int TakeDamage(int amount, Entity attacker)

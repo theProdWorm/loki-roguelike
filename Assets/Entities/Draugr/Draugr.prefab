@@ -1210,13 +1210,14 @@ MonoBehaviour:
   OnDamageDealt:
     m_PersistentCalls:
       m_Calls: []
-  ragdollDuration: 6
-  dissolveSpeed: 2
+  IsDead: 0
   attackPoint: {fileID: 1316648758732067850}
   rotationSpeed: 3
   attackPrefab: {fileID: 6175426701053642483, guid: e495763dd1db0f44caf2c873374580e7, type: 3}
   type: 0
   HasSpawned: 1
+  ragdollDuration: 6
+  dissolveDuration: 4
 --- !u!114 &9062405598094356531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1412,11 +1413,6 @@ MonoBehaviour:
   _enemyType: 0
   _sittingStatue: 0
   hasSpawned: 1
-  _componentsToTurnOffAndOn:
-  - {fileID: 1084426119069932485}
-  - {fileID: 1932528128612567161}
-  - {fileID: 9062405598094356531}
-  - {fileID: 2179194264091995956}
   _enemyScript: {fileID: 2179194264091995956}
   _behaviourAgentComponent: {fileID: 9062405598094356531}
   _navMeshAgentComponent: {fileID: 1932528128612567161}
