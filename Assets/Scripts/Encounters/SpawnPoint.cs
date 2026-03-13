@@ -27,8 +27,6 @@ public class SpawnPoint : MonoBehaviour
     private Behaviour _behaviourAgentComponent;
     [SerializeField]
     private NavMeshAgent _navMeshAgentComponent;
-    [SerializeField]
-    private AnimationEventListener _animationEventListenerScript;
 
     [Header("Bird on Bird")]
     [SerializeField]
@@ -72,7 +70,6 @@ public class SpawnPoint : MonoBehaviour
         _enemyScript.enabled = false;
         _behaviourAgentComponent.enabled = false;
         _navMeshAgentComponent.enabled = false;
-        _animationEventListenerScript.enabled = false;
         #endregion
 
         _animatorSpeed = animator.speed;
@@ -96,7 +93,6 @@ public class SpawnPoint : MonoBehaviour
         _enemyScript.enabled = true;
         _behaviourAgentComponent.enabled = true;
         _navMeshAgentComponent.enabled = true;
-        _animationEventListenerScript.enabled = true;
         #endregion
 
         animator.SetBool("HasSpawned", true);
