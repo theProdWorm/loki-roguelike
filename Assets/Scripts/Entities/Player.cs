@@ -12,55 +12,54 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-
 namespace Entities
 {
+    /*⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+      ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠛⠉⠁⠀⠀⠀⠀⠈⠉⠉⠙⠛⠛⠿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+      ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⠉⠁⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠻⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+      ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠀⠀⠀⢲⣶⣶⣷⣶⣶⣦⣤⣀⠀⠀⠀⠀⠀⠀⠈⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+      ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⠀⠀⠀⠀⠀⠀⢀⣤⣶⣿⣿⣿⣷⣆⠀⢻⣿⣿⣿⣿⣿⣿⣿⣿⣷⣦⣄⠀⠀⠀⠀⠈⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+      ⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⡀⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣄⠀⠀⠀⠀⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+      ⠀⠀⠉⠻⢿⣿⣿⣿⡿⠛⠀⠀⠀⠀⠀⠠⠀⠀⠀⣼⠀⡿⠛⠛⠙⠛⠛⠛⠛⢧⠀⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⡀⠀⠀⠀⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+      ⠀⠀⠀⠀⠀⢹⡿⠋⠀⠀⠀⠀⠀⠀⠀⠂⠀⠀⠘⠇⠀⢀⣤⣴⣶⣶⣦⣤⡀⠀⢠⡀⠘⣿⣿⡟⠁⣹⣿⣿⣿⣿⣿⣿⣿⣿⣄⠀⠀⠀⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+      ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⠁⠠⠁⠀⠈⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⢳⡀⠈⠋⢀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡆⠀⠀⠀⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+      ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⢀⠠⢁⠂⠀⠀⠀⣼⣿⣿⣿⣿⣿⣿⣿⣿⡏⠀⢸⣷⣄⣴⣿⣿⣿⡟⠁⣽⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+      ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡐⠀⡈⢀⠐⡀⠂⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇⠀⣼⣿⣿⣿⣿⣿⠏⠀⣼⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+      ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠂⠀⠐⠀⠄⠂⢄⡁⠀⠀⠀⠸⣿⣿⣿⠿⢿⣿⣿⠟⠀⣰⣿⣿⣿⣿⡿⠁⠀⠚⠛⠛⠛⠛⠛⠛⠛⠛⠿⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+      ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠄⡁⢆⠂⠀⠀⠀⠀⠙⠻⠿⠦⠶⠛⠋⢀⣴⣿⣿⣿⣿⣿⠗⠀⠀⠀⠀⠀⠒⠶⣶⣶⣶⣦⡄⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+      ⠀⠀⠀⠀⠀⠀⠎⡑⢢⠄⠀⠀⠁⢂⠔⡨⠀⠀⠀⠀⠀⠖⠆⠀⠀⠀⢀⣴⣿⣿⣿⣿⣿⡟⠁⠀⢀⣴⣾⣿⣷⣦⡀⠈⠻⣿⣿⡇⠀⠀⠀⠀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+      ⠀⠀⠀⠀⠀⠀⠈⢑⠢⡁⢰⡀⠀⠈⢆⡑⠀⠀⠀⠀⠀⢠⣄⣀⣴⡾⠟⠛⠋⠉⠉⣿⣿⠀⠀⢠⣿⣿⣿⣿⣿⣿⣿⡄⠀⢸⡿⠀⠀⠀⠀⢰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+      ⢀⢀⣀⡀⠄⠀⠀⢈⠶⣵⣿⡇⠀⢈⠆⠀⠀⠀⣠⡆⠀⠀⣿⣿⣿⣤⣀⣠⣴⡆⠀⣿⡇⠀⠀⣼⣿⣿⣿⣿⣿⣿⣿⣿⡄⠈⠁⠀⠀⠀⠀⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+      ⠌⠂⠀⠀⠀⠀⠀⡈⠆⣿⠟⠀⠀⡐⠈⠀⠀⠀⠻⢁⠀⠀⢸⣿⣿⣿⣿⣿⣿⣧⣀⣿⡇⠀⠀⣿⡟⠿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+      ⠀⠀⠀⠀⠀⠀⠠⠀⠔⠁⠀⠀⠀⠀⠀⠀⠀⠀⠠⣿⠃⡀⠀⠙⠻⢿⣿⣿⣿⣿⣿⣿⣇⠀⠀⠈⠲⢴⣿⣿⡿⠿⠛⠁⠀⠀⠀⢀⠂⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+      ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠂⠀⠀⠀⠀⠀⠁⣴⣿⣶⣤⠀⠀⠉⠻⣿⣿⣿⣿⣿⡀⢱⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡈⠄⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+      ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣾⠇⠀⠀⠀⠀⠀⠀⠀⠀⠙⢿⠋⣰⣷⣤⣀⠀⠉⠛⠿⣿⣿⡶⠿⠛⠒⠀⠀⢀⣤⡖⠀⠀⠐⠀⠀⠀⠘⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+      ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⡏⠀⢀⣄⠀⠀⠀⠀⠀⠀⠀⠀⠈⠛⠿⡿⢉⣴⠂⢀⣄⡀⠀⠀⠀⠀⢠⠦⠄⠼⠿⠏⠀⠀⠁⠀⠀⠀⠀⠀⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+      ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⠀⢀⣾⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠃⠴⠿⠛⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠀⠀⠀⠀⠀⠈⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+      ⠀⠐⡀⠀⠀⠀⠀⠀⠀⢸⡿⠀⠈⣡⡦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⠀⠀⠀⠀⠀⠘⣆⠀⠀⠀⠀⠀⠀⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+      ⠀⠘⡄⠀⠀⠀⠀⠀⠀⢸⡷⠀⠸⠋⠁⣠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⠟⠁⠀⠀⠀⠀⠀⠀⢀⣀⡀⠀⠀⠀⠀⡀⠀⠀⠀⢹⣷⡀⠀⠀⠀⠀⠀⠙⣿⣿⣿⣿⣿⣿⣿⣿⣿
+      ⠀⠌⡰⠀⠀⠀⠀⠀⠀⢸⣿⠀⠀⠰⠞⠁⣴⡷⠀⠀⠀⢀⡼⠃⢀⣴⠞⠁⠀⠀⠀⠀⠂⠄⠀⠀⢸⣿⣿⣷⣶⣤⣄⣷⡀⠀⠀⠀⢻⣷⣄⠀⠀⠀⠀⠀⠘⢿⣿⣿⣿⣿⣿⣿⣿
+      ⠀⠂⠄⠣⠄⠀⠀⠀⠀⢸⣿⣷⣄⠀⠀⠘⠋⢀⣴⣷⠀⠛⢁⣴⠟⠁⠀⠀⠀⠄⠀⠠⢁⠂⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⠀⢿⣿⣦⠀⠀⠀⢁⠀⠈⠻⣿⣿⣿⣿⣿⣿
+      ⠀⠈⠄⠃⡜⢡⠀⠀⠀⠀⠛⢿⣿⣷⣄⡐⠀⠈⠛⠃⠀⣰⡿⠁⠀⠀⠀⠠⢈⠀⠀⠐⠠⢈⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣇⠀⠀⠀⠈⢿⣿⣷⡀⠀⠀⠐⡀⠀⠙⣿⣿⣿⣿⣿
+      ⠀⠈⠄⠡⢀⢃⠒⡄⠀⠀⠀⠀⠉⠻⢿⣿⣷⣦⣄⣀⣼⠋⠀⠀⠀⠀⠌⡐⠀⠀⠀⠌⡐⠁⠀⠀⣰⣿⣿⡿⠛⠁⠀⠀⠉⠻⠄⠀⠀⠀⠈⢿⣿⣿⣄⠀⠀⠠⢁⠀⠘⢿⣿⣿⣿
+      ⠀⠀⠌⡐⠠⢈⠒⡈⢆⡀⠀⠀⠀⠀⠀⠈⠛⢿⣿⡟⠀⠀⠀⠀⠄⡁⠂⠀⠀⠀⠀⠀⠀⠀⠀⠰⣿⡿⠋⠀⢀⣴⣿⣿⣶⠄⠀⠀⠀⠀⠀⠈⢿⣿⣿⣧⡀⠀⠀⠆⡀⠈⢿⣿⣿
+      ⠀⠀⠀⠀⠀⠂⠐⠀⠂⠀⠁⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠀⠄⡁⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠟⠀⠀⡰⢌⡾⠛⠉⠀⠀⠘⠦⠀⠀⠀⠀⠈⢿⣿⣿⣷⡄⠀⠠⢁⠀⠀⢻⣿
+      ⠠⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⠡⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠰⣈⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢻⣿⣿⣿⣆⠀⠀⠌⡀⠀⢻
+      ⠀⠂⠌⡐⠄⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠠⢀⠂⠌⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠰⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠛⠿⣿⣿⣆⠀⠐⢀⠂⠀
+      ⠀⠌⡐⠀⠀⠀⠈⠀⠀⠀⠀⠀⠠⢁⠂⠤⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢃⠖⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⢿⣧⡀⠀⠘⡀
+      ⠀⠀⠀⠈⠀⠁⠀⠀⠀⠀⠀⠈⠀⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢨⠎⡑⢆⣤⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠷⣄⠀⠐
+      ⣿⣾⣶⣷⣾⣿⣿⣿⣿⣿⣿⣿⡟⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠊⠵⠯⠞⠛⠒⠀⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠄⠀⠀⢀⠀⠈⠓⠀
+      ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣷⣤⣀⣀⠀⠀⠀⠀⣠⣿⣿⣶⣤⡀⠀⠀⠀⠀⠀⠀⢈⠀⠀⠀⠄⠠⠀
+      ⣿⣿⣿⣿⣿⣿⣿⡿⠟⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠓⠒⠛⠛⠛⠉⠀⠀⢀⣠⣾⣿⣿⣿⣿⣿⣿⣶⣄⡀⠀⠀⠀⠀⠀⠂⠀⠀⠁⠄*/
     [RequireComponent(typeof(Rigidbody))]
     public class Player : Entity
     {
-        //⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-        //⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠛⠉⠁⠀⠀⠀⠀⠈⠉⠉⠙⠛⠛⠿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-        //⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⠉⠁⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠻⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-        //⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠀⠀⠀⢲⣶⣶⣷⣶⣶⣦⣤⣀⠀⠀⠀⠀⠀⠀⠈⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-        //⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⠀⠀⠀⠀⠀⠀⢀⣤⣶⣿⣿⣿⣷⣆⠀⢻⣿⣿⣿⣿⣿⣿⣿⣿⣷⣦⣄⠀⠀⠀⠀⠈⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-        //⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⡀⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣄⠀⠀⠀⠀⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-        //⠀⠀⠉⠻⢿⣿⣿⣿⡿⠛⠀⠀⠀⠀⠀⠠⠀⠀⠀⣼⠀⡿⠛⠛⠙⠛⠛⠛⠛⢧⠀⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⡀⠀⠀⠀⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-        //⠀⠀⠀⠀⠀⢹⡿⠋⠀⠀⠀⠀⠀⠀⠀⠂⠀⠀⠘⠇⠀⢀⣤⣴⣶⣶⣦⣤⡀⠀⢠⡀⠘⣿⣿⡟⠁⣹⣿⣿⣿⣿⣿⣿⣿⣿⣄⠀⠀⠀⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-        //⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⠁⠠⠁⠀⠈⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⢳⡀⠈⠋⢀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡆⠀⠀⠀⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-        //⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⢀⠠⢁⠂⠀⠀⠀⣼⣿⣿⣿⣿⣿⣿⣿⣿⡏⠀⢸⣷⣄⣴⣿⣿⣿⡟⠁⣽⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-        //⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡐⠀⡈⢀⠐⡀⠂⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇⠀⣼⣿⣿⣿⣿⣿⠏⠀⣼⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-        //⠀⠀⠀⠀⠀⠀⠀⠀⠀⠂⠀⠐⠀⠄⠂⢄⡁⠀⠀⠀⠸⣿⣿⣿⠿⢿⣿⣿⠟⠀⣰⣿⣿⣿⣿⡿⠁⠀⠚⠛⠛⠛⠛⠛⠛⠛⠛⠿⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-        //⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠄⡁⢆⠂⠀⠀⠀⠀⠙⠻⠿⠦⠶⠛⠋⢀⣴⣿⣿⣿⣿⣿⠗⠀⠀⠀⠀⠀⠒⠶⣶⣶⣶⣦⡄⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-        //⠀⠀⠀⠀⠀⠀⠎⡑⢢⠄⠀⠀⠁⢂⠔⡨⠀⠀⠀⠀⠀⠖⠆⠀⠀⠀⢀⣴⣿⣿⣿⣿⣿⡟⠁⠀⢀⣴⣾⣿⣷⣦⡀⠈⠻⣿⣿⡇⠀⠀⠀⠀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-        //⠀⠀⠀⠀⠀⠀⠈⢑⠢⡁⢰⡀⠀⠈⢆⡑⠀⠀⠀⠀⠀⢠⣄⣀⣴⡾⠟⠛⠋⠉⠉⣿⣿⠀⠀⢠⣿⣿⣿⣿⣿⣿⣿⡄⠀⢸⡿⠀⠀⠀⠀⢰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-        //⢀⢀⣀⡀⠄⠀⠀⢈⠶⣵⣿⡇⠀⢈⠆⠀⠀⠀⣠⡆⠀⠀⣿⣿⣿⣤⣀⣠⣴⡆⠀⣿⡇⠀⠀⣼⣿⣿⣿⣿⣿⣿⣿⣿⡄⠈⠁⠀⠀⠀⠀⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-        //⠌⠂⠀⠀⠀⠀⠀⡈⠆⣿⠟⠀⠀⡐⠈⠀⠀⠀⠻⢁⠀⠀⢸⣿⣿⣿⣿⣿⣿⣧⣀⣿⡇⠀⠀⣿⡟⠿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-        //⠀⠀⠀⠀⠀⠀⠠⠀⠔⠁⠀⠀⠀⠀⠀⠀⠀⠀⠠⣿⠃⡀⠀⠙⠻⢿⣿⣿⣿⣿⣿⣿⣇⠀⠀⠈⠲⢴⣿⣿⡿⠿⠛⠁⠀⠀⠀⢀⠂⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-        //⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠂⠀⠀⠀⠀⠀⠁⣴⣿⣶⣤⠀⠀⠉⠻⣿⣿⣿⣿⣿⡀⢱⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡈⠄⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-        //⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣾⠇⠀⠀⠀⠀⠀⠀⠀⠀⠙⢿⠋⣰⣷⣤⣀⠀⠉⠛⠿⣿⣿⡶⠿⠛⠒⠀⠀⢀⣤⡖⠀⠀⠐⠀⠀⠀⠘⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-        //⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⡏⠀⢀⣄⠀⠀⠀⠀⠀⠀⠀⠀⠈⠛⠿⡿⢉⣴⠂⢀⣄⡀⠀⠀⠀⠀⢠⠦⠄⠼⠿⠏⠀⠀⠁⠀⠀⠀⠀⠀⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-        //⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⠀⢀⣾⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠃⠴⠿⠛⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠀⠀⠀⠀⠀⠈⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-        //⠀⠐⡀⠀⠀⠀⠀⠀⠀⢸⡿⠀⠈⣡⡦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⠀⠀⠀⠀⠀⠘⣆⠀⠀⠀⠀⠀⠀⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-        //⠀⠘⡄⠀⠀⠀⠀⠀⠀⢸⡷⠀⠸⠋⠁⣠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⠟⠁⠀⠀⠀⠀⠀⠀⢀⣀⡀⠀⠀⠀⠀⡀⠀⠀⠀⢹⣷⡀⠀⠀⠀⠀⠀⠙⣿⣿⣿⣿⣿⣿⣿⣿⣿
-        //⠀⠌⡰⠀⠀⠀⠀⠀⠀⢸⣿⠀⠀⠰⠞⠁⣴⡷⠀⠀⠀⢀⡼⠃⢀⣴⠞⠁⠀⠀⠀⠀⠂⠄⠀⠀⢸⣿⣿⣷⣶⣤⣄⣷⡀⠀⠀⠀⢻⣷⣄⠀⠀⠀⠀⠀⠘⢿⣿⣿⣿⣿⣿⣿⣿
-        //⠀⠂⠄⠣⠄⠀⠀⠀⠀⢸⣿⣷⣄⠀⠀⠘⠋⢀⣴⣷⠀⠛⢁⣴⠟⠁⠀⠀⠀⠄⠀⠠⢁⠂⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⠀⢿⣿⣦⠀⠀⠀⢁⠀⠈⠻⣿⣿⣿⣿⣿⣿
-        //⠀⠈⠄⠃⡜⢡⠀⠀⠀⠀⠛⢿⣿⣷⣄⡐⠀⠈⠛⠃⠀⣰⡿⠁⠀⠀⠀⠠⢈⠀⠀⠐⠠⢈⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣇⠀⠀⠀⠈⢿⣿⣷⡀⠀⠀⠐⡀⠀⠙⣿⣿⣿⣿⣿
-        //⠀⠈⠄⠡⢀⢃⠒⡄⠀⠀⠀⠀⠉⠻⢿⣿⣷⣦⣄⣀⣼⠋⠀⠀⠀⠀⠌⡐⠀⠀⠀⠌⡐⠁⠀⠀⣰⣿⣿⡿⠛⠁⠀⠀⠉⠻⠄⠀⠀⠀⠈⢿⣿⣿⣄⠀⠀⠠⢁⠀⠘⢿⣿⣿⣿
-        //⠀⠀⠌⡐⠠⢈⠒⡈⢆⡀⠀⠀⠀⠀⠀⠈⠛⢿⣿⡟⠀⠀⠀⠀⠄⡁⠂⠀⠀⠀⠀⠀⠀⠀⠀⠰⣿⡿⠋⠀⢀⣴⣿⣿⣶⠄⠀⠀⠀⠀⠀⠈⢿⣿⣿⣧⡀⠀⠀⠆⡀⠈⢿⣿⣿
-        //⠀⠀⠀⠀⠀⠂⠐⠀⠂⠀⠁⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠀⠄⡁⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠟⠀⠀⡰⢌⡾⠛⠉⠀⠀⠘⠦⠀⠀⠀⠀⠈⢿⣿⣿⣷⡄⠀⠠⢁⠀⠀⢻⣿
-        //⠠⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⠡⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠰⣈⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢻⣿⣿⣿⣆⠀⠀⠌⡀⠀⢻
-        //⠀⠂⠌⡐⠄⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠠⢀⠂⠌⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠰⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠛⠿⣿⣿⣆⠀⠐⢀⠂⠀
-        //⠀⠌⡐⠀⠀⠀⠈⠀⠀⠀⠀⠀⠠⢁⠂⠤⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢃⠖⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⢿⣧⡀⠀⠘⡀
-        //⠀⠀⠀⠈⠀⠁⠀⠀⠀⠀⠀⠈⠀⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢨⠎⡑⢆⣤⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠷⣄⠀⠐
-        //⣿⣾⣶⣷⣾⣿⣿⣿⣿⣿⣿⣿⡟⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠊⠵⠯⠞⠛⠒⠀⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠄⠀⠀⢀⠀⠈⠓⠀
-        //⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣷⣤⣀⣀⠀⠀⠀⠀⣠⣿⣿⣶⣤⡀⠀⠀⠀⠀⠀⠀⢈⠀⠀⠀⠄⠠⠀
-        //⣿⣿⣿⣿⣿⣿⣿⡿⠟⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠓⠒⠛⠛⠛⠉⠀⠀⢀⣠⣾⣿⣿⣿⣿⣿⣿⣶⣄⡀⠀⠀⠀⠀⠀⠂⠀⠀⠁⠄
+        
         public enum Character { Fenrir, Hel }
 
         private static readonly int IS_MOVING = Animator.StringToHash("isMoving");
         private static readonly int DASH = Animator.StringToHash("dash");
         private static readonly int ATTACK = Animator.StringToHash("attack");
-        private static readonly int SPECIAL = Animator.StringToHash("special");
         private static readonly int SWITCH = Animator.StringToHash("switch");
 
         public UnityEvent<int, int> OnHealthChanged;
@@ -106,7 +105,7 @@ namespace Entities
 
         [SerializeField] private Transform _dashPoint;
 
-        [Range(0.01f, 0.5f)]
+        [Range(0.02f, 0.5f)]
         [SerializeField] private float _dashDuration;
 
         [Range(0f, 1f), Tooltip("Fraction of dash duration to fade back to normal speed.")]
@@ -122,14 +121,12 @@ namespace Entities
         [SerializeField] private CharacterAbilitySet _fenrirAbilities;
         [SerializeField] private Animator _fenrirAnimator;
         [SerializeField] private Transform _fenrirAttackPoint;
-        [SerializeField] private Transform _fenrirSpecialPoint;
         [SerializeField] private float _fenrirLungeForce;
         [SerializeField] private float _fenrirLungeDuration;
 
         [Header("Hel")][SerializeField] private CharacterAbilitySet _helAbilities;
         [SerializeField] private Animator _helAnimator;
         [SerializeField] private Transform _helAttackPoint;
-        [SerializeField] private Transform _helSpecialPoint;
         [SerializeField] private float _helLungeForce;
         [SerializeField] private float _helLungeDuration;
 
@@ -139,18 +136,14 @@ namespace Entities
         public Character ActiveCharacter;
 
         private AttackAbilityTracker[] _attackAbilityTrackers;
-        private AttackAbilityTracker[] _specialAbilityTrackers;
         private AttackAbilityTracker[] _switchAbilityTrackers;
         private AbilityTracker _dashAbilityTracker;
         private AttackAbilityTracker AttackAbilityTracker => _attackAbilityTrackers[(int)ActiveCharacter];
-        private AttackAbilityTracker SpecialAbilityTracker => _specialAbilityTrackers[(int)ActiveCharacter];
         private AttackAbilityTracker SwitchAbilityTracker => _switchAbilityTrackers[(int)ActiveCharacter];
 
         private Transform[] _attackPoints;
-        private Transform[] _specialPoint;
 
         private Vector3 AttackPosition => _attackPoints[(int)ActiveCharacter].position;
-        private Vector3 SpecialPosition => _specialPoint[(int)ActiveCharacter].position;
 
         private Ability _currentAbility;
         private int _currentAbilityUseTimes;
@@ -160,8 +153,6 @@ namespace Entities
         private Camera _camera;
 
         private Vector2 _moveInput;
-        private Vector2 _lastMoveInput;
-        private Vector2 _dashInputSnapshot;
 
         private float _critChance;
         private float _critDamage;
@@ -208,7 +199,6 @@ namespace Entities
 
             #endregion
             SceneManager sceneManager = FindFirstObjectByType<SceneManager>();
-            Debug.Log(sceneManager);
             if (sceneManager != null)
                 sceneManager.OnSceneLoaded.AddListener(() =>
                 {
@@ -220,6 +210,8 @@ namespace Entities
             _playerInput.SwitchCurrentActionMap("Dialogue");
             _playerInput.SwitchCurrentActionMap("UI");
             _playerInput.SwitchCurrentActionMap("Player");
+           
+            _rigidbody.maxAngularVelocity = 0;
 
             _camera = Camera.main!;
 
@@ -243,7 +235,6 @@ namespace Entities
             //Sync the health UI at the start
             OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
             CharacterIndexChanged();
-
         }
 
         private void InitializeAbilityTrackers()
@@ -273,12 +264,6 @@ namespace Entities
             {
                 _fenrirAttackPoint,
                 _helAttackPoint
-            };
-
-            _specialPoint = new[]
-            {
-                _fenrirSpecialPoint,
-                _helSpecialPoint
             };
         }
 
@@ -338,8 +323,6 @@ namespace Entities
 
             MoveAndRotate();
 
-            _rigidbody.angularVelocity = Vector3.zero;
-
             if (_interactables.Count > 0)
                 FindMainInteractable();
 
@@ -351,24 +334,35 @@ namespace Entities
 
         private void MoveAndRotate()
         {
-            var cameraForward = _camera.transform.forward;
-            var downProjection = Vector3.Project(cameraForward, Vector3.up);
+            Vector3 movement = Vector3.zero;
+            
+            if (!_isDashing && _hasControl)
+            {
+                var cameraForward = _camera.transform.forward;
+                var downProjection = Vector3.Project(cameraForward, Vector3.up);
 
-            var forwardDirection = (cameraForward - downProjection).normalized;
-            var rightDirection = _camera.transform.right.normalized;
+                var forwardDirection = (cameraForward - downProjection).normalized;
+                var rightDirection = _camera.transform.right.normalized;
 
-            Vector2 moveVector = _isDashing ? _dashInputSnapshot : _hasControl ? _moveInput : Vector2.zero;
+                Vector3 movementX = _moveInput.x * rightDirection;
+                Vector3 movementZ = _moveInput.y * forwardDirection;
 
-            Vector3 movementX = moveVector.x * rightDirection;
-            Vector3 movementZ = moveVector.y * forwardDirection;
+                movement = _moveSpeed * (movementX + movementZ).normalized;
+            }
+            else if (_isDashing)
+            {
+                movement = _moveSpeed * transform.forward;
+            }
 
-            Vector3 movement = _moveSpeed * (movementX + movementZ).normalized;
-
-            _rigidbody.linearVelocity = movement + _lungeForce;
+            _rigidbody.linearVelocity = movement;
+            
+            if (_lungeCoroutine != null)
+                _rigidbody.linearVelocity += _lungeForce;
 
             transform.LookAt(transform.position + _rigidbody.linearVelocity);
 
-            _rigidbody.linearVelocity += _knockbackForce;
+            if (_knockbackCoroutine != null)
+                _rigidbody.linearVelocity += _knockbackForce;
 
             CurrentAnimator.SetBool(IS_MOVING, movement.magnitude > 0.01f);
         }
@@ -459,7 +453,7 @@ namespace Entities
         {
             LoseControl();
             var target = FindTarget();
-            _targetPos = target ? target.position : transform.position + transform.forward;
+            _targetPos = target ? target.position : transform.position + transform.forward * 10f;
             _targetPos.y = transform.position.y;
 
             _currentAbility = ability;
@@ -546,8 +540,6 @@ namespace Entities
                     yield return new WaitForSeconds(delay);
             }
         }
-
-
 
         private void PerformDash(Vector3 dashPoint, bool animate)
         {
@@ -651,10 +643,10 @@ namespace Entities
                 }
             }
 
-        coroutine:
+            coroutine:
             commands.Dispose();
             hits.Dispose();
-            if (Vector3.Distance(transform.position, dashPoint) < 1f)
+            if (Vector3.Distance(transform.position, dashPoint) < .5f)
             {
                 Debug.LogWarning("Skipped dash");
                 return;
@@ -674,10 +666,9 @@ namespace Entities
             if (animate)
                 CurrentAnimator.SetTrigger(DASH);
 
-            _isDashing = true;
-            _hasControl = false;
-            _dashInputSnapshot = _lastMoveInput;
-
+            SetDashing(true);
+            LoseControl();
+            
             int defaultPlayerLayer = gameObject.layer;
 
             int dashingPlayerLayer = _dashingPlayerLayer;
@@ -688,20 +679,38 @@ namespace Entities
             gameObject.layer = dashLayer;
 
             float actualDashDistance = Vector3.Distance(transform.position, dashPoint);
-            float dashDistanceFraction = actualDashDistance / _originalDashDistance;
+            float dashDistanceFraction = Mathf.Clamp01(actualDashDistance / _originalDashDistance);
 
             float dashDuration = _dashDuration * dashDistanceFraction;
 
             float dashSpeed = actualDashDistance / dashDuration;
             _moveSpeed = dashSpeed;
 
-            yield return new WaitForSeconds(dashDuration);
+            float elapsedTime = 0;
+            while (elapsedTime < dashDuration)
+            {
+                Vector3 velocityVector = _rigidbody.linearVelocity * Time.fixedDeltaTime;
+                float moveDistance = velocityVector.magnitude;
+                float distanceToDashPoint = Vector3.Distance(_rigidbody.position, dashPoint);
+
+                if (moveDistance > distanceToDashPoint)
+                {
+                    float fraction = distanceToDashPoint / moveDistance;
+                    _moveSpeed *= fraction;
+                    yield return new WaitForFixedUpdate();
+                    break;
+                }
+                    
+                elapsedTime += Time.fixedDeltaTime;
+                yield return new WaitForFixedUpdate();
+            }
+            
+            //yield return new WaitForSeconds(dashDuration);
 
             gameObject.layer = defaultPlayerLayer;
 
-            _isDashing = false;
-            _hasControl = true;
-            _dashInputSnapshot = Vector2.zero;
+            SetDashing(false);
+            GainControl();
 
             float dashFadeDuration = dashDuration * _dashFade;
 
@@ -711,7 +720,7 @@ namespace Entities
                 yield break;
             }
 
-            float elapsedTime = 0;
+            elapsedTime = 0;
             while (elapsedTime < dashFadeDuration)
             {
                 elapsedTime += Time.deltaTime;
@@ -821,10 +830,6 @@ namespace Entities
         public void MoveInput(InputAction.CallbackContext context)
         {
             _moveInput = context.ReadValue<Vector2>();
-
-            bool isMoving = _moveInput.sqrMagnitude > 0.5f;
-            if (isMoving)
-                _lastMoveInput = _moveInput;
         }
 
         public void InteractInput(InputAction.CallbackContext context)
@@ -844,14 +849,6 @@ namespace Entities
                 return;
 
             _inputBuffer.Add(AttackAbilityTracker.TryUse);
-        }
-
-        public void SpecialInput(InputAction.CallbackContext context)
-        {
-            if (!context.performed)
-                return;
-
-            _inputBuffer.Add(SpecialAbilityTracker.TryUse);
         }
 
         public void HealInput(InputAction.CallbackContext context)
@@ -888,17 +885,18 @@ namespace Entities
             _inputBuffer.Add(() =>
             {
                 ActiveCharacter = (Character)((int)++ActiveCharacter % 2);
+                CharacterIndexChanged();
 
                 if (!SwitchAbilityTracker.TryUse())
                 {
                     ActiveCharacter = (Character)((int)++ActiveCharacter % 2);
+                    CharacterIndexChanged();
                     return false;
                 }
 
                 foreach (var tracker in _switchAbilityTrackers)
                     tracker.Reset();
 
-                CharacterIndexChanged();
                 return true;
             });
         }

@@ -696,6 +696,18 @@ MonoBehaviour:
           m_StringArgument: event:/Dave/SFX/Oneshots/Player/Player_Death
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: SceneManager, Assembly-CSharp
+        m_MethodName: LoadScene
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: event:/Dave/SFX/Oneshots/Player/Player_Death
+          m_BoolArgument: 0
+        m_CallState: 2
   OnDamageTaken:
     m_PersistentCalls:
       m_Calls:
@@ -773,7 +785,7 @@ MonoBehaviour:
   _dashPoint: {fileID: 3132654603202236795}
   _dashDuration: 0.1
   _dashFade: 0
-  _dashHoleSnapFraction: 0.5
+  _dashHoleSnapFraction: 1
   _dashingPlayerLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -998,11 +1010,11 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 000bb941-35cc-40f1-bd60-1bcabe7e92f8
-    m_ActionName: 'UI/Click[/Mouse/leftButton,/Pen/tip]'
+    m_ActionName: 'UI/Click[/Mouse/leftButton,/Pen/tip,/Touchscreen/touch0/press,/Touchscreen/touch1/press,/Touchscreen/touch2/press,/Touchscreen/touch3/press,/Touchscreen/touch4/press,/Touchscreen/touch5/press,/Touchscreen/touch6/press,/Touchscreen/touch7/press,/Touchscreen/touch8/press,/Touchscreen/touch9/press]'
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 7b966cb1-70bd-41b8-b36f-a1b0d7421678
-    m_ActionName: 'UI/Submit[/Keyboard/enter,/XInputControllerWindows/buttonSouth]'
+    m_ActionName: 'UI/Submit[/Keyboard/enter]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: 
@@ -3167,7 +3179,7 @@ Transform:
   m_GameObject: {fileID: 6401663635591185238}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 5}
+  m_LocalPosition: {x: 0, y: 0, z: 7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3180,7 +3192,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6401663635591185238}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

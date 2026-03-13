@@ -30,7 +30,7 @@ namespace Entities
         protected float _damageTakenMultiplier = 1f;
 
         protected Vector3 _knockbackForce;
-        private Coroutine _knockbackCoroutine;
+        protected Coroutine _knockbackCoroutine;
         
         public bool IsDead;
         
