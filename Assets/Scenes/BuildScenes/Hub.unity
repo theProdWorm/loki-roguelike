@@ -3764,6 +3764,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9dfdfcf9f764d8342bcbdb0762d8caf2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 315051572}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9dfdfcf9f764d8342bcbdb0762d8caf2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 315051574}
   m_SourcePrefab: {fileID: 100100000, guid: 9dfdfcf9f764d8342bcbdb0762d8caf2, type: 3}
 --- !u!1 &151809151
 GameObject:
@@ -7431,6 +7434,34 @@ MonoBehaviour:
   _dialogueQueue:
   - {fileID: 11400000, guid: 4c5af6b38f9f2ff4ca6edb5ac71d01c7, type: 2}
   - {fileID: 11400000, guid: d283b2bdc31e99343867254c1869bf12, type: 2}
+--- !u!114 &315051574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 315051571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01e9396506b244fa88105960f378db02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _target: {fileID: 11400000, guid: 4c5af6b38f9f2ff4ca6edb5ac71d01c7, type: 2}
+  OnDialogueSequenceFinished:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1135677545}
+        m_TargetAssemblyTypeName: Animation.Gate, Assembly-CSharp
+        m_MethodName: Open
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &325592003
 GameObject:
   m_ObjectHideFlags: 0
@@ -7840,78 +7871,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5924539a6c3e8dc41a95844f2c80b8c0, type: 3}
   m_PrefabInstance: {fileID: 334325499}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &339630901
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 339630903}
-  - component: {fileID: 339630902}
-  m_Layer: 0
-  m_Name: Dialogue Event Listener
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &339630902
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 339630901}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01e9396506b244fa88105960f378db02, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _target: {fileID: 11400000, guid: 4c5af6b38f9f2ff4ca6edb5ac71d01c7, type: 2}
-  OnDialogueSequenceFinished:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1135677540}
-        m_TargetAssemblyTypeName: Animation.Vibrator, Assembly-CSharp
-        m_MethodName: Vibrate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1135677545}
-        m_TargetAssemblyTypeName: Animation.Sinker, Assembly-CSharp
-        m_MethodName: Sink
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!4 &339630903
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 339630901}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &343230752
 GameObject:
   m_ObjectHideFlags: 0
@@ -14239,6 +14198,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7190223140050489853, guid: 27961b68dbe96df44ae89b6bc0078879, type: 3}
   m_PrefabInstance: {fileID: 521633437}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &527222894 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7127767047885952231, guid: c34cc6ff4027a054d8e0eab3624113ce, type: 3}
+  m_PrefabInstance: {fileID: 1224653103}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &535079975
 GameObject:
   m_ObjectHideFlags: 0
@@ -26680,17 +26650,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1126334433}
   m_Mesh: {fileID: -2576880024519324526, guid: 4e40befed2105f54abc70c0eabf391cf, type: 3}
---- !u!114 &1135677540 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1534029178263495535, guid: 4acaa2d9832d95148a0f92f4f4e066cf, type: 3}
-  m_PrefabInstance: {fileID: 4769786100205960263}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0b0ed90a40b479c9f69e2187f450866, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1135677545 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8850166621943802283, guid: 4acaa2d9832d95148a0f92f4f4e066cf, type: 3}
@@ -44719,7 +44678,7 @@ PrefabInstance:
     - target: {fileID: 3866964451493474540, guid: a971f5a7cab47dd429835583349c201d, type: 3}
       propertyPath: _playerInput
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 527222894}
     - target: {fileID: 4715921622822401321, guid: a971f5a7cab47dd429835583349c201d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -52154,6 +52113,5 @@ SceneRoots:
   - {fileID: 2006203938}
   - {fileID: 1149272036}
   - {fileID: 1796628704}
-  - {fileID: 1224653103}
-  - {fileID: 339630903}
   - {fileID: 4769786100205960263}
+  - {fileID: 1224653103}
