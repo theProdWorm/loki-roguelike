@@ -174,7 +174,6 @@ namespace Entities
             if (sceneManager != null)
                 sceneManager.OnSceneLoaded.AddListener(() =>
                 {
-                    Debug.Log("Faggot");
                     _statsPersistence.PlayerHealth = _currentHealth;
                     _statsPersistence.HealthItemAmount = _potionCharges;
                     _statsPersistence.isFenrir = ActiveCharacter == Character.Fenrir;
