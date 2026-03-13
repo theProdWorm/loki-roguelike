@@ -29,15 +29,16 @@ namespace Entities
         private SkinnedMeshRenderer _skinnedMeshRenderer;
         private Material[] materials;
         
-        
-        [SerializeField] private Transform attackPoint;
-        [SerializeField] private float rotationSpeed = 5;
         [SerializeField] private GameObject attackPrefab;
+        [Tooltip("Where the attack will spawn")]
+        [SerializeField] private Transform attackPoint;
         [SerializeField] EncounterManager.EnemyTypes type;
         public bool HasSpawned = true;
         
         [Header("Death")]
+        [Tooltip("How long the ragdoll lasts before starting to dissolve")]
         [SerializeField] private float ragdollDuration = 1f;
+        [Tooltip("How long it takes for the ragdoll to dissolve")]
         [SerializeField] private float dissolveDuration = 1f;
 
         
