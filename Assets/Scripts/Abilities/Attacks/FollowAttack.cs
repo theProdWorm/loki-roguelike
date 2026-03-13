@@ -4,12 +4,14 @@ namespace Abilities.Attacks
 {
     public class FollowAttack : Attack
     {
-        private bool _isDead;
+        private void Start()
+        {
+            transform.parent = _owner.transform;
+        }
         
         protected override void OnTriggerEnter(Collider otherCollider)
         {
-            var entity = PerformAttack(otherCollider);
-            OnAttackFinished?.Invoke();
+            PerformAttack(otherCollider);
         }
     }
 }

@@ -1,7 +1,8 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 namespace UI.Narration
 {
@@ -12,13 +13,21 @@ namespace UI.Narration
         [SerializeField] private GameObject _dialoguePanel;
         [SerializeField] private TextMeshProUGUI _dialogueTMP;
         [SerializeField] private TextMeshProUGUI _speakerTMP;
+        [SerializeField] private Image _speakerBackground;
         [SerializeField] private TextMeshProUGUI _nextIndicator;
+
+        [SerializeField] private GameObject _hud;
     
-        public UnityEvent OnDialogueFinished;
-        
+        [SerializeField] private float _defaultLetterDelay;
+        [SerializeField] private LetterDelay[] _customLetterDelays;
+
         private int _dialoguePage;
         private DialogueSequence _dialogue;
 
+        private Coroutine _slowWriteCoroutine;
+        
+        private DialogueLine CurrentLine => _dialogue.Lines[_dialoguePage];
+        
         public static DialogueManager INSTANCE;
         
         private void Awake()
@@ -39,18 +48,26 @@ namespace UI.Narration
             
             INSTANCE._dialogue = dialogue;
             INSTANCE._dialoguePage = 0;
+            
             INSTANCE._dialoguePanel.SetActive(true);
             
+            if (INSTANCE._hud) 
+                INSTANCE._hud.SetActive(false);
+            
             INSTANCE._nextIndicator.enabled = INSTANCE._dialogue.Lines.Length > 1;
-            SetDialogue(dialogue.Lines[0]);
+            INSTANCE._slowWriteCoroutine = INSTANCE.StartCoroutine(SlowWriteText(dialogue.Lines[0]));
         }
 
         private static void EndDialogue()
         {
-            INSTANCE._dialoguePanel.SetActive(false);
             INSTANCE._playerInput.SwitchCurrentActionMap("Player");
             
-            INSTANCE.OnDialogueFinished.Invoke();
+            INSTANCE._dialoguePanel.SetActive(false);
+            
+            if (INSTANCE._hud)
+                INSTANCE._hud.SetActive(false);
+
+            INSTANCE._dialogue.OnFinished?.Invoke();
         }
 
         public static void AdvanceDialogue(InputAction.CallbackContext context)
@@ -58,24 +75,63 @@ namespace UI.Narration
             if (!context.started)
                 return;
             
-            if (INSTANCE._dialoguePage < INSTANCE._dialogue.Lines.Length - 1)
-            {
+            if (INSTANCE._slowWriteCoroutine != null)
+            { // Skip slow write
+                INSTANCE.StopCoroutine(INSTANCE._slowWriteCoroutine);
+                INSTANCE._slowWriteCoroutine = null;
+                
+                INSTANCE._dialogueTMP.text = INSTANCE.CurrentLine.Text;
+            }
+            else if (INSTANCE._dialoguePage < INSTANCE._dialogue.Lines.Length - 1)
+            { // Advance to next line
                 INSTANCE._nextIndicator.enabled = INSTANCE._dialoguePage < INSTANCE._dialogue.Lines.Length - 2;
                 
                 var line = INSTANCE._dialogue.Lines[++INSTANCE._dialoguePage];
-                SetDialogue(line);
+                INSTANCE._slowWriteCoroutine = INSTANCE.StartCoroutine(SlowWriteText(line));
             }
             else
                 EndDialogue();
         }
 
-        private static void SetDialogue(DialogueLine line)
+        private static void SetSpeaker(DialogueSpeaker speaker)
         {
-            string text = line.Text;
-            string speaker = line.Speaker.ToString();
+            var backgroundColor = speaker.BackgroundColor;
+            var textColor = speaker.TextColor;
+            backgroundColor.a = 0.5f;
+            textColor.a = 1f;
             
-            INSTANCE._dialogueTMP.text = text;
-            INSTANCE._speakerTMP.text = speaker;
+            INSTANCE._speakerBackground.color = backgroundColor;
+            INSTANCE._speakerTMP.color = textColor;
+            INSTANCE._speakerTMP.text = speaker.name;
+        }
+
+        private static float GetLetterDelay(char targetChar)
+        {
+            foreach (var c in INSTANCE._customLetterDelays)
+            {
+                if (c.Letter == targetChar)
+                    return c.Delay;
+            }
+
+            return INSTANCE._defaultLetterDelay;
+        }
+        
+        private static IEnumerator SlowWriteText(DialogueLine line)
+        {
+            SetSpeaker(line.Speaker);
+            
+            string text = "";
+
+            foreach (var c in line.Text)
+            {
+                float delay = GetLetterDelay(c);
+
+                text += c;
+                INSTANCE._dialogueTMP.text = text;
+                yield return new WaitForSeconds(delay);
+            }
+            
+            INSTANCE._slowWriteCoroutine = null;
         }
     }
 }

@@ -107,7 +107,6 @@ namespace Entities
                 else
                 {
                     dissolveTimeLeft -= Time.deltaTime;
-                    Debug.Log(Mathf.InverseLerp(0,dissolveDuration,dissolveTimeLeft));
                     materials[0].SetFloat("_Cutoff_Height", Mathf.InverseLerp(0,dissolveDuration,dissolveTimeLeft));
                     if (!(dissolveTimeLeft <= 0)) return;
                     ragdollActive = false;

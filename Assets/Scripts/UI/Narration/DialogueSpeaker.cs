@@ -1,14 +1,11 @@
+using UnityEngine;
+
 namespace UI.Narration
 {
-    public enum DialogueSpeaker
+    [CreateAssetMenu(fileName = "Speaker", menuName = "Dialogue/Speaker")]
+    public class DialogueSpeaker : ScriptableObject
     {
-        Fenrir,
-        Hel,
-        Bragi,
-        Huginn,
-        Muninn,
-        Runes,
-        Loki,
-        Sigyn
+        public Color  TextColor;
+        public Color  BackgroundColor;
     }
 }
