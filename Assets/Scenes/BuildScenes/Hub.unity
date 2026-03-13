@@ -7873,13 +7873,25 @@ MonoBehaviour:
   OnDialogueSequenceFinished:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1135677539}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 0
+      - m_Target: {fileID: 1135677540}
+        m_TargetAssemblyTypeName: Animation.Vibrator, Assembly-CSharp
+        m_MethodName: Vibrate
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1135677545}
+        m_TargetAssemblyTypeName: Animation.Sinker, Assembly-CSharp
+        m_MethodName: Sink
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -26668,11 +26680,28 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1126334433}
   m_Mesh: {fileID: -2576880024519324526, guid: 4e40befed2105f54abc70c0eabf391cf, type: 3}
---- !u!1 &1135677539 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5842159763686437012, guid: 4acaa2d9832d95148a0f92f4f4e066cf, type: 3}
+--- !u!114 &1135677540 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1534029178263495535, guid: 4acaa2d9832d95148a0f92f4f4e066cf, type: 3}
   m_PrefabInstance: {fileID: 4769786100205960263}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0b0ed90a40b479c9f69e2187f450866, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1135677545 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8850166621943802283, guid: 4acaa2d9832d95148a0f92f4f4e066cf, type: 3}
+  m_PrefabInstance: {fileID: 4769786100205960263}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e92fe42dbd114347af8f0afa6339effa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1137142084
 GameObject:
   m_ObjectHideFlags: 0
