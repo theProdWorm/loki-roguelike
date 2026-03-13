@@ -12,17 +12,9 @@ namespace UI.Narration
 
         [SerializeField] public UnityEvent OnFinished;
         
-        private UnityEvent _onFinishedTemp;
-
         private void OnValidate()
         {
             OnFinished.RemoveAllListeners();
-            OnFinished.AddListener(_onFinishedTemp.Invoke);
-        }
-
-        public void AddListener(Action action)
-        {
-            _onFinishedTemp.AddListener(action.Invoke);
         }
     }
 }

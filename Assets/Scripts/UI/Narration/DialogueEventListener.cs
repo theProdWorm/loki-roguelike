@@ -11,7 +11,7 @@ namespace UI.Narration
         
         private void Start()
         {
-            _target.AddListener(OnDialogueSequenceFinished.Invoke);
+            _target.OnFinished.AddListener(OnDialogueSequenceFinished.Invoke);
         }
     }
 }
