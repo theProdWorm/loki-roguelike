@@ -118,8 +118,6 @@ public class FollowCamera : MonoBehaviour
 
     private IEnumerator ShakeCoroutine(ScreenShakeEvent shakeEvent)
     {
-        print("start shake");
-        
         float elapsedTime = 0;
 
         while (elapsedTime < shakeEvent.Duration)
@@ -127,8 +125,6 @@ public class FollowCamera : MonoBehaviour
             float t = Mathf.Clamp01(elapsedTime / shakeEvent.Duration);
             float intensity = _shakeIntensity * shakeEvent.IntensityMultiplier * shakeEvent.IntensityCurve.Evaluate(t);
 
-            print(intensity);
-            
             Vector3 shakeDir = Random.insideUnitSphere;
             Vector3 projection = Vector3.Project(shakeDir, transform.forward);
 
@@ -138,8 +134,6 @@ public class FollowCamera : MonoBehaviour
             
             elapsedTime += Time.deltaTime;
         }
-        
-        print("end shake");
     }
 
     public void RotateInput(InputAction.CallbackContext context)
