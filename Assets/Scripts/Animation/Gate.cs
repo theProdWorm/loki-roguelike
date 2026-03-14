@@ -9,6 +9,7 @@ namespace Animation
         [SerializeField] private Transform _closedPosition;
         [SerializeField] private float _duration = 2f;
         [SerializeField] private float _shakeIntensity = 0.5f;
+        [SerializeField] private ParticleSystem _particleSystem;
         
         private bool _isOpen;
         
@@ -24,6 +25,8 @@ namespace Animation
 
         private IEnumerator OpenRoutine()
         {
+            _particleSystem.Play();
+            
             float elapsedTime = 0;
             while (elapsedTime < _duration)
             {
@@ -39,6 +42,8 @@ namespace Animation
         
         private IEnumerator CloseRoutine()
         {
+            _particleSystem.Play();
+            
             float elapsedTime = 0;
             while (elapsedTime < _duration)
             {
