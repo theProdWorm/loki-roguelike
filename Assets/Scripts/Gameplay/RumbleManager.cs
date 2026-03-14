@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -14,6 +15,12 @@ namespace Gameplay
                 Destroy(gameObject);
             else
                 _instance = this;
+        }
+
+        public void StopRumble()
+        {
+            StopAllCoroutines();
+            Gamepad.current?.SetMotorSpeeds(0, 0);
         }
 
         public void Rumble(RumbleEvent rumbleEvent)
@@ -42,6 +49,11 @@ namespace Gameplay
             }
             
             Gamepad.current.SetMotorSpeeds(0, 0);
+        }
+
+        private void OnDestroy()
+        {
+            StopRumble();
         }
     }
 }

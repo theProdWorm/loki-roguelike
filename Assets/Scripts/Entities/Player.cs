@@ -65,6 +65,8 @@ namespace Entities
         public UnityEvent<int, int> OnHealthChanged;
         public UnityEvent<int, int> OnPotionChargesChanged;
         public UnityEvent OnPotionDrunk;
+        public UnityEvent OnDashStarted;
+        public UnityEvent OnDashFinished;
 
         [SerializeField] private Transform _characterContainer;
         [SerializeField] private PlayerInput _playerInput;
@@ -666,6 +668,8 @@ namespace Entities
             if (animate)
                 CurrentAnimator.SetTrigger(DASH);
 
+            OnDashStarted?.Invoke();
+            
             SetDashing(true);
             LoseControl();
             
@@ -709,6 +713,8 @@ namespace Entities
 
             gameObject.layer = defaultPlayerLayer;
 
+            OnDashFinished?.Invoke();
+            
             SetDashing(false);
             GainControl();
 
