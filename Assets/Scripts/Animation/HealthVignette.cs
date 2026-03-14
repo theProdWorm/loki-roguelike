@@ -33,11 +33,18 @@ namespace Animation
         
         private void Update()
         {
+            float healthIntensity = _healthIntensityCurve.Evaluate(_playerHealthPercent);
+
+            if (healthIntensity <= 0)
+            {
+                _vignette.intensity.value = 0;
+                return;
+            }
+            
             float pulseT = (Mathf.Sin(_pulseSpeed * Time.realtimeSinceStartup * Mathf.PI * 2) + 1) / 2;
-            float intensity = Mathf.Lerp(_minIntensity, _maxIntensity, _healthIntensityCurve.Evaluate(_playerHealthPercent) * pulseT);
+            float intensity = Mathf.Lerp(_minIntensity, _maxIntensity, healthIntensity * pulseT);
 
             _vignette.intensity.value = intensity;
-            print(intensity);
         }
     }
 }
