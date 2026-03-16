@@ -33,6 +33,7 @@ namespace Entities
         [Tooltip("Where the attack will spawn")]
         [SerializeField] private Transform attackPoint;
         [SerializeField] EncounterManager.EnemyTypes type;
+        [SerializeField] private bool canBeStaggered;
         public bool HasSpawned = true;
         
         [Header("Death")]
@@ -182,6 +183,14 @@ namespace Entities
             int realDamage = base.TakeDamage(amount, attacker);
             DamageNumbers.CreateDamageNumber(transform, realDamage);
             _healthBar.UpdateHealth(_currentHealth, _maxHealth);
+
+            if (canBeStaggered)
+            {
+                animator.StopPlayback();
+                animator.SetBool("Stagger",true);
+                AiAgent.SetVariableValue("Staggered", true);
+                AiAgent.SetVariableValue("Attacking", false);
+            }
 
             return realDamage;
         }
