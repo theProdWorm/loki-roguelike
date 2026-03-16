@@ -65,7 +65,7 @@ namespace UI.Narration
             INSTANCE._dialoguePanel.SetActive(false);
             
             if (INSTANCE._hud)
-                INSTANCE._hud.SetActive(false);
+                INSTANCE._hud.SetActive(true);
 
             INSTANCE._dialogue.OnFinished?.Invoke();
         }
