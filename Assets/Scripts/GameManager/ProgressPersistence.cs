@@ -8,13 +8,4 @@ public class ProgressPersistence : MonoBehaviour
 
     public bool BeatBoss = false;
     public bool BeatBoss2 = false;
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
 }
