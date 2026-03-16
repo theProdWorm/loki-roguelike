@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Aurora
-  m_Shader: {fileID: -6465566751694194690, guid: fc8f29faa05735a488c1d8e7cccef104, type: 3}
-  m_Parent: {fileID: 2100000, guid: a74fc0e2fd7c4d941890f347fb7af306, type: 2}
+  m_Name: Shader Graphs_TimeControllable_Shader
+  m_Shader: {fileID: -6465566751694194690, guid: 21d4461edac582e4289beb67c567f666, type: 3}
+  m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -23,17 +23,31 @@ Material:
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs: []
+    m_TexEnvs:
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Rotation_Speed: 1
-    - _Voronoi_Angle: 3
-    - _Voronoi_Density: 5
-    - _Voronoi_Power: 2
-    m_Colors: []
+    - _DistortionStrength: 0.1
+    - _FresnelPower: 3
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    m_Colors:
+    - _Color: {r: 0, g: 0, b: 0, a: 0}
+    - _MaskSmoothstep: {r: 0.85, g: 1.27, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &9143865391280369537
+--- !u!114 &6844690912597885790
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

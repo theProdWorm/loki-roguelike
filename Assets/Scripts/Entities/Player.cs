@@ -125,6 +125,8 @@ namespace Entities
         [SerializeField] private Transform _fenrirAttackPoint;
         [SerializeField] private float _fenrirLungeForce;
         [SerializeField] private float _fenrirLungeDuration;
+        [SerializeField] private float _shieldBlockAngle;
+        [SerializeField] private GameObject _shield;
 
         [Header("Hel")][SerializeField] private CharacterAbilitySet _helAbilities;
         [SerializeField] private Animator _helAnimator;
@@ -402,7 +404,12 @@ namespace Entities
         private Transform FindTarget()
         {
             var enemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None);
+            
+            var cameraForward = _camera.transform.forward;
+            var downProjection = Vector3.Project(cameraForward, Vector3.up);
 
+            var forwardDirection = (cameraForward - downProjection).normalized;
+            
             List<float> distances = new();
             List<float> angles = new();
 
@@ -416,7 +423,7 @@ namespace Entities
                     return false;
 
                 Vector3 toVector = enemy.transform.position - transform.position;
-                float angle = Mathf.Abs(Vector3.Angle(transform.forward, toVector));
+                float angle = Mathf.Abs(Vector3.Angle(forwardDirection, toVector));
 
                 if (angle > _targetLockAngle)
                     return false;
@@ -450,7 +457,7 @@ namespace Entities
 
             return validEnemies[targetIndex].transform;
         }
-
+        
         private void StartAttack(Ability ability, int useTimes, int animatorHash)
         {
             LoseControl();
@@ -542,6 +549,9 @@ namespace Entities
                     yield return new WaitForSeconds(delay);
             }
         }
+
+        public void ActivateShield() => _shield.SetActive(true);
+        public void DeactivateShield() => _shield.SetActive(false);
 
         private void PerformDash(Vector3 dashPoint, bool animate)
         {
@@ -740,6 +750,13 @@ namespace Entities
 
         public override int TakeDamage(int amount, Entity attacker)
         {
+            if (_shield.activeSelf)
+            {
+                float angle = Vector3.Angle(transform.forward, attacker.transform.position - transform.position);
+                if (angle <= _shieldBlockAngle)
+                    return 0;
+            }
+            
             int reducedDamage = Mathf.CeilToInt(amount * (1 - _damageReduction));
             int realDamage = base.TakeDamage(reducedDamage, attacker);
 
