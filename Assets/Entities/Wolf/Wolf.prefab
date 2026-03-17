@@ -11520,6 +11520,7 @@ MonoBehaviour:
   attackPrefab: {fileID: 6175426701053642483, guid: e495763dd1db0f44caf2c873374580e7, type: 3}
   attackPoint: {fileID: 91000878631997636}
   type: 2
+  canBeStaggered: 1
   HasSpawned: 1
   ragdollDuration: 4
   dissolveDuration: 1
@@ -11670,9 +11671,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.43844193
-  m_Height: 2.34
+  m_Height: 2.7
   m_Direction: 2
-  m_Center: {x: 0.0011894227, y: 0.9699945, z: 0.1}
+  m_Center: {x: 0.0011894227, y: 0.9699945, z: 0.08}
 --- !u!114 &2020504415741763339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11691,10 +11692,7 @@ MonoBehaviour:
   OnAttackPerformed:
     m_PersistentCalls:
       m_Calls: []
-  OnSpecialStarted:
-    m_PersistentCalls:
-      m_Calls: []
-  OnSpecialPerformed:
+  OnAttackEnded:
     m_PersistentCalls:
       m_Calls: []
   OnSwitch:
