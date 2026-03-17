@@ -86,8 +86,16 @@ namespace Entities
 
         public void Attack()
         {
-            Abilities.Attacks.Attack.Create(this, attackPoint.position, transform.rotation, attackStats);
+            if (type == EncounterManager.EnemyTypes.BirdOnBird)
+            {
+                attackStats.Prefab.GetComponent<HomingProjectileAttack>().target = PLAYER.transform;
+                Abilities.Attacks.Attack.Create(this, attackPoint.position, Quaternion.LookRotation(PLAYER.transform.position - transform.position) , attackStats);
+            }
+            else Abilities.Attacks.Attack.Create(this, attackPoint.position, transform.rotation, attackStats);
+            
         }
+        
+        
 
         public void AttackFinished()
         {

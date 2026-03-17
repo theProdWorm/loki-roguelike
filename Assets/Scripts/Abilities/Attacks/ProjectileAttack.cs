@@ -5,12 +5,12 @@ namespace Abilities.Attacks
     [RequireComponent(typeof(Rigidbody))]
     public class ProjectileAttack : Attack
     {
-        [SerializeField] private float _speed;
+        [SerializeField] protected float _speed;
         [SerializeField] private int _maxHits;
 
         [SerializeField] private float _range;
         
-        [SerializeField] private Rigidbody _rigidbody;
+        [SerializeField] protected Rigidbody _rigidbody;
         
         private int _remainingHits;
 
@@ -24,13 +24,14 @@ namespace Abilities.Attacks
             _rigidbody.linearVelocity = transform.forward * _speed;
         }
 
-        private void FixedUpdate()
+        protected virtual void FixedUpdate()
         {
             _distanceTraveled += _rigidbody.linearVelocity.magnitude * Time.fixedDeltaTime;
             
             if (_distanceTraveled >= _range)
                 Die();
         }
+        
         
         private void Die()
         {
