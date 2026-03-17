@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 public class SeeThroughSync : MonoBehaviour
 {
@@ -56,5 +55,9 @@ public class SeeThroughSync : MonoBehaviour
         }
         _treeMaterial.SetVector(PosID, view);
         _stoneMaterial.SetVector(PosID, view);
+
+        _treeMaterial.SetVector(PlayerPosID, transform.position);
+        _stoneMaterial.SetVector(PlayerPosID, transform.position);
     }
+
 }
