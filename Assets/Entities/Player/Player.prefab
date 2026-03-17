@@ -5450,6 +5450,7 @@ Transform:
   - {fileID: 3132654603202236795}
   - {fileID: 3849344189515138746}
   - {fileID: 3928614553047420674}
+  - {fileID: 8507882623860424714}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &6590917616300736346
@@ -5595,6 +5596,30 @@ MonoBehaviour:
           m_StringArgument: event:/Dave/SFX/Oneshots/Misc/Heal
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 8200226155560627125}
+        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
+        m_MethodName: Clear
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: event:/Dave/SFX/Oneshots/Misc/Heal
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8200226155560627125}
+        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: event:/Dave/SFX/Oneshots/Misc/Heal
+          m_BoolArgument: 0
+        m_CallState: 2
   OnDashStarted:
     m_PersistentCalls:
       m_Calls:
@@ -5656,7 +5681,7 @@ MonoBehaviour:
   _lookWeight: 0.2
   _distanceWeight: 3
   _potionHealAmount: 25
-  _potionCost: 40
+  _potionCost: 0
   _maxPotionCharges: 100
   _dashAbility: {fileID: 11400000, guid: 8555943e95a694c4d8ff2084bdf30825, type: 2}
   _dashPoint: {fileID: 3132654603202236795}
@@ -10052,3 +10077,86 @@ Transform:
   - {fileID: 396527023341604815}
   m_Father: {fileID: 5445708829510007082}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &4786148034526794107
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8628447524896632596}
+    m_Modifications:
+    - target: {fileID: 3781267135318987121, guid: a6b7260b17f944a4ba46a0be77196c80, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3781267135318987121, guid: a6b7260b17f944a4ba46a0be77196c80, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3781267135318987121, guid: a6b7260b17f944a4ba46a0be77196c80, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3781267135318987121, guid: a6b7260b17f944a4ba46a0be77196c80, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3781267135318987121, guid: a6b7260b17f944a4ba46a0be77196c80, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3781267135318987121, guid: a6b7260b17f944a4ba46a0be77196c80, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3781267135318987121, guid: a6b7260b17f944a4ba46a0be77196c80, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3781267135318987121, guid: a6b7260b17f944a4ba46a0be77196c80, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3781267135318987121, guid: a6b7260b17f944a4ba46a0be77196c80, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3781267135318987121, guid: a6b7260b17f944a4ba46a0be77196c80, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3781267135318987121, guid: a6b7260b17f944a4ba46a0be77196c80, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3781267135318987121, guid: a6b7260b17f944a4ba46a0be77196c80, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3781267135318987121, guid: a6b7260b17f944a4ba46a0be77196c80, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3781267135318987121, guid: a6b7260b17f944a4ba46a0be77196c80, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4890945493999633974, guid: a6b7260b17f944a4ba46a0be77196c80, type: 3}
+      propertyPath: m_Name
+      value: Heal_Particles
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a6b7260b17f944a4ba46a0be77196c80, type: 3}
+--- !u!198 &8200226155560627125 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 3721906759387429582, guid: a6b7260b17f944a4ba46a0be77196c80, type: 3}
+  m_PrefabInstance: {fileID: 4786148034526794107}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8507882623860424714 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3781267135318987121, guid: a6b7260b17f944a4ba46a0be77196c80, type: 3}
+  m_PrefabInstance: {fileID: 4786148034526794107}
+  m_PrefabAsset: {fileID: 0}
