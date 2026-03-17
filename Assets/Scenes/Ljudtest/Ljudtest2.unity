@@ -7815,7 +7815,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6551288902505837234, guid: a971f5a7cab47dd429835583349c201d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 832884089}
   m_SourcePrefab: {fileID: 100100000, guid: a971f5a7cab47dd429835583349c201d, type: 3}
 --- !u!1001 &274795531
 PrefabInstance:
@@ -26168,6 +26171,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4460204380267995781, guid: 8e0164502a8b64333ad16715815ee77a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1284225148}
+    - targetCorrespondingSourceObject: {fileID: 5603759414852219608, guid: 8e0164502a8b64333ad16715815ee77a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1312015124}
     - targetCorrespondingSourceObject: {fileID: 6471521469487040756, guid: 8e0164502a8b64333ad16715815ee77a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1096662420}
@@ -30494,6 +30500,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 3069080942694379688, guid: 7dfab53da1c9443db81c70289bfd04b3, type: 3}
+      propertyPath: OnIdle.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3069080942694379688, guid: 7dfab53da1c9443db81c70289bfd04b3, type: 3}
+      propertyPath: OnIdle.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3086094162786148021, guid: 7dfab53da1c9443db81c70289bfd04b3, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -31329,6 +31343,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7423838565527987290, guid: 7163adf2fa6c83e438a45d9a94e20a9c, type: 3}
   m_PrefabInstance: {fileID: 1939358337}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &832884083 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6551288902505837234, guid: a971f5a7cab47dd429835583349c201d, type: 3}
+  m_PrefabInstance: {fileID: 274396909}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &832884089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 832884083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9de6f78c740c417787ca627be31cf639, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxDistance: 0
 --- !u!1001 &833986568
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -50128,6 +50160,27 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  _ambienceMusic:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  _combatMusic:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  _menuMusic:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   <skog>k__BackingField:
     Guid:
       Data1: -1444733491
@@ -55080,6 +55133,37 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5603759414852219608, guid: 8e0164502a8b64333ad16715815ee77a, type: 3}
   m_PrefabInstance: {fileID: 667250384}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1312015124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1312015114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  Event: 
+  EventPlayTrigger: 1
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: -1
+  OverrideMaxDistance: -1
 --- !u!4 &1318858668 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5924539a6c3e8dc41a95844f2c80b8c0, type: 3}

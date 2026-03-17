@@ -14043,7 +14043,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7127767047885952231, guid: c34cc6ff4027a054d8e0eab3624113ce, type: 3}
   m_PrefabInstance: {fileID: 1224653103}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2018272601}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
@@ -28842,7 +28842,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5411575004226257307, guid: c34cc6ff4027a054d8e0eab3624113ce, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2018272606}
   m_SourcePrefab: {fileID: 100100000, guid: c34cc6ff4027a054d8e0eab3624113ce, type: 3}
 --- !u!1 &1225903200
 GameObject:
@@ -35232,6 +35235,10 @@ PrefabInstance:
       propertyPath: StartCalled.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 527222899}
+    - target: {fileID: 5220538739444989524, guid: ccbbde10cb566bc45bcb5898ac383286, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -41630,7 +41637,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2473319740043560885, guid: 962e2fe746eb15e41bd47ba516fad3bb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1666388344}
   m_SourcePrefab: {fileID: 100100000, guid: 962e2fe746eb15e41bd47ba516fad3bb, type: 3}
 --- !u!1 &1652246309
 GameObject:
@@ -41804,6 +41814,42 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1658084533}
   m_Mesh: {fileID: -2576880024519324526, guid: 4e40befed2105f54abc70c0eabf391cf, type: 3}
+--- !u!1 &1666388336 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2473319740043560885, guid: 962e2fe746eb15e41bd47ba516fad3bb, type: 3}
+  m_PrefabInstance: {fileID: 1651098523}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1666388344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1666388336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -577774032
+      Data2: 1090232168
+      Data3: 1168287115
+      Data4: -561029943
+    Path: event:/Anton/BrageHUB/Harpa
+  Event: 
+  EventPlayTrigger: 1
+  EventStopTrigger: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 1
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 130
 --- !u!1 &1674667727
 GameObject:
   m_ObjectHideFlags: 0
@@ -49855,6 +49901,25 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2015554347}
   m_Mesh: {fileID: -316046109595110636, guid: c718dbb0717a48d4cab4cccb341b3215, type: 3}
+--- !u!1 &2018272601 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5411575004226257307, guid: c34cc6ff4027a054d8e0eab3624113ce, type: 3}
+  m_PrefabInstance: {fileID: 1224653103}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2018272606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2018272601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 2018272601}
 --- !u!1 &2018339607
 GameObject:
   m_ObjectHideFlags: 0
