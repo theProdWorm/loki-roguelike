@@ -5681,8 +5681,8 @@ MonoBehaviour:
   _lookWeight: 0.2
   _distanceWeight: 3
   _potionHealAmount: 25
-  _potionCost: 0
-  _maxPotionCharges: 100
+  _potionCost: 100
+  _maxPotionCharges: 300
   _dashAbility: {fileID: 11400000, guid: 8555943e95a694c4d8ff2084bdf30825, type: 2}
   _dashPoint: {fileID: 3132654603202236795}
   _dashDuration: 0.1
@@ -10085,6 +10085,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8628447524896632596}
     m_Modifications:
+    - target: {fileID: 3721906759387429582, guid: a6b7260b17f944a4ba46a0be77196c80, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3781267135318987121, guid: a6b7260b17f944a4ba46a0be77196c80, type: 3}
       propertyPath: m_LocalScale.x
       value: 2.5
