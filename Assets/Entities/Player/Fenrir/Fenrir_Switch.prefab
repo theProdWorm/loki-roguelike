@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7421366384584664828}
   - component: {fileID: 163185426513766829}
   - component: {fileID: 3466287375279518610}
+  - component: {fileID: 8106445857097250920}
   m_Layer: 0
   m_Name: Visual Effect
   m_TagString: Untagged
@@ -57,6 +58,9 @@ VisualEffect:
       - m_Value: 2
         m_Name: RotationX
         m_Overridden: 0
+      - m_Value: 0.5
+        m_Name: Lifetime
+        m_Overridden: 1
     m_Vector2f:
       m_Array: []
     m_Vector3f:
@@ -120,6 +124,22 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &8106445857097250920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3926195959820328527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9b5a8f87831495991932dc1e3f744f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lifetime: 0.5
+  OnDestroy:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5312937427267001930
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,7 +250,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b5a8f87831495991932dc1e3f744f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lifetime: 0
+  _lifetime: 0.5
   OnDestroy:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6979462564921621498}
+        m_TargetAssemblyTypeName: UnityEngine.Transform, UnityEngine
+        m_MethodName: DetachChildren
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
