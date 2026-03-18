@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
 using Stats;
+using StatusEffects;
+using StatusEffects.Effects;
 using UI;
 using Unity.Behavior;
 using UnityEngine;
@@ -11,7 +13,9 @@ namespace Entities
 {
     public class Enemy : Entity
     {
-        private static readonly int MoveDir = Animator.StringToHash("MoveDir");
+        private static readonly int MOVE_DIR = Animator.StringToHash("MoveDir");
+        private static readonly int SPEED = Animator.StringToHash("Speed");
+        
         private static int ENEMYAMOUNT = 0;
         private static GameObject PLAYER;
 
@@ -42,11 +46,13 @@ namespace Entities
         [Tooltip("How long it takes for the ragdoll to dissolve")]
         [SerializeField] private float dissolveDuration = 1f;
 
-        
+        private StatusEffectList _statusEffects;
 
         protected override void Awake()
         {
             base.Awake();
+            _statusEffects = new(this);
+            
             InitializeBaseStats();
             AiAgent = GetComponent<BehaviorGraphAgent>();
             navAgent = GetComponent<NavMeshAgent>();
@@ -104,11 +110,8 @@ namespace Entities
             
         }
         
-        
-
-        
         private float dissolveValue;
-        protected override void Update()
+        private void Update()
         {
             if (IsDead)
             {
@@ -128,7 +131,8 @@ namespace Entities
                 }
                 return;
             }
-            base.Update();
+            
+            _statusEffects.Update();
 
             //navAgent.speed = _moveSpeed;
 
@@ -158,10 +162,19 @@ namespace Entities
 
             prevDot = smoothed;
 
-            animator.SetFloat(MoveDir, smoothed);
+            animator.SetFloat(MOVE_DIR, smoothed);
 
             prevPos = transform.position;
         }
+        
+        public void ApplyStatusEffect(StatusEffect effect) => 
+            _statusEffects.Add(effect);
+        public void RemoveAllStatusEffectsOfType<T>() where T : StatusEffect => 
+            _statusEffects.RemoveAll<T>();
+        public int  CountStatusEffectsOfType<T>() where T : StatusEffect => 
+            _statusEffects.GetCount<T>();
+        public bool HasStatusEffectOfType<T>() where T : StatusEffect =>
+            _statusEffects.HasEffect<T>();
 
         public void Destroy()
         {
@@ -193,6 +206,13 @@ namespace Entities
             if(!HasSpawned)
                 return 0;
 
+            if (HasStatusEffectOfType<StatusEffect_Frozen>() && 
+                attacker is Player { ActiveCharacter: Player.Character.Fenrir })
+            {
+                amount *= 2;
+                RemoveAllStatusEffectsOfType<StatusEffect_Frozen>();
+            }
+            
             int realDamage = base.TakeDamage(amount, attacker);
             DamageNumbers.CreateDamageNumber(transform, realDamage);
             _healthBar.UpdateHealth(_currentHealth, _maxHealth);
@@ -212,6 +232,17 @@ namespace Entities
         {
             base.Heal(amount);
             _healthBar.UpdateHealth(_currentHealth, _maxHealth);
+        }
+
+        public void Freeze()
+        {
+            AiAgent.SetVariableValue("Frozen", true);
+            animator.SetFloat(SPEED, 0);
+        }
+        public void Unfreeze()
+        {
+            AiAgent.SetVariableValue("Frozen", false);
+            animator.SetFloat(SPEED, 1);
         }
     }
 }

@@ -15,12 +15,12 @@ namespace StatusEffects
         [Tooltip("Whether to reset the duration of all other stacks when a new one is applied.")]
         [SerializeField] protected bool  _refresh = true;
         
-        private void Awake()
+        protected virtual void Awake()
         {
             var attack = GetComponent<Attack>();
-            attack.OnHitEntity.AddListener(ApplyEffect);
+            attack.OnHitEntity.AddListener((entity, damage) => ApplyEffect((Enemy) entity, damage));
         }
 
-        protected abstract void ApplyEffect(Entity entity, int _);
+        protected abstract void ApplyEffect(Enemy enemy, int damage);
     }
 }

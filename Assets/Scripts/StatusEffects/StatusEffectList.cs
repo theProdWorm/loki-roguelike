@@ -7,7 +7,7 @@ namespace StatusEffects
 {
     public class StatusEffectList
     {
-        private readonly Entity _entity;
+        private readonly Enemy _enemy;
         private StatusEffect[] _effects;
 
         private int _capacity = 4;
@@ -16,9 +16,9 @@ namespace StatusEffects
         
         public StatusEffect this[int index] => _effects[index];
         
-        public StatusEffectList(Entity entity)
+        public StatusEffectList(Enemy enemy)
         {
-            _entity = entity;
+            _enemy = enemy;
             
             _effects = new StatusEffect[_capacity];
         }
@@ -35,9 +35,9 @@ namespace StatusEffects
             }
         }
 
-        public int GetCount(StatusEffect sampleEffect)
+        public int GetCount<T>() where T : StatusEffect
         {
-            var type = sampleEffect.GetType();
+            var type = typeof(T);
             
             int count = 0;
             for (int i = 0; i < Count; i++)
@@ -67,6 +67,20 @@ namespace StatusEffects
 
             return false;
         }
+
+        public bool HasEffect<T>() where T : StatusEffect
+        {
+            for (int i = 0; i < Count; i++)
+            {
+                if (_effects[i] == null)
+                    return false;
+                
+                if (_effects[i].GetType() == typeof(T))
+                    return true;
+            }
+            
+            return false;
+        }
         
         public void Add(StatusEffect effect)
         {
@@ -80,7 +94,7 @@ namespace StatusEffects
                 Extend();
             
             _effects[Count++] = effect;
-            effect.Apply(_entity);
+            effect.Apply(_enemy);
         }
         
         public void Remove(StatusEffect effect)
@@ -92,28 +106,23 @@ namespace StatusEffects
                     break;
             }
 
-            _effects[i].Remove(_entity);
+            _effects[i].Remove(_enemy);
             _effects[i] = null;
             
             Rebuild();
             Count--;
         }
 
-        public void RemoveAll(StatusEffect sampleEffect, int max = int.MaxValue)
+        public void RemoveAll<T>() where T : StatusEffect
         {
-            var type = sampleEffect.GetType();
+            var type = typeof(T);
             
-            int count = 0;
             for (int i = Count - 1; i >= 0; i--)
             {
-                if (count >= max)
-                    break;
-                
                 if (_effects[i].GetType() != type)
                     continue;
                 
-                count++;
-                _effects[i].Remove(_entity);
+                _effects[i].Remove(_enemy);
                 _effects[i] = null;
                 Count--;
             }
@@ -125,7 +134,7 @@ namespace StatusEffects
         {
             for (int i = 0; i < Count; i++)
             {
-                _effects[i].Remove(_entity);
+                _effects[i].Remove(_enemy);
                 _effects[i] = null;
             }
             

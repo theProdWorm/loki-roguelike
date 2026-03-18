@@ -61,13 +61,11 @@ MonoBehaviour:
   OnHitEntity:
     m_PersistentCalls:
       m_Calls: []
-  OnHitEntityWithDamage:
-    m_PersistentCalls:
-      m_Calls: []
   OnAttackFinished:
     m_PersistentCalls:
       m_Calls: []
   _damageMultiplier: 0.5
+  _knockbackForce: 0
 --- !u!114 &655778515405983000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,8 +82,9 @@ MonoBehaviour:
   _duration: 2
   _stackable: 1
   _refresh: 1
-  _movementSlowdown: 0.05
-  _attackSpeedSlowdown: 0.05
+  _maxChill: 5
+  _slowAmount: 0.1
+  _frozenDuration: 3
 --- !u!114 &-1416256876014258992
 MonoBehaviour:
   m_ObjectHideFlags: 0

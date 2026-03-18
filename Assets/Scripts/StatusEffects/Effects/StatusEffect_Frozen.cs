@@ -4,19 +4,19 @@ namespace StatusEffects.Effects
 {
     public class StatusEffect_Frozen : StatusEffect
     {
-        public StatusEffect_Frozen(float duration, bool stackable, bool refreshOnApplication) : 
-            base(duration, stackable, refreshOnApplication)
+        public StatusEffect_Frozen(float duration) : 
+            base(duration, false, false)
         {
         }
         
-        public override void Apply(Entity entity)
+        public override void Apply(Enemy enemy)
         {
-            entity.RemoveSpeedMultiplier(1);
+            enemy.Freeze();
         }
 
-        public override void Remove(Entity entity)
+        public override void Remove(Enemy enemy)
         {
-            entity.AddSpeedMultiplier(1);
+            enemy.Unfreeze();
         }
     }
 }

@@ -12,14 +12,14 @@ namespace StatusEffects.Effects
             _slowAmount = slowAmount;
         }
         
-        public override void Apply(Entity entity)
+        public override void Apply(Enemy enemy)
         {
-            entity.RemoveSpeedMultiplier(_slowAmount);
+            enemy.RemoveSpeedMultiplier(_slowAmount);
         }
 
-        public override void Remove(Entity entity)
+        public override void Remove(Enemy enemy)
         {
-            entity.AddSpeedMultiplier(_slowAmount);
+            enemy.AddSpeedMultiplier(_slowAmount);
         }
     }
 }

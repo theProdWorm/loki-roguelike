@@ -23,8 +23,8 @@ namespace StatusEffects
             RefreshOnApplication = refreshOnApplication;
         }
         
-        public abstract void Apply(Entity entity);
-        public abstract void Remove(Entity entity);
+        public abstract void Apply(Enemy enemy);
+        public abstract void Remove(Enemy enemy);
 
         public void RefreshDuration()
         {

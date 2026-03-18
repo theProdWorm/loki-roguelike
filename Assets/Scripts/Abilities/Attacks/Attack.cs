@@ -1,7 +1,9 @@
+using System;
 using Entities;
 using Stats;
 using UnityEngine;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 namespace Abilities.Attacks
 {
@@ -66,12 +68,13 @@ namespace Abilities.Attacks
             
             bool crit = Random.Range(0f, 100f) <= _stats.CritChance;
             int damage = Mathf.CeilToInt(_damage * (crit ? _stats.CritDamage : 1));
-            entity.TakeDamage(damage, _owner);
+            
+            int realDamage = entity.TakeDamage(damage, _owner);
             
             Vector3 knockbackDirection = (entity.transform.position - _owner.transform.position).normalized;
             entity.KnockBack(knockbackDirection, _knockbackForce, 0.1f);
             
-            OnHitEntity?.Invoke(entity, damage);
+            OnHitEntity?.Invoke(entity, realDamage);
             
             return entity;
         }

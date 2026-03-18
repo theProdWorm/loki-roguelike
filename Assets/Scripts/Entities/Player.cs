@@ -254,7 +254,7 @@ namespace Entities
                 new(_helAbilities.Attack, (ability, action) =>
                     StartAttack(ability, action, ATTACK))
             };
-
+            
             _switchAbilityTrackers = new AttackAbilityTracker[]
             {
                 new(_fenrirAbilities.Switch, (ability, action) =>
@@ -298,10 +298,8 @@ namespace Entities
         public void SetDashing(bool isDashing) => _isDashing = isDashing;
         public void SetDashing() => _isDashing = true;
 
-        protected override void Update()
+        private void Update()
         {
-            base.Update();
-
             _inputBuffer.Update();
             if (_hasControl)
                 _inputBuffer.NextInput();
@@ -374,18 +372,6 @@ namespace Entities
                 _rigidbody.linearVelocity += _knockbackForce;
 
             CurrentAnimator.SetBool(IS_MOVING, movement.magnitude > 0.01f);
-        }
-
-        public void Lunge(Vector3 direction, float force, float duration)
-        {
-            if (_lungeCoroutine != null)
-            {
-                StopCoroutine(_lungeCoroutine);
-                _lungeCoroutine = null;
-            }
-
-            _lungeForce = direction * force;
-            _lungeCoroutine = StartCoroutine(LungeFadeCoroutine(direction, force, duration));
         }
 
         private IEnumerator LungeFadeCoroutine(Vector3 direction, float originalForce, float duration)
@@ -519,18 +505,20 @@ namespace Entities
 
         public void PerformAttackLunge()
         {
-            var direction = (_targetPos - transform.position).normalized;
+            var toTarget = _targetPos - transform.position;
+            var distanceToTarget = toTarget.magnitude;
+            var direction = toTarget.normalized;
 
-            switch (ActiveCharacter)
+            float projectedDistance = 0.75f * _fenrirLungeForce * _fenrirLungeDuration;
+            float duration = _fenrirLungeDuration * Mathf.Clamp01(distanceToTarget / projectedDistance);
+            
+            if (_lungeCoroutine != null)
             {
-                default:
-                case Character.Fenrir:
-                    Lunge(direction, _fenrirLungeForce, _fenrirLungeDuration);
-                    break;
-                case Character.Hel:
-                    Lunge(direction, -_helLungeForce, _helLungeDuration);
-                    break;
+                StopCoroutine(_lungeCoroutine);
+                _lungeCoroutine = null;
             }
+
+            _lungeCoroutine = StartCoroutine(LungeFadeCoroutine(direction, _fenrirLungeForce, duration));
         }
 
         private IEnumerator AttackCoroutine(AttackStats stats, int times, float delay, float spreadAngle,
@@ -775,8 +763,6 @@ namespace Entities
         {
             if (_potionCharges >= _maxPotionCharges)
                 return;
-
-            Debug.Log($"Added {damage} potion charges");
 
             _potionCharges += damage;
             OnPotionChargesChanged?.Invoke(_potionCharges, _maxPotionCharges);

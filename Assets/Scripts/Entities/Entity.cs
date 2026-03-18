@@ -33,23 +33,15 @@ namespace Entities
         protected Coroutine _knockbackCoroutine;
         
         public bool IsDead;
-        
-        private StatusEffectList _statusEffects;
 
         protected virtual void Awake()
         {
-            _statusEffects = new StatusEffectList(this);
             IsDead = false;
         }
 
         protected virtual void Start()
         {
             InitializeBaseStats();
-        }
-
-        protected virtual void Update()
-        {
-            _statusEffects.Update();
         }
 
         protected virtual void InitializeBaseStats()
@@ -85,13 +77,6 @@ namespace Entities
             if (_currentHealth > _maxHealth)
                 _currentHealth = _maxHealth;
         }
-
-        public void ApplyStatusEffect(StatusEffect effect) => 
-            _statusEffects.Add(effect);
-        public void RemoveAllStatusEffectsOfType(StatusEffect sampleEffect, int max = int.MaxValue) => 
-            _statusEffects.RemoveAll(sampleEffect, max);
-        public int  CountStatusEffectsOfType(StatusEffect sampleEffect) => 
-            _statusEffects.GetCount(sampleEffect);
 
         public void AddDamageTakenMultiplier(float amount) =>
             _damageTakenMultiplier += amount;
