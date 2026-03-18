@@ -21,6 +21,7 @@ namespace Entities
         private float prevDot = 0;
         private BehaviorGraphAgent AiAgent;
         private BlackboardVariable<ChargePrep> ChargePrepEventChannel;
+        private BlackboardVariable<AttackEvent> AttackEventChannel;
         private NavMeshAgent navAgent;
         private AttackStats attackStats;
         private bool ragdollActive;
@@ -68,14 +69,28 @@ namespace Entities
 
             ENEMYAMOUNT++;
 
-            if (type == EncounterManager.EnemyTypes.Wolf)
+            switch (type)
             {
-                if (AiAgent.GetVariable("ChargePrep", out ChargePrepEventChannel))
+                case EncounterManager.EnemyTypes.Wolf:
                 {
+                    if (AiAgent.GetVariable("ChargePrep", out ChargePrepEventChannel))
+                    {
                    
-                }
-                else throw new NullReferenceException();
+                    }
+                    else throw new NullReferenceException();
 
+                    break;
+                }
+                case EncounterManager.EnemyTypes.Draugr:
+                {
+                    if (AiAgent.GetVariable("AttackEvent", out AttackEventChannel))
+                    {
+                   
+                    }
+                    else throw new NullReferenceException();
+
+                    break;
+                }
             }
         }
 
@@ -83,6 +98,16 @@ namespace Entities
         {
             ChargePrepEventChannel.Value.SendEventMessage();
         }
+        public void AttackFinished()
+        {
+            AiAgent.SetVariableValue("Attacking", false);
+        }
+
+        public void AttackFinishedEvent()
+        {
+            AttackEventChannel.Value.SendEventMessage();
+        }
+
 
         public void Attack()
         {
@@ -97,11 +122,7 @@ namespace Entities
         
         
 
-        public void AttackFinished()
-        {
-            AiAgent.SetVariableValue("Attacking", false);
-        }
-
+        
         private float dissolveValue;
         protected override void Update()
         {
@@ -194,10 +215,13 @@ namespace Entities
 
             if (canBeStaggered)
             {
-                animator.StopPlayback();
+                //animator.StopPlayback();
                 animator.SetBool("Stagger",true);
                 AiAgent.SetVariableValue("Staggered", true);
-                AiAgent.SetVariableValue("Attacking", false);
+                if (AttackEventChannel.Value)
+                {
+                    AttackEventChannel.Value.SendEventMessage();
+                }
             }
 
             return realDamage;
