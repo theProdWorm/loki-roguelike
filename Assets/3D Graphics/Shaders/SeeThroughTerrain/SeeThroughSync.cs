@@ -55,13 +55,11 @@ public class SeeThroughSync : MonoBehaviour
 
     private void OnDestroy()
     {
-        _treeMaterial.SetFloat(SizeID, 0);
-        _stoneMaterial.SetFloat(SizeID, 0);
-        
-        _treeMaterial.SetVector(PosID, Vector2.zero);
-        _stoneMaterial.SetVector(PosID, Vector2.zero);
-        
-        _treeMaterial.SetVector(PlayerPosID, Vector2.zero);
-        _stoneMaterial.SetVector(PlayerPosID, Vector2.zero);
+        foreach(Material mat in _materials)
+        {
+            mat.SetFloat(SizeID, 0);
+            mat.SetVector(PosID, Vector2.zero);
+            mat.SetVector(PlayerPosID, Vector3.zero);
+        }
     }
 }
