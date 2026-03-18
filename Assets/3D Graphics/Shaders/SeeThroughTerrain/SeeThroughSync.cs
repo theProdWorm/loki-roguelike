@@ -72,7 +72,5 @@ public class SeeThroughSync : MonoBehaviour
         
         _treeMaterial.SetVector(PlayerPosID, Vector2.zero);
         _stoneMaterial.SetVector(PlayerPosID, Vector2.zero);
-        
-        print("now we have thse beir van for DESTROY ");
     }
 }
