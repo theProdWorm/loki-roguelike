@@ -207,10 +207,17 @@ namespace Entities
                 return 0;
 
             if (HasStatusEffectOfType<StatusEffect_Frozen>() && 
-                attacker is Player { ActiveCharacter: Player.Character.Fenrir })
+                attacker is Player player)
             {
-                amount *= 2;
-                RemoveAllStatusEffectsOfType<StatusEffect_Frozen>();
+                if (player.ActiveCharacter == Player.Character.Fenrir)
+                {
+                    amount *= 2;
+                    RemoveAllStatusEffectsOfType<StatusEffect_Frozen>();
+                }
+                else
+                {
+                    amount = Mathf.CeilToInt(amount * 0.5f);
+                }
             }
             
             int realDamage = base.TakeDamage(amount, attacker);

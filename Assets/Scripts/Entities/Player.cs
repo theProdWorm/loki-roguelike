@@ -125,8 +125,6 @@ namespace Entities
         [SerializeField] private Transform _fenrirAttackPoint;
         [SerializeField] private float _fenrirLungeForce;
         [SerializeField] private float _fenrirLungeDuration;
-        [SerializeField] private float _shieldBlockAngle;
-        [SerializeField] private GameObject _shield;
 
         [Header("Hel")][SerializeField] private CharacterAbilitySet _helAbilities;
         [SerializeField] private Animator _helAnimator;
@@ -538,9 +536,6 @@ namespace Entities
             }
         }
 
-        public void ActivateShield() => _shield.SetActive(true);
-        public void DeactivateShield() => _shield.SetActive(false);
-
         private void PerformDash(Vector3 dashPoint, bool animate)
         {
             // Projected dash vector using the calculated offset from player center to front
@@ -738,13 +733,6 @@ namespace Entities
 
         public override int TakeDamage(int amount, Entity attacker)
         {
-            if (_shield.activeSelf)
-            {
-                float angle = Vector3.Angle(transform.forward, attacker.transform.position - transform.position);
-                if (angle <= _shieldBlockAngle)
-                    return 0;
-            }
-            
             int reducedDamage = Mathf.CeilToInt(amount * (1 - _damageReduction));
             int realDamage = base.TakeDamage(reducedDamage, attacker);
 
