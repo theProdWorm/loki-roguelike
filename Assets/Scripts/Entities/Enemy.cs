@@ -81,16 +81,6 @@ namespace Entities
 
                     break;
                 }
-                case EncounterManager.EnemyTypes.Draugr:
-                {
-                    if (AiAgent.GetVariable("AttackEvent", out AttackEventChannel))
-                    {
-                   
-                    }
-                    else throw new NullReferenceException();
-
-                    break;
-                }
             }
         }
 
@@ -101,11 +91,6 @@ namespace Entities
         public void AttackFinished()
         {
             AiAgent.SetVariableValue("Attacking", false);
-        }
-
-        public void AttackFinishedEvent()
-        {
-            AttackEventChannel.Value.SendEventMessage();
         }
 
 
