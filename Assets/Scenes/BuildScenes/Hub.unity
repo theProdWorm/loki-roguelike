@@ -72217,10 +72217,46 @@ PrefabInstance:
       propertyPath: m_Name
       value: Brage
       objectReference: {fileID: 0}
+    - target: {fileID: 2473319740043560885, guid: 962e2fe746eb15e41bd47ba516fad3bb, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7498283530037303175, guid: 962e2fe746eb15e41bd47ba516fad3bb, type: 3}
+      propertyPath: OnDialogueSequenceFinished.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7498283530037303175, guid: 962e2fe746eb15e41bd47ba516fad3bb, type: 3}
+      propertyPath: OnDialogueSequenceFinished.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7498283530037303175, guid: 962e2fe746eb15e41bd47ba516fad3bb, type: 3}
       propertyPath: OnDialogueSequenceFinished.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1154760861}
+    - target: {fileID: 7498283530037303175, guid: 962e2fe746eb15e41bd47ba516fad3bb, type: 3}
+      propertyPath: OnDialogueSequenceFinished.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1666388354}
+    - target: {fileID: 7498283530037303175, guid: 962e2fe746eb15e41bd47ba516fad3bb, type: 3}
+      propertyPath: OnDialogueSequenceFinished.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7498283530037303175, guid: 962e2fe746eb15e41bd47ba516fad3bb, type: 3}
+      propertyPath: OnDialogueSequenceFinished.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: LightFuse
+      objectReference: {fileID: 0}
+    - target: {fileID: 7498283530037303175, guid: 962e2fe746eb15e41bd47ba516fad3bb, type: 3}
+      propertyPath: OnDialogueSequenceFinished.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: Animation.Firework, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7498283530037303175, guid: 962e2fe746eb15e41bd47ba516fad3bb, type: 3}
+      propertyPath: OnDialogueSequenceFinished.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7498283530037303175, guid: 962e2fe746eb15e41bd47ba516fad3bb, type: 3}
+      propertyPath: OnDialogueSequenceFinished.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -72231,6 +72267,18 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2473319740043560885, guid: 962e2fe746eb15e41bd47ba516fad3bb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1666388344}
+    - targetCorrespondingSourceObject: {fileID: 2473319740043560885, guid: 962e2fe746eb15e41bd47ba516fad3bb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1666388354}
+    - targetCorrespondingSourceObject: {fileID: 2473319740043560885, guid: 962e2fe746eb15e41bd47ba516fad3bb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1666388353}
+    - targetCorrespondingSourceObject: {fileID: 2473319740043560885, guid: 962e2fe746eb15e41bd47ba516fad3bb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1666388352}
+    - targetCorrespondingSourceObject: {fileID: 2473319740043560885, guid: 962e2fe746eb15e41bd47ba516fad3bb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1666388361}
   m_SourcePrefab: {fileID: 100100000, guid: 962e2fe746eb15e41bd47ba516fad3bb, type: 3}
 --- !u!1 &1652246309
 GameObject:
@@ -72604,6 +72652,102 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1257362218799639885, guid: 962e2fe746eb15e41bd47ba516fad3bb, type: 3}
   m_PrefabInstance: {fileID: 1651098523}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1666388352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1666388336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01e9396506b244fa88105960f378db02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _target: {fileID: 11400000, guid: d283b2bdc31e99343867254c1869bf12, type: 2}
+  OnDialogueSequenceFinished:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1666388354}
+        m_TargetAssemblyTypeName: Animation.Firework, Assembly-CSharp
+        m_MethodName: LightFuse
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!54 &1666388353
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1666388336}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &1666388354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1666388336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1fe7e9895964f97a87dfbefad6d8c63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rigidbody: {fileID: 1666388353}
+  _force: 20
+  _horizontality: 50
+  _forceDirection: 1
+  _direction: {x: -1, y: 1}
+  _explosionPrefab: {fileID: 5460156743986595943, guid: 8567abb327c7d9f48af9f61f5aea825d, type: 3}
+--- !u!136 &1666388361
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1666388336}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.35775748
+  m_Height: 1.4136326
+  m_Direction: 1
+  m_Center: {x: -0.00000003359033, y: 1.3696398, z: 0.04309957}
 --- !u!1 &1674667727
 GameObject:
   m_ObjectHideFlags: 0
