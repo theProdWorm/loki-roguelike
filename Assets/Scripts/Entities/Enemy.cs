@@ -21,7 +21,6 @@ namespace Entities
         private float prevDot = 0;
         private BehaviorGraphAgent AiAgent;
         private BlackboardVariable<ChargePrep> ChargePrepEventChannel;
-        private BlackboardVariable<AttackEvent> AttackEventChannel;
         private NavMeshAgent navAgent;
         private AttackStats attackStats;
         private bool ragdollActive;
@@ -81,16 +80,6 @@ namespace Entities
 
                     break;
                 }
-                case EncounterManager.EnemyTypes.Draugr:
-                {
-                    if (AiAgent.GetVariable("AttackEvent", out AttackEventChannel))
-                    {
-                   
-                    }
-                    else throw new NullReferenceException();
-
-                    break;
-                }
             }
         }
 
@@ -101,11 +90,6 @@ namespace Entities
         public void AttackFinished()
         {
             AiAgent.SetVariableValue("Attacking", false);
-        }
-
-        public void AttackFinishedEvent()
-        {
-            AttackEventChannel.Value.SendEventMessage();
         }
 
 
@@ -218,10 +202,7 @@ namespace Entities
                 //animator.StopPlayback();
                 animator.SetBool("Stagger",true);
                 AiAgent.SetVariableValue("Staggered", true);
-                if (AttackEventChannel.Value)
-                {
-                    AttackEventChannel.Value.SendEventMessage();
-                }
+                AiAgent.SetVariableValue("Attacking", false);
             }
 
             return realDamage;
