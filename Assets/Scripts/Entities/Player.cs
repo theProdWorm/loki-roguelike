@@ -231,7 +231,11 @@ namespace Entities
             InitializeAttackPoints();
             InitializeAnimators();
 
-            OnDamageDealt.AddListener(AddPotionCharges);
+            OnDamageDealt.AddListener((entity, chargeAmount) =>
+            {
+                if (ActiveCharacter == Character.Fenrir)
+                    AddPotionCharges(entity, chargeAmount);
+            });
 
             OnHealthChanged.AddListener((current, max) =>
                 FMODEvents.SetLowHealth((float)current / max <= _lowHealthThreshold));
