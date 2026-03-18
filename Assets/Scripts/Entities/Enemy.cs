@@ -14,7 +14,8 @@ namespace Entities
     public class Enemy : Entity
     {
         private static readonly int MOVE_DIR = Animator.StringToHash("MoveDir");
-        private static readonly int SPEED = Animator.StringToHash("Speed");
+        private static readonly int MOVE_SPEED = Animator.StringToHash("MoveSpeed");
+        private static readonly int ATTACK_SPEED = Animator.StringToHash("AttackSpeed");
         
         private static int ENEMYAMOUNT = 0;
         private static GameObject PLAYER;
@@ -48,6 +49,8 @@ namespace Entities
 
         private StatusEffectList _statusEffects;
 
+        private float _animationSpeed;
+        
         protected override void Awake()
         {
             base.Awake();
@@ -71,6 +74,7 @@ namespace Entities
             _healthBar = GetComponentInChildren<UIEnemyHealth>();
             _healthBar.UpdateHealth(_currentHealth, _maxHealth);
             
+            _animationSpeed = animator.GetFloat(MOVE_SPEED);
 
             ENEMYAMOUNT++;
 
@@ -97,8 +101,7 @@ namespace Entities
         {
             AiAgent.SetVariableValue("Attacking", false);
         }
-
-
+        
         public void Attack()
         {
             if (type == EncounterManager.EnemyTypes.BirdOnBird)
@@ -106,8 +109,8 @@ namespace Entities
                 attackStats.Prefab.GetComponent<HomingProjectileAttack>().target = PLAYER.transform;
                 Abilities.Attacks.Attack.Create(this, attackPoint.position, Quaternion.LookRotation(PLAYER.transform.position - transform.position) , attackStats);
             }
-            else Abilities.Attacks.Attack.Create(this, attackPoint.position, transform.rotation, attackStats);
-            
+            else 
+                Abilities.Attacks.Attack.Create(this, attackPoint.position, transform.rotation, attackStats);
         }
         
         private float dissolveValue;
@@ -118,7 +121,6 @@ namespace Entities
                 if (!ragdollActive) return;
                 if (ragdollTimeLeft > 0)
                 {
-                        
                     ragdollTimeLeft -= Time.deltaTime ;
                 }
                 else
@@ -244,12 +246,31 @@ namespace Entities
         public void Freeze()
         {
             AiAgent.SetVariableValue("Frozen", true);
-            animator.SetFloat(SPEED, 0);
+            animator.SetFloat(MOVE_SPEED, 0);
         }
         public void Unfreeze()
         {
             AiAgent.SetVariableValue("Frozen", false);
-            animator.SetFloat(SPEED, 1);
+            animator.SetFloat(MOVE_SPEED, 1);
+        }
+        
+        public override void AddSpeedMultiplier(float amount)
+        {
+            base.AddSpeedMultiplier(amount);
+            navAgent.speed = _moveSpeed;
+            
+            float animationSpeed = _animationSpeed * _speedMultiplier;
+            animator.SetFloat(MOVE_SPEED, animationSpeed);
+            animator.SetFloat(ATTACK_SPEED, animationSpeed);
+        }
+        public override void RemoveSpeedMultiplier(float amount)
+        {
+            base.RemoveSpeedMultiplier(amount);
+            navAgent.speed = _moveSpeed;
+            
+            float animationSpeed = _animationSpeed * _speedMultiplier;
+            animator.SetFloat(MOVE_SPEED, animationSpeed);
+            animator.SetFloat(ATTACK_SPEED, animationSpeed);
         }
     }
 }

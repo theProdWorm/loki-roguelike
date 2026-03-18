@@ -78,17 +78,12 @@ namespace Entities
                 _currentHealth = _maxHealth;
         }
 
-        public void AddDamageTakenMultiplier(float amount) =>
-            _damageTakenMultiplier += amount;
-        public void RemoveDamageTakenMultiplier(float amount) =>
-            _damageTakenMultiplier -= amount;
-
-        public void AddSpeedMultiplier(float amount)
+        public virtual void AddSpeedMultiplier(float amount)
         {
             _speedMultiplier += amount;
             _moveSpeed = _baseMoveSpeed * _speedMultiplier;
         }
-        public void RemoveSpeedMultiplier(float amount)
+        public virtual void RemoveSpeedMultiplier(float amount)
         {
             _speedMultiplier -= amount;
             _moveSpeed = _baseMoveSpeed * _speedMultiplier;

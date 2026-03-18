@@ -13,7 +13,7 @@ public class ChargeAction : Action
     [SerializeReference] public BlackboardVariable<GameObject> Agent;
     [SerializeReference] public BlackboardVariable<GameObject> Target;
     [SerializeReference] public BlackboardVariable<float> ChargeDistance;
-    [SerializeReference] public BlackboardVariable<float> ChargeSpeed;
+    [SerializeReference] public BlackboardVariable<float> ChargeSpeedMultiplier;
     [SerializeReference] public BlackboardVariable<bool> IsCharging;
     
     protected BehaviorGraphCollisionEvents m_CollisionEvents { get; private set; }
@@ -26,6 +26,8 @@ public class ChargeAction : Action
     private bool _validCollision;
     private bool _hitTarget;
 
+    private float _chargeSpeed;
+
     protected override Status OnStart()
     {
         _navMeshAgent = Agent.Value.GetComponentInChildren<NavMeshAgent>();
@@ -35,6 +37,8 @@ public class ChargeAction : Action
         _validCollision = false;
         m_HasBeenProcessed = false;
 
+        _chargeSpeed = _navMeshAgent.speed * ChargeSpeedMultiplier.Value;
+        
         if (m_CollisionEvents == null)
         {
             m_CollisionEvents = Agent.Value.GetOrAddComponent<BehaviorGraphCollisionEvents>();
@@ -43,9 +47,6 @@ public class ChargeAction : Action
         m_CollisionEvents.OnCollisionEnterEvent += OnCollisionEnter;
         IsCharging.Value = true;
         return Status.Running;
-        
-        
-        
     }
 
     private void OnCollisionEnter(GameObject other)
@@ -78,13 +79,13 @@ public class ChargeAction : Action
             targetPosition = Agent.Value.transform.position +
                              (direction.normalized * ChargeDistance);
             var distance = Vector3.Distance(Agent.Value.transform.position, targetPosition);
-            time = distance / ChargeSpeed.Value;
+            time = distance / _chargeSpeed;
             _wait = true;
         }
         if (time > 0f)
         {
             time -= Time.deltaTime;
-            _navMeshAgent.Move(direction.normalized * (Time.deltaTime * ChargeSpeed.Value));
+            _navMeshAgent.Move(direction.normalized * (Time.deltaTime * _chargeSpeed));
         }
         else
         {
