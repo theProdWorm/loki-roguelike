@@ -54,7 +54,6 @@ namespace Entities
     [RequireComponent(typeof(Rigidbody))]
     public class Player : Entity
     {
-        
         public enum Character { Fenrir, Hel }
 
         private static readonly int IS_MOVING = Animator.StringToHash("isMoving");

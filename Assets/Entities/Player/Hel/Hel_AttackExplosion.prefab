@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4136490763423946232}
   - component: {fileID: 1671411552816584262}
+  - component: {fileID: 6154330245010166978}
   - component: {fileID: 6455466209646873278}
   - component: {fileID: 655778515405983000}
   - component: {fileID: -1416256876014258992}
-  - component: {fileID: 6154330245010166978}
   m_Layer: 10
   m_Name: Hel_AttackExplosion
   m_TagString: Untagged
@@ -46,6 +46,27 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5635829443833088131}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!135 &6154330245010166978
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5635829443833088131}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 6
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6455466209646873278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,7 +103,7 @@ MonoBehaviour:
   _duration: 2
   _stackable: 1
   _refresh: 1
-  _maxChill: 5
+  _maxChill: 7
   _slowAmount: 0.1
   _frozenDuration: 3
 --- !u!114 &-1416256876014258992
@@ -113,27 +134,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!135 &6154330245010166978
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5635829443833088131}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 6
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &87548138464261726
 PrefabInstance:
   m_ObjectHideFlags: 0
