@@ -405,11 +405,6 @@ namespace Entities
         {
             var enemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None);
             
-            var cameraForward = _camera.transform.forward;
-            var downProjection = Vector3.Project(cameraForward, Vector3.up);
-
-            var forwardDirection = (cameraForward - downProjection).normalized;
-            
             List<float> distances = new();
             List<float> angles = new();
 
@@ -423,7 +418,7 @@ namespace Entities
                     return false;
 
                 Vector3 toVector = enemy.transform.position - transform.position;
-                float angle = Mathf.Abs(Vector3.Angle(forwardDirection, toVector));
+                float angle = Mathf.Abs(Vector3.Angle(transform.forward, toVector));
 
                 if (angle > _targetLockAngle)
                     return false;
