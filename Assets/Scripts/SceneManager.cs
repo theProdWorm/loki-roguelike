@@ -1,15 +1,32 @@
+using Entities;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class SceneManager : MonoBehaviour
 {
+    static Player PLAYER;
     public UnityEvent OnSceneLoaded;
+
+    Fading _fade;
+
+    private void Awake()
+    {
+        _fade = FindFirstObjectByType<Fading>();
+        Debug.Log(_fade);
+    }
+
+    private void Start()
+    {
+        PLAYER = FindFirstObjectByType<Player>();
+        OnSceneLoaded.AddListener(PLAYER.SetDashing);
+    }
 
     public void LoadScene(int sceneIndex)
     {
         OnSceneLoaded.Invoke();
-        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneIndex);
+        StartCoroutine(AfterFade(_fade.FadeIn(), sceneIndex));
     }
 
     public void LoadScene(string sceneName)
@@ -67,4 +84,22 @@ public class SceneManager : MonoBehaviour
     }
 
     public void QuitGame() => Application.Quit();
+
+    private IEnumerator AfterFade(IEnumerator func, int i)
+    {
+        yield return StartCoroutine(func);
+
+        switch (i)
+        {
+            case 0:
+            case 1:
+                UnityEngine.SceneManagement.SceneManager.LoadScene(i);
+                break;
+            case 2:
+                Application.Quit();
+                break;
+            default:
+                break;
+        }
+    }
 }

@@ -296,6 +296,7 @@ namespace Entities
         public void GainControl() => _hasControl = true;
 
         public void SetDashing(bool isDashing) => _isDashing = isDashing;
+        public void SetDashing() => _isDashing = true;
 
         protected override void Update()
         {
