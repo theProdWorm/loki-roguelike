@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class SeeThroughSync : MonoBehaviour
@@ -21,6 +22,7 @@ public class SeeThroughSync : MonoBehaviour
     private float _fadeSpeed = 1f;
 
     private Camera _camera;
+    
     void Awake()
     {
         _camera = Camera.main;
@@ -60,4 +62,17 @@ public class SeeThroughSync : MonoBehaviour
         _stoneMaterial.SetVector(PlayerPosID, transform.position);
     }
 
+    private void OnDestroy()
+    {
+        _treeMaterial.SetFloat(SizeID, 0);
+        _stoneMaterial.SetFloat(SizeID, 0);
+        
+        _treeMaterial.SetVector(PosID, Vector2.zero);
+        _stoneMaterial.SetVector(PosID, Vector2.zero);
+        
+        _treeMaterial.SetVector(PlayerPosID, Vector2.zero);
+        _stoneMaterial.SetVector(PlayerPosID, Vector2.zero);
+        
+        print("now we have thse beir van for DESTROY ");
+    }
 }
