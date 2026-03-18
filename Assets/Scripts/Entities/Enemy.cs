@@ -163,10 +163,12 @@ namespace Entities
             );
 
             prevDot = smoothed;
-
+            prevPos = transform.position;
+            
+            if (type == EncounterManager.EnemyTypes.BirdOnBird) return;
             animator.SetFloat(MOVE_DIR, smoothed);
 
-            prevPos = transform.position;
+            
         }
         
         public void ApplyStatusEffect(StatusEffect effect) => 
