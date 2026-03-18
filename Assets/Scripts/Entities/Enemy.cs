@@ -202,10 +202,7 @@ namespace Entities
                 //animator.StopPlayback();
                 animator.SetBool("Stagger",true);
                 AiAgent.SetVariableValue("Staggered", true);
-                if (AttackEventChannel.Value)
-                {
-                    AttackEventChannel.Value.SendEventMessage();
-                }
+                AiAgent.SetVariableValue("Attacking", false);
             }
 
             return realDamage;
