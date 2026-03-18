@@ -12623,11 +12623,11 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: 1191897402
-      Data2: 1096097528
-      Data3: 476368285
-      Data4: 1032032676
-    Path: event:/Boss_Room_Clear
+      Data1: 720282911
+      Data2: 1162644469
+      Data3: -1019637374
+      Data4: 815674102
+    Path: event:/Dave/SFX/Ambience/WaterAmbience
   Event: 
   EventPlayTrigger: 1
   EventStopTrigger: 2
@@ -12638,7 +12638,7 @@ MonoBehaviour:
   Params: []
   OverrideAttenuation: 1
   OverrideMinDistance: 0
-  OverrideMaxDistance: 20
+  OverrideMaxDistance: 40
 --- !u!1001 &400135553
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20028,6 +20028,7 @@ Transform:
   - {fileID: 1589071308}
   - {fileID: 1399232836}
   - {fileID: 395724405}
+  - {fileID: 1874579627}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &486470281
@@ -71685,6 +71686,69 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 428697357}
   m_SourcePrefab: {fileID: 100100000, guid: c34cc6ff4027a054d8e0eab3624113ce, type: 3}
+--- !u!1 &1874579625
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1874579627}
+  - component: {fileID: 1874579628}
+  m_Layer: 0
+  m_Name: WaterSound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1874579627
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874579625}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -29.534912, y: 53.66651, z: 35.159996}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 485692232}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1874579628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874579625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 720282911
+      Data2: 1162644469
+      Data3: -1019637374
+      Data4: 815674102
+    Path: event:/Dave/SFX/Ambience/WaterAmbience
+  Event: 
+  EventPlayTrigger: 1
+  EventStopTrigger: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 1
+  OverrideMinDistance: 25
+  OverrideMaxDistance: 45
 --- !u!1 &1875319453 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6703020892167929694, guid: 2b44bc1ad9d4a4880af324c8fa92f767, type: 3}
