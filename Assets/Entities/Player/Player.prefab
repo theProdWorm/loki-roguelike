@@ -5934,8 +5934,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bce100810aa26041bf04ec80760f3d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _treeMaterial: {fileID: 2100000, guid: 5b48a215a0517b54392f8474cac17a97, type: 2}
-  _stoneMaterial: {fileID: 2100000, guid: 4e718d14f2c0f6f418ce6bb7e7aeeb6e, type: 2}
+  _radius: 3
+  _materials:
+  - {fileID: 2100000, guid: 6451619f451c1ae42af7bdc23e10df4e, type: 2}
+  - {fileID: 2100000, guid: 109550ffa33d25440acc59dfa792d182, type: 2}
+  - {fileID: 2100000, guid: 674cde920ecf605429c6681f42fc9307, type: 2}
   _mask:
     serializedVersion: 2
     m_Bits: 16384
@@ -8621,18 +8624,6 @@ MonoBehaviour:
   OnAttackPerformed:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3904859379294053273}
-        m_TargetAssemblyTypeName: Entities.Player, Assembly-CSharp
-        m_MethodName: PerformAttackLunge
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 3904859379294053273}
         m_TargetAssemblyTypeName: Entities.Player, Assembly-CSharp
         m_MethodName: PerformAttack
