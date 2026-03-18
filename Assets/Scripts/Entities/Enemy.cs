@@ -21,7 +21,6 @@ namespace Entities
         private float prevDot = 0;
         private BehaviorGraphAgent AiAgent;
         private BlackboardVariable<ChargePrep> ChargePrepEventChannel;
-        private BlackboardVariable<AttackEvent> AttackEventChannel;
         private NavMeshAgent navAgent;
         private AttackStats attackStats;
         private bool ragdollActive;
