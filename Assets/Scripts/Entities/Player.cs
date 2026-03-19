@@ -124,13 +124,18 @@ namespace Entities
         [SerializeField] private Transform _fenrirAttackPoint;
         [SerializeField] private float _fenrirLungeForce;
         [SerializeField] private float _fenrirLungeDuration;
-
-        [Header("Hel")][SerializeField] private CharacterAbilitySet _helAbilities;
+        
+        [Header("Hel")]
+        [SerializeField] private CharacterAbilitySet _helAbilities;
         [SerializeField] private Animator _helAnimator;
         [SerializeField] private Transform _helAttackPoint;
         [SerializeField] private float _helLungeForce;
         [SerializeField] private float _helLungeDuration;
 
+        [Header("Freeze")]
+        [SerializeField] public int   ShatterBonusDamage = 20;
+        [SerializeField] public float HelFreezeDamageMultiplier = 0.5f;
+        
         private Animator[] _animators;
         private Animator CurrentAnimator => _animators[(int)ActiveCharacter];
 

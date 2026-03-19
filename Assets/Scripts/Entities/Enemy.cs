@@ -220,12 +220,12 @@ namespace Entities
             {
                 if (player.ActiveCharacter == Player.Character.Fenrir)
                 {
-                    amount *= 2;
+                    amount += player.ShatterBonusDamage;
                     RemoveAllStatusEffectsOfType<StatusEffect_Frozen>();
                 }
                 else
                 {
-                    amount = Mathf.CeilToInt(amount * 0.5f);
+                    amount = Mathf.CeilToInt(amount * player.HelFreezeDamageMultiplier);
                 }
             }
             
