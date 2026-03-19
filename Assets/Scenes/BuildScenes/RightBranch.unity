@@ -65565,6 +65565,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ccbbde10cb566bc45bcb5898ac383286, type: 3}
+--- !u!114 &1550430349 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3576573568654590172, guid: ccbbde10cb566bc45bcb5898ac383286, type: 3}
+  m_PrefabInstance: {fileID: 1550430348}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc735212b3709144999a8940cfa0f913, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1553688523
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -74897,6 +74908,26 @@ PrefabInstance:
     - target: {fileID: 2773711634254589127, guid: c34cc6ff4027a054d8e0eab3624113ce, type: 3}
       propertyPath: m_Name
       value: Player Components
+      objectReference: {fileID: 0}
+    - target: {fileID: 7074895534098608523, guid: c34cc6ff4027a054d8e0eab3624113ce, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1550430349}
+    - target: {fileID: 7074895534098608523, guid: c34cc6ff4027a054d8e0eab3624113ce, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1087705542}
+    - target: {fileID: 7074895534098608523, guid: c34cc6ff4027a054d8e0eab3624113ce, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlayEvent
+      objectReference: {fileID: 0}
+    - target: {fileID: 7074895534098608523, guid: c34cc6ff4027a054d8e0eab3624113ce, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: LoadScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 7074895534098608523, guid: c34cc6ff4027a054d8e0eab3624113ce, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Hub
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
