@@ -26,7 +26,8 @@ public class FollowCamera : MonoBehaviour
     [SerializeField] private float _maxFOV = 85f;
     
     [Header("Rotation")]
-    [SerializeField] private float _rotationSpeed = 20f;
+    [SerializeField] private float _controllerRotationSpeed = 20f;
+    [SerializeField] private float _mouseRotationSpeed = 50f;
     [Tooltip("Minimum rotation value on the x-axis (pitch).")]
     [SerializeField] private float _minPitch = 30f;
     [Tooltip("Maximum rotation value on the x-axis (pitch).")]
@@ -60,13 +61,21 @@ public class FollowCamera : MonoBehaviour
 
     private void Update()
     {
-        if (MenuManager.Paused) return;
+        if (MenuManager.Paused) 
+            return;
+
+        bool holdingRightClick = Input.GetMouseButton(1);
+        Cursor.visible = !holdingRightClick;
+        Cursor.lockState = holdingRightClick ? CursorLockMode.Locked : CursorLockMode.None;
+        
         transform.position = _target.position;
         
-        float yawDelta = _rotateInput.x * _rotationSpeed * Time.deltaTime;
+        float yawDelta = _rotateInput.x * Time.deltaTime;
+        yawDelta *= holdingRightClick ? _mouseRotationSpeed : _controllerRotationSpeed;
         float yaw = (_rotationEuler.y + yawDelta) % 360;
         
-        float pitchDelta = -_rotateInput.y * _rotationSpeed * Time.deltaTime;
+        float pitchDelta = -_rotateInput.y * Time.deltaTime;
+        pitchDelta *= holdingRightClick ? _mouseRotationSpeed : _controllerRotationSpeed;
         float pitch = Mathf.Clamp(_rotationEuler.x + pitchDelta, _minPitch, _maxPitch);
         
         _rotationEuler = new Vector3(pitch, yaw, 0);
@@ -77,23 +86,13 @@ public class FollowCamera : MonoBehaviour
         transform.position += transform.up * _upwardOffset;
         transform.position += _shakeOffset;
         
-        //transform.position = _lerpPosition ? LerpPosition() : _target.position + _offset;
-        
         if (_lerpZoom)
             _camera.fieldOfView = LerpZoom();
+        
+        if (holdingRightClick)
+            _rotateInput = Vector2.zero;
     }
-
-    // private Vector3 LerpPosition()
-    // {
-    //     Vector3 followPoint = _target.position + _followOffset * _followBehaviour switch
-    //     {
-    //         FollowBehaviour.Ahead => _target.linearVelocity.normalized,
-    //         _ => Vector3.zero
-    //     };
-    //
-    //     return Vector3.Lerp(transform.position, followPoint + _offset, _positionLerpSpeed);
-    // }
-
+    
     private float LerpZoom()
     {
         bool zoomOut = _target.linearVelocity.sqrMagnitude > .5f;
@@ -138,6 +137,9 @@ public class FollowCamera : MonoBehaviour
 
     public void RotateInput(InputAction.CallbackContext context)
     {
-        _rotateInput = context.ReadValue<Vector2>();
+        bool usingMouse = context.control.device is Mouse && Input.GetMouseButton(1);
+        
+        if (usingMouse || context.control.device is Gamepad)
+            _rotateInput = context.ReadValue<Vector2>();
     }
 }
