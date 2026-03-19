@@ -20,7 +20,7 @@ public class SceneManager : MonoBehaviour
     private void Start()
     {
         PLAYER = FindFirstObjectByType<Player>();
-        OnSceneLoaded.AddListener(PLAYER.SetDashing);
+        if(PLAYER) OnSceneLoaded.AddListener(PLAYER.SetDashing);
     }
 
     public void LoadScene(int sceneIndex)
