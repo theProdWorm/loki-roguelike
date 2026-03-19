@@ -28,7 +28,8 @@ namespace Animation
         private void Start()
         {
             var player = FindFirstObjectByType<Player>();
-            player.OnHealthChanged.AddListener((current, max) => _playerHealthPercent = current / (float) max);
+            if(player){ player.OnHealthChanged.AddListener((current, max) => _playerHealthPercent = current / (float) max);}
+            else Debug.LogWarning("No player found");
         }
         
         private void Update()

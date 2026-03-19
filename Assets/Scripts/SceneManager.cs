@@ -14,7 +14,7 @@ public class SceneManager : MonoBehaviour
     private void Awake()
     {
         _fade = FindFirstObjectByType<Fading>();
-        Debug.Log(_fade);
+        if(!_fade) Debug.LogWarning("No fade found");
     }
 
     private void Start()
@@ -26,6 +26,11 @@ public class SceneManager : MonoBehaviour
     public void LoadScene(int sceneIndex)
     {
         OnSceneLoaded.Invoke();
+        if (!_fade)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneIndex);
+            return;
+        }
         StartCoroutine(AfterFade(_fade.FadeIn(), sceneIndex));
     }
 
