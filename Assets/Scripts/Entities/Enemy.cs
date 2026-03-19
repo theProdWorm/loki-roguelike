@@ -254,6 +254,9 @@ namespace Entities
         private bool _frozen;
         public void Freeze()
         {
+            if (IsDead)
+                return;
+
             AiAgent.SetVariableValue("Frozen", true);
             animator.SetFloat(MOVE_SPEED, 0);
 
