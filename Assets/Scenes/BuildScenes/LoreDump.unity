@@ -376,26 +376,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1373783263898710964, guid: a971f5a7cab47dd429835583349c201d, type: 3}
-      propertyPath: m_Name
-      value: Speaker background
-      objectReference: {fileID: 0}
     - target: {fileID: 2002684836266427708, guid: a971f5a7cab47dd429835583349c201d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3866964451493474540, guid: a971f5a7cab47dd429835583349c201d, type: 3}
-      propertyPath: _hud
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3866964451493474540, guid: a971f5a7cab47dd429835583349c201d, type: 3}
       propertyPath: _playerInput
       value: 
       objectReference: {fileID: 1593525905}
-    - target: {fileID: 3866964451493474540, guid: a971f5a7cab47dd429835583349c201d, type: 3}
-      propertyPath: _speakerBackground
-      value: 
-      objectReference: {fileID: 2062938405}
     - target: {fileID: 4715921622822401321, guid: a971f5a7cab47dd429835583349c201d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -504,10 +492,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player UI
       objectReference: {fileID: 0}
+    - target: {fileID: 6551288902505837234, guid: a971f5a7cab47dd429835583349c201d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 2288324644186987063, guid: a971f5a7cab47dd429835583349c201d, type: 3}
     - {fileID: 4087586618819086923, guid: a971f5a7cab47dd429835583349c201d, type: 3}
+    - {fileID: 4269265888423967707, guid: a971f5a7cab47dd429835583349c201d, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a971f5a7cab47dd429835583349c201d, type: 3}
@@ -881,17 +874,6 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
---- !u!114 &2062938405 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 572297681789033933, guid: a971f5a7cab47dd429835583349c201d, type: 3}
-  m_PrefabInstance: {fileID: 1097935596}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
