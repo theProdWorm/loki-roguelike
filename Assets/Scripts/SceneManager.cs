@@ -87,7 +87,8 @@ public class SceneManager : MonoBehaviour
 
     private IEnumerator AfterFade(IEnumerator func, int i)
     {
-        yield return StartCoroutine(func);
+        if (_fade != null)
+            yield return StartCoroutine(func);
 
         switch (i)
         {
