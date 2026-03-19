@@ -1232,6 +1232,7 @@ MonoBehaviour:
   attackPrefab: {fileID: 6175426701053642483, guid: ba64dd56073553743b38c32f2f495eb5, type: 3}
   attackPoint: {fileID: 6735178599589374041}
   type: 0
+  canBeStaggered: 0
   HasSpawned: 0
   ragdollDuration: 6
   dissolveDuration: 1
@@ -1293,7 +1294,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 15
   m_ObstacleAvoidanceType: 4
 --- !u!95 &924450538011832401
 Animator:
@@ -1385,10 +1386,7 @@ MonoBehaviour:
   OnAttackPerformed:
     m_PersistentCalls:
       m_Calls: []
-  OnSpecialStarted:
-    m_PersistentCalls:
-      m_Calls: []
-  OnSpecialPerformed:
+  OnAttackEnded:
     m_PersistentCalls:
       m_Calls: []
   OnSwitch:

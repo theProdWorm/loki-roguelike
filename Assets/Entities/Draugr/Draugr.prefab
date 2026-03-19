@@ -1266,7 +1266,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 15
   m_ObstacleAvoidanceType: 4
 --- !u!95 &5544178206595017841
 Animator:
@@ -1378,10 +1378,7 @@ MonoBehaviour:
   OnAttackPerformed:
     m_PersistentCalls:
       m_Calls: []
-  OnSpecialStarted:
-    m_PersistentCalls:
-      m_Calls: []
-  OnSpecialPerformed:
+  OnAttackEnded:
     m_PersistentCalls:
       m_Calls: []
   OnSwitch:
