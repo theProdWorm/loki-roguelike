@@ -1,5 +1,7 @@
 using System;
 using System.Linq;
+using Animation;
+using Effects;
 using Stats;
 using StatusEffects;
 using StatusEffects.Effects;
@@ -40,6 +42,8 @@ namespace Entities
         [SerializeField] EncounterManager.EnemyTypes type;
         [SerializeField] private bool canBeStaggered;
         public bool HasSpawned = true;
+
+        [SerializeField] private GameObject _iceBlockPrefab;
         
         [Header("Death")]
         [Tooltip("How long the ragdoll lasts before starting to dissolve")]
@@ -202,6 +206,8 @@ namespace Entities
             ragdollActive = true;
             ragdollTimeLeft = ragdollDuration;
             dissolveTimeLeft = dissolveDuration;
+            
+            Unfreeze();
         }
 
         public override int TakeDamage(int amount, Entity attacker)
@@ -244,15 +250,28 @@ namespace Entities
             _healthBar.UpdateHealth(_currentHealth, _maxHealth);
         }
 
+        private IceBlock _iceBlockInstance;
+        private bool _frozen;
         public void Freeze()
         {
             AiAgent.SetVariableValue("Frozen", true);
             animator.SetFloat(MOVE_SPEED, 0);
+
+            _iceBlockInstance = Instantiate(_iceBlockPrefab, transform.position, transform.rotation)
+                .GetComponent<IceBlock>();
+
+            _frozen = true;
         }
         public void Unfreeze()
         {
+            if (!_frozen)
+                return;
+            
             AiAgent.SetVariableValue("Frozen", false);
             animator.SetFloat(MOVE_SPEED, 1);
+            
+            _iceBlockInstance.Shatter();
+            _frozen = false;
         }
         
         public override void AddSpeedMultiplier(float amount)

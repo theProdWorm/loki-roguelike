@@ -7,14 +7,12 @@ namespace Helpers
         private ParticleSystem _particleSystem;
 
         private float _elapsedTime;
-        
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
+
         private void Start()
         {
             _particleSystem = GetComponent<ParticleSystem>();
         }
 
-        // Update is called once per frame
         private void Update()
         {
             _elapsedTime += Time.deltaTime;

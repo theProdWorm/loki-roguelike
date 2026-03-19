@@ -518,6 +518,7 @@ MonoBehaviour:
   type: 1
   canBeStaggered: 1
   HasSpawned: 1
+  _iceBlockPrefab: {fileID: 2423593729358401461, guid: 7a29c2975f767714291647e4049509b0, type: 3}
   ragdollDuration: 2
   dissolveDuration: 7
 --- !u!114 &67063205710862506
@@ -536,9 +537,7 @@ MonoBehaviour:
   m_BlackboardVariableOverridesList:
   - rid: 4525730027103060043
   - rid: 4765442100583990220
-  - rid: 4765442163286999758
   - rid: 4765442163719537517
-  - rid: 4765442164051149620
   m_OriginalGraph: {fileID: 0}
   m_IsInitialised: 0
   m_IsStarted: 0
@@ -561,14 +560,6 @@ MonoBehaviour:
           m_Value1: 6584390184548361953
         Name: CloseDistance
         m_Value: 8
-    - rid: 4765442163286999758
-      type: {class: 'BlackboardVariable`1[[UnityEngine.Animator, UnityEngine.AnimationModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 13270791377165552057
-          m_Value1: 11483313407365178158
-        Name: Blames Animator
-        m_Value: {fileID: 3691938871965420950}
     - rid: 4765442163719537517
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -577,14 +568,6 @@ MonoBehaviour:
           m_Value1: 13986240861812670968
         Name: FarDistance
         m_Value: 15
-    - rid: 4765442164051149620
-      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 312917458180973132
-          m_Value1: 6794383437016527952
-        Name: Blames
-        m_Value: {fileID: 7969008146296933718}
 --- !u!195 &1084904002477406691
 NavMeshAgent:
   m_ObjectHideFlags: 0
