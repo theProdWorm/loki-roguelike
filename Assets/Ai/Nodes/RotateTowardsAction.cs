@@ -13,12 +13,11 @@ public class RotateTowardsAction : Action
     [SerializeReference] public BlackboardVariable<GameObject> Target;
     [SerializeReference] public BlackboardVariable<float> RotationSpeed;
     [SerializeReference] public BlackboardVariable<bool> Disabled;
-    private NavMeshAgent _navMeshAgent;
+    
 
     protected override Status OnStart()
     {
-        _navMeshAgent = Agent.Value.GetComponentInChildren<NavMeshAgent>();
-        return !_navMeshAgent ? Status.Failure : Status.Running;
+        return Status.Running;
     }
 
     protected override Status OnUpdate()

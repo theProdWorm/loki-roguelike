@@ -73,7 +73,6 @@ namespace Entities
 
             _healthBar = GetComponentInChildren<UIEnemyHealth>();
             _healthBar.UpdateHealth(_currentHealth, _maxHealth);
-            
             _animationSpeed = animator.GetFloat(MOVE_SPEED);
 
             ENEMYAMOUNT++;
@@ -231,7 +230,7 @@ namespace Entities
             if (canBeStaggered)
             {
                 //animator.StopPlayback();
-                animator.SetBool("Stagger",true);
+                if(type != EncounterManager.EnemyTypes.BirdOnBird) animator.SetBool("Stagger",true);
                 AiAgent.SetVariableValue("Staggered", true);
                 AiAgent.SetVariableValue("Attacking", false);
             }
