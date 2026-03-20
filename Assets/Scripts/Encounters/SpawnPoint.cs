@@ -107,7 +107,9 @@ public class SpawnPoint : MonoBehaviour
 
     private Entity SpawnBirdOnBird()
     {
-        return null;
+        GameObject bird = Instantiate(_bbPrefab, transform.position, transform.rotation);
+        Entity entity = bird.GetComponent<Entity>();
+        return entity;
         //TODO: OBJECTPOOL
     }
 
