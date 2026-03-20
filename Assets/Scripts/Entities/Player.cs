@@ -443,7 +443,11 @@ namespace Entities
                 targetIndex = i;
             }
 
-            return validEnemies[targetIndex].transform;
+            var target = validEnemies[targetIndex].transform;
+            
+            Debug.DrawLine(transform.position, target.position, Color.red);
+            
+            return target;
         }
         
         private void StartAttack(Ability ability, int useTimes, int animatorHash)

@@ -6951,13 +6951,13 @@ MonoBehaviour:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SceneManager, Assembly-CSharp
         m_MethodName: LoadScene
-        m_Mode: 3
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: event:/Dave/SFX/Oneshots/Player/Player_Death
+          m_StringArgument: Hub
           m_BoolArgument: 0
         m_CallState: 2
   OnDamageTaken:
@@ -6975,6 +6975,30 @@ MonoBehaviour:
           m_StringArgument: event:/Dave/SFX/Oneshots/Player/Player_Hit
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Gameplay.RumbleManager, Assembly-CSharp
+        m_MethodName: Rumble
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 53967edfb162f5e4bb8b2e31d61bbecd, type: 2}
+          m_ObjectArgumentAssemblyTypeName: Gameplay.RumbleEvent, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: event:/Dave/SFX/Oneshots/Player/Player_Hit
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: FollowCamera, Assembly-CSharp
+        m_MethodName: Shake
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 242eeb9b1f112a2498484469d6ab11ba, type: 2}
+          m_ObjectArgumentAssemblyTypeName: Gameplay.ScreenShakeEvent, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: event:/Dave/SFX/Oneshots/Player/Player_Hit
+          m_BoolArgument: 0
+        m_CallState: 2
   OnDamageDealt:
     m_PersistentCalls:
       m_Calls:
@@ -6985,6 +7009,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: event:/Dave/SFX/Oneshots/Player/Pleyer_Meele
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Gameplay.RumbleManager, Assembly-CSharp
+        m_MethodName: Rumble
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: d8484173cdd758348989d98dec886a1a, type: 2}
+          m_ObjectArgumentAssemblyTypeName: Gameplay.RumbleEvent, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: event:/Dave/SFX/Oneshots/Player/Pleyer_Meele
@@ -7065,19 +7101,7 @@ MonoBehaviour:
         m_CallState: 2
   OnDashFinished:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1422470969019542592}
-        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-        m_MethodName: Stop
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   _characterContainer: {fileID: 8848846395872390570}
   _playerInput: {fileID: 3960114018095941365}
   _inputBufferMargin: 0.05
@@ -13077,7 +13101,31 @@ MonoBehaviour:
         m_CallState: 2
   OnAttackEnded:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 0
+      - m_Target: {fileID: 3904859379294053273}
+        m_TargetAssemblyTypeName: Entities.Player, Assembly-CSharp
+        m_MethodName: GainControl
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnSwitch:
     m_PersistentCalls:
       m_Calls:

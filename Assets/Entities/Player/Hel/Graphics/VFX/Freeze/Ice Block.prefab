@@ -388,7 +388,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 50
+      scalar: 15
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -1081,7 +1081,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 25
+        scalar: 50
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -1135,11 +1135,11 @@ ParticleSystem:
       repeatInterval: 0.01
       probability: 1
     - serializedVersion: 2
-      time: 0.05
+      time: 0.1
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 25
+        scalar: 50
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -5074,7 +5074,6 @@ GameObject:
   - component: {fileID: 9104850081768426720}
   - component: {fileID: 5865873719241837809}
   - component: {fileID: 6539868984294451289}
-  - component: {fileID: 2017057116476333509}
   m_Layer: 0
   m_Name: Ice Mist
   m_TagString: Untagged
@@ -9947,18 +9946,6 @@ ParticleSystemRenderer:
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
 --- !u!114 &6539868984294451289
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4038366295975330610}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f84747727140b5488fc413155996b1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2017057116476333509
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
