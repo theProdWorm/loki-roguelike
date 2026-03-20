@@ -21,7 +21,7 @@ public class Gateway : MonoBehaviour
 
     public void Close()
     {
-        _collider.enabled = false;
+        _collider.enabled = true;
         _animator.SetTrigger("Close");
     }
 
