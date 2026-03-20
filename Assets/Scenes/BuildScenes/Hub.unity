@@ -82674,7 +82674,8 @@ PrefabInstance:
       propertyPath: OnDialogueSequenceFinished.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6009676527004011678, guid: 962e2fe746eb15e41bd47ba516fad3bb, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 1257362218799639885, guid: 962e2fe746eb15e41bd47ba516fad3bb, type: 3}
@@ -82702,6 +82703,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2473319740043560885, guid: 962e2fe746eb15e41bd47ba516fad3bb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1666388361}
+    - targetCorrespondingSourceObject: {fileID: 2473319740043560885, guid: 962e2fe746eb15e41bd47ba516fad3bb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1666388362}
   m_SourcePrefab: {fileID: 100100000, guid: 962e2fe746eb15e41bd47ba516fad3bb, type: 3}
 --- !u!1 &1652246309
 GameObject:
@@ -83296,6 +83300,25 @@ CapsuleCollider:
   m_Height: 1.4136326
   m_Direction: 1
   m_Center: {x: -0.00000003359033, y: 1.3696398, z: 0.04309957}
+--- !u!114 &1666388362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1666388336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 198ebdf49c7f4f59931ef6bc6dbf131e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _indicator: {fileID: 0}
+  _dialogueQueue: []
+  _firstMeeting:
+  - {fileID: 11400000, guid: 4c5af6b38f9f2ff4ca6edb5ac71d01c7, type: 2}
+  - {fileID: 11400000, guid: d283b2bdc31e99343867254c1869bf12, type: 2}
+  _afterFirstBranch: []
+  _afterSecondBranch: []
 --- !u!1 &1674667727
 GameObject:
   m_ObjectHideFlags: 0

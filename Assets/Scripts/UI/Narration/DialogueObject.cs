@@ -11,7 +11,7 @@ namespace UI.Narration
     
         public Vector3 Position { get; private set; }
     
-        [SerializeField] private List<DialogueSequence> _dialogueQueue;
+        [SerializeField] protected List<DialogueSequence> _dialogueQueue;
 
         private void Update()
         {
