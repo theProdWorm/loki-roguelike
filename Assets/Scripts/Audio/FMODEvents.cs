@@ -47,7 +47,6 @@ namespace Audio
         private readonly List<EventInstance> _eventInstances = new();
         private Dictionary<string, EventInstance> _eventInstancesByName = new();
         
-        
         private static FMODEvents _instance;
 
         private void Awake()
@@ -100,7 +99,7 @@ namespace Audio
         
         public void SetNextPosition(Transform reference) => _nextPosition = reference.position;
         public void SetNextPosition(Vector3 position) => _nextPosition = position;
-        public void PlayEvent(string eventName)
+        public EventInstance PlayEvent(string eventName)
         {
             var instance = RuntimeManager.CreateInstance(eventName);
             
@@ -108,6 +107,8 @@ namespace Audio
             _eventInstancesByName[eventName] = instance;
             
             instance.start();
+
+	    return instance;
         }
 
         public void StopEvent(string eventName)

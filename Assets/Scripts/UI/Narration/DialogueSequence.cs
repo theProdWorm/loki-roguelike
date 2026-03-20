@@ -11,7 +11,7 @@ namespace UI.Narration
         public DialogueLine[] Lines;
 
         public bool IsVoiced;
-        public EventReference VoiceEvent;
+        public string VoiceEventName;
         public string VoiceParameterName;
         
         public UnityEvent OnFinished;

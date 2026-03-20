@@ -3,6 +3,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using FMOD.Studio;
+using FMODUnity;
+using Audio;
 
 namespace UI.Narration
 {
@@ -15,6 +18,7 @@ namespace UI.Narration
         [SerializeField] private TextMeshProUGUI _speakerTMP;
         [SerializeField] private Image _speakerBackground;
         [SerializeField] private TextMeshProUGUI _nextIndicator;
+	[SerializeField] private FMODEvents _fmodEvents;
 
         [SerializeField] private GameObject _hud;
     
@@ -23,6 +27,8 @@ namespace UI.Narration
 
         private int _dialoguePage;
         private DialogueSequence _dialogue;
+
+	private EventInstance _dialogueEventInstance;
 
         private Coroutine _slowWriteCoroutine;
         
@@ -59,6 +65,9 @@ namespace UI.Narration
 
             if (!INSTANCE._dialogue.IsVoiced)
                 return;
+
+	    INSTANCE._dialogueEventInstance = INSTANCE._fmodEvents.PlayEvent(INSTANCE._dialogue.VoiceEventName);
+	    INSTANCE._dialogueEventInstance.setParameterByName(INSTANCE._dialogue.VoiceParameterName, INSTANCE._dialoguePage);
         }
 
         private static void EndDialogue()
@@ -91,6 +100,8 @@ namespace UI.Narration
                 
                 var line = INSTANCE._dialogue.Lines[++INSTANCE._dialoguePage];
                 INSTANCE._slowWriteCoroutine = INSTANCE.StartCoroutine(SlowWriteText(line));
+
+		INSTANCE._dialogueEventInstance.setParameterByName(INSTANCE._dialogue.VoiceParameterName, INSTANCE._dialoguePage);
             }
             else
                 EndDialogue();
