@@ -16,6 +16,9 @@ public class ProgressPersistence : MonoBehaviour
     //This will always know how long you've progressed in your current branch
     public int CurrentBranchProgression = 0;
 
+    public void UnlockDialogue1() => BragerDialogue1 = true;
+    public void UnlockDialogue2() => BragerDialogue2 = true;
+    
     [Tooltip("0 = Tutorial, 1 = Left Branch, 2 = Right Branch")]
     public void ChangeCurrentBranch(int branch)
     {

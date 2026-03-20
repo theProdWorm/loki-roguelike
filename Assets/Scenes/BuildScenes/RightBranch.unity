@@ -38421,6 +38421,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07b3790808df02f458624318a763afe6, type: 3}
+--- !u!114 &893807872 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2804970522790086908, guid: 07b3790808df02f458624318a763afe6, type: 3}
+  m_PrefabInstance: {fileID: 893807871}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f890b5afce4c084c93f72ac32189ef7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &896420484
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -55273,6 +55284,95 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1635592522}
   m_LocalEulerAnglesHint: {x: 0, y: -41.99, z: 0}
+--- !u!1 &1115833216
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1115833219}
+  - component: {fileID: 1115833218}
+  - component: {fileID: 1115833217}
+  m_Layer: 0
+  m_Name: Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1115833217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1115833216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 445c767b6f10f6346a3ded8f5f03387b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TriggerEntered:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 893807872}
+        m_TargetAssemblyTypeName: ProgressPersistence, Assembly-CSharp
+        m_MethodName: UnlockDialogue2
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  TriggerExited:
+    m_PersistentCalls:
+      m_Calls: []
+  _destroySelfOnEnter: 0
+  _destroySelfOnExit: 0
+  _allowedTags:
+  - Player
+  _disallowedTags: []
+--- !u!65 &1115833218
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1115833216}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 17.197536, y: 9.6778755, z: 10.310031}
+  m_Center: {x: 0.5266094, y: -0.93360233, z: 4.6549983}
+--- !u!4 &1115833219
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1115833216}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.19577467, z: -0, w: 0.98064893}
+  m_LocalPosition: {x: 106.08, y: 4.245064, z: 21.83}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -22.58, z: 0}
 --- !u!4 &1116341956 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d2d78769bf71ee1458e66d524f1d197e, type: 3}
@@ -88285,3 +88385,4 @@ SceneRoots:
   - {fileID: 893807871}
   - {fileID: 1087705543}
   - {fileID: 1874377814}
+  - {fileID: 1115833219}
