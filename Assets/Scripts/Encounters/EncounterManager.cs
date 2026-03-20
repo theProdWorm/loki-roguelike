@@ -48,6 +48,12 @@ public class EncounterManager : MonoBehaviour
     [SerializeField, Tooltip("Represented in decimal form"), Range(0, 1)]
     private float _percentageOfEnemiesToSpawnNextWave = 25;
 
+    [Header("Time Between Spawns")]
+    [SerializeField]
+    private float _minSpawnTime = .25f;
+    [SerializeField]
+    private float _maxSpawnTime = .75f;
+
     private List<Entity> _enemiesAlive = new();
     private float _currentAmountOfEnemiesAlive = 0;
     [Tooltip("Adds together the amount of enemies that were left over from last wave and the ones that spawn in the new wave")]
@@ -138,7 +144,7 @@ public class EncounterManager : MonoBehaviour
 
         _amountOfEnemiesThisWave = nextWaveEnemies.Count + (int)_currentAmountOfEnemiesAlive;
 
-        SpawnWave(nextWaveEnemies);
+        StartCoroutine(SpawnWave(nextWaveEnemies));
         _currentAmountOfEnemiesAlive = _enemiesAlive.Count;
 
         _currentWaveIndex++;
@@ -147,28 +153,31 @@ public class EncounterManager : MonoBehaviour
     private void ActivateFirstWave()
     {
         List<EnemyTypes> nextWaveEnemies = _wave0.Enemies;
-        //if (_spawnRandomLocationsForWave0)
         _amountOfEnemiesThisWave = nextWaveEnemies.Count;
         _currentAmountOfEnemiesAlive = _amountOfEnemiesThisWave;
-        SpawnWave(nextWaveEnemies);
-        //else
-        //{
-        //    _amountOfEnemiesThisWave = _wave0.Count;
-        //    foreach (GameObject enemy in _wave0)
-        //    {
-        //        Entity script = enemy.GetComponent<Entity>();
-        //        script.OnDeath.AddListener(EnemyDied);
-        //        _enemiesAlive.Add(script);
-        //        SpawnPoint spawnPoint = enemy.GetComponent<SpawnPoint>();
-        //        spawnPoint.Spawn();
-        //    }
-        //    _currentAmountOfEnemiesAlive = _enemiesAlive.Count;
-        //}
-
+        StartCoroutine(SpawnWave(nextWaveEnemies));
     }
 
-    private void SpawnWave(List<EnemyTypes> wave)
+    private System.Collections.IEnumerator SpawnWave(List<EnemyTypes> wave)
     {
+        //Randomizes the wave list to keep player on their toes
+        List<EnemyTypes> tempList = new();
+        List<int> closedList = new();
+
+        for (int i = 0; i < wave.Count;)
+        {
+            int r = Random.Range(0, wave.Count);
+
+            if (!closedList.Contains(r))
+            {
+                tempList.Add(wave[i]);
+                i++;
+                closedList.Add(r);
+            }
+        }
+        wave = tempList;
+
+        //Spawn each enemy in randomized list
         for (int i = 0; i < wave.Count; i++)
         {
             Entity entity = null;
@@ -194,6 +203,9 @@ public class EncounterManager : MonoBehaviour
             {
                 Debug.Log("entity returned null");
             }
+
+            float r = Random.Range(_minSpawnTime, _maxSpawnTime);
+            yield return new WaitForSecondsRealtime(r);
         }
         _isSpawning = false;
     }
@@ -274,7 +286,7 @@ public class EncounterManager : MonoBehaviour
 
         if (spawnPoints.Count == 0)
             return null;
-        
+
         r = Random.Range(0, spawnPoints.Count);
         Debug.Log(r + ", " + spawnPoints.Count);
         entity = spawnPoints[r].GetComponent<SpawnPoint>().Spawn();
