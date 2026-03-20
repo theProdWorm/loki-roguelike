@@ -21,10 +21,10 @@ namespace UI.Narration.Editor
             if (!isVoiced.boolValue)
                 return;
 
-            var voiceEvent = serializedObject.FindProperty("VoiceEvent");
+            var voiceEventName = serializedObject.FindProperty("VoiceEventName");
             var voiceParameterName = serializedObject.FindProperty("VoiceParameterName");
             
-            EditorGUILayout.PropertyField(voiceEvent);
+            EditorGUILayout.PropertyField(voiceEventName);
             EditorGUILayout.PropertyField(voiceParameterName);
         }
     }
