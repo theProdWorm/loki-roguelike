@@ -14,13 +14,23 @@ public class SceneManager : MonoBehaviour
     private void Awake()
     {
         _fade = FindFirstObjectByType<Fading>();
-        if(!_fade) Debug.LogWarning("No fade found");
+        if (!_fade) Debug.LogWarning("No fade found");
     }
 
     private void Start()
     {
         PLAYER = FindFirstObjectByType<Player>();
-        if(PLAYER) OnSceneLoaded.AddListener(PLAYER.SetDashing);
+        if (PLAYER)
+        {
+            OnSceneLoaded.AddListener(PLAYER.SetDashing);
+            PLAYER.OnDeath.AddListener(ReloadScene);
+        }
+    }
+
+    public void ReloadScene(Entity Why)
+    {
+        Scene sceneLoaded = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneLoaded.buildIndex);
     }
 
     public void LoadScene(int sceneIndex)
