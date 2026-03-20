@@ -56,6 +56,9 @@ namespace UI.Narration
             
             INSTANCE._nextIndicator.enabled = INSTANCE._dialogue.Lines.Length > 1;
             INSTANCE._slowWriteCoroutine = INSTANCE.StartCoroutine(SlowWriteText(dialogue.Lines[0]));
+
+            if (!INSTANCE._dialogue.IsVoiced)
+                return;
         }
 
         private static void EndDialogue()
