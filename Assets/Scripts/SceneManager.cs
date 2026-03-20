@@ -30,7 +30,7 @@ public class SceneManager : MonoBehaviour
     public void ReloadScene(Entity Why)
     {
         Scene sceneLoaded = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
-        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneLoaded.buildIndex);
+        LoadScene(sceneLoaded.buildIndex);
     }
 
     public void LoadScene(int sceneIndex)
