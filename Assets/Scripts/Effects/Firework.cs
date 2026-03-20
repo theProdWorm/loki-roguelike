@@ -34,13 +34,17 @@ namespace Animation
             _rigidbody.AddExplosionForce(_force, explosionPosition, 10f, 1, ForceMode.Impulse);
         }
 
-        private void OnCollisionEnter(Collision other)
+        private void Explode()
         {
-            if (!_isLit)
-                return;
-            
             Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
+
+        private void OnCollisionEnter(Collision other)
+        {
+            if (_isLit)Explode();
+        }
+
+        
     }
 }
