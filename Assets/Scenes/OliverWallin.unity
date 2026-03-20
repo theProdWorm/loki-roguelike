@@ -1595,6 +1595,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bird
       objectReference: {fileID: 0}
+    - target: {fileID: 952443620035947193, guid: b12bf3a389294fe4b8e30020236b6116, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 960279709060611028, guid: b12bf3a389294fe4b8e30020236b6116, type: 3}
       propertyPath: m_Layer
       value: 17
@@ -1661,7 +1665,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3981865705857930857, guid: b12bf3a389294fe4b8e30020236b6116, type: 3}
       propertyPath: m_AABB.m_Extent.y
-      value: 221.95
+      value: 133.89
       objectReference: {fileID: 0}
     - target: {fileID: 4070149566752183536, guid: b12bf3a389294fe4b8e30020236b6116, type: 3}
       propertyPath: m_Layer
@@ -1786,6 +1790,18 @@ PrefabInstance:
     - target: {fileID: 6784721112175840552, guid: b12bf3a389294fe4b8e30020236b6116, type: 3}
       propertyPath: m_Layer
       value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 6813365353594782183, guid: b12bf3a389294fe4b8e30020236b6116, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6813365353594782183, guid: b12bf3a389294fe4b8e30020236b6116, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6813365353594782183, guid: b12bf3a389294fe4b8e30020236b6116, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7311307614385652454, guid: b12bf3a389294fe4b8e30020236b6116, type: 3}
       propertyPath: m_Layer
@@ -2728,11 +2744,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5860463367884849991, guid: 32f6a838a7312ed49b19642398ff701c, type: 3}
   m_PrefabInstance: {fileID: 1958571679}
   m_PrefabAsset: {fileID: 0}
---- !u!54 &1782388520 stripped
-Rigidbody:
-  m_CorrespondingSourceObject: {fileID: 2179091515267350455, guid: 32f6a838a7312ed49b19642398ff701c, type: 3}
-  m_PrefabInstance: {fileID: 1958571679}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1782388522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2745,7 +2756,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1fe7e9895964f97a87dfbefad6d8c63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rigidbody: {fileID: 1782388520}
+  _rigidbody: {fileID: 0}
   _force: 500
   _horizontality: 0
   _forceDirection: 0
