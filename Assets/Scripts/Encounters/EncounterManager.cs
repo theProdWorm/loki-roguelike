@@ -13,7 +13,8 @@ public class EncounterManager : MonoBehaviour
     {
         Draugr,
         BirdOnBird,
-        Wolf
+        Wolf,
+        WolfBoss
     }
 
     [SerializeField] List<GameObject> _gates = new();
@@ -77,7 +78,8 @@ public class EncounterManager : MonoBehaviour
 
     public void StartEncounter()
     {
-        if (_isEncounterActive || _isEncounterCompleted) return;
+        if (_isEncounterActive || _isEncounterCompleted)
+            return;
         _isEncounterActive = true;
         _player = FindFirstObjectByType<Player>();
         CloseDoors();

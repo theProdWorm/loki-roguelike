@@ -13,9 +13,6 @@ public class SpawnPoint : MonoBehaviour
     private bool _sittingStatue = false;
     public bool hasSpawned = false;
 
-    //[SerializeField, Tooltip("DEV TOOL. Designers don't touch")]
-    //private Component[] _componentsToTurnOffAndOn; //TODO: Fix this ugly ass solution
-
     Animator animator;
 
     private float _animatorSpeed; //Holder for the animation speed of current clip
@@ -36,6 +33,10 @@ public class SpawnPoint : MonoBehaviour
     [SerializeField]
     private GameObject _wolfPrefab;
 
+    [Header("BossWolf")]
+    [SerializeField]
+    private GameObject _bossWolfPrefab;
+
     private void Start()
     {
         if (!hasSpawned && _enemyType is EncounterManager.EnemyTypes.Draugr)
@@ -52,6 +53,8 @@ public class SpawnPoint : MonoBehaviour
                 return SpawnBirdOnBird();
             case EncounterManager.EnemyTypes.Wolf:
                 return SpawnWolf();
+            case EncounterManager.EnemyTypes.WolfBoss:
+                return SpawnBossWolf();
             default:
                 break;
         }
@@ -107,7 +110,7 @@ public class SpawnPoint : MonoBehaviour
 
     private Entity SpawnBirdOnBird()
     {
-        GameObject bird = Instantiate(_bbPrefab, transform.position, transform.rotation);
+        GameObject bird = Instantiate(_bbPrefab, transform.position + Vector3.up * 300, transform.rotation);
         Entity entity = bird.GetComponent<Entity>();
         return entity;
         //TODO: OBJECTPOOL
@@ -117,6 +120,14 @@ public class SpawnPoint : MonoBehaviour
     {
         GameObject wolf = Instantiate(_wolfPrefab, transform.position, transform.rotation);
         Entity entity = wolf.GetComponent<Entity>();
+        return entity;
+        //TODO: OBJECTPOOL
+    }
+
+    private Entity SpawnBossWolf()
+    {
+        GameObject boss = Instantiate(_bossWolfPrefab, transform.position, transform.rotation);
+        Entity entity = boss.GetComponent<Entity>();
         return entity;
         //TODO: OBJECTPOOL
     }
