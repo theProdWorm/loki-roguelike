@@ -61,6 +61,8 @@ namespace Entities
         private static readonly int ATTACK = Animator.StringToHash("attack");
         private static readonly int SWITCH = Animator.StringToHash("switch");
 
+        private static bool HEL_UNLOCKED;
+        
         public UnityEvent<int, int> OnHealthChanged;
         public UnityEvent<int, int> OnPotionChargesChanged;
         public UnityEvent OnPotionDrunk;
@@ -777,6 +779,8 @@ namespace Entities
             FMODEvents.SetCharacter(ActiveCharacter == Character.Hel);
         }
 
+        public void UnlockHel() => HEL_UNLOCKED = true;
+        
         #region Collision
 
         private void FindMainInteractable()
@@ -884,7 +888,7 @@ namespace Entities
 
         public void SwitchInput(InputAction.CallbackContext context)
         {
-            if (!context.performed)
+            if (!context.performed || !HEL_UNLOCKED)
                 return;
 
             _inputBuffer.Add(() =>
