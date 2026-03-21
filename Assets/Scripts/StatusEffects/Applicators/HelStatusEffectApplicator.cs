@@ -13,7 +13,7 @@ namespace StatusEffects.Applicators
         
         protected override void ApplyEffect(Enemy enemy, int _)
         {
-            if (enemy.HasStatusEffectOfType<StatusEffect_Frozen>())
+            if (enemy.ImmuneToStatusEffects || enemy.HasStatusEffectOfType<StatusEffect_Frozen>())
                 return;
             
             for (int i = 0; i < _stacksToApply; i++)

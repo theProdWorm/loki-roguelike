@@ -43,7 +43,9 @@ namespace Entities
         [SerializeField] private bool canBeStaggered;
         public bool HasSpawned = true;
 
+        [Header("Status Effects")]
         [SerializeField] private GameObject _iceBlockPrefab;
+        [SerializeField] public bool ImmuneToStatusEffects;
         
         [Header("Death")]
         [Tooltip("How long the ragdoll lasts before starting to dissolve")]
