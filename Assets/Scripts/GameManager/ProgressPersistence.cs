@@ -1,9 +1,10 @@
+using System;
 using UnityEngine;
 
 public class ProgressPersistence : MonoBehaviour
 {
-    public bool BragerDialogue1 = false;
-    public bool BragerDialogue2 = false;
+    public static bool FirstBranchDone;
+    public static bool SecondBranchDone;
 
     public bool BeatBoss = false;
     public bool BeatBoss2 = false;
@@ -16,8 +17,8 @@ public class ProgressPersistence : MonoBehaviour
     //This will always know how long you've progressed in your current branch
     public int CurrentBranchProgression = 0;
 
-    public void UnlockDialogue1() => BragerDialogue1 = true;
-    public void UnlockDialogue2() => BragerDialogue2 = true;
+    public void UnlockDialogue1() => FirstBranchDone = true;
+    public void UnlockDialogue2() => SecondBranchDone = true;
     
     [Tooltip("0 = Tutorial, 1 = Left Branch, 2 = Right Branch")]
     public void ChangeCurrentBranch(int branch)

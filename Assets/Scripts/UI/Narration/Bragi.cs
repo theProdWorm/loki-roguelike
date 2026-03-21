@@ -11,11 +11,9 @@ namespace UI.Narration
         
         private void Start()
         {
-            var progressPersistence = FindFirstObjectByType<ProgressPersistence>();
-            
-            if (progressPersistence.BragerDialogue2)
+            if (ProgressPersistence.SecondBranchDone)
                 _dialogueQueue = _afterSecondBranch;
-            else if (progressPersistence.BragerDialogue1)
+            else if (ProgressPersistence.FirstBranchDone)
                 _dialogueQueue = _afterFirstBranch;
             else
                 _dialogueQueue = _firstMeeting;
