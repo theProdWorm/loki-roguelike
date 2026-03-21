@@ -100,7 +100,8 @@ namespace UI.Narration
                 var line = INSTANCE._dialogue.Lines[++INSTANCE._dialoguePage];
                 INSTANCE._slowWriteCoroutine = INSTANCE.StartCoroutine(SlowWriteText(line));
 
-		        INSTANCE._dialogueEventInstance.setParameterByName(INSTANCE._dialogue.VoiceParameterName, INSTANCE._dialoguePage);
+                if (INSTANCE._dialogue.IsVoiced)
+		            INSTANCE._dialogueEventInstance.setParameterByName(INSTANCE._dialogue.VoiceParameterName, INSTANCE._dialoguePage);
             }
             else
                 EndDialogue();
@@ -108,12 +109,9 @@ namespace UI.Narration
 
         private static void SetSpeaker(DialogueSpeaker speaker)
         {
-            var backgroundColor = speaker.BackgroundColor;
             var textColor = speaker.TextColor;
-            backgroundColor.a = 0.5f;
             textColor.a = 1f;
             
-            INSTANCE._speakerBackground.color = backgroundColor;
             INSTANCE._speakerTMP.color = textColor;
             INSTANCE._speakerTMP.text = speaker.name;
         }
