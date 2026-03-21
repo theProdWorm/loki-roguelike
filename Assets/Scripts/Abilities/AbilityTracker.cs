@@ -13,6 +13,8 @@ namespace Abilities
         protected float _remainingCooldown;
         protected int   _remainingCharges;
 
+        public float RemainingCooldownPercent => _remainingCooldown / _ability.RechargeTime;
+        
         public AbilityTracker(Ability ability, Action onAbilityUsed)
         {
             _ability = ability;
