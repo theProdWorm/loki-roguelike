@@ -11,6 +11,7 @@ using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 namespace Entities
 {
@@ -302,6 +303,8 @@ namespace Entities
         public void SetDashing(bool isDashing) => _isDashing = isDashing;
         public void SetDashing() => _isDashing = true;
 
+        public float GetSwitchCooldown() => SwitchAbilityTracker.RemainingCooldownPercent;
+        
         private void Update()
         {
             _inputBuffer.Update();
@@ -402,7 +405,12 @@ namespace Entities
             
             List<float> distances = new();
             List<float> angles = new();
+            
+            var cameraForward = _camera.transform.forward;
+            var downProjection = Vector3.Project(cameraForward, Vector3.up);
 
+            var forwardDirection = (cameraForward - downProjection).normalized;
+            
             var validEnemies = enemies.Where(enemy =>
             {
                 if (!enemy.HasSpawned || enemy.IsDead)
@@ -413,7 +421,7 @@ namespace Entities
                     return false;
 
                 Vector3 toVector = enemy.transform.position - transform.position;
-                float angle = Mathf.Abs(Vector3.Angle(transform.forward, toVector));
+                float angle = Mathf.Abs(Vector3.Angle(forwardDirection, toVector));
 
                 if (angle > _targetLockAngle)
                     return false;
