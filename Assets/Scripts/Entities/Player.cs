@@ -191,6 +191,15 @@ namespace Entities
 
         private StatsPersistence _statsPersistence;
 
+        protected override void Awake()
+        {
+            base.Awake();
+            
+            _playerInput.SwitchCurrentActionMap("Dialogue");
+            _playerInput.SwitchCurrentActionMap("UI");
+            _playerInput.SwitchCurrentActionMap("Player");
+        }
+
         protected override void Start()
         {
             #region StatsPersistence Initialization
@@ -216,10 +225,6 @@ namespace Entities
                     _statsPersistence.isFenrir = ActiveCharacter == Character.Fenrir;
                 });
 
-            _playerInput.SwitchCurrentActionMap("Dialogue");
-            _playerInput.SwitchCurrentActionMap("UI");
-            _playerInput.SwitchCurrentActionMap("Player");
-           
             _rigidbody.maxAngularVelocity = 0;
 
             _camera = Camera.main!;

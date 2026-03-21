@@ -24,14 +24,15 @@ namespace UI.Narration
         [SerializeField] private float _defaultLetterDelay;
         [SerializeField] private LetterDelay[] _customLetterDelays;
 
-        private int _dialoguePage;
+        public static int DIALOGUE_PAGE;
         private DialogueSequence _dialogue;
 
-	    private EventInstance _dialogueEventInstance;
+        public static bool PLAYING_VOICED_DIALOGUE => INSTANCE && INSTANCE._dialogue && INSTANCE._dialogue.IsVoiced;
+        public static string VOICE_PARAMETER_NAME => INSTANCE._dialogue.VoiceParameterName;
 
         private Coroutine _slowWriteCoroutine;
         
-        private DialogueLine CurrentLine => _dialogue.Lines[_dialoguePage];
+        private DialogueLine CurrentLine => _dialogue.Lines[DIALOGUE_PAGE];
         
         public static DialogueManager INSTANCE;
         
@@ -52,7 +53,7 @@ namespace UI.Narration
             INSTANCE._playerInput.SwitchCurrentActionMap("Dialogue");
             
             INSTANCE._dialogue = dialogue;
-            INSTANCE._dialoguePage = 0;
+            DIALOGUE_PAGE = 0;
             
             INSTANCE._dialoguePanel.SetActive(true);
             
@@ -65,8 +66,7 @@ namespace UI.Narration
             if (!INSTANCE._dialogue.IsVoiced)
                 return;
 
-	        INSTANCE._dialogueEventInstance = INSTANCE._fmodEvents.PlayEvent(INSTANCE._dialogue.VoiceEventName);
-	        INSTANCE._dialogueEventInstance.setParameterByName(INSTANCE._dialogue.VoiceParameterName, INSTANCE._dialoguePage);
+            INSTANCE._fmodEvents.PlayEvent(INSTANCE._dialogue.VoiceEventName);
         }
 
         private static void EndDialogue()
@@ -93,15 +93,12 @@ namespace UI.Narration
                 
                 INSTANCE._dialogueTMP.text = INSTANCE.CurrentLine.Text;
             }
-            else if (INSTANCE._dialoguePage < INSTANCE._dialogue.Lines.Length - 1)
+            else if (DIALOGUE_PAGE < INSTANCE._dialogue.Lines.Length - 1)
             { // Advance to next line
-                INSTANCE._nextIndicator.enabled = INSTANCE._dialoguePage < INSTANCE._dialogue.Lines.Length - 2;
+                INSTANCE._nextIndicator.enabled = DIALOGUE_PAGE < INSTANCE._dialogue.Lines.Length - 2;
                 
-                var line = INSTANCE._dialogue.Lines[++INSTANCE._dialoguePage];
+                var line = INSTANCE._dialogue.Lines[++DIALOGUE_PAGE];
                 INSTANCE._slowWriteCoroutine = INSTANCE.StartCoroutine(SlowWriteText(line));
-
-                if (INSTANCE._dialogue.IsVoiced)
-		            INSTANCE._dialogueEventInstance.setParameterByName(INSTANCE._dialogue.VoiceParameterName, INSTANCE._dialoguePage);
             }
             else
                 EndDialogue();

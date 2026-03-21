@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using FMOD.Studio;
 using FMODUnity;
+using UI.Narration;
 using UnityEngine;
 
 namespace Audio
@@ -91,6 +92,9 @@ namespace Audio
                 
                 instance.setParameterByName("Player_Form", _isPlayerHel ? 1 : 0);
                 instance.setParameterByName("Player_LowHealth", _isPlayerLowHealth ? 1 : 0);
+                
+                if (DialogueManager.PLAYING_VOICED_DIALOGUE)
+                    instance.setParameterByName(DialogueManager.VOICE_PARAMETER_NAME, DialogueManager.DIALOGUE_PAGE);
             }
         }
 
@@ -99,7 +103,7 @@ namespace Audio
         
         public void SetNextPosition(Transform reference) => _nextPosition = reference.position;
         public void SetNextPosition(Vector3 position) => _nextPosition = position;
-        public EventInstance PlayEvent(string eventName)
+        public void PlayEvent(string eventName)
         {
             var instance = RuntimeManager.CreateInstance(eventName);
             
@@ -107,8 +111,6 @@ namespace Audio
             _eventInstancesByName[eventName] = instance;
             
             instance.start();
-
-	        return instance;
         }
 
         public void StopEvent(string eventName)
