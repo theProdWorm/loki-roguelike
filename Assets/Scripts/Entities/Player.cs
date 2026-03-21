@@ -464,7 +464,13 @@ namespace Entities
         {
             LoseControl();
             var target = FindTarget();
-            _targetPos = target ? target.position : transform.position + transform.forward * 10f;
+            
+            var cameraForward = _camera.transform.forward;
+            var downProjection = Vector3.Project(cameraForward, Vector3.up);
+
+            var forwardDirection = (cameraForward - downProjection).normalized;
+            
+            _targetPos = target ? target.position : transform.position + forwardDirection * 10f;
             _targetPos.y = transform.position.y;
 
             _currentAbility = ability;
