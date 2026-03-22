@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Animation;
+using Audio;
 using Effects;
 using Stats;
 using StatusEffects;
@@ -116,6 +117,15 @@ namespace Entities
             }
             else 
                 Abilities.Attacks.Attack.Create(this, attackPoint.position, transform.rotation, attackStats);
+
+            var sound = type switch
+            {
+                EncounterManager.EnemyTypes.Draugr => FMODEvents.INSTANCE._draugrSwing,
+                EncounterManager.EnemyTypes.BirdOnBird => FMODEvents.INSTANCE._draugrSwing,
+                EncounterManager.EnemyTypes.Wolf => FMODEvents.INSTANCE._draugrSwing
+            };
+            
+            FMODEvents.INSTANCE.PlayEvent(sound);
         }
         
         private float dissolveValue;

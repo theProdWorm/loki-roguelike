@@ -1,5 +1,6 @@
 using Entities;
 using System.Collections.Generic;
+using Audio;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -219,6 +220,8 @@ public class EncounterManager : MonoBehaviour
         {
             gate.GetComponent<Gateway>().Close();
         }
+        
+        FMODEvents.INSTANCE.SetCombat(true);
     }
 
     private void OpenDoors()
@@ -228,6 +231,7 @@ public class EncounterManager : MonoBehaviour
         {
             gate.GetComponent<Gateway>().Open();
         }
+        FMODEvents.INSTANCE.SetCombat(false);
     }
 
     private Entity SpawnEnemy(List<GameObject> spawnPoints, bool removePoint)

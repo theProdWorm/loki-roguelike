@@ -5,7 +5,7 @@ using FMODUnity;
 
 public class FMODEvents2 : MonoBehaviour
 {
-    //För kategorisering av rubriker och underrubriker i Fmodevent references
+    //FÃ¶r kategorisering av rubriker och underrubriker i Fmodevent references
     [Header("Player SFX")]
     [SerializeField] private EventReference _playerDeath;
     [SerializeField] private EventReference _playerHit;

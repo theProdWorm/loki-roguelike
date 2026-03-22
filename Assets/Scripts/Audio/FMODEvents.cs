@@ -10,65 +10,56 @@ namespace Audio
     public class FMODEvents : MonoBehaviour
     {
         [Header("Player SFX")]
-        [SerializeField] private EventReference _playerDeath;
-        [SerializeField] private EventReference _playerHit;
-        [SerializeField] private EventReference _playerMovement;
-        [SerializeField] private EventReference _playerDash;
+        public EventReference _playerDeath;
+        public EventReference _playerHit;
+        public EventReference _playerMovement;
+        public EventReference _playerDash;
     
-        [SerializeField] private EventReference _playerAttack;
-        [SerializeField] private EventReference _playerSwitchIn;
+        public EventReference _playerAttack;
+        public EventReference _playerSwitchIn;
 
         [Header("Hel SFX")]
-        [SerializeField] private EventReference _helProjectileTravel;
-        [SerializeField] private EventReference _helProjectileHit;
+        public EventReference _helProjectileTravel;
+        public EventReference _helProjectileHit;
     
         [Header("Enemy SFX")]
-        [SerializeField] private EventReference _draugrDeath;
-        [SerializeField] private EventReference _draugrHit;
-        [SerializeField] private EventReference _draugrSwing;
+        public EventReference _draugrDeath;
+        public EventReference _draugrHit;
+        public EventReference _draugrSwing;
         
         [Header("Misc")]
-        [SerializeField] private EventReference _potionConsume;
-        [SerializeField] private EventReference _runestoneInteract;
+        public EventReference _potionConsume;
+        public EventReference _runestoneInteract;
     
         [Header("UI SFX")]
-        [SerializeField] private EventReference _uiButtonClick;
-        [SerializeField] private EventReference _uiButtonHover;
-        [SerializeField] private EventReference _gameStart;
+        public EventReference _uiButtonClick;
+        public EventReference _uiButtonHover;
+        public EventReference _gameStart;
     
         [Header("Music")]
-        [SerializeField] private EventReference _ambienceMusic;
-        [SerializeField] private EventReference _combatMusic;
-        [SerializeField] private EventReference _menuMusic;
+        public EventReference _playlistMusic;
+        public EventReference _menuMusic;
 
+        [Header("Ambience Sounds")]
+        public EventReference _forest;
+        
         private bool _isPlayerHel;
         private bool _isPlayerLowHealth;
 
         private Vector3 _nextPosition;
         private readonly List<EventInstance> _eventInstances = new();
-        private Dictionary<string, EventInstance> _eventInstancesByName = new();
+        private readonly Dictionary<string, EventInstance> _eventInstancesByName = new();
         
-        private static FMODEvents _instance;
+        public static FMODEvents INSTANCE;
 
         private void Awake()
         {
-            if (_instance != null)
+            if (INSTANCE != null)
             {
-                Destroy(_instance.gameObject);
+                Destroy(INSTANCE.gameObject);
             }
 
-            _instance = this;
-
-            // if (_instance != null)
-            // {
-            //     Debug.LogError("Found more than one FMOD Events instance in the scene");
-            //
-            //     Destroy(gameObject);
-            //     return;
-            // }
-            //
-            // _instance = this;
-            // DontDestroyOnLoad(gameObject);
+            INSTANCE = this;
         }
 
         private void OnDestroy()
@@ -98,14 +89,25 @@ namespace Audio
             }
         }
 
-        public static void SetCharacter(bool isPlayerHel) => _instance._isPlayerHel = isPlayerHel;
-        public static void SetLowHealth(bool isLowHealth) => _instance._isPlayerLowHealth = isLowHealth;
+        public static void SetCharacter(bool isPlayerHel) => INSTANCE._isPlayerHel = isPlayerHel;
+        public static void SetLowHealth(bool isLowHealth) => INSTANCE._isPlayerLowHealth = isLowHealth;
         
         public void SetNextPosition(Transform reference) => _nextPosition = reference.position;
         public void SetNextPosition(Vector3 position) => _nextPosition = position;
         public void PlayEvent(string eventName)
         {
             var instance = RuntimeManager.CreateInstance(eventName);
+            
+            _eventInstances.Add(instance);
+            _eventInstancesByName[eventName] = instance;
+            
+            instance.start();
+        }
+
+        public void PlayEvent(EventReference eventReference)
+        {
+            string eventName = eventReference.Path;
+            var instance = RuntimeManager.CreateInstance(eventReference);
             
             _eventInstances.Add(instance);
             _eventInstancesByName[eventName] = instance;
@@ -122,6 +124,24 @@ namespace Audio
             
             if (reference.isValid())
                 reference.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        }
+
+        public void StopEvent(EventReference eventReference)
+        {
+            string eventName = eventReference.Path;
+            
+            if (!_eventInstancesByName.ContainsKey(eventName))
+                return;
+            
+            var reference = _eventInstancesByName[eventName];
+            
+            if (reference.isValid())
+                reference.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        }
+
+        public void SetCombat(bool inCombat)
+        {
+            _eventInstancesByName[_playlistMusic.Path].setParameterByName("Combat", inCombat ? 1 : 0);
         }
     }
 }

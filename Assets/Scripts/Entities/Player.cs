@@ -524,6 +524,9 @@ namespace Entities
                     _currentAbility.BurstDelay, _currentAbility.SpreadAngle, position));
             else
                 Attack.Create(this, position, transform.rotation, attackStats);
+
+            var sound = FMODEvents.INSTANCE._playerAttack;
+            FMODEvents.INSTANCE.PlayEvent(sound);
         }
 
         public void PerformAttackParented(Transform attackPoint)
@@ -546,6 +549,9 @@ namespace Entities
                     _currentAbility.BurstDelay, _currentAbility.SpreadAngle, position));
             else
                 Attack.Create(this, attackPoint, attackStats);
+            
+            var sound = FMODEvents.INSTANCE._playerAttack;
+            FMODEvents.INSTANCE.PlayEvent(sound);
         }
 
         public void PerformAttackLunge()
@@ -785,6 +791,9 @@ namespace Entities
 
             OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
 
+            var sound = FMODEvents.INSTANCE._playerHit;
+            FMODEvents.INSTANCE.PlayEvent(sound);
+            
             return realDamage;
         }
 
@@ -911,6 +920,9 @@ namespace Entities
 
                 OnPotionDrunk?.Invoke();
 
+                var sound = FMODEvents.INSTANCE._potionConsume;
+                FMODEvents.INSTANCE.PlayEvent(sound);
+
                 return true;
             });
         }
@@ -920,7 +932,13 @@ namespace Entities
             if (!context.performed)
                 return;
 
-            _inputBuffer.Add(_dashAbilityTracker.TryUse);
+            _inputBuffer.Add(() =>
+            {
+                var sound = FMODEvents.INSTANCE._playerDash;
+                FMODEvents.INSTANCE.PlayEvent(sound);
+                
+                return _dashAbilityTracker.TryUse();
+            });
         }
 
         public void SwitchInput(InputAction.CallbackContext context)
@@ -943,6 +961,9 @@ namespace Entities
                 foreach (var tracker in _switchAbilityTrackers)
                     tracker.Reset();
 
+                var sound = FMODEvents.INSTANCE._playerSwitchIn;
+                FMODEvents.INSTANCE.PlayEvent(sound);
+                
                 return true;
             });
         }
@@ -954,6 +975,9 @@ namespace Entities
             base.Die();
             _statsPersistence.PlayerHealth = _maxHealth;
             _statsPersistence.HealthItemAmount = 0;
+            
+            var sound = FMODEvents.INSTANCE._playerDeath;
+            FMODEvents.INSTANCE.PlayEvent(sound);
         }
     }
 }

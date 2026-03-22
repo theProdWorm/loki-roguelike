@@ -68,4 +68,8 @@ public class Audiomanager2 : MonoBehaviour
         CleanUp();
     }
 
+    public void PlayPlayerDeath()
+    {
+        
+    }
 }
