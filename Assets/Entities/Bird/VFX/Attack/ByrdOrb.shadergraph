@@ -89,6 +89,9 @@
         },
         {
             "m_Id": "c1d17f10f4e848219fee2a1cb7646b32"
+        },
+        {
+            "m_Id": "5b6b3e478f5d498d8236949b550dc49b"
         }
     ],
     "m_GroupDatas": [],
@@ -592,6 +595,21 @@
         "z": 0.0,
         "w": 0.0
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "1370cc82740d407ea1a8988dbe14e40a",
+    "m_Id": -1430489621,
+    "m_DisplayName": "Rotation Speed 2",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Rotation_Speed_2",
+    "m_StageCapability": 3,
+    "m_Value": 0.5,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
 }
 
 {
@@ -1292,6 +1310,101 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.SubGraphNode",
+    "m_ObjectId": "5b6b3e478f5d498d8236949b550dc49b",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Warp",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 498.0,
+            "y": -1088.0,
+            "width": 248.0,
+            "height": 351.00006103515627
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "969a050898e8402c912cafa5778d6053"
+        },
+        {
+            "m_Id": "7383161b0819477884f9cb914f5ab10d"
+        },
+        {
+            "m_Id": "8f8ddd96b41f421ba3fcc45771d8e4ea"
+        },
+        {
+            "m_Id": "1370cc82740d407ea1a8988dbe14e40a"
+        },
+        {
+            "m_Id": "e01c03f63ce54fbabe45f648de6a01d5"
+        },
+        {
+            "m_Id": "5d095c5975cf4abeb3fe81e59bfbf27b"
+        },
+        {
+            "m_Id": "d2375ea53df24f89b7ae8b2d699e6f33"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_SerializedSubGraph": "{\n    \"subGraph\": {\n        \"fileID\": -5475051401550479605,\n        \"guid\": \"993e8ef4e2aa5784c8e98471733b94fb\",\n        \"type\": 3\n    }\n}",
+    "m_PropertyGuids": [
+        "185f29fa-35b9-4cb8-973b-dbb0a713a973",
+        "f3ce442a-1ab9-470d-b33e-94cb78c019dc",
+        "a2769ea6-da88-4bef-a144-93753bc3fa6f",
+        "e1a4e3db-b818-4e5b-956f-bf2dbd41fc28",
+        "ac59be39-1ed9-46ae-81bf-09f6142c501d",
+        "c205c89e-f1d0-42ed-b26a-5b5a7a5c6cb8",
+        "3390b185-3fbf-49ee-ba3e-40a01485c85b"
+    ],
+    "m_PropertyIds": [
+        -1751829389,
+        -1555128232,
+        -202325068,
+        -1430489621,
+        28193653,
+        1658785670,
+        -2114570860
+    ],
+    "m_Dropdowns": [],
+    "m_DropdownSelectedEntries": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector3MaterialSlot",
+    "m_ObjectId": "5d095c5975cf4abeb3fe81e59bfbf27b",
+    "m_Id": 1658785670,
+    "m_DisplayName": "Directionality",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Directionality",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.ColorRGBMaterialSlot",
     "m_ObjectId": "61f02bfb577d4854bb8dc659033f33aa",
     "m_Id": 0,
@@ -1503,6 +1616,21 @@
     },
     "isMainColor": false,
     "m_ColorMode": 1
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "7383161b0819477884f9cb914f5ab10d",
+    "m_Id": -1555128232,
+    "m_DisplayName": "Voronoi Density 2",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Voronoi_Density_2",
+    "m_StageCapability": 3,
+    "m_Value": 5.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
 }
 
 {
@@ -1725,6 +1853,21 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "8f8ddd96b41f421ba3fcc45771d8e4ea",
+    "m_Id": -202325068,
+    "m_DisplayName": "Rotation Speed 1",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Rotation_Speed_1",
+    "m_StageCapability": 3,
+    "m_Value": 1.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
     "m_ObjectId": "932d47b12c91454ba49a21f861a35283",
     "m_Group": {
@@ -1757,6 +1900,21 @@
     "m_Property": {
         "m_Id": "deb8efbf82344389a2f45b65984d0377"
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "969a050898e8402c912cafa5778d6053",
+    "m_Id": -1751829389,
+    "m_DisplayName": "Voronoi Density 1",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Voronoi_Density_1",
+    "m_StageCapability": 3,
+    "m_Value": 2.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
 }
 
 {
@@ -2100,6 +2258,29 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector3MaterialSlot",
+    "m_ObjectId": "d2375ea53df24f89b7ae8b2d699e6f33",
+    "m_Id": 1,
+    "m_DisplayName": "Position",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Position",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector2MaterialSlot",
     "m_ObjectId": "d3b8368ac7dd44fb999fd7ee2d9770bf",
     "m_Id": 0,
@@ -2249,6 +2430,21 @@
         "x": 0.0,
         "y": 1.0
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "e01c03f63ce54fbabe45f648de6a01d5",
+    "m_Id": 28193653,
+    "m_DisplayName": "Remap Minimum",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Remap_Minimum",
+    "m_StageCapability": 3,
+    "m_Value": 0.5,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
 }
 
 {
