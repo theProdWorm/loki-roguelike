@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Runestones
+  m_Name: BrageStump
   m_Shader: {fileID: -6465566751694194690, guid: 653da5397687e3b4ebacc9aa3f769af8, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -25,7 +25,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 93d267013429fae4aa52d40d2570a109, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -49,7 +49,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 93d267013429fae4aa52d40d2570a109, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -73,6 +73,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture:
+        m_Texture: {fileID: 2800000, guid: 0d080a5f20d1f1b4bbdc160f1635da4b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2D:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -109,12 +113,16 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _DstBlendAlpha: 0
+    - _Edge_blur: 0.03
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Highlight_Size: 0.1
     - _Highlight_Strength: 2
+    - _Highlight_depth: 9.11
+    - _Highlight_strength: 5
+    - _Highlight_threshold: 3.7
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
@@ -123,6 +131,8 @@ Material:
     - _ReceiveShadows: 1
     - _Shadow_Size: 0
     - _Shadow_Strength: 0.5
+    - _Shadow_size: 0.4
+    - _Shadow_strength: 0.4
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -132,18 +142,20 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 1}
-    - _Base_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0}
-    - _Color: {r: 0.53773576, g: 0.53773576, b: 0.53773576, a: 1}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Base_Color: {r: 1, g: 1, b: 1, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Highlight_Camera_Influence: {r: 0, g: 0, b: 0.5, a: 0}
     - _Highlight_Color: {r: 1, g: 1, b: 1, a: 0}
+    - _Highlight_color: {r: 1, g: 1, b: 1, a: 0}
     - _Shadow_Camera_Influence: {r: 0, g: 0, b: 0, a: 0}
     - _Shadow_Color: {r: 0.509434, g: 0, b: 0, a: 0}
+    - _Shadow_color: {r: 0, g: 0.014995, b: 0.32075468, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &5701603676893674937
+--- !u!114 &6498334417524694255
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
