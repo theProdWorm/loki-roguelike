@@ -13,6 +13,8 @@ public class HomingProjectileAttack : ProjectileAttack
 
     protected override void FixedUpdate()
     {
+        base.FixedUpdate();
+        
         var rotation = Quaternion.LookRotation(target.position - transform.position, Vector3.up);
         var lerpRot = Quaternion.Lerp(transform.rotation,rotation , Time.fixedDeltaTime * turnRate);
         var rot = lerpRot.eulerAngles;
