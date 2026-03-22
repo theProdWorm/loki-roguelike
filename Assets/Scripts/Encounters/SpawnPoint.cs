@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Effects;
+using UnityEngine;
 using Entities;
 using Helpers;
 using UnityEngine.AI;
@@ -120,6 +121,9 @@ public class SpawnPoint : MonoBehaviour
     {
         GameObject wolf = Instantiate(_wolfPrefab, transform.position, transform.rotation);
         Entity entity = wolf.GetComponent<Entity>();
+        
+        GetComponent<Rustler>().Rustle(1f);
+        
         return entity;
         //TODO: OBJECTPOOL
     }
