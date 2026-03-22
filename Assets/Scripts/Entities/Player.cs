@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Audio;
 using Entities.Stats;
+using FMODUnity;
 using Gameplay.Input;
 using Unity.Collections;
 using UnityEngine;
@@ -525,7 +526,14 @@ namespace Entities
             else
                 Attack.Create(this, position, transform.rotation, attackStats);
 
-            var sound = FMODEvents.INSTANCE._playerAttack;
+            string attackName = attackStats.Prefab.name.ToLower();
+            EventReference sound;
+
+            if (attackName.Contains("switch"))
+                sound = FMODEvents.INSTANCE._playerSwitchIn;
+            else
+                sound = FMODEvents.INSTANCE._playerAttack;
+            
             FMODEvents.INSTANCE.PlayEvent(sound);
         }
 
@@ -550,7 +558,14 @@ namespace Entities
             else
                 Attack.Create(this, attackPoint, attackStats);
             
-            var sound = FMODEvents.INSTANCE._playerAttack;
+            string attackName = attackStats.Prefab.name.ToLower();
+            EventReference sound;
+
+            if (attackName.Contains("switch"))
+                sound = FMODEvents.INSTANCE._playerSwitchIn;
+            else
+                sound = FMODEvents.INSTANCE._playerAttack;
+            
             FMODEvents.INSTANCE.PlayEvent(sound);
         }
 
@@ -591,6 +606,9 @@ namespace Entities
 
         private void PerformDash(Vector3 dashPoint, bool animate)
         {
+            var sound = FMODEvents.INSTANCE._playerDash;
+            FMODEvents.INSTANCE.PlayEvent(sound);
+
             // Projected dash vector using the calculated offset from player center to front
             Vector3 dashVector = dashPoint - _rigidbody.position;
             float distance = dashVector.magnitude;
@@ -932,13 +950,7 @@ namespace Entities
             if (!context.performed)
                 return;
 
-            _inputBuffer.Add(() =>
-            {
-                var sound = FMODEvents.INSTANCE._playerDash;
-                FMODEvents.INSTANCE.PlayEvent(sound);
-                
-                return _dashAbilityTracker.TryUse();
-            });
+            _inputBuffer.Add(_dashAbilityTracker.TryUse);
         }
 
         public void SwitchInput(InputAction.CallbackContext context)
@@ -961,9 +973,6 @@ namespace Entities
                 foreach (var tracker in _switchAbilityTrackers)
                     tracker.Reset();
 
-                var sound = FMODEvents.INSTANCE._playerSwitchIn;
-                FMODEvents.INSTANCE.PlayEvent(sound);
-                
                 return true;
             });
         }
