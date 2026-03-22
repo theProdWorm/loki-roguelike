@@ -1704,6 +1704,10 @@ PrefabInstance:
       propertyPath: ragdollDuration
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1932451184444441319, guid: 054bf27e0e26af74dbee2aa55812c924, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2485099746850201545, guid: 054bf27e0e26af74dbee2aa55812c924, type: 3}
       propertyPath: CollisionModule.collidesWith.m_Bits
       value: 64
@@ -1714,15 +1718,15 @@ PrefabInstance:
       objectReference: {fileID: 1696118423}
     - target: {fileID: 2630600637449374201, guid: 054bf27e0e26af74dbee2aa55812c924, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2630600637449374201, guid: 054bf27e0e26af74dbee2aa55812c924, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2630600637449374201, guid: 054bf27e0e26af74dbee2aa55812c924, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 2909043636633576071, guid: 054bf27e0e26af74dbee2aa55812c924, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1750,7 +1754,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4547739919307190125, guid: 054bf27e0e26af74dbee2aa55812c924, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6824195809774673961, guid: 054bf27e0e26af74dbee2aa55812c924, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1848,6 +1852,10 @@ PrefabInstance:
     - target: {fileID: 7981152736141391101, guid: 054bf27e0e26af74dbee2aa55812c924, type: 3}
       propertyPath: 'managedReferences[4765442117938971561].m_Value.Array.data[1]'
       value: Hole
+      objectReference: {fileID: 0}
+    - target: {fileID: 8505425013275848820, guid: 054bf27e0e26af74dbee2aa55812c924, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2359,11 +2367,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5860463367884849991, guid: 32f6a838a7312ed49b19642398ff701c, type: 3}
   m_PrefabInstance: {fileID: 1958571679}
   m_PrefabAsset: {fileID: 0}
---- !u!54 &1782388520 stripped
-Rigidbody:
-  m_CorrespondingSourceObject: {fileID: 2179091515267350455, guid: 32f6a838a7312ed49b19642398ff701c, type: 3}
-  m_PrefabInstance: {fileID: 1958571679}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1782388522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2376,7 +2379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1fe7e9895964f97a87dfbefad6d8c63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rigidbody: {fileID: 1782388520}
+  _rigidbody: {fileID: 0}
   _force: 500
   _horizontality: 0
   _forceDirection: 0
@@ -2538,6 +2541,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2179194264091995956, guid: 32f6a838a7312ed49b19642398ff701c, type: 3}
+      propertyPath: EntityBaseStats
+      value: 
+      objectReference: {fileID: 11400000, guid: 59291c7746b31bc41bc3ebbe9c96bef3, type: 2}
+    - target: {fileID: 2179194264091995956, guid: 32f6a838a7312ed49b19642398ff701c, type: 3}
       propertyPath: ragdollDuration
       value: 22222
       objectReference: {fileID: 0}
@@ -2653,6 +2660,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2099048900515470175, guid: a971f5a7cab47dd429835583349c201d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2099048900515470175, guid: a971f5a7cab47dd429835583349c201d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4715921622822401321, guid: a971f5a7cab47dd429835583349c201d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2749,6 +2764,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5838843801048430088, guid: a971f5a7cab47dd429835583349c201d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5838843801048430088, guid: a971f5a7cab47dd429835583349c201d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5870786806410763980, guid: a971f5a7cab47dd429835583349c201d, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -2764,6 +2787,14 @@ PrefabInstance:
     - target: {fileID: 6551288902505837234, guid: a971f5a7cab47dd429835583349c201d, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9076808353954427688, guid: a971f5a7cab47dd429835583349c201d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9076808353954427688, guid: a971f5a7cab47dd429835583349c201d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

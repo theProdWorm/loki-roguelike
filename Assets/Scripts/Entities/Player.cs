@@ -58,6 +58,8 @@ namespace Entities
     {
         public enum Character { Fenrir, Hel }
 
+        public static Player INSTANCE;
+        
         private static readonly int IS_MOVING = Animator.StringToHash("isMoving");
         private static readonly int DASH = Animator.StringToHash("dash");
         private static readonly int ATTACK = Animator.StringToHash("attack");
@@ -197,6 +199,8 @@ namespace Entities
         protected override void Awake()
         {
             base.Awake();
+
+            INSTANCE = this;
             
             _playerInput.SwitchCurrentActionMap("Dialogue");
             _playerInput.SwitchCurrentActionMap("UI");
@@ -255,6 +259,7 @@ namespace Entities
 
             //Sync the health UI at the start
             OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
+            OnPotionChargesChanged?.Invoke(_potionCharges, _maxPotionCharges);
             CharacterIndexChanged();
         }
 
@@ -311,7 +316,7 @@ namespace Entities
         public void SetDashing(bool isDashing) => _isDashing = isDashing;
         public void SetDashing() => _isDashing = true;
 
-        public float GetSwitchCooldown() => SwitchAbilityTracker.RemainingCooldownPercent;
+        public float GetSwitchCooldownPercent() => SwitchAbilityTracker.RemainingCooldownPercent;
         
         private void Update()
         {

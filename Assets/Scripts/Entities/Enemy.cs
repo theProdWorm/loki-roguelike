@@ -70,7 +70,7 @@ namespace Entities
             _skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
             materials = _skinnedMeshRenderer.materials;
             if (!PLAYER)
-                PLAYER = GameObject.FindGameObjectWithTag("Player");
+                PLAYER = Player.INSTANCE.gameObject;
 
             AiAgent.SetVariableValue("Target", PLAYER);
             AiAgent.SetVariableValue("Animator", GetComponent<Animator>());
