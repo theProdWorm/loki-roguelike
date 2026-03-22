@@ -88,6 +88,8 @@ namespace Entities
         [SerializeField] private float _targetLockAngleWeight;
         [SerializeField] private float _targetLockDistanceWeight;
 
+        [SerializeField] private bool _useCameraDirection = true;
+
         [Header("Collision")]
         [SerializeField] private CapsuleCollider _collider;
 
@@ -410,11 +412,20 @@ namespace Entities
             
             List<float> distances = new();
             List<float> angles = new();
-            
-            var cameraForward = _camera.transform.forward;
-            var downProjection = Vector3.Project(cameraForward, Vector3.up);
 
-            var forwardDirection = (cameraForward - downProjection).normalized;
+            Vector3 forwardDirection;
+
+            if (_useCameraDirection)
+            {
+                var cameraForward = _camera.transform.forward;
+                var downProjection = Vector3.Project(cameraForward, Vector3.up);
+
+                forwardDirection = (cameraForward - downProjection).normalized;
+            }
+            else
+            {
+                forwardDirection = transform.forward;
+            }
             
             var validEnemies = enemies.Where(enemy =>
             {
@@ -469,17 +480,26 @@ namespace Entities
         {
             LoseControl();
             var target = FindTarget();
-            
-            var cameraForward = _camera.transform.forward;
-            var downProjection = Vector3.Project(cameraForward, Vector3.up);
 
-            var forwardDirection = (cameraForward - downProjection).normalized;
-            
-            _targetPos = target ? target.position : transform.position + forwardDirection * 10f;
+            if (_useCameraDirection)
+            {
+                var cameraForward = _camera.transform.forward;
+                var downProjection = Vector3.Project(cameraForward, Vector3.up);
+
+                var forwardDirection = (cameraForward - downProjection).normalized;
+                
+                _targetPos = target ? target.position : transform.position + forwardDirection * 10f;
+            }
+            else
+            {
+                _targetPos = target ? target.position : transform.position + transform.forward * 10f;
+            }
             _targetPos.y = transform.position.y;
 
             _currentAbility = ability;
             _currentAbilityUseTimes = useTimes;
+            
+            transform.LookAt(_targetPos);
 
             CurrentAnimator.SetTrigger(animatorHash);
         }
@@ -496,9 +516,7 @@ namespace Entities
                 _damage,
                 _critChance,
                 _critDamage);
-
-            transform.LookAt(_targetPos);
-
+            
             var position = attackPoint.position;
 
             if (_currentAbility.Burst)
