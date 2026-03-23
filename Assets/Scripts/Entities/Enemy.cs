@@ -25,6 +25,7 @@ namespace Entities
 
         private UIEnemyHealth _healthBar;
         private Animator animator;
+        private Animator childAnimator;
         private Vector3 prevPos = Vector3.zero;
         private float prevDot = 0;
         private BehaviorGraphAgent AiAgent;
@@ -94,6 +95,11 @@ namespace Entities
                     }
                     else throw new NullReferenceException();
 
+                    break;
+                }
+                case EncounterManager.EnemyTypes.BirdOnBird:
+                {
+                    childAnimator = GetComponentInChildren<Animator>();
                     break;
                 }
             }
@@ -271,6 +277,7 @@ namespace Entities
 
             AiAgent.SetVariableValue("Frozen", true);
             animator.SetFloat(MOVE_SPEED, 0);
+            navAgent.enabled = false;
 
             _iceBlockInstance = Instantiate(_iceBlockPrefab, transform.position, transform.rotation)
                 .GetComponent<IceBlock>();
@@ -284,6 +291,7 @@ namespace Entities
             
             AiAgent.SetVariableValue("Frozen", false);
             animator.SetFloat(MOVE_SPEED, 1);
+            navAgent.enabled = true;
             
             _iceBlockInstance.Shatter();
             _frozen = false;
@@ -296,6 +304,11 @@ namespace Entities
             
             float animationSpeed = _animationSpeed * _speedMultiplier;
             animator.SetFloat(MOVE_SPEED, animationSpeed);
+            if (type == EncounterManager.EnemyTypes.BirdOnBird)
+            {
+                childAnimator.SetFloat(ATTACK_SPEED, animationSpeed);
+                return;
+            }
             animator.SetFloat(ATTACK_SPEED, animationSpeed);
         }
         public override void RemoveSpeedMultiplier(float amount)
@@ -305,6 +318,11 @@ namespace Entities
             
             float animationSpeed = _animationSpeed * _speedMultiplier;
             animator.SetFloat(MOVE_SPEED, animationSpeed);
+            if (type == EncounterManager.EnemyTypes.BirdOnBird)
+            {
+                childAnimator.SetFloat(ATTACK_SPEED, animationSpeed);
+                return;
+            }
             animator.SetFloat(ATTACK_SPEED, animationSpeed);
         }
     }
