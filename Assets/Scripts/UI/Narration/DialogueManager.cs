@@ -16,7 +16,7 @@ namespace UI.Narration
         [SerializeField] private TextMeshProUGUI _dialogueTMP;
         [SerializeField] private TextMeshProUGUI _speakerTMP;
         [SerializeField] private Image _speakerBackground;
-        [SerializeField] private TextMeshProUGUI _nextIndicator;
+        [SerializeField] private GameObject _nextIndicator;
 	    [SerializeField] private FMODEvents _fmodEvents;
 
         [SerializeField] private GameObject _hud;
@@ -60,7 +60,7 @@ namespace UI.Narration
             if (INSTANCE._hud) 
                 INSTANCE._hud.SetActive(false);
             
-            INSTANCE._nextIndicator.enabled = INSTANCE._dialogue.Lines.Length > 1;
+            INSTANCE._nextIndicator.SetActive(INSTANCE._dialogue.Lines.Length > 1);
             INSTANCE._slowWriteCoroutine = INSTANCE.StartCoroutine(SlowWriteText(dialogue.Lines[0]));
 
             if (!INSTANCE._dialogue.IsVoiced)
@@ -95,7 +95,7 @@ namespace UI.Narration
             }
             else if (DIALOGUE_PAGE < INSTANCE._dialogue.Lines.Length - 1)
             { // Advance to next line
-                INSTANCE._nextIndicator.enabled = DIALOGUE_PAGE < INSTANCE._dialogue.Lines.Length - 2;
+                INSTANCE._nextIndicator.SetActive(DIALOGUE_PAGE < INSTANCE._dialogue.Lines.Length - 2);
                 
                 var line = INSTANCE._dialogue.Lines[++DIALOGUE_PAGE];
                 INSTANCE._slowWriteCoroutine = INSTANCE.StartCoroutine(SlowWriteText(line));
