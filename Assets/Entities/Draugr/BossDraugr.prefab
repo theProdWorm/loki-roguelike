@@ -1235,6 +1235,7 @@ MonoBehaviour:
   canBeStaggered: 0
   HasSpawned: 0
   _iceBlockPrefab: {fileID: 0}
+  ImmuneToStatusEffects: 0
   ragdollDuration: 6
   dissolveDuration: 1
 --- !u!114 &4919910354261688550
@@ -1266,7 +1267,7 @@ MonoBehaviour:
           m_Value0: 5023668529737102000
           m_Value1: 8549000263383715842
         Name: AttackDelay
-        m_Value: 0.1
+        m_Value: 3
     - rid: 4525730027103060043
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -1399,6 +1400,12 @@ MonoBehaviour:
   OnIdle:
     m_PersistentCalls:
       m_Calls: []
+  OnWolfJump:
+    m_PersistentCalls:
+      m_Calls: []
+  OnWolfJumpEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5307327347796881616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1419,6 +1426,7 @@ MonoBehaviour:
   _navMeshAgentComponent: {fileID: 5228035748806818966}
   _bbPrefab: {fileID: 0}
   _wolfPrefab: {fileID: 0}
+  _bossWolfPrefab: {fileID: 0}
 --- !u!1 &2725723869450810358
 GameObject:
   m_ObjectHideFlags: 0
