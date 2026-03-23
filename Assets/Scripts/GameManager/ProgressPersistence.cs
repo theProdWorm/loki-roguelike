@@ -9,13 +9,15 @@ public class ProgressPersistence : MonoBehaviour
     public bool BeatBoss = false;
     public bool BeatBoss2 = false;
 
-    public int SpawnPersistence = 0;
+    public int SpawnPersistence = 0; //Determines where the player will spawn in the hub when returning from a branch
+
     public int TutorialProgression = 0;
     public int LeftBranchProgression = 0;
     public int RightBranchProgression = 0;
 
     //This will always know how long you've progressed in your current branch
     public int CurrentBranchProgression = 0;
+    public int CurrentBranch = 0;
 
     public void UnlockDialogue1() => FirstBranchDone = true;
     public void UnlockDialogue2() => SecondBranchDone = true;

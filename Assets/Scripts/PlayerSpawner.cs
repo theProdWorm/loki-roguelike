@@ -61,6 +61,49 @@ public class PlayerSpawner : MonoBehaviour
         PLAYER.SetDashing(false);
     }
 
+    [Tooltip("0 = Tutorial, 1 = Left Branch, 2 = Right Branch")]
+    public void ChangeCurrentBranch(int branch)
+    {
+        if (_progressPersistence == null)
+            _progressPersistence = FindFirstObjectByType<ProgressPersistence>();
+
+        switch (branch)
+        {
+            default:
+            case 0:
+                _progressPersistence.CurrentBranchProgression = _progressPersistence.TutorialProgression;
+                break;
+            case 1:
+                _progressPersistence.CurrentBranchProgression = _progressPersistence.LeftBranchProgression;
+                break;
+            case 2:
+                _progressPersistence.CurrentBranchProgression = _progressPersistence.RightBranchProgression;
+                break;
+        }
+    }
+
+    public void ChangeBranchProgression(int i)
+    {
+        if (_progressPersistence == null)
+            _progressPersistence = FindFirstObjectByType<ProgressPersistence>();
+
+        _progressPersistence.CurrentBranchProgression = i;
+
+        switch (_progressPersistence.CurrentBranch)
+        {
+            default:
+            case 0:
+                _progressPersistence.TutorialProgression = i;
+                break;
+            case 1:
+                _progressPersistence.LeftBranchProgression = i;
+                break;
+            case 2:
+                _progressPersistence.RightBranchProgression = i;
+                break;
+        }
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
