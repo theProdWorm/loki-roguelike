@@ -122,6 +122,9 @@ namespace UI
 
         public static void CreateDamageNumber(Transform position, int damage)
         {
+            if (damage == 0) 
+                return;
+            
             var text = textPool.Get();
             Vector3 rand = Random.insideUnitCircle*randOffset;
             Vector3 pos = new Vector3(position.position.x,position.position.y+2, position.position.z) + rand;
