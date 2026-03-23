@@ -50,7 +50,7 @@ public class EncounterManager : MonoBehaviour
     [SerializeField, Tooltip("Represented in decimal form"), Range(0, 1)]
     private float _percentageOfEnemiesToSpawnNextWave = 25;
 
-    [Header("Time Between Spawns")]
+    [Header("Time Between Spawns Per Wave")]
     [SerializeField]
     private float _minSpawnTime = .25f;
     [SerializeField]
@@ -66,7 +66,7 @@ public class EncounterManager : MonoBehaviour
     private bool _isEncounterCompleted = false;
     private bool _isSpawning = false;
 
-    private float _timeBetweenChecks = .25f;
+    private float _timeBetweenChecks = .1f;
     private float _t = 0f;
 
     private void OnDisable()
@@ -99,23 +99,24 @@ public class EncounterManager : MonoBehaviour
 
         if (_t >= _timeBetweenChecks)
         {
-            _t = 0;
 
+            //Time between waves matters
             if (_timeBetweenWaves != -1)
             {
                 _timeSinceLastWave += _t;
-
+                Debug.Log(_timeSinceLastWave + " / " + _timeBetweenWaves + ". _t = " + _t);
                 if (_timeSinceLastWave >= _timeBetweenWaves)
                 {
                     NextWave();
                 }
             }
-            Debug.Log(_amountOfEnemiesThisWave + ", " + _currentAmountOfEnemiesAlive);
+
             float _percentageOfEnemiesLeft = _currentAmountOfEnemiesAlive / _amountOfEnemiesThisWave;
             if (_percentageOfEnemiesLeft <= _percentageOfEnemiesToSpawnNextWave && _isSpawning == false)
             {
                 NextWave();
             }
+            _t = 0;
         }
     }
 
