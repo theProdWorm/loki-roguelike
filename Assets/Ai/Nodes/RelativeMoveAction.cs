@@ -21,11 +21,12 @@ namespace Unity.Behavior
         protected override Status OnStart()
         {
             _navMeshAgent = Agent.Value.GetComponentInChildren<NavMeshAgent>();
+            if (!_navMeshAgent || !_navMeshAgent.isOnNavMesh) return Status.Failure;
             if (RefreshDistance.Value < 0)
             {
                 RefreshDistance.Value = _navMeshAgent.stoppingDistance;
             }
-            return !_navMeshAgent ? Status.Failure : Status.Running;
+            return Status.Running;
         }
 
         private bool wait;
