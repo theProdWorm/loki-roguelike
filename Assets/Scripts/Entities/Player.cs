@@ -76,6 +76,8 @@ namespace Entities
         [SerializeField] private Transform _characterContainer;
         [SerializeField] private PlayerInput _playerInput;
 
+        [SerializeField] private float _invincibilityDuration;
+        
         [Tooltip("Amount of time (in seconds) in advance the player can press an input for it to count.")]
         [SerializeField] private float _inputBufferMargin;
 
@@ -186,6 +188,8 @@ namespace Entities
         private bool _hasControl = true;
         private float _controlLossDuration;
 
+        private float _remainingInvincibilityDuration;
+        
         private Coroutine _lungeCoroutine;
         private Vector3 _lungeForce;
 
@@ -357,6 +361,9 @@ namespace Entities
                 _controlLossDuration += Time.deltaTime;
             else
                 _controlLossDuration = 0;
+            
+            if (_remainingInvincibilityDuration > 0)
+                _remainingInvincibilityDuration -= Time.deltaTime;
         }
 
         private void MoveAndRotate()
@@ -809,6 +816,9 @@ namespace Entities
 
         public override int TakeDamage(int amount, Entity attacker)
         {
+            if (_remainingInvincibilityDuration > 0)
+                return 0;
+            
             int reducedDamage = Mathf.CeilToInt(amount * (1 - _damageReduction));
             int realDamage = base.TakeDamage(reducedDamage, attacker);
 
@@ -816,6 +826,8 @@ namespace Entities
 
             var sound = FMODEvents.INSTANCE._playerHit;
             FMODEvents.INSTANCE.PlayEvent(sound);
+            
+            _remainingInvincibilityDuration = _invincibilityDuration;
             
             return realDamage;
         }
