@@ -85,6 +85,7 @@ namespace Entities
 
         [Header("Movement")]
         [SerializeField] private float _animationLockMoveSpeedFadeDuration;
+        [SerializeField] private float _insideHoleSpeedMultiplier;
 
         [Header("Target Lock")]
         [SerializeField] private float _targetLockAngle;
@@ -184,10 +185,12 @@ namespace Entities
 
         private Vector3 _targetPos;
 
-        private bool _isDashing;
-        private bool _hasControl = true;
+        private bool  _isDashing;
+        private float _dashSpeed;
+        
+        private bool  _hasControl = true;
         private float _controlLossDuration;
-
+        
         private float _remainingInvincibilityDuration;
         
         private Coroutine _lungeCoroutine;
@@ -213,7 +216,6 @@ namespace Entities
 
         protected override void Start()
         {
-            #region StatsPersistence Initialization
             StatsPersistence _statsPersistence = FindFirstObjectByType<StatsPersistence>();
             if (_statsPersistence.isFenrir)
                 ActiveCharacter = Character.Fenrir;
@@ -226,7 +228,6 @@ namespace Entities
             if (_statsPersistence.HealthItemAmount > 0)
                 _potionCharges = _statsPersistence.HealthItemAmount;
 
-            #endregion
             SceneManager sceneManager = FindFirstObjectByType<SceneManager>();
             if (sceneManager != null)
                 sceneManager.OnSceneLoaded.AddListener(() =>
@@ -248,6 +249,8 @@ namespace Entities
             _originalMoveSpeed = _moveSpeed;
             _originalDashDistance = Vector3.Distance(transform.position, _dashPoint.position);
 
+            _dashSpeed = _originalDashDistance / _dashDuration;
+            
             InitializeAbilityTrackers();
             InitializeAttackPoints();
             InitializeAnimators();
@@ -380,8 +383,12 @@ namespace Entities
 
                 Vector3 movementX = _moveInput.x * rightDirection;
                 Vector3 movementZ = _moveInput.y * forwardDirection;
-
-                movement = _moveSpeed * (movementX + movementZ).normalized;
+                
+                bool aboveHole = Physics.Raycast(transform.position,
+                    Vector3.down, 10f, _holeLayer);
+                
+                float speed = _moveSpeed * (aboveHole ? _insideHoleSpeedMultiplier : 1);
+                movement = speed * (movementX + movementZ).normalized;
             }
             else if (_isDashing)
             {
@@ -546,7 +553,7 @@ namespace Entities
             else
                 sound = FMODEvents.INSTANCE._playerAttack;
             
-            FMODEvents.INSTANCE.PlayEvent(sound);
+            FMODEvents.INSTANCE.PlayEvent(sound, transform.position);
         }
 
         public void PerformAttackParented(Transform attackPoint)
@@ -578,7 +585,7 @@ namespace Entities
             else
                 sound = FMODEvents.INSTANCE._playerAttack;
             
-            FMODEvents.INSTANCE.PlayEvent(sound);
+            FMODEvents.INSTANCE.PlayEvent(sound, transform.position);
         }
 
         public void PerformAttackLunge()
@@ -619,8 +626,8 @@ namespace Entities
         private void PerformDash(Vector3 dashPoint, bool animate)
         {
             var sound = FMODEvents.INSTANCE._playerDash;
-            FMODEvents.INSTANCE.PlayEvent(sound);
-
+            FMODEvents.INSTANCE.PlayEvent(sound, transform.position);
+            
             // Projected dash vector using the calculated offset from player center to front
             Vector3 dashVector = dashPoint - _rigidbody.position;
             float distance = dashVector.magnitude;
@@ -628,114 +635,123 @@ namespace Entities
             // Distance from center of player to the front collision point
             Vector3 collisionPointOffset =
                 dashVector.normalized * (0.02f + _collider.radius * 2);
-
-            LayerMask holeAndWall = _wallLayer | _holeLayer;
-
-            var commands = new NativeArray<RaycastCommand>(1, Allocator.Persistent);
-            var hits = new NativeArray<RaycastHit>(3, Allocator.Persistent);
-            QueryParameters parameters =
-                new QueryParameters(holeAndWall, true, QueryTriggerInteraction.Ignore, true);
-            commands[0] = new RaycastCommand(transform.position, dashVector.normalized, parameters,
-                distance);
-            RaycastCommand.ScheduleBatch(commands, hits, 1, 3).Complete();
-
-            hits.Sort(Comparer<RaycastHit>.Create((a, b) => a.distance.CompareTo(b.distance)));
-
-            //int closestWall = -1;
-            int firstHit = -1;
-            int hitCount = 0;
-            bool hitCollider = false;
-            List<Vector3> hitPoints = new List<Vector3>();
-            for (int i = 1; i < hits.Length; i++)
+            
+            bool hitWall = Physics.Raycast(transform.position, dashVector, out var rHit, distance, _wallLayer);
+            if (hitWall)
             {
-
-                if (hits[i].collider)
-                {
-                    if (!hitCollider)
-                    {
-                        firstHit = i;
-                        hitCollider = true;
-                    }
-                    hitPoints.Add(hits[i].point);
-                    hitCount++;
-                }
-                else continue;
-                if (1 << hits[i].collider.gameObject.layer == _wallLayer)
-                {
-                    //closestWall = i;
-                    if (i % 2 == 0)
-                    {
-                        Debug.Log("Wall in hole");
-                        dashPoint = hits[i - 1].point - collisionPointOffset;
-                        goto coroutine;
-                    }
-                    dashPoint = hits[i].point - collisionPointOffset;
-                    goto coroutine;
-                }
+                var wallDistance = rHit.distance;
+                dashVector = dashVector.normalized * wallDistance;
+                
+                dashPoint = transform.position + dashVector - collisionPointOffset;
             }
-
-            Debug.Log(hitCount);
-
-            /*if (closestWall == 0)
-            {
-                dashPoint = hits[0].point-collisionPointOffset;
-                goto coroutine;
-            }*/
-
-            if (firstHit == -1)
-            {
-                goto coroutine;
-            }
-            if (hitCount == 3)
-            {
-                dashPoint = hitPoints[hitCount - 1] - collisionPointOffset;
-            }
-            else if (hitCount == 2)
-            {
-                dashPoint = hitPoints[hitCount - 1] + collisionPointOffset;
-            }
-            else if (hitCount == 1)
-            {
-                Ray backRay = new(hitPoints[0] + dashVector.normalized * distance, -dashVector.normalized);
-                if (!hits[firstHit].collider.Raycast(backRay, out RaycastHit hit, 500))
-                {
-                    dashPoint = hitPoints[0] - collisionPointOffset;
-                    goto coroutine;
-                }
-                Vector3 holeBack = hit.point;
-                float holeDiameter = Vector3.Distance(hitPoints[0], holeBack);
-
-                if (holeDiameter > 300) goto coroutine;
-                float dashDistance = Vector3.Distance(hitPoints[0], dashPoint);
-                float fraction = dashDistance / holeDiameter;
-                Debug.LogWarning(fraction);
-                if (fraction > _dashHoleSnapFraction)
-                {
-                    dashPoint = hit.point + collisionPointOffset;
-
-                }
-                else
-                {
-                    dashPoint = hitPoints[0] - collisionPointOffset;
-                    goto coroutine;
-                }
-            }
-
-            coroutine:
-            commands.Dispose();
-            hits.Dispose();
-            if (Vector3.Distance(transform.position, dashPoint) < .5f)
-            {
-                Debug.LogWarning("Skipped dash");
-                return;
-            }
+            
+            // LayerMask holeAndWall = _wallLayer | _holeLayer;
+            //
+            // var commands = new NativeArray<RaycastCommand>(1, Allocator.Persistent);
+            // var hits = new NativeArray<RaycastHit>(3, Allocator.Persistent);
+            // QueryParameters parameters =
+            //     new QueryParameters(holeAndWall, true, QueryTriggerInteraction.Ignore, true);
+            // commands[0] = new RaycastCommand(transform.position, dashVector.normalized, parameters,
+            //     distance);
+            // RaycastCommand.ScheduleBatch(commands, hits, 1, 3).Complete();
+            //
+            // hits.Sort(Comparer<RaycastHit>.Create((a, b) => a.distance.CompareTo(b.distance)));
+            //
+            // //int closestWall = -1;
+            // int firstHit = -1;
+            // int hitCount = 0;
+            // bool hitCollider = false;
+            // List<Vector3> hitPoints = new List<Vector3>();
+            // for (int i = 1; i < hits.Length; i++)
+            // {
+            //
+            //     if (hits[i].collider)
+            //     {
+            //         if (!hitCollider)
+            //         {
+            //             firstHit = i;
+            //             hitCollider = true;
+            //         }
+            //         hitPoints.Add(hits[i].point);
+            //         hitCount++;
+            //     }
+            //     else continue;
+            //     if (1 << hits[i].collider.gameObject.layer == _wallLayer)
+            //     {
+            //         //closestWall = i;
+            //         if (i % 2 == 0)
+            //         {
+            //             Debug.Log("Wall in hole");
+            //             dashPoint = hits[i - 1].point - collisionPointOffset;
+            //             goto coroutine;
+            //         }
+            //         dashPoint = hits[i].point - collisionPointOffset;
+            //         goto coroutine;
+            //     }
+            // }
+            //
+            // Debug.Log(hitCount);
+            //
+            // /*if (closestWall == 0)
+            // {
+            //     dashPoint = hits[0].point-collisionPointOffset;
+            //     goto coroutine;
+            // }*/
+            //
+            // if (firstHit == -1)
+            // {
+            //     goto coroutine;
+            // }
+            // if (hitCount == 3)
+            // {
+            //     dashPoint = hitPoints[hitCount - 1] - collisionPointOffset;
+            // }
+            // else if (hitCount == 2)
+            // {
+            //     dashPoint = hitPoints[hitCount - 1] + collisionPointOffset;
+            // }
+            // else if (hitCount == 1)
+            // {
+            //     Ray backRay = new(hitPoints[0] + dashVector.normalized * distance, -dashVector.normalized);
+            //     if (!hits[firstHit].collider.Raycast(backRay, out RaycastHit hit, 500))
+            //     {
+            //         dashPoint = hitPoints[0] - collisionPointOffset;
+            //         goto coroutine;
+            //     }
+            //     Vector3 holeBack = hit.point;
+            //     float holeDiameter = Vector3.Distance(hitPoints[0], holeBack);
+            //
+            //     if (holeDiameter > 300) goto coroutine;
+            //     float dashDistance = Vector3.Distance(hitPoints[0], dashPoint);
+            //     float fraction = dashDistance / holeDiameter;
+            //     Debug.LogWarning(fraction);
+            //     if (fraction > _dashHoleSnapFraction)
+            //     {
+            //         dashPoint = hit.point + collisionPointOffset;
+            //
+            //     }
+            //     else
+            //     {
+            //         dashPoint = hitPoints[0] - collisionPointOffset;
+            //         goto coroutine;
+            //     }
+            // }
+            //
+            // commands.Dispose();
+            // hits.Dispose();
+            //coroutine:
+            // if (Vector3.Distance(transform.position, dashPoint) < .5f)
+            // {
+            //     Debug.LogWarning("Skipped dash");
+            //     return;
+            // }
 
             if (_dashCoroutine != null)
             {
                 StopCoroutine(_dashCoroutine);
                 _moveSpeed = _originalMoveSpeed;
             }
-            Debug.DrawLine(dashPoint, dashPoint + Vector3.up * 100, Color.magenta, 10f);
+            
             _dashCoroutine = StartCoroutine(DashCoroutine(dashPoint, animate));
         }
 
@@ -749,22 +765,21 @@ namespace Entities
             SetDashing(true);
             LoseControl();
             
-            int defaultPlayerLayer = gameObject.layer;
-
-            int dashingPlayerLayer = _dashingPlayerLayer;
-            int dashLayer = 0;
-            while ((dashingPlayerLayer >>= 1) > 0)
-                dashLayer++;
-
-            gameObject.layer = dashLayer;
+            // int defaultPlayerLayer = gameObject.layer;
+            //
+            // int dashingPlayerLayer = _dashingPlayerLayer;
+            // int dashLayer = 0;
+            // while ((dashingPlayerLayer >>= 1) > 0)
+            //     dashLayer++;
+            //
+            // gameObject.layer = dashLayer;
 
             float actualDashDistance = Vector3.Distance(transform.position, dashPoint);
             float dashDistanceFraction = Mathf.Clamp01(actualDashDistance / _originalDashDistance);
 
             float dashDuration = _dashDuration * dashDistanceFraction;
 
-            float dashSpeed = actualDashDistance / dashDuration;
-            _moveSpeed = dashSpeed;
+            _moveSpeed = _dashSpeed;
 
             float elapsedTime = 0;
             while (elapsedTime < dashDuration)
@@ -784,34 +799,28 @@ namespace Entities
                 elapsedTime += Time.fixedDeltaTime;
                 yield return new WaitForFixedUpdate();
             }
-            
-            //yield return new WaitForSeconds(dashDuration);
 
-            gameObject.layer = defaultPlayerLayer;
+            //gameObject.layer = defaultPlayerLayer;
 
             OnDashFinished?.Invoke();
             
             SetDashing(false);
             GainControl();
 
-            float dashFadeDuration = dashDuration * _dashFade;
-
-            if (dashFadeDuration <= 0)
-            {
-                _moveSpeed = _originalMoveSpeed;
-                yield break;
-            }
-
             elapsedTime = 0;
-            while (elapsedTime < dashFadeDuration)
+            while (elapsedTime < _dashFade)
             {
-                elapsedTime += Time.deltaTime;
-                float t = Mathf.Clamp01(elapsedTime / dashFadeDuration);
+                elapsedTime += Time.fixedDeltaTime;
+                float t = Mathf.Clamp01(elapsedTime / _dashFade);
 
-                _moveSpeed = Mathf.Lerp(dashSpeed, _originalMoveSpeed, t);
+                Debug.Log($"fading. speed: {_moveSpeed}");
+                
+                _moveSpeed = Mathf.Lerp(_dashSpeed, _originalMoveSpeed, t);
 
-                yield return null;
+                yield return new WaitForFixedUpdate();
             }
+            
+            _moveSpeed = _originalMoveSpeed;
         }
 
         public override int TakeDamage(int amount, Entity attacker)
@@ -825,7 +834,7 @@ namespace Entities
             OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
 
             var sound = FMODEvents.INSTANCE._playerHit;
-            FMODEvents.INSTANCE.PlayEvent(sound);
+            FMODEvents.INSTANCE.PlayEvent(sound, transform.position);
             
             _remainingInvincibilityDuration = _invincibilityDuration;
             
@@ -956,7 +965,7 @@ namespace Entities
                 OnPotionDrunk?.Invoke();
 
                 var sound = FMODEvents.INSTANCE._potionConsume;
-                FMODEvents.INSTANCE.PlayEvent(sound);
+                FMODEvents.INSTANCE.PlayEvent(sound, transform.position);
 
                 return true;
             });
@@ -1003,7 +1012,7 @@ namespace Entities
             _statsPersistence.HealthItemAmount = 0;
             
             var sound = FMODEvents.INSTANCE._playerDeath;
-            FMODEvents.INSTANCE.PlayEvent(sound);
+            FMODEvents.INSTANCE.PlayEvent(sound, transform.position);
         }
     }
 }

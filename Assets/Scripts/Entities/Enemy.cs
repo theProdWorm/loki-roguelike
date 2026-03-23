@@ -131,7 +131,7 @@ namespace Entities
                 EncounterManager.EnemyTypes.Wolf => FMODEvents.INSTANCE._draugrSwing
             };
             
-            FMODEvents.INSTANCE.PlayEvent(sound);
+            FMODEvents.INSTANCE.PlayEvent(sound, transform.position);
         }
         
         private float dissolveValue;

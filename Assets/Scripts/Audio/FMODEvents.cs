@@ -93,7 +93,7 @@ namespace Audio
         public static void SetLowHealth(bool isLowHealth) => INSTANCE._isPlayerLowHealth = isLowHealth;
         
         public void SetNextPosition(Transform reference) => _nextPosition = reference.position;
-        public void SetNextPosition(Vector3 position) => _nextPosition = position;
+        
         public void PlayEvent(string eventName)
         {
             var instance = RuntimeManager.CreateInstance(eventName);
@@ -104,7 +104,7 @@ namespace Audio
             instance.start();
         }
 
-        public void PlayEvent(EventReference eventReference)
+        public void PlayEvent(EventReference eventReference, Vector3 position)
         {
             string eventName = eventReference.Path;
             var instance = RuntimeManager.CreateInstance(eventReference);

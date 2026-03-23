@@ -7210,13 +7210,16 @@ MonoBehaviour:
         m_CallState: 2
   _characterContainer: {fileID: 8848846395872390570}
   _playerInput: {fileID: 3960114018095941365}
+  _invincibilityDuration: 0
   _inputBufferMargin: 0.05
   _lowHealthThreshold: 0.35
   _animationLockMoveSpeedFadeDuration: 0.05
-  _targetLockAngle: 40
+  _insideHoleSpeedMultiplier: 0.75
+  _targetLockAngle: 50
   _targetLockMaxDistance: 15
   _targetLockAngleWeight: 1
   _targetLockDistanceWeight: 1
+  _useCameraDirection: 1
   _collider: {fileID: 6590917616300736346}
   _wallLayer:
     serializedVersion: 2
@@ -7226,13 +7229,13 @@ MonoBehaviour:
     m_Bits: 512
   _lookWeight: 0.2
   _distanceWeight: 3
-  _potionHealAmount: 25
-  _potionCost: 100
+  _potionHealAmount: 35
+  _potionCost: 150
   _maxPotionCharges: 300
   _dashAbility: {fileID: 11400000, guid: 8555943e95a694c4d8ff2084bdf30825, type: 2}
   _dashPoint: {fileID: 3132654603202236795}
   _dashDuration: 0.1
-  _dashFade: 0
+  _dashFade: 0.1
   _dashHoleSnapFraction: 0.5
   _dashingPlayerLayer:
     serializedVersion: 2
@@ -11374,6 +11377,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnWolfJump:
+    m_PersistentCalls:
+      m_Calls: []
+  OnWolfJumpEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &6925140968386920682
 GameObject:
   m_ObjectHideFlags: 0
@@ -13263,6 +13272,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnIdle:
+    m_PersistentCalls:
+      m_Calls: []
+  OnWolfJump:
+    m_PersistentCalls:
+      m_Calls: []
+  OnWolfJumpEnd:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &8602566569896497470
