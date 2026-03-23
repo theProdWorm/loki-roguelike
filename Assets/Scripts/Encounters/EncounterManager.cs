@@ -133,6 +133,7 @@ public class EncounterManager : MonoBehaviour
 
     private void NextWave()
     {
+        _timeSinceLastWave = 0;
         if (_currentWaveIndex >= _enemyWaves.Count - 1)
         {
             if (_enemiesAlive.Count <= 0)
