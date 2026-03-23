@@ -7,6 +7,7 @@ using System.Linq;
 using Audio;
 using Entities.Stats;
 using FMODUnity;
+using GameManager;
 using Gameplay.Input;
 using Unity.Collections;
 using UnityEngine;
@@ -201,8 +202,6 @@ namespace Entities
         private List<IInteractable> _interactables = new();
         private IInteractable _currentInteractable;
 
-        private StatsPersistence _statsPersistence;
-
         protected override void Awake()
         {
             base.Awake();
@@ -216,25 +215,24 @@ namespace Entities
 
         protected override void Start()
         {
-            StatsPersistence _statsPersistence = FindFirstObjectByType<StatsPersistence>();
-            if (_statsPersistence.isFenrir)
+            if (StatsPersistence.IsFenrir)
                 ActiveCharacter = Character.Fenrir;
             else
                 ActiveCharacter = Character.Hel;
 
-            if (_statsPersistence.PlayerHealth > 0)
-                _currentHealth = _statsPersistence.PlayerHealth;
+            if (StatsPersistence.PlayerHealth > 0)
+                _currentHealth = StatsPersistence.PlayerHealth;
 
-            if (_statsPersistence.HealthItemAmount > 0)
-                _potionCharges = _statsPersistence.HealthItemAmount;
+            if (StatsPersistence.HealthItemAmount > 0)
+                _potionCharges = StatsPersistence.HealthItemAmount;
 
             SceneManager sceneManager = FindFirstObjectByType<SceneManager>();
             if (sceneManager != null)
                 sceneManager.OnSceneLoaded.AddListener(() =>
                 {
-                    _statsPersistence.PlayerHealth = _currentHealth;
-                    _statsPersistence.HealthItemAmount = _potionCharges;
-                    _statsPersistence.isFenrir = ActiveCharacter == Character.Fenrir;
+                    StatsPersistence.PlayerHealth = _currentHealth;
+                    StatsPersistence.HealthItemAmount = _potionCharges;
+                    StatsPersistence.IsFenrir = ActiveCharacter == Character.Fenrir;
                 });
 
             _rigidbody.maxAngularVelocity = 0;
@@ -813,8 +811,6 @@ namespace Entities
                 elapsedTime += Time.fixedDeltaTime;
                 float t = Mathf.Clamp01(elapsedTime / _dashFade);
 
-                Debug.Log($"fading. speed: {_moveSpeed}");
-                
                 _moveSpeed = Mathf.Lerp(_dashSpeed, _originalMoveSpeed, t);
 
                 yield return new WaitForFixedUpdate();
@@ -867,6 +863,7 @@ namespace Entities
             }
 
             FMODEvents.SetCharacter(ActiveCharacter == Character.Hel);
+            StatsPersistence.IsFenrir = ActiveCharacter == Character.Fenrir;
         }
 
         public void UnlockHel() => HEL_UNLOCKED = true;
@@ -1008,8 +1005,8 @@ namespace Entities
         protected override void Die()
         {
             base.Die();
-            _statsPersistence.PlayerHealth = _maxHealth;
-            _statsPersistence.HealthItemAmount = 0;
+            StatsPersistence.PlayerHealth = _maxHealth;
+            StatsPersistence.HealthItemAmount = 0;
             
             var sound = FMODEvents.INSTANCE._playerDeath;
             FMODEvents.INSTANCE.PlayEvent(sound, transform.position);

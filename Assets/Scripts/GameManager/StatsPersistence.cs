@@ -1,8 +1,11 @@
 using UnityEngine;
 
-public class StatsPersistence : MonoBehaviour
+namespace GameManager
 {
-    public int PlayerHealth;
-    public int HealthItemAmount;
-    public bool isFenrir = true;
+    public class StatsPersistence : MonoBehaviour
+    {
+        public static int PlayerHealth;
+        public static int HealthItemAmount;
+        public static bool IsFenrir = true;
+    }
 }
