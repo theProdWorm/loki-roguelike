@@ -127,5 +127,11 @@ namespace UI
             
             _potion2Material.SetFloat(_brightnessProperty, potion2Charged ? _filledPotionBrightness : 1);
         }
+
+        private void OnDestroy()
+        {
+            _potion1Material.SetFloat(_brightnessProperty, 1);
+            _potion2Material.SetFloat(_brightnessProperty, 1);
+        }
     }
 }
