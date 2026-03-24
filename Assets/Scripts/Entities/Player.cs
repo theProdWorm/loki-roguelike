@@ -65,6 +65,7 @@ namespace Entities
         private static readonly int DASH = Animator.StringToHash("dash");
         private static readonly int ATTACK = Animator.StringToHash("attack");
         private static readonly int SWITCH = Animator.StringToHash("switch");
+        private static readonly int ATTACK_FLIP = Animator.StringToHash("attackFlip");
 
         private static bool HEL_UNLOCKED = true;
         
@@ -196,6 +197,8 @@ namespace Entities
         private Coroutine _lungeCoroutine;
         private Vector3 _lungeForce;
 
+        private bool _flipFenrirAttack;
+        
         private InputBuffer _inputBuffer;
 
         private List<IInteractable> _interactables = new();
@@ -272,7 +275,12 @@ namespace Entities
             _attackAbilityTrackers = new AttackAbilityTracker[]
             {
                 new(_fenrirAbilities.Attack, (ability, action) =>
-                    StartAttack(ability, action, ATTACK)),
+                {
+                    _flipFenrirAttack = !_flipFenrirAttack;
+                    _fenrirAnimator.SetBool(ATTACK_FLIP, _flipFenrirAttack);
+                    
+                    StartAttack(ability, action, ATTACK);
+                }),
                 new(_helAbilities.Attack, (ability, action) =>
                     StartAttack(ability, action, ATTACK))
             };
