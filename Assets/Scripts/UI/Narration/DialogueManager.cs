@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using FMOD.Studio;
 using Audio;
+using Entities;
 
 namespace UI.Narration
 {
@@ -14,7 +15,7 @@ namespace UI.Narration
         
         [SerializeField] private GameObject _dialoguePanel;
         [SerializeField] private TextMeshProUGUI _dialogueTMP;
-        [SerializeField] private TextMeshProUGUI _speakerTMP;
+        [SerializeField] private Image _speakerImage;
         [SerializeField] private Image _speakerBackground;
         [SerializeField] private GameObject _nextIndicator;
 	    [SerializeField] private FMODEvents _fmodEvents;
@@ -109,8 +110,13 @@ namespace UI.Narration
             var textColor = speaker.TextColor;
             textColor.a = 1f;
             
-            INSTANCE._speakerTMP.color = textColor;
-            INSTANCE._speakerTMP.text = speaker.name;
+            INSTANCE._speakerImage.color = textColor;
+            INSTANCE._speakerImage.sprite = speaker.Sprite;
+
+            if (speaker.name == "Daughter of Lies")
+                Player.INSTANCE.SetActiveCharacter(Player.Character.Hel);
+            else if (speaker.name == "Son of Lies")
+                Player.INSTANCE.SetActiveCharacter(Player.Character.Fenrir);
         }
 
         private static float GetLetterDelay(char targetChar)

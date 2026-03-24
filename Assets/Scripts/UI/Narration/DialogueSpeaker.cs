@@ -6,5 +6,6 @@ namespace UI.Narration
     public class DialogueSpeaker : ScriptableObject
     {
         public Color  TextColor;
+        public Sprite Sprite;
     }
 }
