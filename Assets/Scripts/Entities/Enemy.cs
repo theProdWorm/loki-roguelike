@@ -138,7 +138,7 @@ namespace Entities
         }
         
         private float dissolveValue;
-        private void Update()
+        protected override void Update()
         {
             if (IsDead)
             {
@@ -157,6 +157,8 @@ namespace Entities
                 }
                 return;
             }
+            
+            base.Update();
             
             _statusEffects.Update();
 
@@ -227,6 +229,8 @@ namespace Entities
             ragdollActive = true;
             ragdollTimeLeft = ragdollDuration;
             dissolveTimeLeft = dissolveDuration;
+
+            _statusEffects.Clear();
             
             Unfreeze();
         }

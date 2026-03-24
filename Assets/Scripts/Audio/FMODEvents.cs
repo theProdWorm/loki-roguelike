@@ -14,7 +14,8 @@ namespace Audio
         public EventReference _playerHit;
         public EventReference _playerMovement;
         public EventReference _playerDash;
-    
+        public EventReference _playerFootstep;
+        
         public EventReference _playerAttack;
         public EventReference _playerSwitchIn;
 
@@ -62,6 +63,11 @@ namespace Audio
             INSTANCE = this;
         }
 
+        private void Start()
+        {
+            RuntimeManager.StudioSystem.setParameterByName("Menu", 0);
+        }
+
         private void OnDestroy()
         {
             foreach (var instance in _eventInstances)
@@ -82,11 +88,12 @@ namespace Audio
                 }
                 
                 instance.setParameterByName("Player_Form", _isPlayerHel ? 1 : 0);
-                instance.setParameterByName("Player_LowHealth", _isPlayerLowHealth ? 1 : 0);
                 
                 if (DialogueManager.PLAYING_VOICED_DIALOGUE)
                     instance.setParameterByName(DialogueManager.VOICE_PARAMETER_NAME, DialogueManager.DIALOGUE_PAGE);
             }
+            
+            RuntimeManager.StudioSystem.setParameterByName("Player_LowHealth", _isPlayerLowHealth ? 1 : 0);
         }
 
         public static void SetCharacter(bool isPlayerHel) => INSTANCE._isPlayerHel = isPlayerHel;
@@ -113,6 +120,15 @@ namespace Audio
             _eventInstancesByName[eventName] = instance;
             
             instance.start();
+        }
+
+        public void CreateEvent(EventReference eventReference, out EventInstance instance)
+        {
+            string eventName = eventReference.Path;
+            instance = RuntimeManager.CreateInstance(eventReference);
+            
+            _eventInstances.Add(instance);
+            _eventInstancesByName[eventName] = instance;
         }
 
         public void StopEvent(string eventName)

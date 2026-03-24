@@ -12,7 +12,8 @@ namespace Helpers.Events
         public UnityEvent OnDeath;
         public UnityEvent OnIdle;
         public UnityEvent OnWolfJump;
-	public UnityEvent OnWolfJumpEnd;
+        public UnityEvent OnWolfJumpEnd;
+        public UnityEvent OnStepTaken;
 
         private void InvokeAttackStarted() => OnAttackStarted?.Invoke();
         private void InvokeAttackPerformed() => OnAttackPerformed?.Invoke();
@@ -22,5 +23,6 @@ namespace Helpers.Events
         private void InvokeIdle() => OnIdle?.Invoke();
         private void InvokeOnWolfJump() => OnWolfJump?.Invoke();
         private void InvokeOnWolfJumpEnd() => OnWolfJumpEnd?.Invoke();
+        private void InvokeStepTaken() => OnStepTaken?.Invoke();
     }
 }

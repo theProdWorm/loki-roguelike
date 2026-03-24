@@ -101,7 +101,6 @@ namespace Entities
         [SerializeField] private CapsuleCollider _collider;
 
         [SerializeField] private LayerMask _wallLayer;
-        [SerializeField] private LayerMask _holeLayer;
 
         [Header("Interaction")]
         [SerializeField] private float _lookWeight;
@@ -323,8 +322,10 @@ namespace Entities
 
         public float GetSwitchCooldownPercent() => SwitchAbilityTracker.RemainingCooldownPercent;
         
-        private void Update()
+        protected override void Update()
         {
+            base.Update();
+            
             _inputBuffer.Update();
             if (_hasControl)
                 _inputBuffer.NextInput();
@@ -382,10 +383,7 @@ namespace Entities
                 Vector3 movementX = _moveInput.x * rightDirection;
                 Vector3 movementZ = _moveInput.y * forwardDirection;
                 
-                bool aboveHole = Physics.Raycast(transform.position + Vector3.up * 10f,
-                    Vector3.down, 20f, _holeLayer);
-                
-                float speed = _moveSpeed * (aboveHole ? _insideHoleSpeedMultiplier : 1);
+                float speed = _moveSpeed * (_aboveHole ? _insideHoleSpeedMultiplier : 1);
                 movement = speed * (movementX + movementZ).normalized;
             }
             else if (_isDashing)
@@ -852,6 +850,15 @@ namespace Entities
             OnPotionChargesChanged?.Invoke(_potionCharges, _maxPotionCharges);
         }
 
+        public void SetActiveCharacter(Character character)
+        {
+            if (ActiveCharacter == character)
+                return;
+            
+            ActiveCharacter = character;
+            CharacterIndexChanged();
+        }
+        
         private void CharacterIndexChanged()
         {
             for (int i = 0; i < _characterContainer.childCount; i++)
@@ -867,6 +874,15 @@ namespace Entities
         }
 
         public void UnlockHel() => HEL_UNLOCKED = true;
+
+        public void TakeStep()
+        {
+            var sound = FMODEvents.INSTANCE._playerFootstep;
+            FMODEvents.INSTANCE.CreateEvent(sound, out var instance);
+
+            instance.setParameterByName("FloorType", _aboveHole ? 1 : 0);
+            instance.start();
+        }
         
         #region Collision
 

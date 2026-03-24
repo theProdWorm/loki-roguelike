@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Entities.Stats;
 using StatusEffects;
@@ -34,14 +35,24 @@ namespace Entities
         
         public bool IsDead;
 
+        protected LayerMask _holeLayer;
+        protected bool _aboveHole;
+
         protected virtual void Awake()
         {
             IsDead = false;
+            
+            _holeLayer = LayerMask.GetMask("Hole");
         }
 
         protected virtual void Start()
         {
             InitializeBaseStats();
+        }
+
+        protected virtual void Update()
+        {
+            _aboveHole = Physics.Raycast(transform.position + Vector3.up * 10f, Vector3.down, 20f, _holeLayer);
         }
 
         protected virtual void InitializeBaseStats()
