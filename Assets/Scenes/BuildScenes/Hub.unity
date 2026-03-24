@@ -25585,9 +25585,11 @@ GameObject:
   - component: {fileID: 489781650}
   - component: {fileID: 489781649}
   - component: {fileID: 489781648}
+  - component: {fileID: 489781652}
+  - component: {fileID: 489781651}
   m_Layer: 0
   m_Name: Runestone1
-  m_TagString: Untagged
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25696,6 +25698,42 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 489781646}
   m_Mesh: {fileID: 6927347771005792261, guid: 88e54e677f8b23c49b0053def099cae5, type: 3}
+--- !u!114 &489781651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 489781646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cdd1c6f6203178409de95432885bc10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _indicator: {fileID: 0}
+  _dialogueQueue:
+  - {fileID: 11400000, guid: cbf94e43007903248aef84c343fa628f, type: 2}
+--- !u!135 &489781652
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 489781646}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 3.73
+  m_Center: {x: -0.1549743, y: 2.124267, z: -1.99}
 --- !u!1 &492925486
 GameObject:
   m_ObjectHideFlags: 0
@@ -72970,7 +73008,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _indicator: {fileID: 0}
-  _dialogueQueue: []
+  _dialogueQueue:
+  - {fileID: 11400000, guid: 5963e4396ea64894db7ead8823ddca58, type: 2}
 --- !u!1001 &1421317017
 PrefabInstance:
   m_ObjectHideFlags: 0
