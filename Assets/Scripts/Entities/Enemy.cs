@@ -10,6 +10,7 @@ using UI;
 using Unity.Behavior;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 using UnityEngine.VFX;
 
 namespace Entities
@@ -46,6 +47,8 @@ namespace Entities
         public bool HasSpawned = true;
 
         [Header("Status Effects")]
+        [SerializeField] private Image _statusEffectIcon;
+        [SerializeField] private Image _statusEffectCountIcon;
         [SerializeField] private GameObject _iceBlockPrefab;
         [SerializeField] public bool ImmuneToStatusEffects;
         
@@ -62,7 +65,7 @@ namespace Entities
         protected override void Awake()
         {
             base.Awake();
-            _statusEffects = new(this);
+            _statusEffects = new(this, _statusEffectIcon, _statusEffectCountIcon);
             
             InitializeBaseStats();
             AiAgent = GetComponent<BehaviorGraphAgent>();

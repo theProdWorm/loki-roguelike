@@ -1,26 +1,49 @@
-using System;
-using System.Linq;
 using Entities;
-using UnityEngine.Events;
+using StatusEffects.Effects;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace StatusEffects
 {
     public class StatusEffectList
     {
+        private static StatusEffectIcons ICONS;
+        private static readonly Color TRANSPARENT = new Color(0, 0, 0, 0);
+        
         private readonly Enemy _enemy;
         private StatusEffect[] _effects;
 
+        private readonly Image _effectIcon;
+        private readonly Image _countIcon;
+        
         private int _capacity = 4;
         
         public int Count;
+
+        private float _totalPulseDuration;
+        private float _remainingPulseDuration;
+        private float _pulseFrequency;
+        private float _pulseIntensity;
         
         public StatusEffect this[int index] => _effects[index];
         
-        public StatusEffectList(Enemy enemy)
+        public StatusEffectList(Enemy enemy, Image effectIcon, Image countIcon)
         {
             _enemy = enemy;
             
             _effects = new StatusEffect[_capacity];
+            
+            if (!ICONS)
+                ICONS = Resources.Load<StatusEffectIcons>("Status Effect Icons");
+            
+            _effectIcon = effectIcon;
+            _countIcon = countIcon;
+            
+            _effectIcon.sprite = null;
+            _countIcon.sprite = null;
+
+            _effectIcon.color = TRANSPARENT;
+            _countIcon.color = TRANSPARENT;
         }
         
         public void Update()
@@ -33,6 +56,16 @@ namespace StatusEffects
                 if (effect.Expired)
                     Remove(effect);
             }
+
+            if (_remainingPulseDuration <= 0)
+                return;
+            
+            _remainingPulseDuration -= Time.deltaTime;
+            float t = _totalPulseDuration - _remainingPulseDuration;
+
+            float interval = _pulseIntensity * 0.5f;
+            float pulse = (1 + interval) + interval * Mathf.Sin(_pulseFrequency * t * 2 * Mathf.PI);
+            _effectIcon.rectTransform.localScale = pulse * new Vector3(1, 2, 1);
         }
 
         public int GetCount<T>() where T : StatusEffect
@@ -95,6 +128,37 @@ namespace StatusEffects
             
             _effects[Count++] = effect;
             effect.Apply(_enemy);
+            
+            if (effect is StatusEffect_Frozen)
+            {
+                _totalPulseDuration = ICONS.FrozenPulseDuration;
+                _remainingPulseDuration = ICONS.FrozenPulseDuration;
+                _pulseFrequency = ICONS.FrozenPulseFrequency;
+                _pulseIntensity = ICONS.FrozenPulseIntensity;
+                
+                _effectIcon.sprite = ICONS.FrozenIcon;
+                _countIcon.sprite = null;
+
+                _effectIcon.color = ICONS.MaxStackColor;
+                _countIcon.color = TRANSPARENT;
+                
+                return;
+            }
+            
+            _totalPulseDuration = ICONS.ChillPulseDuration;
+            _remainingPulseDuration = ICONS.ChillPulseDuration;
+            _pulseFrequency = ICONS.ChillPulseFrequency;
+            _pulseIntensity = ICONS.ChillPulseIntensity;
+            
+            int chillCount = GetCount<StatusEffect_Chill>();
+            float t = chillCount / 4f;
+            var color = Color.Lerp(ICONS.MinStackColor, ICONS.MaxStackColor, t);
+            
+            _countIcon.sprite = ICONS.NumberSprites[chillCount - 1];
+            _countIcon.color = color;
+            
+            _effectIcon.sprite = ICONS.ChillIcon;
+            _effectIcon.color = color;
         }
         
         public void Remove(StatusEffect effect)
@@ -111,6 +175,25 @@ namespace StatusEffects
             
             Rebuild();
             Count--;
+
+            if (effect is StatusEffect_Frozen || Count == 0)
+            {
+                _effectIcon.sprite = null;
+                _countIcon.sprite = null;
+                _effectIcon.color = TRANSPARENT;
+                _countIcon.color = TRANSPARENT;
+                return;
+            }
+            
+            int chillCount = GetCount<StatusEffect_Chill>();
+            float t = chillCount / 4f;
+            var color = Color.Lerp(ICONS.MinStackColor, ICONS.MaxStackColor, t);
+            
+            _countIcon.sprite = ICONS.NumberSprites[chillCount - 1];
+            _countIcon.color = color;
+            
+            _effectIcon.sprite = ICONS.ChillIcon;
+            _effectIcon.color = color;
         }
 
         public void RemoveAll<T>() where T : StatusEffect
@@ -128,6 +211,11 @@ namespace StatusEffects
             }
             
             Rebuild();
+        
+            _effectIcon.sprite = null;
+            _countIcon.sprite = null;
+            _effectIcon.color = TRANSPARENT;
+            _countIcon.color = TRANSPARENT;
         }
 
         public void Clear()
