@@ -256,7 +256,7 @@ namespace Entities
                 //animator.StopPlayback();
                 if(type != EncounterManager.EnemyTypes.BirdOnBird) animator.SetBool("Stagger",true);
                 AiAgent.SetVariableValue("Staggered", true);
-                AiAgent.SetVariableValue("Attacking", false);
+                if(type != EncounterManager.EnemyTypes.Wolf)AiAgent.SetVariableValue("Attacking", false);
             }
 
             return realDamage;
