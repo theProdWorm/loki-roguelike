@@ -11645,6 +11645,7 @@ MonoBehaviour:
   canBeStaggered: 1
   HasSpawned: 1
   _iceBlockPrefab: {fileID: 2423593729358401461, guid: 7a29c2975f767714291647e4049509b0, type: 3}
+  ImmuneToStatusEffects: 0
   ragdollDuration: 4
   dissolveDuration: 1
 --- !u!114 &7981152736141391101
@@ -11910,6 +11911,7 @@ MonoBehaviour:
   _navMeshAgentComponent: {fileID: 709134253858999479}
   _bbPrefab: {fileID: 0}
   _wolfPrefab: {fileID: 0}
+  _bossWolfPrefab: {fileID: 0}
 --- !u!1 &4638364899901315120
 GameObject:
   m_ObjectHideFlags: 0
@@ -12608,7 +12610,39 @@ VisualEffect:
     m_AnimationCurve:
       m_Array: []
     m_Gradient:
-      m_Array: []
+      m_Array:
+      - m_Value:
+          serializedVersion: 2
+          key0: {r: 11.984313, g: 0, b: 0, a: 0}
+          key1: {r: 1.1353018, g: 0.08875583, b: 0, a: 1}
+          key2: {r: 0, g: 0, b: 0, a: 0.7058824}
+          key3: {r: 0, g: 0, b: 0, a: 0}
+          key4: {r: 0, g: 0, b: 0, a: 0}
+          key5: {r: 0, g: 0, b: 0, a: 0}
+          key6: {r: 0, g: 0, b: 0, a: 0}
+          key7: {r: 0, g: 0, b: 0, a: 0}
+          ctime0: 8867
+          ctime1: 65150
+          ctime2: 0
+          ctime3: 0
+          ctime4: 0
+          ctime5: 0
+          ctime6: 0
+          ctime7: 0
+          atime0: 0
+          atime1: 26792
+          atime2: 38357
+          atime3: 65535
+          atime4: 0
+          atime5: 0
+          atime6: 0
+          atime7: 0
+          m_Mode: 0
+          m_ColorSpace: 1
+          m_NumColorKeys: 2
+          m_NumAlphaKeys: 4
+        m_Name: Teeth color
+        m_Overridden: 1
     m_NamedObject:
       m_Array: []
     m_Bool:
