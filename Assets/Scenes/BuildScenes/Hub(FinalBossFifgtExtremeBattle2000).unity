@@ -22794,6 +22794,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BossDraugr (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5085069257869210253, guid: 4140ec50d2282894aafbc61e3cfdd81a, type: 3}
+      propertyPath: ImmuneToStatusEffects
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -40469,6 +40473,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3569038683568460616, guid: a95636678c3dddd40bae9701ea7ce26a, type: 3}
+      propertyPath: Enemies.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3569038683568460616, guid: a95636678c3dddd40bae9701ea7ce26a, type: 3}
       propertyPath: 'Enemies.Array.data[2]'
       value: 0
       objectReference: {fileID: 0}
@@ -40482,16 +40490,28 @@ PrefabInstance:
       objectReference: {fileID: 1012104620}
     - target: {fileID: 5448028266526155889, guid: a95636678c3dddd40bae9701ea7ce26a, type: 3}
       propertyPath: _enemyWaves.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5448028266526155889, guid: a95636678c3dddd40bae9701ea7ce26a, type: 3}
       propertyPath: '_enemyWaves.Array.data[0]'
       value: 
       objectReference: {fileID: 1012104620}
     - target: {fileID: 5448028266526155889, guid: a95636678c3dddd40bae9701ea7ce26a, type: 3}
+      propertyPath: '_enemyWaves.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1493292761}
+    - target: {fileID: 5448028266526155889, guid: a95636678c3dddd40bae9701ea7ce26a, type: 3}
+      propertyPath: _wolfSpawnPoints.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5448028266526155889, guid: a95636678c3dddd40bae9701ea7ce26a, type: 3}
       propertyPath: _draugrSpawnPoints.Array.size
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 5448028266526155889, guid: a95636678c3dddd40bae9701ea7ce26a, type: 3}
+      propertyPath: '_wolfSpawnPoints.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1223940621}
     - target: {fileID: 5448028266526155889, guid: a95636678c3dddd40bae9701ea7ce26a, type: 3}
       propertyPath: '_draugrSpawnPoints.Array.data[0]'
       value: 
@@ -40519,7 +40539,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5231353859808227588, guid: a95636678c3dddd40bae9701ea7ce26a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1493292761}
   m_SourcePrefab: {fileID: 100100000, guid: a95636678c3dddd40bae9701ea7ce26a, type: 3}
 --- !u!1001 &813831757
 PrefabInstance:
@@ -47280,7 +47303,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5448028266526155889, guid: a95636678c3dddd40bae9701ea7ce26a, type: 3}
   m_PrefabInstance: {fileID: 812524703}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1493292759}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f32ffdae2b0e5934d80e7c2a83116bfa, type: 3}
@@ -47291,7 +47314,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3569038683568460616, guid: a95636678c3dddd40bae9701ea7ce26a, type: 3}
   m_PrefabInstance: {fileID: 812524703}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1493292759}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 09c5db9f2aa409b43a3c8d5293759230, type: 3}
@@ -59218,6 +59241,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1223862056}
   m_Mesh: {fileID: -410959170220184986, guid: 8d1f30bd1feb5f646a848c409d468190, type: 3}
+--- !u!1 &1223940621 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9091951355515360111, guid: 8ba8404aac8e27842896114fb823bc76, type: 3}
+  m_PrefabInstance: {fileID: 1408063524}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1224653103
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -68979,18 +69007,6 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3700538621924023200, guid: 0865e0029324943418be9c567579dc79, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 5.88556
-      objectReference: {fileID: 0}
-    - target: {fileID: 3700538621924023200, guid: 0865e0029324943418be9c567579dc79, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 5.88556
-      objectReference: {fileID: 0}
-    - target: {fileID: 3700538621924023200, guid: 0865e0029324943418be9c567579dc79, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 5.88556
-      objectReference: {fileID: 0}
-    - target: {fileID: 3700538621924023200, guid: 0865e0029324943418be9c567579dc79, type: 3}
       propertyPath: m_LocalPosition.x
       value: 380.49222
       objectReference: {fileID: 0}
@@ -71032,6 +71048,71 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &1408063524
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3218414063362760614, guid: 8ba8404aac8e27842896114fb823bc76, type: 3}
+      propertyPath: _enemyType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3218414063362760614, guid: 8ba8404aac8e27842896114fb823bc76, type: 3}
+      propertyPath: _wolfPrefab
+      value: 
+      objectReference: {fileID: 7265710432343011223, guid: 0865e0029324943418be9c567579dc79, type: 3}
+    - target: {fileID: 4138119148503039768, guid: 8ba8404aac8e27842896114fb823bc76, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 388.5698
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138119148503039768, guid: 8ba8404aac8e27842896114fb823bc76, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.0313871
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138119148503039768, guid: 8ba8404aac8e27842896114fb823bc76, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10.599009
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138119148503039768, guid: 8ba8404aac8e27842896114fb823bc76, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138119148503039768, guid: 8ba8404aac8e27842896114fb823bc76, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138119148503039768, guid: 8ba8404aac8e27842896114fb823bc76, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138119148503039768, guid: 8ba8404aac8e27842896114fb823bc76, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138119148503039768, guid: 8ba8404aac8e27842896114fb823bc76, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138119148503039768, guid: 8ba8404aac8e27842896114fb823bc76, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138119148503039768, guid: 8ba8404aac8e27842896114fb823bc76, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9091951355515360111, guid: 8ba8404aac8e27842896114fb823bc76, type: 3}
+      propertyPath: m_Name
+      value: WolfSpawn
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8ba8404aac8e27842896114fb823bc76, type: 3}
 --- !u!1001 &1408817642
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -77523,6 +77604,25 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1491065528}
   m_Mesh: {fileID: -2576880024519324526, guid: 4e40befed2105f54abc70c0eabf391cf, type: 3}
+--- !u!1 &1493292759 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5231353859808227588, guid: a95636678c3dddd40bae9701ea7ce26a, type: 3}
+  m_PrefabInstance: {fileID: 812524703}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1493292761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1493292759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09c5db9f2aa409b43a3c8d5293759230, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _name: 
+  Enemies: 00000000
 --- !u!1001 &1496714125
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -78792,6 +78892,10 @@ PrefabInstance:
     - target: {fileID: 2720522860840490669, guid: 4140ec50d2282894aafbc61e3cfdd81a, type: 3}
       propertyPath: m_Name
       value: BossDraugr
+      objectReference: {fileID: 0}
+    - target: {fileID: 5085069257869210253, guid: 4140ec50d2282894aafbc61e3cfdd81a, type: 3}
+      propertyPath: ImmuneToStatusEffects
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -109910,3 +110014,4 @@ SceneRoots:
   - {fileID: 482311839}
   - {fileID: 812524703}
   - {fileID: 1360011368}
+  - {fileID: 1408063524}
