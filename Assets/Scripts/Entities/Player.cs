@@ -382,8 +382,8 @@ namespace Entities
                 Vector3 movementX = _moveInput.x * rightDirection;
                 Vector3 movementZ = _moveInput.y * forwardDirection;
                 
-                bool aboveHole = Physics.Raycast(transform.position,
-                    Vector3.down, 10f, _holeLayer);
+                bool aboveHole = Physics.Raycast(transform.position + Vector3.up * 10f,
+                    Vector3.down, 20f, _holeLayer);
                 
                 float speed = _moveSpeed * (aboveHole ? _insideHoleSpeedMultiplier : 1);
                 movement = speed * (movementX + movementZ).normalized;
