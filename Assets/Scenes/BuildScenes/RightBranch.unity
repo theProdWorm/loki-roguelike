@@ -3627,6 +3627,14 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: e816f3e8cf2fa4448b8d45af0d7e39a2, type: 2}
+    - target: {fileID: 298860176699775887, guid: 2b44bc1ad9d4a4880af324c8fa92f767, type: 3}
+      propertyPath: canBeStaggered
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 298860176699775887, guid: 2b44bc1ad9d4a4880af324c8fa92f767, type: 3}
+      propertyPath: ImmuneToStatusEffects
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 307890764919403406, guid: 2b44bc1ad9d4a4880af324c8fa92f767, type: 3}
       propertyPath: Enemies.Array.size
       value: 4
@@ -96248,15 +96256,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1110251986108116296, guid: c34cc6ff4027a054d8e0eab3624113ce, type: 3}
       propertyPath: m_Height
-      value: 4.098056
+      value: 3.8552744
       objectReference: {fileID: 0}
     - target: {fileID: 1110251986108116296, guid: c34cc6ff4027a054d8e0eab3624113ce, type: 3}
       propertyPath: m_Center.y
-      value: 1.0490308
+      value: 1.1704215
+      objectReference: {fileID: 0}
+    - target: {fileID: 2567521986139045126, guid: c34cc6ff4027a054d8e0eab3624113ce, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.689
       objectReference: {fileID: 0}
     - target: {fileID: 2773711634254589127, guid: c34cc6ff4027a054d8e0eab3624113ce, type: 3}
       propertyPath: m_Name
       value: Player Components
+      objectReference: {fileID: 0}
+    - target: {fileID: 7074895534098608523, guid: c34cc6ff4027a054d8e0eab3624113ce, type: 3}
+      propertyPath: _insideHoleSpeedMultiplier
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7074895534098608523, guid: c34cc6ff4027a054d8e0eab3624113ce, type: 3}
       propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.size
