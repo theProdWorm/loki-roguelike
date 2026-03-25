@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using Entities;
 using Gameplay;
 using Unity.Mathematics;
 using UnityEngine;
@@ -20,13 +22,6 @@ public class FollowCamera : MonoBehaviour
     [SerializeField] private float _followOffset = 1f;
     [SerializeField] private FollowBehaviour _followBehaviour = FollowBehaviour.Ahead;
     
-    [Header("Zoom")]
-    [SerializeField] private bool _lerpZoom = true;
-    [SerializeField] private float _zoomInLerpSpeed = .05f;
-    [SerializeField] private float _zoomOutLerpSpeed = .2f;
-    [SerializeField] private float _minFOV = 70f;
-    [SerializeField] private float _maxFOV = 85f;
-    
     [Header("Rotation")]
     [SerializeField] private float _controllerRotationSpeed = 20f;
     [SerializeField] private float _mouseRotationSpeed = 50f;
@@ -35,23 +30,24 @@ public class FollowCamera : MonoBehaviour
     [Tooltip("Maximum rotation value on the x-axis (pitch).")]
     [SerializeField] private float _maxPitch = 80f;
     
-    private float   _upwardOffset;
-    private float   _backwardOffset;
     [Header("Screen Shake")]
     [SerializeField] private float _shakeIntensity = 1f;
+    
+    private float   _upwardOffset;
+    private float   _backwardOffset;
     
     private Vector3 _rotationEuler;
 
     private Vector2 _rotateInput;
     
-    private Camera _camera;
-    
     private Coroutine _shakeCoroutine;
     private Vector3 _shakeOffset;
 
+    private Coroutine _forcedLookAtCoroutine;
+    private Transform _forcedTarget;
+
     private void Start()
     {
-        _camera = GetComponent<Camera>();
         _rotationEuler = transform.rotation.eulerAngles;
         
         var toTarget = transform.position - _target.position;
@@ -60,14 +56,20 @@ public class FollowCamera : MonoBehaviour
         _upwardOffset = (toTarget - projection).magnitude;
         _backwardOffset = projection.magnitude;
         
-        SettingsMenu.OnscreenShakeChanged.AddListener(SetScreenShakeMultiplier);
+        SettingsMenu.INSTANCE.ScreenShakeSlider.onValueChanged.AddListener(SetScreenShakeMultiplier);
+        SettingsMenu.INSTANCE.ScreenShakeSlider.value = PlayerPrefs.GetFloat("shakeIntensity");
+    }
+
+    private void OnDisable()
+    {
+        PlayerPrefs.SetFloat("shakeIntensity", _shakeIntensity);
     }
 
     private void Update()
     {
-        if (MenuManager.Paused) 
+        if (MenuManager.Paused || _forcedLookAtCoroutine != null) 
             return;
-
+        
         bool holdingRightClick = Input.GetMouseButton(1);
         Cursor.visible = !holdingRightClick;
         Cursor.lockState = holdingRightClick ? CursorLockMode.Locked : CursorLockMode.None;
@@ -90,23 +92,10 @@ public class FollowCamera : MonoBehaviour
         transform.position += transform.up * _upwardOffset;
         transform.position += _shakeOffset;
         
-        if (_lerpZoom)
-            _camera.fieldOfView = LerpZoom();
-        
         if (holdingRightClick)
             _rotateInput = Vector2.zero;
     }
     
-    private float LerpZoom()
-    {
-        bool zoomOut = _target.linearVelocity.sqrMagnitude > .5f;
-        
-        float targetFOV = zoomOut ? _maxFOV : _minFOV;
-        float lerpSpeed = zoomOut ? _zoomOutLerpSpeed : _zoomInLerpSpeed;
-        
-        return Mathf.Lerp(_camera.fieldOfView, targetFOV, lerpSpeed);
-    }
-
     public void Shake(ScreenShakeEvent shakeEvent)
     {
         if (_shakeCoroutine != null)
@@ -139,6 +128,42 @@ public class FollowCamera : MonoBehaviour
         }
     }
 
+    private IEnumerator ForceLookAtCoroutine(ForceLookEvent forceLookEvent)
+    {
+        var startRotation = transform.rotation;
+        var toTarget = _forcedTarget.position - transform.position;
+        var targetRotation = Quaternion.LookRotation(toTarget);
+        
+        float elapsedTime = 0;
+        while (elapsedTime < forceLookEvent.ForcedLookAtLerpTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / forceLookEvent.ForcedLookAtLerpTime);
+            t = forceLookEvent.ForcedLookAtCurve.Evaluate(t);
+            
+            transform.rotation = Quaternion.Slerp(startRotation, targetRotation, t);
+            
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(forceLookEvent.ForcedLookAtHoldTime);
+        
+        elapsedTime = 0;
+        while (elapsedTime < forceLookEvent.LookBackLerpTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / forceLookEvent.LookBackLerpTime);
+            t = forceLookEvent.LookBackCurve.Evaluate(t);
+            
+            transform.rotation = Quaternion.Slerp(targetRotation, startRotation, t);
+            
+            yield return null;
+        }
+        
+        // transform.rotation = targetRotation;
+        _forcedLookAtCoroutine = null;
+    }
+
     public void RotateInput(InputAction.CallbackContext context)
     {
         bool usingMouse = context.control.device is Mouse && Input.GetMouseButton(1);
@@ -147,8 +172,33 @@ public class FollowCamera : MonoBehaviour
             _rotateInput = context.ReadValue<Vector2>();
     }
 
-    private void SetScreenShakeMultiplier(float value)
+    private void SetScreenShakeMultiplier(System.Single value)
     {
         _shakeIntensity = math.clamp(value,0,1);
+    }
+
+    public void SetForcedTarget(Transform target)
+    {
+        _forcedTarget = target;
+    }
+    
+    public void ForceLookAt(ForceLookEvent forceLookEvent)
+    {
+        Player.INSTANCE.LoseControl();
+
+        _forcedLookAtCoroutine = StartCoroutine(ForceLookAtCoroutine(forceLookEvent));
+        
+        StartCoroutine(SafetyControlRegainRoutine());
+    }
+
+    public void RegainControl()
+    {
+        Player.INSTANCE.GainControl();
+    }
+
+    private IEnumerator SafetyControlRegainRoutine()
+    {
+        yield return new WaitForSecondsRealtime(5);
+        RegainControl();
     }
 }

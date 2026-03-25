@@ -16,9 +16,7 @@ GameObject:
   - component: {fileID: 7070772432926166166}
   - component: {fileID: 5481773994454912399}
   - component: {fileID: 8142583463470668846}
-  - component: {fileID: 7307686891505532110}
   - component: {fileID: 2730838851932590985}
-  - component: {fileID: 368110016925964093}
   - component: {fileID: 7498283530037303175}
   m_Layer: 8
   m_Name: Brage
@@ -224,24 +222,6 @@ MonoBehaviour:
   OverrideAttenuation: 1
   OverrideMinDistance: 1
   OverrideMaxDistance: 130
---- !u!114 &7307686891505532110
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2473319740043560885}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1fe7e9895964f97a87dfbefad6d8c63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _rigidbody: {fileID: 7070772432926166166}
-  _force: 20
-  _horizontality: 50
-  _forceDirection: 1
-  _direction: {x: -1, y: 1}
-  _explosionPrefab: {fileID: 5460156743986595943, guid: 8567abb327c7d9f48af9f61f5aea825d, type: 3}
 --- !u!114 &2730838851932590985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,34 +243,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 613c906e44386684b971d8fe4f1801c5, type: 2}
   _afterSecondBranch:
   - {fileID: 11400000, guid: 6a0802b7778802c4fb9208959d7cbef9, type: 2}
---- !u!114 &368110016925964093
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2473319740043560885}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01e9396506b244fa88105960f378db02, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _target: {fileID: 11400000, guid: d283b2bdc31e99343867254c1869bf12, type: 2}
-  OnDialogueSequenceFinished:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7307686891505532110}
-        m_TargetAssemblyTypeName: Animation.Firework, Assembly-CSharp
-        m_MethodName: LightFuse
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &7498283530037303175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -717,6 +669,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: a24a1240829b5e9478ade62dbe66dda3, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b2bde2220beee994eb907fe56a165303, type: 2}
     - target: {fileID: 919132149155446097, guid: a24a1240829b5e9478ade62dbe66dda3, type: 3}
       propertyPath: m_Name
       value: stump
