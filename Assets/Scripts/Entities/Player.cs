@@ -8,6 +8,7 @@ using Audio;
 using Entities.Stats;
 using FMODUnity;
 using GameManager;
+using Gameplay;
 using Gameplay.Input;
 using Unity.Collections;
 using UnityEngine;
@@ -90,8 +91,10 @@ namespace Entities
         [SerializeField] private float _animationLockMoveSpeedFadeDuration;
         [SerializeField] private float _insideHoleSpeedMultiplier;
 
-        [SerializeField] private VisualEffect _grassStepVFX;
-        [SerializeField] private VisualEffect _waterStepVFX;
+        [SerializeField] private RumbleEvent _waterRumble;
+        
+        [SerializeField] private ParticleSystem _grassStepVFX;
+        [SerializeField] private ParticleSystem _waterStepVFX;
         
         [Header("Target Lock")]
         [SerializeField] private float _targetLockAngle;
@@ -190,6 +193,8 @@ namespace Entities
 
         private Vector3 _targetPos;
 
+        private bool  _deltaIsMoving;
+        private bool  _deltaAboveHole;
         private bool  _isDashing;
         private float _dashSpeed;
         
@@ -413,7 +418,10 @@ namespace Entities
             if (_knockbackCoroutine != null)
                 _rigidbody.linearVelocity += _knockbackForce;
 
-            CurrentAnimator.SetBool(IS_MOVING, movement.magnitude > 0.01f);
+            bool isMoving = movement.magnitude > 0.01f;
+            CurrentAnimator.SetBool(IS_MOVING, isMoving);
+            
+            RumbleManager.PLAYER_MOVING_IN_WATER = _aboveHole && isMoving;
         }
 
         private IEnumerator LungeFadeCoroutine(Vector3 direction, float originalForce, float duration)
@@ -895,7 +903,7 @@ namespace Entities
             instance.setParameterByName("FloorType", _aboveHole ? 1 : 0);
             instance.start();
             
-            //(_aboveHole ? _waterStepVFX : _grassStepVFX).Play();
+            //Instantiate(_aboveHole ? _waterStepVFX : _grassStepVFX, transform.position, transform.rotation);
         }
         
         #region Collision

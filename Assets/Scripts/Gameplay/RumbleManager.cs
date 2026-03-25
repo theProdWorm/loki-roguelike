@@ -7,16 +7,33 @@ namespace Gameplay
 {
     public class RumbleManager : MonoBehaviour
     {
-        private static RumbleManager _instance;
+        public static bool PLAYER_MOVING_IN_WATER;
+        public static RumbleManager INSTANCE;
 
+        [SerializeField] private float _waterLowFrequency;
+        [SerializeField] private float _waterHighFrequency;
+        
+        private Coroutine _rumbleCoroutine;
+        
         private void Awake()
         {
-            if (_instance)
+            if (INSTANCE)
                 Destroy(gameObject);
             else
-                _instance = this;
+                INSTANCE = this;
         }
 
+        private void Update()
+        {
+            if (Gamepad.current == null || _rumbleCoroutine != null) 
+                return;
+            
+            if (PLAYER_MOVING_IN_WATER)
+                Gamepad.current?.SetMotorSpeeds(_waterLowFrequency, _waterHighFrequency);
+            else
+                Gamepad.current?.SetMotorSpeeds(0, 0);
+        }
+        
         public void StopRumble()
         {
             StopAllCoroutines();
@@ -28,7 +45,10 @@ namespace Gameplay
             if (Gamepad.current == null)
                 return;
             
-            StartCoroutine(RumbleCoroutine(rumbleEvent));
+            if (_rumbleCoroutine != null)
+                StopCoroutine(_rumbleCoroutine);
+            
+            _rumbleCoroutine = StartCoroutine(RumbleCoroutine(rumbleEvent));
         }
 
         private IEnumerator RumbleCoroutine(RumbleEvent rumbleEvent)
