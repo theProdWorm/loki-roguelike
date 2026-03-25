@@ -24,7 +24,6 @@ namespace Gameplay
                 Destroy(gameObject);
             else
                 INSTANCE = this;
-            
         }
 
         private void Start()
@@ -52,6 +51,10 @@ namespace Gameplay
         public void StopRumble()
         {
             Gamepad.current?.SetMotorSpeeds(0, 0);
+
+            if (_rumbleCoroutine == null)
+                return;
+            
             StopCoroutine(_rumbleCoroutine);
             _rumbleCoroutine = null;
         }
