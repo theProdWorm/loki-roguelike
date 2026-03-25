@@ -32387,12 +32387,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 578040466}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.69961816, z: 0, w: 0.71451694}
-  m_LocalPosition: {x: 6.4949026, y: 19.522217, z: 2.0636182}
-  m_LocalScale: {x: 1.8184826, y: 1.8184828, z: 1.8184826}
+  m_LocalRotation: {x: -0, y: -0.99994457, z: -0, w: 0.010535031}
+  m_LocalPosition: {x: -8.377303, y: 109.242584, z: 42.147804}
+  m_LocalScale: {x: 41.38661, y: 41.386623, z: 41.38661}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2007530187}
+  m_Father: {fileID: 1922833009}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!212 &578040468
 SpriteRenderer:
@@ -85691,6 +85691,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1617241889}
+        m_TargetAssemblyTypeName: FollowCamera, Assembly-CSharp
+        m_MethodName: SetForcedTarget
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 4981952038936488734}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1617241889}
+        m_TargetAssemblyTypeName: FollowCamera, Assembly-CSharp
+        m_MethodName: ForceLookAt
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 33ddaa592d2282248986e58ab21b552f, type: 2}
+          m_ObjectArgumentAssemblyTypeName: Gameplay.ForceLookEvent, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1674667727
 GameObject:
   m_ObjectHideFlags: 0
@@ -97889,12 +97913,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1881452124}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 6.5229797, y: 19.332216, z: 1.9755301}
-  m_LocalScale: {x: 1.8, y: 1.8, z: 1.8}
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
+  m_LocalPosition: {x: -6.372497, y: 104.91838, z: 42.786808}
+  m_LocalScale: {x: 40.96598, y: 40.965973, z: 40.96598}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 4981952038936488734}
+  m_Father: {fileID: 4099318585445684717}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!212 &1881452126
 SpriteRenderer:
@@ -99788,6 +99812,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1922393525}
   m_Mesh: {fileID: -9085331004972601494, guid: f8e695d80e9744640b4de23b8eb5cf22, type: 3}
+--- !u!4 &1922833009 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6968400736222288674, guid: 025872139a7edc142a5f8ed108cfe0bd, type: 3}
+  m_PrefabInstance: {fileID: 2007530186}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1923232795
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -102554,7 +102583,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 8579203638404953854, guid: 025872139a7edc142a5f8ed108cfe0bd, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 6968400736222288674, guid: 025872139a7edc142a5f8ed108cfe0bd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 578040467}
     m_AddedComponents: []
@@ -111639,6 +111668,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e92fe42dbd114347af8f0afa6339effa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &4099318585445684717 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6968400736222288674, guid: 025872139a7edc142a5f8ed108cfe0bd, type: 3}
+  m_PrefabInstance: {fileID: 4981952038936488733}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4981952038936488733
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -111702,7 +111736,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 8579203638404953854, guid: 025872139a7edc142a5f8ed108cfe0bd, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 6968400736222288674, guid: 025872139a7edc142a5f8ed108cfe0bd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1881452125}
     m_AddedComponents: []
@@ -111855,8 +111889,8 @@ SceneRoots:
   - {fileID: 1924471882}
   - {fileID: 1478234370}
   - {fileID: 1651098523}
-  - {fileID: 4981952038936488733}
   - {fileID: 2007530186}
+  - {fileID: 4981952038936488733}
   - {fileID: 1154760864}
   - {fileID: 191901002}
   - {fileID: 2131296575}
