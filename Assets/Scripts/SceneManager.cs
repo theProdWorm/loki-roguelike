@@ -41,7 +41,7 @@ public class SceneManager : MonoBehaviour
             UnityEngine.SceneManagement.SceneManager.LoadScene(sceneIndex);
             return;
         }
-        StartCoroutine(AfterFade(_fade.FadeIn(), sceneIndex));
+        StartCoroutine(AfterFade(_fade.FadeIn(), sceneIndex, false));
     }
 
     public void LoadScene(string sceneName)
@@ -100,22 +100,15 @@ public class SceneManager : MonoBehaviour
 
     public void QuitGame() => Application.Quit();
 
-    private IEnumerator AfterFade(IEnumerator func, int i)
+    private IEnumerator AfterFade(IEnumerator func, int scene, bool quit)
     {
         if (_fade != null)
             yield return StartCoroutine(func);
 
-        switch (i)
-        {
-            case 0:
-            case 1:
-                UnityEngine.SceneManagement.SceneManager.LoadScene(i);
-                break;
-            case 2:
-                Application.Quit();
-                break;
-            default:
-                break;
-        }
+        if (quit)
+            Application.Quit();
+        else
+            UnityEngine.SceneManagement.SceneManager.LoadScene(scene);
+        
     }
 }
