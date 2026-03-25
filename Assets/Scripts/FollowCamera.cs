@@ -162,6 +162,9 @@ public class FollowCamera : MonoBehaviour
         
         // transform.rotation = targetRotation;
         _forcedLookAtCoroutine = null;
+        Player.INSTANCE.GainControl();
+        
+        StopAllCoroutines();
     }
 
     public void RotateInput(InputAction.CallbackContext context)
