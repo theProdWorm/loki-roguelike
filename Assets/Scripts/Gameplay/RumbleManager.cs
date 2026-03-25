@@ -24,9 +24,7 @@ namespace Gameplay
                 Destroy(gameObject);
             else
                 INSTANCE = this;
-            
             SettingsMenu.OnrumbleChanged.AddListener(SetRumbleMultiplier);
-                INSTANCE = this;
         }
 
         private void Update()
