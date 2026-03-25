@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2068878444611411259}
-  - component: {fileID: 2453176705927949551}
   - component: {fileID: 3244102882864415882}
   - component: {fileID: 3638882196732302560}
+  - component: {fileID: 2005813229147021391}
   m_Layer: 10
   m_Name: Hel_AttackProjectile
   m_TagString: Untagged
@@ -36,27 +36,6 @@ Transform:
   - {fileID: 7827587464417665261}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &2453176705927949551
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 477759728259082672}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &3244102882864415882
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -121,6 +100,29 @@ MonoBehaviour:
   _range: 20
   _rigidbody: {fileID: 3244102882864415882}
   _explosionPrefab: {fileID: 5635829443833088131, guid: ce57eddf227618343828394559023cfa, type: 3}
+--- !u!136 &2005813229147021391
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 477759728259082672}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.6
+  m_Height: 4.159665
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0.42840806}
 --- !u!1 &723084497797544234
 GameObject:
   m_ObjectHideFlags: 0
