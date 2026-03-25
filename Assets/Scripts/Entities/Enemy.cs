@@ -212,10 +212,10 @@ namespace Entities
             AiAgent.End();
             navAgent.enabled = false;
             tag = "Untagged";
-            //enabled = false;
             //TODO Destroy upon ragdoll deletion
             Destroy(AiAgent);
             Destroy(navAgent);
+            if(childAnimator) Destroy(childAnimator);
             Destroy(animator);
             Destroy(GetComponent<Collider>());
             Destroy(_healthBar.gameObject);
