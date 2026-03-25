@@ -200,18 +200,23 @@ namespace Entities
             
             if (type == EncounterManager.EnemyTypes.BirdOnBird) return;
             animator.SetFloat(MOVE_DIR, smoothed);
-
-            
         }
-        
-        public void ApplyStatusEffect(StatusEffect effect) => 
-            _statusEffects.Add(effect);
-        public void RemoveAllStatusEffectsOfType<T>() where T : StatusEffect => 
-            _statusEffects.RemoveAll<T>();
+
+        public void ApplyStatusEffect(StatusEffect effect)
+        {
+            if (!ImmuneToStatusEffects)
+                _statusEffects.Add(effect);
+        }
+
+        public void RemoveAllStatusEffectsOfType<T>() where T : StatusEffect
+        {
+            if (!ImmuneToStatusEffects)
+                _statusEffects.RemoveAll<T>();
+        }
         public int  CountStatusEffectsOfType<T>() where T : StatusEffect => 
-            _statusEffects.GetCount<T>();
+            ImmuneToStatusEffects ? 0 : _statusEffects.GetCount<T>();
         public bool HasStatusEffectOfType<T>() where T : StatusEffect =>
-            _statusEffects.HasEffect<T>();
+            !ImmuneToStatusEffects && _statusEffects.HasEffect<T>();
 
         public void Destroy()
         {
