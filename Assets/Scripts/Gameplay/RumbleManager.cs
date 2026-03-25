@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,8 +8,10 @@ namespace Gameplay
 {
     public class RumbleManager : MonoBehaviour
     {
-        public static bool PLAYER_MOVING_IN_WATER;
         public static RumbleManager INSTANCE;
+        private float RumbleStrengthMultiplier = 0;
+        public static bool PLAYER_MOVING_IN_WATER;
+        
 
         [SerializeField] private float _waterLowFrequency;
         [SerializeField] private float _waterHighFrequency;
@@ -20,6 +23,9 @@ namespace Gameplay
             if (INSTANCE)
                 Destroy(gameObject);
             else
+                INSTANCE = this;
+            
+            SettingsMenu.OnrumbleChanged.AddListener(SetRumbleMultiplier);
                 INSTANCE = this;
         }
 
@@ -62,6 +68,9 @@ namespace Gameplay
                 float low = rumbleEvent.LowFrequency.Evaluate(t);
                 float high = rumbleEvent.HighFrequency.Evaluate(t);
                 
+                low *= RumbleStrengthMultiplier;
+                high *= RumbleStrengthMultiplier;
+                
                 Gamepad.current.SetMotorSpeeds(low, high);
                 
                 elapsedTime += Time.deltaTime;
@@ -69,6 +78,11 @@ namespace Gameplay
             }
             
             Gamepad.current.SetMotorSpeeds(0, 0);
+        }
+
+        private void SetRumbleMultiplier(float value)
+        {
+            RumbleStrengthMultiplier = math.clamp(value,0,1);
         }
 
         private void OnDestroy()

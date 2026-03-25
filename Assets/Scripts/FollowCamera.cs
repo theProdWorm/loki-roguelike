@@ -1,7 +1,9 @@
 using System.Collections;
 using Gameplay;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
 public class FollowCamera : MonoBehaviour
 {
@@ -57,6 +59,8 @@ public class FollowCamera : MonoBehaviour
 
         _upwardOffset = (toTarget - projection).magnitude;
         _backwardOffset = projection.magnitude;
+        
+        SettingsMenu.OnscreenShakeChanged.AddListener(SetScreenShakeMultiplier);
     }
 
     private void Update()
@@ -141,5 +145,10 @@ public class FollowCamera : MonoBehaviour
         
         if (usingMouse || context.control.device is Gamepad)
             _rotateInput = context.ReadValue<Vector2>();
+    }
+
+    private void SetScreenShakeMultiplier(float value)
+    {
+        _shakeIntensity = math.clamp(value,0,1);
     }
 }
