@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using FMOD.Studio;
 using FMODUnity;
 using UI.Narration;
@@ -49,7 +50,6 @@ namespace Audio
 
         private Vector3 _nextPosition;
         private readonly List<EventInstance> _eventInstances = new();
-        private readonly Dictionary<string, EventInstance> _eventInstancesByName = new();
         
         public static FMODEvents INSTANCE;
 
@@ -104,60 +104,42 @@ namespace Audio
         public void PlayEvent(string eventName)
         {
             var instance = RuntimeManager.CreateInstance(eventName);
-            
             _eventInstances.Add(instance);
-            _eventInstancesByName[eventName] = instance;
             
             instance.start();
         }
 
         public void PlayEvent(EventReference eventReference, Vector3 position)
         {
-            string eventName = eventReference.Path;
             var instance = RuntimeManager.CreateInstance(eventReference);
             
             _eventInstances.Add(instance);
-            _eventInstancesByName[eventName] = instance;
             
             instance.start();
         }
 
         public void CreateEvent(EventReference eventReference, out EventInstance instance)
         {
-            string eventName = eventReference.Path;
             instance = RuntimeManager.CreateInstance(eventReference);
             
             _eventInstances.Add(instance);
-            _eventInstancesByName[eventName] = instance;
         }
 
         public void StopEvent(string eventName)
         {
-            if (!_eventInstancesByName.ContainsKey(eventName))
-                return;
-            
-            var reference = _eventInstancesByName[eventName];
-            
-            if (reference.isValid())
-                reference.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-        }
-
-        public void StopEvent(EventReference eventReference)
-        {
-            string eventName = eventReference.Path;
-            
-            if (!_eventInstancesByName.ContainsKey(eventName))
-                return;
-            
-            var reference = _eventInstancesByName[eventName];
-            
-            if (reference.isValid())
-                reference.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            foreach (var e in _eventInstances.Where(e => e.isValid()))
+            {
+                e.getDescription(out var description);
+                description.getPath(out var path);
+                
+                if (path == eventName && e.isValid())
+                    e.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            }
         }
 
         public void SetCombat(bool inCombat)
         {
-            _eventInstancesByName[_playlistMusic.Path].setParameterByName("Combat", inCombat ? 1 : 0);
+            RuntimeManager.StudioSystem.setParameterByName("Combat", inCombat ? 1 : 0);
         }
     }
 }

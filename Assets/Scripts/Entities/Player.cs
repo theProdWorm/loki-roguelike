@@ -14,6 +14,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.VFX;
 
 namespace Entities
 {
@@ -89,6 +90,9 @@ namespace Entities
         [SerializeField] private float _animationLockMoveSpeedFadeDuration;
         [SerializeField] private float _insideHoleSpeedMultiplier;
 
+        [SerializeField] private VisualEffect _grassStepVFX;
+        [SerializeField] private VisualEffect _waterStepVFX;
+        
         [Header("Target Lock")]
         [SerializeField] private float _targetLockAngle;
 
@@ -890,6 +894,8 @@ namespace Entities
 
             instance.setParameterByName("FloorType", _aboveHole ? 1 : 0);
             instance.start();
+            
+            //(_aboveHole ? _waterStepVFX : _grassStepVFX).Play();
         }
         
         #region Collision
