@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -14,14 +15,20 @@ public class MenuManager : MonoBehaviour
 
     public static GameObject PreviousSelected;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    private void Start()
+    private void Awake()
     {
         _SettingsCanvasGroup = SettingsCanvasGroup;
+        SettingsMenu.INSTANCE = _SettingsCanvasGroup.GetComponent<SettingsMenu>();
         _SettingsCanvasGroup.gameObject.SetActive(false);
         if (!PauseCanvasGroup) return;
         _PauseCanvasGroup = PauseCanvasGroup;
         _PauseCanvasGroup.gameObject.SetActive(false);
+    }
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private void Start()
+    {
+        
         
         UnpauseGame();
     }

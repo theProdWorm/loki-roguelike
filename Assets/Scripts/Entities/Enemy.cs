@@ -38,12 +38,14 @@ namespace Entities
         private float dissolveTimeLeft;
         private SkinnedMeshRenderer _skinnedMeshRenderer;
         private Material[] materials;
+        private float staggerTimeLeft;
         
         [SerializeField] private GameObject attackPrefab;
         [Tooltip("Where the attack will spawn")]
         [SerializeField] private Transform attackPoint;
         [SerializeField] EncounterManager.EnemyTypes type;
         [SerializeField] private bool canBeStaggered;
+        [SerializeField] private float staggerCooldown = 3f;
         public bool HasSpawned = true;
 
         [Header("Status Effects")]
@@ -164,6 +166,8 @@ namespace Entities
 
             //navAgent.speed = _moveSpeed;
 
+            if (staggerTimeLeft > 0) staggerTimeLeft -= Time.deltaTime;
+            
             var pos = transform.position;
             // var rotation = Quaternion.LookRotation(PLAYER.transform.position - transform.position, Vector3.up);
             // var lerpRot = Quaternion.Lerp(transform.rotation,rotation , Time.deltaTime * rotationSpeed);
@@ -258,8 +262,9 @@ namespace Entities
             DamageNumbers.CreateDamageNumber(transform, realDamage);
             _healthBar.UpdateHealth(_currentHealth, _maxHealth);
 
-            if (canBeStaggered)
+            if (canBeStaggered && staggerTimeLeft <= 0)
             {
+                staggerTimeLeft = staggerCooldown;
                 //animator.StopPlayback();
                 if(type != EncounterManager.EnemyTypes.BirdOnBird) animator.SetBool("Stagger",true);
                 AiAgent.SetVariableValue("Staggered", true);

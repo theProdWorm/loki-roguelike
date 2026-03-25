@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Gameplay;
 using Unity.Mathematics;
@@ -60,7 +61,13 @@ public class FollowCamera : MonoBehaviour
         _upwardOffset = (toTarget - projection).magnitude;
         _backwardOffset = projection.magnitude;
         
-        SettingsMenu.OnscreenShakeChanged.AddListener(SetScreenShakeMultiplier);
+        SettingsMenu.INSTANCE.ScreenShakeSlider.onValueChanged.AddListener(SetScreenShakeMultiplier);
+        SettingsMenu.INSTANCE.ScreenShakeSlider.value = PlayerPrefs.GetFloat("shakeIntensity");
+    }
+
+    private void OnDisable()
+    {
+        PlayerPrefs.SetFloat("shakeIntensity", _shakeIntensity);
     }
 
     private void Update()
@@ -147,7 +154,7 @@ public class FollowCamera : MonoBehaviour
             _rotateInput = context.ReadValue<Vector2>();
     }
 
-    private void SetScreenShakeMultiplier(float value)
+    private void SetScreenShakeMultiplier(System.Single value)
     {
         _shakeIntensity = math.clamp(value,0,1);
     }

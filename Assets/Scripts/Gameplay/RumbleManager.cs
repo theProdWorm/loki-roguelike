@@ -24,7 +24,18 @@ namespace Gameplay
                 Destroy(gameObject);
             else
                 INSTANCE = this;
-            SettingsMenu.OnrumbleChanged.AddListener(SetRumbleMultiplier);
+            
+        }
+
+        private void Start()
+        {
+            SettingsMenu.INSTANCE.RumbleSlider.onValueChanged.AddListener(SetRumbleMultiplier);
+            SettingsMenu.INSTANCE.RumbleSlider.value = PlayerPrefs.GetFloat("rumbleMultiplier");
+        }
+
+        private void OnDisable()
+        {
+            PlayerPrefs.SetFloat("rumbleMultiplier", RumbleStrengthMultiplier);
         }
 
         private void Update()
@@ -78,7 +89,7 @@ namespace Gameplay
             Gamepad.current.SetMotorSpeeds(0, 0);
         }
 
-        private void SetRumbleMultiplier(float value)
+        private void SetRumbleMultiplier(System.Single value)
         {
             RumbleStrengthMultiplier = math.clamp(value,0,1);
         }
