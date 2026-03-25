@@ -1233,11 +1233,12 @@ MonoBehaviour:
   attackPoint: {fileID: 6735178599589374041}
   type: 0
   canBeStaggered: 0
+  staggerCooldown: 3
   HasSpawned: 0
   _statusEffectIcon: {fileID: 6708727685198461121}
   _statusEffectCountIcon: {fileID: 7443023176663935118}
   _iceBlockPrefab: {fileID: 0}
-  ImmuneToStatusEffects: 0
+  ImmuneToStatusEffects: 1
   ragdollDuration: 6
   dissolveDuration: 4
 --- !u!114 &4919910354261688550
@@ -1406,6 +1407,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnWolfJumpEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStepTaken:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &5307327347796881616
