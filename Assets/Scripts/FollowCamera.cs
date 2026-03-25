@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Entities;
 using Gameplay;
 using Unity.Mathematics;
 using UnityEngine;
@@ -20,13 +21,6 @@ public class FollowCamera : MonoBehaviour
     [SerializeField] private float _positionLerpSpeed = .1f;
     [SerializeField] private float _followOffset = 1f;
     [SerializeField] private FollowBehaviour _followBehaviour = FollowBehaviour.Ahead;
-    
-    [Header("Zoom")]
-    [SerializeField] private bool _lerpZoom = true;
-    [SerializeField] private float _zoomInLerpSpeed = .05f;
-    [SerializeField] private float _zoomOutLerpSpeed = .2f;
-    [SerializeField] private float _minFOV = 70f;
-    [SerializeField] private float _maxFOV = 85f;
     
     [Header("Rotation")]
     [SerializeField] private float _controllerRotationSpeed = 20f;
@@ -49,6 +43,9 @@ public class FollowCamera : MonoBehaviour
     
     private Coroutine _shakeCoroutine;
     private Vector3 _shakeOffset;
+
+    private bool _forceTakeover;
+    private Transform _forcedTarget;
 
     private void Start()
     {
@@ -75,6 +72,14 @@ public class FollowCamera : MonoBehaviour
         if (MenuManager.Paused) 
             return;
 
+        if (_forceTakeover)
+        {
+            var toTarget = _forcedTarget.position - transform.position;
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(toTarget), Time.deltaTime);
+            
+            return;
+        }
+
         bool holdingRightClick = Input.GetMouseButton(1);
         Cursor.visible = !holdingRightClick;
         Cursor.lockState = holdingRightClick ? CursorLockMode.Locked : CursorLockMode.None;
@@ -97,23 +102,10 @@ public class FollowCamera : MonoBehaviour
         transform.position += transform.up * _upwardOffset;
         transform.position += _shakeOffset;
         
-        if (_lerpZoom)
-            _camera.fieldOfView = LerpZoom();
-        
         if (holdingRightClick)
             _rotateInput = Vector2.zero;
     }
     
-    private float LerpZoom()
-    {
-        bool zoomOut = _target.linearVelocity.sqrMagnitude > .5f;
-        
-        float targetFOV = zoomOut ? _maxFOV : _minFOV;
-        float lerpSpeed = zoomOut ? _zoomOutLerpSpeed : _zoomInLerpSpeed;
-        
-        return Mathf.Lerp(_camera.fieldOfView, targetFOV, lerpSpeed);
-    }
-
     public void Shake(ScreenShakeEvent shakeEvent)
     {
         if (_shakeCoroutine != null)
@@ -157,5 +149,28 @@ public class FollowCamera : MonoBehaviour
     private void SetScreenShakeMultiplier(System.Single value)
     {
         _shakeIntensity = math.clamp(value,0,1);
+    }
+
+    public void ForceLookAt(Transform target)
+    {
+        _forceTakeover = true;
+        _forcedTarget = target;
+        
+        Player.INSTANCE.LoseControl();
+        
+        StartCoroutine(SafetyControlRegainRoutine());
+    }
+
+    public void RegainControl()
+    {
+        _forceTakeover = false;
+        
+        Player.INSTANCE.GainControl();
+    }
+
+    private IEnumerator SafetyControlRegainRoutine()
+    {
+        yield return new WaitForSecondsRealtime(5);
+        RegainControl();
     }
 }
