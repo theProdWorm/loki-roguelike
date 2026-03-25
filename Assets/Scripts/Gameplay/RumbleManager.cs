@@ -29,12 +29,12 @@ namespace Gameplay
         private void Start()
         {
             SettingsMenu.INSTANCE.RumbleSlider.onValueChanged.AddListener(SetRumbleMultiplier);
-            SettingsMenu.INSTANCE.RumbleSlider.value = PlayerPrefs.GetFloat("rumbleMultiplier");
+            SettingsMenu.INSTANCE.RumbleSlider.value = PlayerPrefs.GetFloat("RumbleMultiplier");
         }
 
         private void OnDisable()
         {
-            PlayerPrefs.SetFloat("rumbleMultiplier", RumbleStrengthMultiplier);
+            PlayerPrefs.SetFloat("RumbleMultiplier", RumbleStrengthMultiplier);
         }
 
         private void Update()

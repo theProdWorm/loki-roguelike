@@ -4,6 +4,7 @@ using System.Linq;
 using FMOD.Studio;
 using FMODUnity;
 using UI.Narration;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Audio
@@ -52,6 +53,11 @@ namespace Audio
         private readonly List<EventInstance> _eventInstances = new();
         
         public static FMODEvents INSTANCE;
+        
+        private Bus _masterBus;
+        private Bus _musicBus;
+        private Bus _brageBus;
+        private Bus _sfxBus;
 
         private void Awake()
         {
@@ -59,13 +65,34 @@ namespace Audio
             {
                 Destroy(INSTANCE.gameObject);
             }
-
             INSTANCE = this;
+            _masterBus = RuntimeManager.GetBus("bus:/");
+            _musicBus = RuntimeManager.GetBus("bus:/Musik");
+            _brageBus = RuntimeManager.GetBus("bus:/Brage");
+            _sfxBus = RuntimeManager.GetBus("bus:/SFX");
+            var settings = SettingsMenu.INSTANCE;
+            settings.MasterVolumeSlider.onValueChanged.AddListener(SetMasterVolume);
+            settings.SfxVolumeSlider.onValueChanged.AddListener(SetSfxVolume);
+            settings.MusicVolumeSlider.onValueChanged.AddListener(SetMusicVolume);
+            
+            //settings.MasterVolumeSlider.value = PlayerPrefs.GetFloat("MasterVolume");
+            settings.SfxVolumeSlider.value = PlayerPrefs.GetFloat("SfxVolume");
+            settings.MusicVolumeSlider.value = PlayerPrefs.GetFloat("MusicVolume");
         }
 
         private void Start()
         {
             RuntimeManager.StudioSystem.setParameterByName("Menu", 0);
+        }
+
+        private void OnDisable()
+        {
+            _masterBus.getVolume(out float masterVolume);
+            _sfxBus.getVolume(out float sfxVolume);
+            _musicBus.getVolume(out float musicVolume);
+            PlayerPrefs.SetFloat("MasterVolume",masterVolume );
+            PlayerPrefs.SetFloat("SfxVolume", sfxVolume );
+            PlayerPrefs.SetFloat("MusicVolume", musicVolume );
         }
 
         private void OnDestroy()
@@ -135,6 +162,20 @@ namespace Audio
                 if (path == eventName && e.isValid())
                     e.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
             }
+        }
+
+        private void SetMasterVolume(System.Single value) => SetBusVolume(value,_masterBus);
+        private void SetSfxVolume(System.Single value) => SetBusVolume(value,_sfxBus);
+        private void SetMusicVolume(System.Single value)
+        {
+            SetBusVolume(value,_musicBus);
+            SetBusVolume(value,_brageBus);
+        }
+        private void SetBusVolume(float volume, Bus bus)
+        {
+            bus.setVolume(math.clamp(volume, 0f, 1f));
+            bus.getPath(out var path);
+            bus.getVolume(out var vol);
         }
 
         public void SetCombat(bool inCombat)
