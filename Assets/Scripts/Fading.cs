@@ -9,7 +9,7 @@ public class Fading : MonoBehaviour
     [SerializeField]
     private Image _image;
     [SerializeField]
-    private float speedIn = 1f;    
+    private float speedIn = 1f;
     [SerializeField]
     private float _speedOut = 1f;
 
@@ -17,10 +17,16 @@ public class Fading : MonoBehaviour
 
     private void Start()
     {
-        if(_fadeOut)
+        if (_fadeOut)
+        {
+            Debug.Log("Fade");
             StartCoroutine(FadeOut());
+        }
         else
+        {
+            Debug.Log("Clear");
             _image.color = Color.clear;
+        }
     }
 
     public IEnumerator FadeIn()
@@ -28,24 +34,29 @@ public class Fading : MonoBehaviour
         _image.gameObject.SetActive(true);
         _t = 0;
 
-        while (_t < 1)
+        while (_t <= 1)
         {
             _t += Time.deltaTime * speedIn;
             yield return new WaitForEndOfFrame();
             _image.color = Color.Lerp(Color.clear, Color.black, _t);
         }
+        _image.color = Color.black;
     }
 
     public IEnumerator FadeOut()
     {
+        _image.gameObject.SetActive(true);
         _t = 1;
 
-        while (_t > 0)
+        while (_t >= 0)
         {
+            Debug.Log("Queer Innit");
             _t -= Time.deltaTime * _speedOut;
             yield return new WaitForEndOfFrame();
             _image.color = Color.Lerp(Color.clear, Color.black, _t);
         }
+        _image.color = Color.clear;
         _image.gameObject.SetActive(false);
+
     }
 }

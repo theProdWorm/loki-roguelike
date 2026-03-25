@@ -104,7 +104,6 @@ public class EncounterManager : MonoBehaviour
             if (_timeBetweenWaves != -1)
             {
                 _timeSinceLastWave += _t;
-                Debug.Log(_timeSinceLastWave + " / " + _timeBetweenWaves + ". _t = " + _t);
                 if (_timeSinceLastWave >= _timeBetweenWaves)
                 {
                     NextWave();
