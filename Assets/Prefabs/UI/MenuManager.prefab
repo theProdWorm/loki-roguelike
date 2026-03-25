@@ -75,7 +75,7 @@ MonoBehaviour:
   m_ScrollWheelAction: {fileID: 0}
   m_TrackedDevicePositionAction: {fileID: 0}
   m_TrackedDeviceOrientationAction: {fileID: 0}
-  m_DeselectOnBackgroundClick: 1
+  m_DeselectOnBackgroundClick: 0
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
   m_ScrollDeltaPerTick: 6
@@ -275,7 +275,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5763609090334588890, guid: 567a571b4c64b5647ae6db550a1eaa2c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6450697228770919508}
   m_SourcePrefab: {fileID: 100100000, guid: 567a571b4c64b5647ae6db550a1eaa2c, type: 3}
 --- !u!224 &292317526588731117 stripped
 RectTransform:
@@ -287,6 +290,23 @@ CanvasGroup:
   m_CorrespondingSourceObject: {fileID: 2388244234102370751, guid: 567a571b4c64b5647ae6db550a1eaa2c, type: 3}
   m_PrefabInstance: {fileID: 1192503387381347651}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6877256585967192729 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5763609090334588890, guid: 567a571b4c64b5647ae6db550a1eaa2c, type: 3}
+  m_PrefabInstance: {fileID: 1192503387381347651}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6450697228770919508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877256585967192729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb2c9191b5a8628488c320f6a9eff48f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1594788455449578971
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -431,6 +451,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7350849303254423002, guid: 4efe61d2eec20414ea62449da1385bc4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7526400449322547300, guid: 4efe61d2eec20414ea62449da1385bc4, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -518,6 +542,26 @@ PrefabInstance:
     - target: {fileID: 7880141781397845788, guid: 4efe61d2eec20414ea62449da1385bc4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7937375252858355260, guid: 4efe61d2eec20414ea62449da1385bc4, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7937375252858355260, guid: 4efe61d2eec20414ea62449da1385bc4, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7937375252858355260, guid: 4efe61d2eec20414ea62449da1385bc4, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7937375252858355260, guid: 4efe61d2eec20414ea62449da1385bc4, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7937375252858355260, guid: 4efe61d2eec20414ea62449da1385bc4, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
