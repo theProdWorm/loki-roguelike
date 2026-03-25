@@ -67,7 +67,9 @@ namespace Entities
         protected override void Awake()
         {
             base.Awake();
-            _statusEffects = new(this, _statusEffectIcon, _statusEffectCountIcon);
+            
+            if (!ImmuneToStatusEffects)
+                _statusEffects = new(this, _statusEffectIcon, _statusEffectCountIcon);
             
             InitializeBaseStats();
             AiAgent = GetComponent<BehaviorGraphAgent>();
@@ -162,7 +164,8 @@ namespace Entities
             
             base.Update();
             
-            _statusEffects.Update();
+            if (!ImmuneToStatusEffects)
+                _statusEffects.Update();
 
             //navAgent.speed = _moveSpeed;
 
