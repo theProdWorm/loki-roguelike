@@ -30,26 +30,24 @@ public class FollowCamera : MonoBehaviour
     [Tooltip("Maximum rotation value on the x-axis (pitch).")]
     [SerializeField] private float _maxPitch = 80f;
     
-    private float   _upwardOffset;
-    private float   _backwardOffset;
     [Header("Screen Shake")]
     [SerializeField] private float _shakeIntensity = 1f;
+    
+    private float   _upwardOffset;
+    private float   _backwardOffset;
     
     private Vector3 _rotationEuler;
 
     private Vector2 _rotateInput;
     
-    private Camera _camera;
-    
     private Coroutine _shakeCoroutine;
     private Vector3 _shakeOffset;
 
-    private bool _forceTakeover;
+    private Coroutine _forcedLookAtCoroutine;
     private Transform _forcedTarget;
 
     private void Start()
     {
-        _camera = GetComponent<Camera>();
         _rotationEuler = transform.rotation.eulerAngles;
         
         var toTarget = transform.position - _target.position;
@@ -69,17 +67,9 @@ public class FollowCamera : MonoBehaviour
 
     private void Update()
     {
-        if (MenuManager.Paused) 
+        if (MenuManager.Paused || _forcedLookAtCoroutine != null) 
             return;
-
-        if (_forceTakeover)
-        {
-            var toTarget = _forcedTarget.position - transform.position;
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(toTarget), Time.deltaTime);
-            
-            return;
-        }
-
+        
         bool holdingRightClick = Input.GetMouseButton(1);
         Cursor.visible = !holdingRightClick;
         Cursor.lockState = holdingRightClick ? CursorLockMode.Locked : CursorLockMode.None;
@@ -138,6 +128,42 @@ public class FollowCamera : MonoBehaviour
         }
     }
 
+    private IEnumerator ForceLookAtCoroutine(ForceLookEvent forceLookEvent)
+    {
+        var startRotation = transform.rotation;
+        var toTarget = _forcedTarget.position - transform.position;
+        var targetRotation = Quaternion.LookRotation(toTarget);
+        
+        float elapsedTime = 0;
+        while (elapsedTime < forceLookEvent.ForcedLookAtLerpTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / forceLookEvent.ForcedLookAtLerpTime);
+            t = forceLookEvent.ForcedLookAtCurve.Evaluate(t);
+            
+            transform.rotation = Quaternion.Slerp(startRotation, targetRotation, t);
+            
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(forceLookEvent.ForcedLookAtHoldTime);
+        
+        elapsedTime = 0;
+        while (elapsedTime < forceLookEvent.LookBackLerpTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / forceLookEvent.LookBackLerpTime);
+            t = forceLookEvent.LookBackCurve.Evaluate(t);
+            
+            transform.rotation = Quaternion.Slerp(targetRotation, startRotation, t);
+            
+            yield return null;
+        }
+        
+        // transform.rotation = targetRotation;
+        _forcedLookAtCoroutine = null;
+    }
+
     public void RotateInput(InputAction.CallbackContext context)
     {
         bool usingMouse = context.control.device is Mouse && Input.GetMouseButton(1);
@@ -151,20 +177,22 @@ public class FollowCamera : MonoBehaviour
         _shakeIntensity = math.clamp(value,0,1);
     }
 
-    public void ForceLookAt(Transform target)
+    public void SetForcedTarget(Transform target)
     {
-        _forceTakeover = true;
         _forcedTarget = target;
-        
+    }
+    
+    public void ForceLookAt(ForceLookEvent forceLookEvent)
+    {
         Player.INSTANCE.LoseControl();
+
+        _forcedLookAtCoroutine = StartCoroutine(ForceLookAtCoroutine(forceLookEvent));
         
         StartCoroutine(SafetyControlRegainRoutine());
     }
 
     public void RegainControl()
     {
-        _forceTakeover = false;
-        
         Player.INSTANCE.GainControl();
     }
 
