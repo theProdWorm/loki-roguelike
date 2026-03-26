@@ -28,8 +28,6 @@ public class MenuManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
-        
-        
         UnpauseGame();
     }
 
@@ -86,6 +84,7 @@ public class MenuManager : MonoBehaviour
 
     public static void UnpauseGame()
     {
+        if (!Paused) return;
         if (!_playerInput) _playerInput = FindFirstObjectByType<PlayerInput>();
         Time.timeScale = 1;
         _playerInput.SwitchCurrentActionMap("Player");
