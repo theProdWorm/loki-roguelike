@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Gameplay
+namespace Gameplay.Feedback
 {
     [CreateAssetMenu(fileName = "New Rumble Event", menuName = "Gameplay/Rumble Event")]
     public class RumbleEvent : ScriptableObject

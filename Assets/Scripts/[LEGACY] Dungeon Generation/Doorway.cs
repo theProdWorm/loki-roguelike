@@ -1,16 +1,18 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
 
-public class LegacyDoorway : MonoBehaviour
+namespace _LEGACY__Dungeon_Generation
 {
-    public Corridor ConnectedCorridor;
-
-    private bool _isConnected = false;
-    public bool IsConnected { get { return _isConnected; } }
-
-    public void UpdateConnection(bool state)
+    public class LegacyDoorway : MonoBehaviour
     {
-        _isConnected = state;
-        //TODO:Change visual representation of doorway to indicate connection state
+        public Corridor ConnectedCorridor;
+
+        private bool _isConnected = false;
+        public bool IsConnected { get { return _isConnected; } }
+
+        public void UpdateConnection(bool state)
+        {
+            _isConnected = state;
+            //TODO:Change visual representation of doorway to indicate connection state
+        }
     }
 }

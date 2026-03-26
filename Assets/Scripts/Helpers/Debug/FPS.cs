@@ -6,37 +6,39 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class FPS : MonoBehaviour
+namespace Helpers.Debug
 {
-    public int FramesPerSec { get; protected set; }
-
-    [SerializeField] private float frequency = 0.5f;
-
-
-    private TextMeshProUGUI counter;
-
-    private void Start()
+    public class FPS : MonoBehaviour
     {
-        counter = GetComponent<TextMeshProUGUI>();
-        counter.text = "";
-        StartCoroutine(FPSRoutine());
-    }
+        public int FramesPerSec { get; protected set; }
 
-    private IEnumerator FPSRoutine()
-    {
-        for (; ; )
+        [SerializeField] private float frequency = 0.5f;
+
+
+        private TextMeshProUGUI counter;
+
+        private void Start()
         {
-            int lastFrameCount = Time.frameCount;
-            float lastTime = Time.realtimeSinceStartup;
-            yield return new WaitForSeconds(frequency);
+            counter = GetComponent<TextMeshProUGUI>();
+            counter.text = "";
+            StartCoroutine(FPSRoutine());
+        }
 
-            float timeSpan = Time.realtimeSinceStartup - lastTime;
-            int frameCount = Time.frameCount - lastFrameCount;
+        private IEnumerator FPSRoutine()
+        {
+            for (; ; )
+            {
+                int lastFrameCount = Time.frameCount;
+                float lastTime = Time.realtimeSinceStartup;
+                yield return new WaitForSeconds(frequency);
 
-            FramesPerSec = Mathf.RoundToInt(frameCount / timeSpan);
-            counter.text = "FPS: " + FramesPerSec.ToString();
+                float timeSpan = Time.realtimeSinceStartup - lastTime;
+                int frameCount = Time.frameCount - lastFrameCount;
+
+                FramesPerSec = Mathf.RoundToInt(frameCount / timeSpan);
+                counter.text = "FPS: " + FramesPerSec.ToString();
+            }
         }
     }
 }

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Helpers
+namespace Helpers.Events
 {
     public class TriggerEventTrigger : MonoBehaviour
     {

@@ -1,10 +1,12 @@
 using System;
-using UnityEngine;
+using Unity.Behavior;
 using Unity.Properties;
+using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
+using Action = Unity.Behavior.Action;
 
-namespace Unity.Behavior
+namespace AI.Nodes
 {
     [Serializable, GeneratePropertyBag]
     [NodeDescription(name: "SimplifiedTargetNav",

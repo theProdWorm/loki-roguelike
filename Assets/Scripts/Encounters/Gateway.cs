@@ -1,33 +1,36 @@
 ﻿using UnityEngine;
 
-public class Gateway : MonoBehaviour
+namespace Encounters
 {
-    [SerializeField]
-    private Collider _collider;
-
-    private Animator _animator;
-
-    private void Awake()
+    public class Gateway : MonoBehaviour
     {
-        _animator = GetComponent<Animator>();
-        _collider.enabled = false;
-    }
+        [SerializeField]
+        private Collider _collider;
 
-    public void Open()
-    {
-        _collider.enabled = false;
-        _animator.SetTrigger("Open");
-    }
+        private Animator _animator;
 
-    public void Close()
-    {
-        _collider.enabled = true;
-        _animator.SetTrigger("Close");
-    }
+        private void Awake()
+        {
+            _animator = GetComponent<Animator>();
+            _collider.enabled = false;
+        }
 
-    private void OnValidate()
-    {
-        if (_collider == null)
-            Debug.LogError("Collider is not assigned in the inspector for " + gameObject.name);
+        public void Open()
+        {
+            _collider.enabled = false;
+            _animator.SetTrigger("Open");
+        }
+
+        public void Close()
+        {
+            _collider.enabled = true;
+            _animator.SetTrigger("Close");
+        }
+
+        private void OnValidate()
+        {
+            if (_collider == null)
+                Debug.LogError("Collider is not assigned in the inspector for " + gameObject.name);
+        }
     }
 }

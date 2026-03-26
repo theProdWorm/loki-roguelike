@@ -3,61 +3,64 @@ using System.Collections.Generic;
 using System.Linq;
 using Random = UnityEngine.Random;
 
-public class LootUtils
+namespace Items
 {
-    public static T GetItem<T>(WeightedItem<T>[] items)
+    public class LootUtils
     {
-        int totalWeight = 0;
-        foreach (var item in items)
+        public static T GetItem<T>(WeightedItem<T>[] items)
         {
-            totalWeight += item.weight;
-        }
-        
-        int sample = Random.Range(0, totalWeight);
-
-        foreach (var item in items)
-        {
-            if (sample < item.weight)
+            int totalWeight = 0;
+            foreach (var item in items)
             {
-                return item.item;
+                totalWeight += item.weight;
             }
-            else sample -= item.weight;
-        }
-        return default;
-    }
-
-    public static T[] GetItems<T>(WeightedItem<T>[] items, int amount)
-    {
-        if(items.Length < amount)
-        {
-            return items.Select(x => x.item).ToArray();
-        }
-        List<WeightedItem<T>> pool = new List<WeightedItem<T>>(items);
-        T[] result = new T[amount];
-
-        for (int k = 0; k < amount; k++)
-        {
-            int totalWeight = pool.Sum(i => i.weight);
+        
             int sample = Random.Range(0, totalWeight);
 
-            foreach (var i in pool)
+            foreach (var item in items)
             {
-                if (sample < i.weight)
+                if (sample < item.weight)
                 {
-                    result[k] = i.item;
-                    pool.Remove(i);
-                    break;
+                    return item.item;
                 }
-                sample -= i.weight;
+                else sample -= item.weight;
             }
+            return default;
         }
-        return result;
-    }
-}
 
-[Serializable]
-public struct WeightedItem<T>
-{
-    public T item;
-    public int weight;
+        public static T[] GetItems<T>(WeightedItem<T>[] items, int amount)
+        {
+            if(items.Length < amount)
+            {
+                return items.Select(x => x.item).ToArray();
+            }
+            List<WeightedItem<T>> pool = new List<WeightedItem<T>>(items);
+            T[] result = new T[amount];
+
+            for (int k = 0; k < amount; k++)
+            {
+                int totalWeight = pool.Sum(i => i.weight);
+                int sample = Random.Range(0, totalWeight);
+
+                foreach (var i in pool)
+                {
+                    if (sample < i.weight)
+                    {
+                        result[k] = i.item;
+                        pool.Remove(i);
+                        break;
+                    }
+                    sample -= i.weight;
+                }
+            }
+            return result;
+        }
+    }
+
+    [Serializable]
+    public struct WeightedItem<T>
+    {
+        public T item;
+        public int weight;
+    }
 }

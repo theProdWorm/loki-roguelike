@@ -1,13 +1,16 @@
 using UnityEngine;
 
-public class Doorway : MonoBehaviour
+namespace Encounters
 {
-    [SerializeField] 
-    private EncounterManager _encounterHandler;
-
-    private void OnTriggerEnter(Collider other)
+    public class Doorway : MonoBehaviour
     {
-        if (other.CompareTag("Player"))
-            _encounterHandler.StartEncounter();
+        [SerializeField] 
+        private EncounterManager _encounterHandler;
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Player"))
+                _encounterHandler.StartEncounter();
+        }
     }
 }

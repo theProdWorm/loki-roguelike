@@ -1,10 +1,10 @@
-using System;
 using System.Collections;
+using UI;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Gameplay
+namespace Gameplay.Feedback
 {
     public class RumbleManager : MonoBehaviour
     {

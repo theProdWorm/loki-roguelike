@@ -1,22 +1,25 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
-public class Room : MonoBehaviour
+namespace _LEGACY__Dungeon_Generation
 {
-    #region Dungeon Generation Variables
-    public int Weight;
-    public List<LegacyDoorway> Doorways = new();
-
-    [/*HideInInspector,*/ Tooltip("Only used for connecting all doors before pruning the connections with Prim's algorithm, creating a minimum spanning tree")]
-    public List<Corridor> ConnectedCorridors;
-
-    public int DistanceFromStart = -1;
-    #endregion
-
-    public bool IsVisited = false;
-
-    private void Awake()
+    public class Room : MonoBehaviour
     {
-       // gameObject.SetActive(false); //Rooms are initially inactive until visited
+        #region Dungeon Generation Variables
+        public int Weight;
+        public List<LegacyDoorway> Doorways = new();
+
+        [/*HideInInspector,*/ Tooltip("Only used for connecting all doors before pruning the connections with Prim's algorithm, creating a minimum spanning tree")]
+        public List<Corridor> ConnectedCorridors;
+
+        public int DistanceFromStart = -1;
+        #endregion
+
+        public bool IsVisited = false;
+
+        private void Awake()
+        {
+            // gameObject.SetActive(false); //Rooms are initially inactive until visited
+        }
     }
 }

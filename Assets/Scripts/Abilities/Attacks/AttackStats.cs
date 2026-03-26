@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Stats
+namespace Abilities.Attacks
 {
     public class AttackStats
     {

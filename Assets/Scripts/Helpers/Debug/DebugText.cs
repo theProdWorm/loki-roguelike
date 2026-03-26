@@ -1,18 +1,21 @@
 using TMPro;
 using UnityEngine;
 
-public class DebugText : MonoBehaviour
+namespace Helpers.Debug
 {
-    private static TextMeshProUGUI DEBUG_TEXT;
+    public class DebugText : MonoBehaviour
+    {
+        private static TextMeshProUGUI DEBUG_TEXT;
     
-    private void Awake()
-    {
-        DEBUG_TEXT = GetComponent<TextMeshProUGUI>();
-    }
+        private void Awake()
+        {
+            DEBUG_TEXT = GetComponent<TextMeshProUGUI>();
+        }
 
-    public static void Log(string text)
-    {
-        if (!DEBUG_TEXT) return;
-        DEBUG_TEXT.text = text;
+        public static void Log(string text)
+        {
+            if (!DEBUG_TEXT) return;
+            DEBUG_TEXT.text = text;
+        }
     }
 }

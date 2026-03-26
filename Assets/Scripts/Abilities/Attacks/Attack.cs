@@ -1,6 +1,5 @@
 using System;
 using Entities;
-using Stats;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;

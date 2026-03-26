@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
-namespace Animation
+namespace Effects
 {
     [RequireComponent(typeof(Volume))]
     public class HealthVignette : MonoBehaviour

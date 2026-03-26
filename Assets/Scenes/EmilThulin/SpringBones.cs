@@ -1,31 +1,34 @@
 using UnityEngine;
 
-public class SpringBones : MonoBehaviour
+namespace Scenes.EmilThulin
 {
-
-    public float Spring = 10f;
-    public float Damper = 0.2f;
-    public float Mass = 10f;
-    public float Size = 0.002f;
-    public float AngularDamper = 5f;
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class SpringBones : MonoBehaviour
     {
-        foreach (Transform child in transform)
+
+        public float Spring = 10f;
+        public float Damper = 0.2f;
+        public float Mass = 10f;
+        public float Size = 0.002f;
+        public float AngularDamper = 5f;
+    
+        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        void Start()
         {
-            var a = child.gameObject.AddComponent<Rigidbody>();
-            a.mass = Mass;
-            a.angularDamping = AngularDamper;
-            var b = child.gameObject.AddComponent<SpringBones>();
+            foreach (Transform child in transform)
+            {
+                var a = child.gameObject.AddComponent<Rigidbody>();
+                a.mass = Mass;
+                a.angularDamping = AngularDamper;
+                var b = child.gameObject.AddComponent<SpringBones>();
        
+            }
         }
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
+        // Update is called once per frame
+        void Update()
+        {
         
-    }
+        }
     
+    }
 }

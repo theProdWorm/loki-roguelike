@@ -1,10 +1,12 @@
-using System;
 using Unity.Behavior;
 
-[BlackboardEnum]
-public enum DistanceState
+namespace AI.Nodes
 {
-	TooClose,
-	TooFar,
-	JustRight
+	[BlackboardEnum]
+	public enum DistanceState
+	{
+		TooClose,
+		TooFar,
+		JustRight
+	}
 }

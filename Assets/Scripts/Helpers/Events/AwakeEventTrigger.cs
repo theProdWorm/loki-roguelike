@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Helpers
+namespace Helpers.Events
 {
     public class AwakeEventTrigger : MonoBehaviour
     {

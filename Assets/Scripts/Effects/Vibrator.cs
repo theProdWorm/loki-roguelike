@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Animation
+namespace Effects
 {
     public class Vibrator : MonoBehaviour
     {
