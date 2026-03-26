@@ -20,6 +20,8 @@ public class Fading : MonoBehaviour
     [SerializeField]
     private float _textWriteDelay = 0.2f;
 
+    [SerializeField] private bool _fadeAudio = true;
+    
     private float _t;
     private Color _textColor;
     private Coroutine _slowWriteRoutine;
@@ -77,6 +79,10 @@ public class Fading : MonoBehaviour
                 _t -= Time.deltaTime * _speedOut;
                 yield return new WaitForEndOfFrame();
                 _text.color = Color.Lerp(Color.clear, _textColor, _t);
+                
+                if (!_fadeAudio)
+                    continue;
+                
                 float volume = (1 - _t) * SettingsMenu.INSTANCE.MasterVolumeSlider.value;
                 FMODEvents.INSTANCE.SetMasterVolume(volume);
             }
@@ -116,6 +122,9 @@ public class Fading : MonoBehaviour
             _image.color = Color.Lerp(Color.clear, Color.black, _t);
             _text.color = Color.Lerp(Color.clear, _textColor, _t);
 
+            if (!_fadeAudio)
+                continue;
+            
             float volume = (1 - _t) * SettingsMenu.INSTANCE.MasterVolumeSlider.value;
             FMODEvents.INSTANCE.SetMasterVolume(volume);
         }

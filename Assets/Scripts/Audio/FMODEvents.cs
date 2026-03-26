@@ -73,8 +73,6 @@ namespace Audio
             _sfxBus = RuntimeManager.GetBus("bus:/SFX");
             
             var settings = SettingsMenu.INSTANCE;
-            if (!settings)
-                return;
             
             settings.MasterVolumeSlider.onValueChanged.AddListener(SetMasterVolume);
             settings.SfxVolumeSlider.onValueChanged.AddListener(SetSfxVolume);
