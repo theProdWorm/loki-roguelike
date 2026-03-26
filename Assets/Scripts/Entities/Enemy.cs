@@ -20,7 +20,7 @@ namespace Entities
         private static readonly int MOVE_DIR = Animator.StringToHash("MoveDir");
         private static readonly int MOVE_SPEED = Animator.StringToHash("MoveSpeed");
         private static readonly int ATTACK_SPEED = Animator.StringToHash("AttackSpeed");
-        
+
         private static int ENEMYAMOUNT = 0;
         private static GameObject PLAYER;
 
@@ -39,7 +39,7 @@ namespace Entities
         private SkinnedMeshRenderer _skinnedMeshRenderer;
         private Material[] materials;
         private float staggerTimeLeft;
-        
+
         [SerializeField] private GameObject attackPrefab;
         [Tooltip("Where the attack will spawn")]
         [SerializeField] private Transform attackPoint;
@@ -49,13 +49,13 @@ namespace Entities
         public bool HasSpawned = true;
 
         [SerializeField] private float _aboveHoleSpeedMultiplier = 0.5f;
-        
+
         [Header("Status Effects")]
         [SerializeField] private Image _statusEffectIcon;
         [SerializeField] private Image _statusEffectCountIcon;
         [SerializeField] private GameObject _iceBlockPrefab;
         [SerializeField] public bool ImmuneToStatusEffects;
-        
+
         [Header("Death")]
         [Tooltip("How long the ragdoll lasts before starting to dissolve")]
         [SerializeField] private float ragdollDuration = 1f;
@@ -66,15 +66,13 @@ namespace Entities
 
         private float _animationSpeed;
 
-        private float _chargeSpeed;
-        
         protected override void Awake()
         {
             base.Awake();
-            
+
             if (!ImmuneToStatusEffects)
                 _statusEffects = new(this, _statusEffectIcon, _statusEffectCountIcon);
-            
+
             InitializeBaseStats();
             AiAgent = GetComponent<BehaviorGraphAgent>();
             navAgent = GetComponent<NavMeshAgent>();
@@ -91,7 +89,7 @@ namespace Entities
             attackStats = new AttackStats(attackPrefab, _damage, 0, 0);
 
             _healthBar = GetComponentInChildren<UIEnemyHealth>();
-            _healthBar.UpdateHealthUI(_currentHealth, _maxHealth);
+            _healthBar.UpdateHealth(_currentHealth, _maxHealth);
             _animationSpeed = animator.GetFloat(MOVE_SPEED);
 
             ENEMYAMOUNT++;
@@ -99,22 +97,20 @@ namespace Entities
             switch (type)
             {
                 case EncounterManager.EnemyTypes.Wolf:
-                {
-                    if (AiAgent.GetVariable("ChargePrep", out ChargePrepEventChannel))
                     {
-                   
+                        if (AiAgent.GetVariable("ChargePrep", out ChargePrepEventChannel))
+                        {
+
+                        }
+                        else throw new NullReferenceException();
+
+                        break;
                     }
-                    else throw new NullReferenceException();
-                    
-                    AiAgent.GetVariable("ChargeSpeed", out BlackboardVariable<float> chargeSpeed);
-                    _chargeSpeed = chargeSpeed.Value;
-                    break;
-                }
                 case EncounterManager.EnemyTypes.BirdOnBird:
-                {
-                    childAnimator = GetComponentInChildren<Animator>();
-                    break;
-                }
+                    {
+                        childAnimator = GetComponentInChildren<Animator>();
+                        break;
+                    }
             }
         }
 
@@ -126,15 +122,15 @@ namespace Entities
         {
             AiAgent.SetVariableValue("Attacking", false);
         }
-        
+
         public void Attack()
         {
             if (type == EncounterManager.EnemyTypes.BirdOnBird)
             {
                 attackStats.Prefab.GetComponent<HomingProjectileAttack>().target = PLAYER.transform;
-                Abilities.Attacks.Attack.Create(this, attackPoint.position, Quaternion.LookRotation(PLAYER.transform.position - transform.position) , attackStats);
+                Abilities.Attacks.Attack.Create(this, attackPoint.position, Quaternion.LookRotation(PLAYER.transform.position - transform.position), attackStats);
             }
-            else 
+            else
                 Abilities.Attacks.Attack.Create(this, attackPoint.position, transform.rotation, attackStats);
 
             var sound = type switch
@@ -143,10 +139,10 @@ namespace Entities
                 EncounterManager.EnemyTypes.BirdOnBird => FMODEvents.INSTANCE._draugrSwing,
                 EncounterManager.EnemyTypes.Wolf => FMODEvents.INSTANCE._draugrSwing
             };
-            
+
             FMODEvents.INSTANCE.PlayEvent(sound, transform.position);
         }
-        
+
         private float dissolveValue;
         protected override void Update()
         {
@@ -155,28 +151,28 @@ namespace Entities
                 if (!ragdollActive) return;
                 if (ragdollTimeLeft > 0)
                 {
-                    ragdollTimeLeft -= Time.deltaTime ;
+                    ragdollTimeLeft -= Time.deltaTime;
                 }
                 else
                 {
                     dissolveTimeLeft -= Time.deltaTime;
-                    materials[0].SetFloat("_Cutoff_Height", Mathf.InverseLerp(0,dissolveDuration,dissolveTimeLeft));
+                    materials[0].SetFloat("_Cutoff_Height", Mathf.InverseLerp(0, dissolveDuration, dissolveTimeLeft));
                     if (!(dissolveTimeLeft <= 0)) return;
                     ragdollActive = false;
                     Destroy(gameObject);
                 }
                 return;
             }
-            
+
             base.Update();
-            
+
             if (!ImmuneToStatusEffects)
                 _statusEffects.Update();
 
             //navAgent.speed = _moveSpeed;
 
             if (staggerTimeLeft > 0) staggerTimeLeft -= Time.deltaTime;
-            
+
             var pos = transform.position;
             // var rotation = Quaternion.LookRotation(PLAYER.transform.position - transform.position, Vector3.up);
             // var lerpRot = Quaternion.Lerp(transform.rotation,rotation , Time.deltaTime * rotationSpeed);
@@ -201,11 +197,13 @@ namespace Entities
                 .05f
             );
 
-            navAgent.speed = _moveSpeed * (_aboveHole ? _aboveHoleSpeedMultiplier : 1);
-            
+            float speedMultiplier = _aboveHole ? _aboveHoleSpeedMultiplier : 1;
+            navAgent.speed = _moveSpeed * speedMultiplier;
+            animator.SetFloat(MOVE_SPEED, _frozen ? 0 : _animationSpeed * speedMultiplier);
+
             prevDot = smoothed;
             prevPos = transform.position;
-            
+
             if (type == EncounterManager.EnemyTypes.BirdOnBird) return;
             animator.SetFloat(MOVE_DIR, smoothed);
         }
@@ -221,7 +219,7 @@ namespace Entities
             if (!ImmuneToStatusEffects)
                 _statusEffects.RemoveAll<T>();
         }
-        public int  CountStatusEffectsOfType<T>() where T : StatusEffect => 
+        public int CountStatusEffectsOfType<T>() where T : StatusEffect =>
             ImmuneToStatusEffects ? 0 : _statusEffects.GetCount<T>();
         public bool HasStatusEffectOfType<T>() where T : StatusEffect =>
             !ImmuneToStatusEffects && _statusEffects.HasEffect<T>();
@@ -235,7 +233,7 @@ namespace Entities
             //TODO Destroy upon ragdoll deletion
             Destroy(AiAgent);
             Destroy(navAgent);
-            if(childAnimator) Destroy(childAnimator);
+            if (childAnimator) Destroy(childAnimator);
             Destroy(animator);
             Destroy(GetComponent<Collider>());
             Destroy(_healthBar.gameObject);
@@ -252,16 +250,16 @@ namespace Entities
 
             if (!ImmuneToStatusEffects)
                 _statusEffects.Clear();
-            
+
             Unfreeze();
         }
 
         public override int TakeDamage(int amount, Entity attacker)
         {
-            if(!HasSpawned)
+            if (!HasSpawned)
                 return 0;
 
-            if (HasStatusEffectOfType<StatusEffect_Frozen>() && 
+            if (HasStatusEffectOfType<StatusEffect_Frozen>() &&
                 attacker is Player player)
             {
                 if (player.ActiveCharacter == Player.Character.Fenrir)
@@ -274,16 +272,16 @@ namespace Entities
                     amount = Mathf.CeilToInt(amount * player.HelFreezeDamageMultiplier);
                 }
             }
-            
+
             int realDamage = base.TakeDamage(amount, attacker);
             DamageNumbers.CreateDamageNumber(transform, realDamage);
-            _healthBar.UpdateHealthUI(_currentHealth, _maxHealth);
+            _healthBar.UpdateHealth(_currentHealth, _maxHealth);
 
             if (canBeStaggered && staggerTimeLeft <= 0)
             {
                 staggerTimeLeft = staggerCooldown;
                 //animator.StopPlayback();
-                if(type != EncounterManager.EnemyTypes.BirdOnBird) animator.SetBool("Stagger",true);
+                if (type != EncounterManager.EnemyTypes.BirdOnBird) animator.SetBool("Stagger", true);
                 AiAgent.SetVariableValue("Staggered", true);
                 AiAgent.SetVariableValue("Attacking", false);
             }
@@ -294,7 +292,7 @@ namespace Entities
         public override void Heal(int amount)
         {
             base.Heal(amount);
-            _healthBar.UpdateHealthUI(_currentHealth, _maxHealth);
+            _healthBar.UpdateHealth(_currentHealth, _maxHealth);
         }
 
         private IceBlock _iceBlockInstance;
@@ -305,7 +303,6 @@ namespace Entities
                 return;
 
             AiAgent.SetVariableValue("Frozen", true);
-            animator.SetFloat(MOVE_SPEED, 0);
             navAgent.enabled = false;
 
             _iceBlockInstance = Instantiate(_iceBlockPrefab, transform.position, transform.rotation)
@@ -317,30 +314,24 @@ namespace Entities
         {
             if (!_frozen)
                 return;
-            
+
             AiAgent.SetVariableValue("Frozen", false);
-            animator.SetFloat(MOVE_SPEED, 1);
             navAgent.enabled = true;
-            
+
             _iceBlockInstance.Shatter();
             _frozen = false;
         }
-        
+
         public override void AddSpeedMultiplier(float amount)
         {
             base.AddSpeedMultiplier(amount);
             navAgent.speed = _moveSpeed;
-            
+
             float animationSpeed = _animationSpeed * _speedMultiplier;
-            animator.SetFloat(MOVE_SPEED, animationSpeed);
             if (type == EncounterManager.EnemyTypes.BirdOnBird)
             {
                 childAnimator.SetFloat(ATTACK_SPEED, animationSpeed);
                 return;
-            }
-            else if (type == EncounterManager.EnemyTypes.Wolf)
-            {
-                AiAgent.SetVariableValue("ChargeSpeed", _chargeSpeed * _speedMultiplier);
             }
             animator.SetFloat(ATTACK_SPEED, animationSpeed);
         }
@@ -348,17 +339,12 @@ namespace Entities
         {
             base.RemoveSpeedMultiplier(amount);
             navAgent.speed = _moveSpeed;
-            
+
             float animationSpeed = _animationSpeed * _speedMultiplier;
-            animator.SetFloat(MOVE_SPEED, animationSpeed);
             if (type == EncounterManager.EnemyTypes.BirdOnBird)
             {
                 childAnimator.SetFloat(ATTACK_SPEED, animationSpeed);
                 return;
-            }
-            else if (type == EncounterManager.EnemyTypes.Wolf)
-            {
-                AiAgent.SetVariableValue("ChargeSpeed", _chargeSpeed * _speedMultiplier);
             }
             animator.SetFloat(ATTACK_SPEED, animationSpeed);
         }

@@ -68,6 +68,7 @@ namespace Entities
         private static readonly int ATTACK = Animator.StringToHash("attack");
         private static readonly int SWITCH = Animator.StringToHash("switch");
         private static readonly int ATTACK_FLIP = Animator.StringToHash("attackFlip");
+        private static readonly int SPEED = Animator.StringToHash("speed");
 
         private static bool HEL_UNLOCKED = true;
 
@@ -342,6 +343,7 @@ namespace Entities
         protected override void Update()
         {
             base.Update();
+            CurrentAnimator.SetFloat(SPEED, _aboveHole ? _insideHoleSpeedMultiplier : 1f);
 
             _inputBuffer.Update();
             if (_hasControl)
