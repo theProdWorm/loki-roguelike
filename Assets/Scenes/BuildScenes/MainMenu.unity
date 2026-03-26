@@ -274,8 +274,8 @@ GameObject:
   m_Component:
   - component: {fileID: 65023883}
   - component: {fileID: 65023882}
-  - component: {fileID: 65023881}
   - component: {fileID: 65023884}
+  - component: {fileID: 65023885}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -283,14 +283,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &65023881
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 65023880}
-  m_Enabled: 1
 --- !u!20 &65023882
 Camera:
   m_ObjectHideFlags: 0
@@ -401,6 +393,20 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &65023885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 65023880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 65023880}
 --- !u!1001 &86496323
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1154,7 +1160,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2422845489208871708, guid: 0e10dc24de418ad4d836ac3afabce179, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1512255739}
   m_SourcePrefab: {fileID: 100100000, guid: 0e10dc24de418ad4d836ac3afabce179, type: 3}
 --- !u!1 &473766067 stripped
 GameObject:
@@ -2689,6 +2698,42 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1512255738 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2422845489208871708, guid: 0e10dc24de418ad4d836ac3afabce179, type: 3}
+  m_PrefabInstance: {fileID: 471775407}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1512255739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512255738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1190808448
+      Data2: 1254004569
+      Data3: 1504527019
+      Data4: -433173728
+    Path: event:/Dave/SFX/Ambience/Brasa_Ambiance
+  Event: 
+  EventPlayTrigger: 1
+  EventStopTrigger: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 1
+  OverrideMinDistance: 15
+  OverrideMaxDistance: 25.7
 --- !u!1001 &1714854846
 PrefabInstance:
   m_ObjectHideFlags: 0

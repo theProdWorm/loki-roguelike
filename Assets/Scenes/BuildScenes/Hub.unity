@@ -17243,6 +17243,71 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 278035508}
   m_Mesh: {fileID: -1652133789245434421, guid: 9a17053b09d37a94183c99825fc60381, type: 3}
+--- !u!1 &280996888
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 280996890}
+  - component: {fileID: 280996889}
+  m_Layer: 0
+  m_Name: awake Brage bossfight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &280996889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 280996888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2934420960477c34e91f3f8da8f2ce6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AwakeCalled:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1149272037}
+        m_TargetAssemblyTypeName: ProgressPersistence, Assembly-CSharp
+        m_MethodName: UnlockDialogue2
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  StartCalled:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEnableCalled:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!4 &280996890
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 280996888}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 217.81886, y: -299.15314, z: 89.41557}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &282238125
 GameObject:
   m_ObjectHideFlags: 0
@@ -41798,9 +41863,9 @@ MonoBehaviour:
   Preload: 0
   NonRigidbodyVelocity: 0
   Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
+  OverrideAttenuation: 1
+  OverrideMinDistance: 18
+  OverrideMaxDistance: 30.16
 --- !u!4 &732027445 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3086229694086091174, guid: 0e10dc24de418ad4d836ac3afabce179, type: 3}
@@ -70908,6 +70973,11 @@ MonoBehaviour:
   m_IgnoreFromBuild: 1
   m_ApplyToChildren: 1
   m_AffectedAgents: ffffffff
+--- !u!1 &1037302046 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6835864611370157226, guid: 962e2fe746eb15e41bd47ba516fad3bb, type: 3}
+  m_PrefabInstance: {fileID: 1651098523}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1039029282
 GameObject:
   m_ObjectHideFlags: 0
@@ -74746,6 +74816,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07b3790808df02f458624318a763afe6, type: 3}
+--- !u!114 &1149272037 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2804970522790086908, guid: 07b3790808df02f458624318a763afe6, type: 3}
+  m_PrefabInstance: {fileID: 1149272036}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f890b5afce4c084c93f72ac32189ef7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1151835976
 GameObject:
   m_ObjectHideFlags: 0
@@ -77505,6 +77586,50 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &1220850013
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1220850015}
+  - component: {fileID: 1220850014}
+  m_Layer: 0
+  m_Name: Destroyshit
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1220850014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1220850013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68d81000a5354a55bb8a2db0880d85cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1220850015
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1220850013}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 222.51414, y: -303.66028, z: 83.75245}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1221448360 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3872171855025431373, guid: f261d331bc0833442be86c48a1a30432, type: 3}
@@ -109329,6 +109454,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1666388368}
   m_SourcePrefab: {fileID: 100100000, guid: 962e2fe746eb15e41bd47ba516fad3bb, type: 3}
+--- !u!114 &1651098524 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8142583463470668846, guid: 962e2fe746eb15e41bd47ba516fad3bb, type: 3}
+  m_PrefabInstance: {fileID: 1651098523}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1666388336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1652246309
 GameObject:
   m_ObjectHideFlags: 0
@@ -110097,6 +110233,30 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Start final boss encounter
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1220850014}
+        m_TargetAssemblyTypeName: Helpers.Destructor, Assembly-CSharp
+        m_MethodName: DestroyComponent
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1651098524}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Component, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Start final boss encounter
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1220850014}
+        m_TargetAssemblyTypeName: Helpers.Destructor, Assembly-CSharp
+        m_MethodName: DestroyObject
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1037302046}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Start final boss encounter
@@ -134014,3 +134174,5 @@ SceneRoots:
   - {fileID: 1321817620}
   - {fileID: 476895109}
   - {fileID: 861349895}
+  - {fileID: 1220850015}
+  - {fileID: 280996890}
