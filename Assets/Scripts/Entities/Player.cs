@@ -1046,6 +1046,19 @@ namespace Entities
             StatsPersistence.PlayerHealth = _maxHealth;
             StatsPersistence.HealthItemAmount = 0;
             
+            foreach (Rigidbody rbC in GetComponentsInChildren<Rigidbody>(true))
+            {
+                rbC.gameObject.SetActive(true);
+                rbC.isKinematic = false;
+            }
+
+            foreach (var animator in _animators)
+            {
+                Destroy(animator);
+            }
+            Destroy(_collider,1);
+            Destroy(this);
+            
             // var sound = FMODEvents.INSTANCE._playerDeath;
             // FMODEvents.INSTANCE.PlayEvent(sound, transform.position);
         }
