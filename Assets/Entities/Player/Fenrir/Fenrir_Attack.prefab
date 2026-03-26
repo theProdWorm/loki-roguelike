@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2107225649140716242}
   - component: {fileID: 1231724344458841491}
   - component: {fileID: 220258877832159161}
+  - component: {fileID: 6881821892305216627}
   m_Layer: 10
   m_Name: ClawSlash
   m_TagString: Untagged
@@ -30,7 +31,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0.9238796, z: -0, w: -0.38268325}
   m_LocalPosition: {x: 0, y: 0.5, z: -2}
   m_LocalScale: {x: 0.12, y: 0.12, z: 0.12}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4201145222526573159}
   m_LocalEulerAnglesHint: {x: 0, y: 225, z: 0}
@@ -143,6 +144,18 @@ MonoBehaviour:
   OnDestroy:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6881821892305216627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6171581266490627440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b855ba784104eedb41e1298c5a57c0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6444237028025776807
 GameObject:
   m_ObjectHideFlags: 0

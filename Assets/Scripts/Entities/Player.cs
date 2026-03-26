@@ -62,7 +62,7 @@ namespace Entities
         public enum Character { Fenrir, Hel }
 
         public static Player INSTANCE;
-        
+
         private static readonly int IS_MOVING = Animator.StringToHash("isMoving");
         private static readonly int DASH = Animator.StringToHash("dash");
         private static readonly int ATTACK = Animator.StringToHash("attack");
@@ -70,7 +70,7 @@ namespace Entities
         private static readonly int ATTACK_FLIP = Animator.StringToHash("attackFlip");
 
         private static bool HEL_UNLOCKED = true;
-        
+
         public UnityEvent<int, int> OnHealthChanged;
         public UnityEvent<int, int> OnPotionChargesChanged;
         public UnityEvent OnPotionDrunk;
@@ -81,7 +81,7 @@ namespace Entities
         [SerializeField] private PlayerInput _playerInput;
 
         [SerializeField] private float _invincibilityDuration;
-        
+
         [Tooltip("Amount of time (in seconds) in advance the player can press an input for it to count.")]
         [SerializeField] private float _inputBufferMargin;
 
@@ -92,10 +92,10 @@ namespace Entities
         [SerializeField] private float _insideHoleSpeedMultiplier;
 
         [SerializeField] private RumbleEvent _waterRumble;
-        
+
         [SerializeField] private ParticleSystem _grassStepVFX;
         [SerializeField] private ParticleSystem _waterStepVFX;
-        
+
         [Header("Target Lock")]
         [SerializeField] private float _targetLockAngle;
 
@@ -143,7 +143,7 @@ namespace Entities
         [SerializeField] private Transform _fenrirAttackPoint;
         [SerializeField] private float _fenrirLungeForce;
         [SerializeField] private float _fenrirLungeDuration;
-        
+
         [Header("Hel")]
         [SerializeField] private CharacterAbilitySet _helAbilities;
         [SerializeField] private Animator _helAnimator;
@@ -152,9 +152,9 @@ namespace Entities
         [SerializeField] private float _helLungeDuration;
 
         [Header("Freeze")]
-        [SerializeField] public int   ShatterBonusDamage = 20;
+        [SerializeField] public int ShatterBonusDamage = 20;
         [SerializeField] public float HelFreezeDamageMultiplier = 0.5f;
-        
+
         private Animator[] _animators;
         private Animator CurrentAnimator => _animators[(int)ActiveCharacter];
 
@@ -193,21 +193,21 @@ namespace Entities
 
         private Vector3 _targetPos;
 
-        private bool  _deltaIsMoving;
-        private bool  _deltaAboveHole;
-        private bool  _isDashing;
+        private bool _deltaIsMoving;
+        private bool _deltaAboveHole;
+        private bool _isDashing;
         private float _dashSpeed;
-        
-        private bool  _hasControl = true;
+
+        private bool _hasControl = true;
         private float _controlLossDuration;
-        
+
         private float _remainingInvincibilityDuration;
-        
+
         private Coroutine _lungeCoroutine;
         private Vector3 _lungeForce;
 
-        private bool _flipFenrirAttack;
-        
+        public bool FlipFenrirAttack;
+
         private InputBuffer _inputBuffer;
 
         private List<IInteractable> _interactables = new();
@@ -218,7 +218,7 @@ namespace Entities
             base.Awake();
 
             INSTANCE = this;
-            
+
             _playerInput.SwitchCurrentActionMap("Dialogue");
             _playerInput.SwitchCurrentActionMap("UI");
             _playerInput.SwitchCurrentActionMap("Player");
@@ -259,7 +259,7 @@ namespace Entities
             _originalDashDistance = Vector3.Distance(transform.position, _dashPoint.position);
 
             _dashSpeed = _originalDashDistance / _dashDuration;
-            
+
             InitializeAbilityTrackers();
             InitializeAttackPoints();
             InitializeAnimators();
@@ -285,15 +285,15 @@ namespace Entities
             {
                 new(_fenrirAbilities.Attack, (ability, action) =>
                 {
-                    _flipFenrirAttack = !_flipFenrirAttack;
-                    _fenrirAnimator.SetBool(ATTACK_FLIP, _flipFenrirAttack);
-                    
+                    FlipFenrirAttack = !FlipFenrirAttack;
+                    _fenrirAnimator.SetBool(ATTACK_FLIP, FlipFenrirAttack);
+
                     StartAttack(ability, action, ATTACK);
                 }),
                 new(_helAbilities.Attack, (ability, action) =>
                     StartAttack(ability, action, ATTACK))
             };
-            
+
             _switchAbilityTrackers = new AttackAbilityTracker[]
             {
                 new(_fenrirAbilities.Switch, (ability, action) =>
@@ -338,11 +338,11 @@ namespace Entities
         public void SetDashing() => _isDashing = true;
 
         public float GetSwitchCooldownPercent() => SwitchAbilityTracker.RemainingCooldownPercent;
-        
+
         protected override void Update()
         {
             base.Update();
-            
+
             _inputBuffer.Update();
             if (_hasControl)
                 _inputBuffer.NextInput();
@@ -380,7 +380,7 @@ namespace Entities
                 _controlLossDuration += Time.deltaTime;
             else
                 _controlLossDuration = 0;
-            
+
             if (_remainingInvincibilityDuration > 0)
                 _remainingInvincibilityDuration -= Time.deltaTime;
         }
@@ -388,7 +388,7 @@ namespace Entities
         private void MoveAndRotate()
         {
             Vector3 movement = Vector3.zero;
-            
+
             if (!_isDashing && _hasControl)
             {
                 var cameraForward = _camera.transform.forward;
@@ -399,7 +399,7 @@ namespace Entities
 
                 Vector3 movementX = _moveInput.x * rightDirection;
                 Vector3 movementZ = _moveInput.y * forwardDirection;
-                
+
                 float speed = _moveSpeed * (_aboveHole ? _insideHoleSpeedMultiplier : 1);
                 movement = speed * (movementX + movementZ).normalized;
             }
@@ -409,7 +409,7 @@ namespace Entities
             }
 
             _rigidbody.linearVelocity = movement;
-            
+
             if (_lungeCoroutine != null)
                 _rigidbody.linearVelocity += _lungeForce;
 
@@ -420,7 +420,7 @@ namespace Entities
 
             bool isMoving = movement.magnitude > 0.01f;
             CurrentAnimator.SetBool(IS_MOVING, isMoving);
-            
+
             RumbleManager.PLAYER_MOVING_IN_WATER = _aboveHole && isMoving;
         }
 
@@ -445,7 +445,7 @@ namespace Entities
         private Transform FindTarget()
         {
             var enemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None);
-            
+
             List<float> distances = new();
             List<float> angles = new();
 
@@ -462,7 +462,7 @@ namespace Entities
             {
                 forwardDirection = transform.forward;
             }
-            
+
             var validEnemies = enemies.Where(enemy =>
             {
                 if (!enemy.HasSpawned || enemy.IsDead)
@@ -506,12 +506,12 @@ namespace Entities
             }
 
             var target = validEnemies[targetIndex].transform;
-            
+
             Debug.DrawLine(transform.position, target.position, Color.red);
-            
+
             return target;
         }
-        
+
         private void StartAttack(Ability ability, int useTimes, int animatorHash)
         {
             LoseControl();
@@ -523,7 +523,7 @@ namespace Entities
                 var downProjection = Vector3.Project(cameraForward, Vector3.up);
 
                 var forwardDirection = (cameraForward - downProjection).normalized;
-                
+
                 _targetPos = target ? target.position : transform.position + forwardDirection * 10f;
             }
             else
@@ -534,7 +534,7 @@ namespace Entities
 
             _currentAbility = ability;
             _currentAbilityUseTimes = useTimes;
-            
+
             transform.LookAt(_targetPos);
 
             CurrentAnimator.SetTrigger(animatorHash);
@@ -552,7 +552,7 @@ namespace Entities
                 _damage,
                 _critChance,
                 _critDamage);
-            
+
             var position = attackPoint.position;
 
             if (_currentAbility.Burst)
@@ -568,7 +568,7 @@ namespace Entities
                 sound = FMODEvents.INSTANCE._playerSwitchIn;
             else
                 sound = FMODEvents.INSTANCE._playerAttack;
-            
+
             FMODEvents.INSTANCE.PlayEvent(sound, transform.position);
         }
 
@@ -592,7 +592,7 @@ namespace Entities
                     _currentAbility.BurstDelay, _currentAbility.SpreadAngle, position));
             else
                 Attack.Create(this, attackPoint, attackStats);
-            
+
             string attackName = attackStats.Prefab.name.ToLower();
             EventReference sound;
 
@@ -600,7 +600,7 @@ namespace Entities
                 sound = FMODEvents.INSTANCE._playerSwitchIn;
             else
                 sound = FMODEvents.INSTANCE._playerAttack;
-            
+
             FMODEvents.INSTANCE.PlayEvent(sound, transform.position);
         }
 
@@ -612,7 +612,7 @@ namespace Entities
 
             float projectedDistance = 0.75f * _fenrirLungeForce * _fenrirLungeDuration;
             float duration = _fenrirLungeDuration * Mathf.Clamp01(distanceToTarget / projectedDistance);
-            
+
             if (_lungeCoroutine != null)
             {
                 StopCoroutine(_lungeCoroutine);
@@ -643,7 +643,7 @@ namespace Entities
         {
             var sound = FMODEvents.INSTANCE._playerDash;
             FMODEvents.INSTANCE.PlayEvent(sound, transform.position);
-            
+
             // Projected dash vector using the calculated offset from player center to front
             Vector3 dashVector = dashPoint - _rigidbody.position;
             float distance = dashVector.magnitude;
@@ -651,16 +651,16 @@ namespace Entities
             // Distance from center of player to the front collision point
             Vector3 collisionPointOffset =
                 dashVector.normalized * (0.02f + _collider.radius * 2);
-            
+
             bool hitWall = Physics.Raycast(transform.position, dashVector, out var rHit, distance, _wallLayer);
             if (hitWall)
             {
                 var wallDistance = rHit.distance;
                 dashVector = dashVector.normalized * wallDistance;
-                
+
                 dashPoint = transform.position + dashVector - collisionPointOffset;
             }
-            
+
             // LayerMask holeAndWall = _wallLayer | _holeLayer;
             //
             // var commands = new NativeArray<RaycastCommand>(1, Allocator.Persistent);
@@ -767,7 +767,7 @@ namespace Entities
                 StopCoroutine(_dashCoroutine);
                 _moveSpeed = _originalMoveSpeed;
             }
-            
+
             _dashCoroutine = StartCoroutine(DashCoroutine(dashPoint, animate));
         }
 
@@ -777,10 +777,10 @@ namespace Entities
                 CurrentAnimator.SetTrigger(DASH);
 
             OnDashStarted?.Invoke();
-            
+
             SetDashing(true);
             LoseControl();
-            
+
             // int defaultPlayerLayer = gameObject.layer;
             //
             // int dashingPlayerLayer = _dashingPlayerLayer;
@@ -811,7 +811,7 @@ namespace Entities
                     yield return new WaitForFixedUpdate();
                     break;
                 }
-                    
+
                 elapsedTime += Time.fixedDeltaTime;
                 yield return new WaitForFixedUpdate();
             }
@@ -819,7 +819,7 @@ namespace Entities
             //gameObject.layer = defaultPlayerLayer;
 
             OnDashFinished?.Invoke();
-            
+
             SetDashing(false);
             GainControl();
 
@@ -833,7 +833,7 @@ namespace Entities
 
                 yield return new WaitForFixedUpdate();
             }
-            
+
             _moveSpeed = _originalMoveSpeed;
         }
 
@@ -841,7 +841,7 @@ namespace Entities
         {
             if (_remainingInvincibilityDuration > 0)
                 return 0;
-            
+
             int reducedDamage = Mathf.CeilToInt(amount * (1 - _damageReduction));
             int realDamage = base.TakeDamage(reducedDamage, attacker);
 
@@ -849,9 +849,9 @@ namespace Entities
 
             var sound = FMODEvents.INSTANCE._playerHit;
             FMODEvents.INSTANCE.PlayEvent(sound, transform.position);
-            
+
             _remainingInvincibilityDuration = _invincibilityDuration;
-            
+
             return realDamage;
         }
 
@@ -874,11 +874,11 @@ namespace Entities
         {
             if (ActiveCharacter == character)
                 return;
-            
+
             ActiveCharacter = character;
             CharacterIndexChanged();
         }
-        
+
         private void CharacterIndexChanged()
         {
             for (int i = 0; i < _characterContainer.childCount; i++)
@@ -902,10 +902,10 @@ namespace Entities
 
             instance.setParameterByName("FloorType", _aboveHole ? 1 : 0);
             instance.start();
-            
+
             //Instantiate(_aboveHole ? _waterStepVFX : _grassStepVFX, transform.position, transform.rotation);
         }
-        
+
         #region Collision
 
         private void FindMainInteractable()
@@ -1045,7 +1045,7 @@ namespace Entities
             base.Die();
             StatsPersistence.PlayerHealth = _maxHealth;
             StatsPersistence.HealthItemAmount = 0;
-            
+
             foreach (Rigidbody rbC in GetComponentsInChildren<Rigidbody>(true))
             {
                 rbC.gameObject.SetActive(true);
@@ -1056,9 +1056,9 @@ namespace Entities
             {
                 Destroy(animator);
             }
-            Destroy(_collider,1);
+            Destroy(_collider, 1);
             Destroy(this);
-            
+
             // var sound = FMODEvents.INSTANCE._playerDeath;
             // FMODEvents.INSTANCE.PlayEvent(sound, transform.position);
         }
