@@ -242,7 +242,8 @@ namespace Entities
             ragdollTimeLeft = ragdollDuration;
             dissolveTimeLeft = dissolveDuration;
 
-            _statusEffects.Clear();
+            if (!ImmuneToStatusEffects)
+                _statusEffects.Clear();
             
             Unfreeze();
         }
