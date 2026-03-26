@@ -27,7 +27,11 @@ public class PlayerSpawner : MonoBehaviour
             _justDied = false;
             int i = _progressPersistence.CurrentBranchProgression;
             Debug.Log(i);
-            PLAYER.transform.position = _reSpawnPoints[i].position;
+            
+            var playerPos = PLAYER.transform.position;
+            var spawnPos = new Vector3(_reSpawnPoints[i].position.x, playerPos.y, _reSpawnPoints[i].position.z);
+            
+            PLAYER.transform.position = spawnPos;
             PLAYER.transform.rotation = _reSpawnPoints[i].rotation;
         }
         else
@@ -62,7 +66,11 @@ public class PlayerSpawner : MonoBehaviour
     private IEnumerator WalkThroughDoorRoutine()
     {
         int i = _progressPersistence.CurrentBranch;
-        PLAYER.transform.position = _doorwayPoints[i].position;
+        
+        var playerPos = PLAYER.transform.position;
+        var spawnPos = new Vector3(_doorwayPoints[i].position.x, playerPos.y, _doorwayPoints[i].position.z);
+
+        PLAYER.transform.position = spawnPos;
         PLAYER.transform.rotation = _doorwayPoints[i].rotation;
 
         PLAYER.SetDashing(true);
