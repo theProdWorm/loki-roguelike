@@ -45,6 +45,7 @@ public class SeeThroughSync : MonoBehaviour
         }
         size = Mathf.Clamp(size, 0, _radius);
 
+
         foreach (Material mat in _materials)
         {
             mat.SetFloat(SizeID, size);
