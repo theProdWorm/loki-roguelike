@@ -1,7 +1,7 @@
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Effects
+namespace Animation
 {
     public class Firework : MonoBehaviour
     {

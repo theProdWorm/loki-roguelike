@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Gameplay.Feedback
+namespace Gameplay
 {
     [CreateAssetMenu(fileName = "New Screen Shake Event", menuName = "Gameplay/Screen Shake Event")]
     public class ScreenShakeEvent : ScriptableObject

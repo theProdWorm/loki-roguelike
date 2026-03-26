@@ -1,7 +1,6 @@
 using System.Collections;
 using Audio;
 using FMODUnity;
-using UI;
 using UnityEngine;
 using UnityEngine.UI;
 

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using GameManager;
 using UnityEngine;
 
 namespace UI.Narration

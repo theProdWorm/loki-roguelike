@@ -1,11 +1,9 @@
 using System;
-using Unity.Behavior;
-using Unity.Properties;
 using UnityEngine;
+using Unity.Properties;
 using UnityEngine.AI;
-using Action = Unity.Behavior.Action;
 
-namespace AI.Nodes
+namespace Unity.Behavior
 {
     [Serializable, GeneratePropertyBag]
     [NodeDescription(name: "Relative Move", story: "[Agent] moves relative to [Target]", category: "Action/Navigation",

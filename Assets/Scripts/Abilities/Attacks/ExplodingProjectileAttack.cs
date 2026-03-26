@@ -1,3 +1,4 @@
+using Stats;
 using UnityEngine;
 
 namespace Abilities.Attacks

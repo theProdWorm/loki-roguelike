@@ -1,10 +1,9 @@
+using System.Collections.Generic;
+using Items;
 using UnityEngine;
 
-namespace Items
+[CreateAssetMenu(fileName = "LootTable", menuName = "Items/LootTable")]
+public class LootTable : ScriptableObject
 {
-    [CreateAssetMenu(fileName = "LootTable", menuName = "Items/LootTable")]
-    public class LootTable : ScriptableObject
-    {
-        public WeightedItem<BaseItemStats>[] items;
-    }
+    public WeightedItem<BaseItemStats>[] items;
 }
