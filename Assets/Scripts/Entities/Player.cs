@@ -1046,8 +1046,8 @@ namespace Entities
             StatsPersistence.PlayerHealth = _maxHealth;
             StatsPersistence.HealthItemAmount = 0;
             
-            var sound = FMODEvents.INSTANCE._playerDeath;
-            FMODEvents.INSTANCE.PlayEvent(sound, transform.position);
+            // var sound = FMODEvents.INSTANCE._playerDeath;
+            // FMODEvents.INSTANCE.PlayEvent(sound, transform.position);
         }
     }
 }
