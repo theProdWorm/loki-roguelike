@@ -52,7 +52,8 @@ public class SceneManager : MonoBehaviour
     public void LoadScene(string sceneName)
     {
         OnSceneLoaded.Invoke();
-        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+        var temp = UnityEngine.SceneManagement.SceneUtility.GetBuildIndexByScenePath(sceneName);
+        LoadScene(temp);
     }
 
     public void LoadSceneAsync(int sceneIndex)
