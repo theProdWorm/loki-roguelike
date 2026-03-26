@@ -20,22 +20,26 @@ public class PlayerSpawner : MonoBehaviour
     void Start()
     {
         _progressPersistence = FindFirstObjectByType<ProgressPersistence>();
-
+        _justDied = _progressPersistence.JustDied;
+        Debug.Log(_justDied);
         if (_justDied)
         {
             _justDied = false;
             int i = _progressPersistence.CurrentBranchProgression;
+            Debug.Log(i);
             PLAYER.transform.position = _reSpawnPoints[i].position;
             PLAYER.transform.rotation = _reSpawnPoints[i].rotation;
         }
         else
             StartCoroutine(WalkThroughDoorRoutine());
 
+        _progressPersistence.JustDied = false;
     }
 
     private void OnEnable()
     {
         PLAYER = FindFirstObjectByType<Player>();
+        Debug.Log(PLAYER);
         PLAYER.OnDeath.AddListener(JustDied);
     }
 
@@ -46,13 +50,18 @@ public class PlayerSpawner : MonoBehaviour
 
     private void JustDied(Entity entity)
     {
+        Debug.Log("who ded?");
         if (entity == PLAYER)
+        {
+            Debug.Log("I ded");
             _justDied = true;
+            _progressPersistence.JustDied = true;
+        }
     }
 
     private IEnumerator WalkThroughDoorRoutine()
     {
-        int i = _progressPersistence.CurrentBranchProgression;
+        int i = _progressPersistence.CurrentBranch;
         PLAYER.transform.position = _doorwayPoints[i].position;
         PLAYER.transform.rotation = _doorwayPoints[i].rotation;
 
@@ -61,7 +70,7 @@ public class PlayerSpawner : MonoBehaviour
         PLAYER.SetDashing(false);
     }
 
-    [Tooltip("0 = Tutorial, 1 = Left Branch, 2 = Right Branch")]
+    //[Tooltip("0 = Tutorial, 1 = Left Branch, 2 = Right Branch")]
     public void ChangeCurrentBranch(int branch)
     {
         if (_progressPersistence == null)

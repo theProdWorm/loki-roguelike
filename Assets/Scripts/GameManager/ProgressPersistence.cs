@@ -18,6 +18,7 @@ public class ProgressPersistence : MonoBehaviour
     //This will always know how long you've progressed in your current branch
     public int CurrentBranchProgression = 0;
     public int CurrentBranch = 0;
+    public bool JustDied = false;
 
     public void UnlockDialogue1() => FirstBranchDone = true;
     public void UnlockDialogue2() => SecondBranchDone = true;
