@@ -61,9 +61,12 @@ namespace Audio
 
         private void Awake()
         {
+            SetMasterVolume(0);
+            
             if (INSTANCE != null)
             {
                 Destroy(INSTANCE.gameObject);
+                return;
             }
             INSTANCE = this;
             _masterBus = RuntimeManager.GetBus("bus:/");
@@ -164,9 +167,9 @@ namespace Audio
             }
         }
 
-        private void SetMasterVolume(System.Single value) => SetBusVolume(value,_masterBus);
-        private void SetSfxVolume(System.Single value) => SetBusVolume(value,_sfxBus);
-        private void SetMusicVolume(System.Single value)
+        public void SetMasterVolume(System.Single value) => SetBusVolume(value,_masterBus);
+        public void SetSfxVolume(System.Single value) => SetBusVolume(value,_sfxBus);
+        public void SetMusicVolume(System.Single value)
         {
             SetBusVolume(value,_musicBus);
             SetBusVolume(value,_brageBus);

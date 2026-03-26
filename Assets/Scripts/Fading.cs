@@ -1,4 +1,6 @@
 using System.Collections;
+using Audio;
+using FMODUnity;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +17,7 @@ public class Fading : MonoBehaviour
 
     private float _t;
 
-    private void Start()
+    private void Awake()
     {
         if (_fadeOut)
         {
@@ -26,7 +28,7 @@ public class Fading : MonoBehaviour
             _image.color = Color.clear;
         }
     }
-
+    
     public IEnumerator FadeIn()
     {
         _image.gameObject.SetActive(true);
@@ -37,6 +39,9 @@ public class Fading : MonoBehaviour
             _t += Time.deltaTime * speedIn;
             yield return new WaitForEndOfFrame();
             _image.color = Color.Lerp(Color.clear, Color.black, _t);
+
+            float volume = (1 - _t) * SettingsMenu.INSTANCE.MasterVolumeSlider.value;
+            FMODEvents.INSTANCE.SetMasterVolume(volume);
         }
         _image.color = Color.black;
     }
@@ -45,15 +50,17 @@ public class Fading : MonoBehaviour
     {
         _image.gameObject.SetActive(true);
         _t = 1;
-
+        
         while (_t >= 0)
         {
             _t -= Time.deltaTime * _speedOut;
             yield return new WaitForEndOfFrame();
             _image.color = Color.Lerp(Color.clear, Color.black, _t);
+
+            float volume = (1 - _t) * SettingsMenu.INSTANCE.MasterVolumeSlider.value;
+            FMODEvents.INSTANCE.SetMasterVolume(volume);
         }
         _image.color = Color.clear;
         _image.gameObject.SetActive(false);
-
     }
 }
