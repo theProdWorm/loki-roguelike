@@ -303,6 +303,7 @@ GameObject:
   - component: {fileID: 7937375252858355260}
   - component: {fileID: 7350849303254423002}
   - component: {fileID: 8614063226050698772}
+  - component: {fileID: 8001914415131815212}
   m_Layer: 5
   m_Name: ReturnArrow
   m_TagString: Untagged
@@ -319,14 +320,14 @@ RectTransform:
   m_GameObject: {fileID: 612413093828114795}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8899172, y: 0.80688846, z: 0.8899172}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 3862537466642455389}
+  m_Father: {fileID: 2610288195918467944}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1.7798342, y: -295.8053}
+  m_AnchoredPosition: {x: -0.000011444092, y: -166.6}
   m_SizeDelta: {x: 13.2404175, y: -45.102264}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7730091394379875912
@@ -435,6 +436,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976b3e9d51d44414b1ee71c3aac10ca5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8001914415131815212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612413093828114795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8001914415131815212}
+          m_TargetAssemblyTypeName: UnityEngine.EventSystems.EventTrigger, UnityEngine.UI
+          m_MethodName: OnSelect
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &737372125904889454
 GameObject:
   m_ObjectHideFlags: 0
@@ -1062,7 +1092,6 @@ RectTransform:
   - {fileID: 842960931302407536}
   - {fileID: 2429254678721648103}
   - {fileID: 7965355373586049108}
-  - {fileID: 3796585585752111253}
   m_Father: {fileID: 9204221143243777208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -3383,7 +3412,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 8273700413870846275, guid: 5e1a4b6ee39a5d144b2925690ed05d6d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3796585585752111253}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e1a4b6ee39a5d144b2925690ed05d6d, type: 3}
 --- !u!224 &2610288195918467944 stripped
