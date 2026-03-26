@@ -17259,7 +17259,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &280996889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17480,6 +17480,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 283573029}
   m_Mesh: {fileID: -410959170220184986, guid: 8d1f30bd1feb5f646a848c409d468190, type: 3}
+--- !u!1 &284011805 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6954518758547045776, guid: 962e2fe746eb15e41bd47ba516fad3bb, type: 3}
+  m_PrefabInstance: {fileID: 1651098523}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &284600670
 GameObject:
   m_ObjectHideFlags: 0
@@ -109453,6 +109458,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2473319740043560885, guid: 962e2fe746eb15e41bd47ba516fad3bb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1666388368}
+    - targetCorrespondingSourceObject: {fileID: 2473319740043560885, guid: 962e2fe746eb15e41bd47ba516fad3bb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1666388370}
   m_SourcePrefab: {fileID: 100100000, guid: 962e2fe746eb15e41bd47ba516fad3bb, type: 3}
 --- !u!114 &1651098524 stripped
 MonoBehaviour:
@@ -110262,6 +110270,30 @@ MonoBehaviour:
           m_StringArgument: Start final boss encounter
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1220850014}
+        m_TargetAssemblyTypeName: Helpers.Destructor, Assembly-CSharp
+        m_MethodName: DestroyObject
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 284011805}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Start final boss encounter
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1666388370}
+        m_TargetAssemblyTypeName: Helpers.BrageInstrumentStopper, Assembly-CSharp
+        m_MethodName: StopMusic
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Start final boss encounter
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1666388369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110314,6 +110346,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1666388370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1666388336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 673128800d3e44d2a559b9e7eaa7c47c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1674667727
 GameObject:
   m_ObjectHideFlags: 0
