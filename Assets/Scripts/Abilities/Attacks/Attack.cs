@@ -20,7 +20,7 @@ namespace Abilities.Attacks
         protected AttackStats _stats;
 
         protected Entity _owner;
-        protected string _hostileTag;
+        protected string _hostileTag = "Player";
 
         public static void Create(Entity owner, Vector3 position, Quaternion rotation, AttackStats stats)
         {

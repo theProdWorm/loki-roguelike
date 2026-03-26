@@ -48,6 +48,8 @@ namespace Entities
         [SerializeField] private float staggerCooldown = 3f;
         public bool HasSpawned = true;
 
+        [SerializeField] private float _aboveHoleSpeedMultiplier = 0.5f;
+        
         [Header("Status Effects")]
         [SerializeField] private Image _statusEffectIcon;
         [SerializeField] private Image _statusEffectCountIcon;
@@ -195,6 +197,8 @@ namespace Entities
                 .05f
             );
 
+            navAgent.speed = _moveSpeed * (_aboveHole ? _aboveHoleSpeedMultiplier : 1);
+            
             prevDot = smoothed;
             prevPos = transform.position;
             
