@@ -98,7 +98,6 @@ public class Fading : MonoBehaviour
         {
             text += c;
             _text.text = text;
-            Debug.Log(_text.text);
             yield return new WaitForSeconds(delay);
         }
 

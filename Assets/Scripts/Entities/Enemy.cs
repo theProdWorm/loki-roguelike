@@ -89,7 +89,7 @@ namespace Entities
             attackStats = new AttackStats(attackPrefab, _damage, 0, 0);
 
             _healthBar = GetComponentInChildren<UIEnemyHealth>();
-            _healthBar.UpdateHealth(_currentHealth, _maxHealth);
+            _healthBar.UpdateHealthUI(_currentHealth, _maxHealth);
             _animationSpeed = animator.GetFloat(MOVE_SPEED);
 
             ENEMYAMOUNT++;
@@ -273,7 +273,7 @@ namespace Entities
             
             int realDamage = base.TakeDamage(amount, attacker);
             DamageNumbers.CreateDamageNumber(transform, realDamage);
-            _healthBar.UpdateHealth(_currentHealth, _maxHealth);
+            _healthBar.UpdateHealthUI(_currentHealth, _maxHealth);
 
             if (canBeStaggered && staggerTimeLeft <= 0)
             {
@@ -290,7 +290,7 @@ namespace Entities
         public override void Heal(int amount)
         {
             base.Heal(amount);
-            _healthBar.UpdateHealth(_currentHealth, _maxHealth);
+            _healthBar.UpdateHealthUI(_currentHealth, _maxHealth);
         }
 
         private IceBlock _iceBlockInstance;
