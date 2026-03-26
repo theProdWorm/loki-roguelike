@@ -9,7 +9,7 @@ public class SceneManager : MonoBehaviour
     static Player PLAYER;
     public UnityEvent OnSceneLoaded;
 
-    Fading _fade;
+    private Fading _fade;
 
     private void Awake()
     {
@@ -41,7 +41,12 @@ public class SceneManager : MonoBehaviour
             UnityEngine.SceneManagement.SceneManager.LoadScene(sceneIndex);
             return;
         }
-        StartCoroutine(AfterFade(_fade.FadeIn(), sceneIndex, false));
+        ProgressPersistence _progressPersistence = FindFirstObjectByType<ProgressPersistence>();
+        if(_progressPersistence != null)
+            StartCoroutine(AfterFade(_fade.FadeIn(_progressPersistence.JustDied), sceneIndex, false));
+        else
+            StartCoroutine(AfterFade(_fade.FadeIn(false), sceneIndex, false));
+
     }
 
     public void LoadScene(string sceneName)

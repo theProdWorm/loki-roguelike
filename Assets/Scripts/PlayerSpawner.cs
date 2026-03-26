@@ -21,12 +21,10 @@ public class PlayerSpawner : MonoBehaviour
     {
         _progressPersistence = FindFirstObjectByType<ProgressPersistence>();
         _justDied = _progressPersistence.JustDied;
-        Debug.Log(_justDied);
         if (_justDied)
         {
             _justDied = false;
             int i = _progressPersistence.CurrentBranchProgression;
-            Debug.Log(i);
             
             var playerPos = PLAYER.transform.position;
             var spawnPos = new Vector3(_reSpawnPoints[i].position.x, playerPos.y, _reSpawnPoints[i].position.z);
@@ -43,7 +41,6 @@ public class PlayerSpawner : MonoBehaviour
     private void OnEnable()
     {
         PLAYER = FindFirstObjectByType<Player>();
-        Debug.Log(PLAYER);
         PLAYER.OnDeath.AddListener(JustDied);
     }
 
@@ -54,10 +51,8 @@ public class PlayerSpawner : MonoBehaviour
 
     private void JustDied(Entity entity)
     {
-        Debug.Log("who ded?");
         if (entity == PLAYER)
         {
-            Debug.Log("I ded");
             _justDied = true;
             _progressPersistence.JustDied = true;
         }
