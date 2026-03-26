@@ -19,12 +19,10 @@ public class Fading : MonoBehaviour
     {
         if (_fadeOut)
         {
-            Debug.Log("Fade");
             StartCoroutine(FadeOut());
         }
         else
         {
-            Debug.Log("Clear");
             _image.color = Color.clear;
         }
     }
@@ -50,7 +48,6 @@ public class Fading : MonoBehaviour
 
         while (_t >= 0)
         {
-            Debug.Log("Queer Innit");
             _t -= Time.deltaTime * _speedOut;
             yield return new WaitForEndOfFrame();
             _image.color = Color.Lerp(Color.clear, Color.black, _t);
