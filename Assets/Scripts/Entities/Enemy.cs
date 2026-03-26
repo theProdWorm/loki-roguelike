@@ -65,6 +65,8 @@ namespace Entities
         private StatusEffectList _statusEffects;
 
         private float _animationSpeed;
+
+        private float _chargeSpeed;
         
         protected override void Awake()
         {
@@ -103,7 +105,9 @@ namespace Entities
                    
                     }
                     else throw new NullReferenceException();
-
+                    
+                    AiAgent.GetVariable("ChargeSpeed", out BlackboardVariable<float> chargeSpeed);
+                    _chargeSpeed = chargeSpeed.Value;
                     break;
                 }
                 case EncounterManager.EnemyTypes.BirdOnBird:
@@ -334,6 +338,10 @@ namespace Entities
                 childAnimator.SetFloat(ATTACK_SPEED, animationSpeed);
                 return;
             }
+            else if (type == EncounterManager.EnemyTypes.Wolf)
+            {
+                AiAgent.SetVariableValue("ChargeSpeed", _chargeSpeed * _speedMultiplier);
+            }
             animator.SetFloat(ATTACK_SPEED, animationSpeed);
         }
         public override void RemoveSpeedMultiplier(float amount)
@@ -347,6 +355,10 @@ namespace Entities
             {
                 childAnimator.SetFloat(ATTACK_SPEED, animationSpeed);
                 return;
+            }
+            else if (type == EncounterManager.EnemyTypes.Wolf)
+            {
+                AiAgent.SetVariableValue("ChargeSpeed", _chargeSpeed * _speedMultiplier);
             }
             animator.SetFloat(ATTACK_SPEED, animationSpeed);
         }

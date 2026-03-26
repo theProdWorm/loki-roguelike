@@ -13,7 +13,7 @@ public class ChargeAction : Action
     [SerializeReference] public BlackboardVariable<GameObject> Agent;
     [SerializeReference] public BlackboardVariable<GameObject> Target;
     [SerializeReference] public BlackboardVariable<float> ChargeDistance;
-    [SerializeReference] public BlackboardVariable<float> ChargeSpeedMultiplier;
+    [SerializeReference] public BlackboardVariable<float> ChargeSpeed;
     [SerializeReference] public BlackboardVariable<bool> IsCharging;
     
     protected BehaviorGraphCollisionEvents m_CollisionEvents { get; private set; }
@@ -37,7 +37,7 @@ public class ChargeAction : Action
         _validCollision = false;
         m_HasBeenProcessed = false;
 
-        _chargeSpeed = _navMeshAgent.speed * ChargeSpeedMultiplier.Value;
+        _chargeSpeed = ChargeSpeed.Value;
         
         if (m_CollisionEvents == null)
         {
