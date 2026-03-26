@@ -165,7 +165,7 @@ namespace Entities
         private AttackAbilityTracker[] _switchAbilityTrackers;
         private AbilityTracker _dashAbilityTracker;
         private AttackAbilityTracker AttackAbilityTracker => _attackAbilityTrackers[(int)ActiveCharacter];
-        private AttackAbilityTracker SwitchAbilityTracker => _switchAbilityTrackers[(int)ActiveCharacter];
+        private AttackAbilityTracker SwitchAbilityTracker => _switchAbilityTrackers[((int) ActiveCharacter + 1) % 2];
 
         private Transform[] _attackPoints;
 
@@ -298,9 +298,19 @@ namespace Entities
             _switchAbilityTrackers = new AttackAbilityTracker[]
             {
                 new(_fenrirAbilities.Switch, (ability, action) =>
-                    StartAttack(ability, action, SWITCH)),
+                {
+                    ActiveCharacter = (Character)((int)++ActiveCharacter % 2);
+                    CharacterIndexChanged();
+                    
+                    StartAttack(ability, action, SWITCH);
+                }),
                 new(_helAbilities.Switch, (ability, action) =>
-                    StartAttack(ability, action, SWITCH))
+                {
+                    ActiveCharacter = (Character)((int)++ActiveCharacter % 2);
+                    CharacterIndexChanged();
+                    
+                    StartAttack(ability, action, SWITCH);
+                })
             };
 
             _dashAbilityTracker = new(_dashAbility, () => PerformDash(_dashPoint.position, true));
@@ -1023,15 +1033,8 @@ namespace Entities
 
             _inputBuffer.Add(() =>
             {
-                ActiveCharacter = (Character)((int)++ActiveCharacter % 2);
-                CharacterIndexChanged();
-
                 if (!SwitchAbilityTracker.TryUse())
-                {
-                    ActiveCharacter = (Character)((int)++ActiveCharacter % 2);
-                    CharacterIndexChanged();
                     return false;
-                }
 
                 foreach (var tracker in _switchAbilityTrackers)
                     tracker.Reset();
