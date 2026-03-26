@@ -61,8 +61,6 @@ namespace Audio
 
         private void Awake()
         {
-            SetMasterVolume(0);
-            
             if (INSTANCE != null)
             {
                 Destroy(INSTANCE.gameObject);
@@ -73,7 +71,11 @@ namespace Audio
             _musicBus = RuntimeManager.GetBus("bus:/Musik");
             _brageBus = RuntimeManager.GetBus("bus:/Brage");
             _sfxBus = RuntimeManager.GetBus("bus:/SFX");
+            
             var settings = SettingsMenu.INSTANCE;
+            if (!settings)
+                return;
+            
             settings.MasterVolumeSlider.onValueChanged.AddListener(SetMasterVolume);
             settings.SfxVolumeSlider.onValueChanged.AddListener(SetSfxVolume);
             settings.MusicVolumeSlider.onValueChanged.AddListener(SetMusicVolume);
