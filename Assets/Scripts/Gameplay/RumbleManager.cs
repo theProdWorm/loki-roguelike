@@ -29,7 +29,7 @@ namespace Gameplay
         private void Start()
         {
             SettingsMenu.INSTANCE.RumbleSlider.onValueChanged.AddListener(SetRumbleMultiplier);
-            SettingsMenu.INSTANCE.RumbleSlider.value = PlayerPrefs.GetFloat("RumbleMultiplier");
+            SettingsMenu.INSTANCE.RumbleSlider.value = PlayerPrefs.HasKey("RumbleMultiplier") ? PlayerPrefs.GetFloat("RumbleMultiplier") : 1f;
         }
 
         private void OnDisable()

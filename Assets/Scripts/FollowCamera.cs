@@ -57,7 +57,7 @@ public class FollowCamera : MonoBehaviour
         _backwardOffset = projection.magnitude;
         
         SettingsMenu.INSTANCE.ScreenShakeSlider.onValueChanged.AddListener(SetScreenShakeMultiplier);
-        SettingsMenu.INSTANCE.ScreenShakeSlider.value = PlayerPrefs.GetFloat("ShakeIntensity");
+        SettingsMenu.INSTANCE.ScreenShakeSlider.value = PlayerPrefs.HasKey("ShakeIntensity") ? PlayerPrefs.GetFloat("ShakeIntensity") : 1f;
     }
 
     private void OnDisable()

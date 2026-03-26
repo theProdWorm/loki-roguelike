@@ -80,9 +80,9 @@ namespace Audio
             settings.SfxVolumeSlider.onValueChanged.AddListener(SetSfxVolume);
             settings.MusicVolumeSlider.onValueChanged.AddListener(SetMusicVolume);
             
-            //settings.MasterVolumeSlider.value = PlayerPrefs.GetFloat("MasterVolume");
-            settings.SfxVolumeSlider.value = PlayerPrefs.GetFloat("SfxVolume");
-            settings.MusicVolumeSlider.value = PlayerPrefs.GetFloat("MusicVolume");
+            settings.MasterVolumeSlider.value = PlayerPrefs.HasKey("MasterVolume") ? PlayerPrefs.GetFloat("MasterVolume"): 1f;
+            settings.SfxVolumeSlider.value = PlayerPrefs.HasKey("SfxVolume") ? PlayerPrefs.GetFloat("SfxVolume") : 1f;
+            settings.MusicVolumeSlider.value = PlayerPrefs.HasKey("MusicVolume") ? PlayerPrefs.GetFloat("MusicVolume") : 1f;
         }
 
         private void Start()
