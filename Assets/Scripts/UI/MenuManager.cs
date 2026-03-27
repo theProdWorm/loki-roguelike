@@ -92,7 +92,7 @@ public class MenuManager : MonoBehaviour
         if (!Paused) return;
         if (!_playerInput) _playerInput = FindFirstObjectByType<PlayerInput>();
         Time.timeScale = 1;
-        _playerInput.SwitchCurrentActionMap("Player");
+        if(_playerInput)_playerInput.SwitchCurrentActionMap("Player");
         Paused = false;
         if(_PauseCanvasGroup)_PauseCanvasGroup.gameObject.SetActive(false);
     }
