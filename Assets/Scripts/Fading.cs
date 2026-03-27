@@ -52,7 +52,12 @@ public class Fading : MonoBehaviour
             yield return new WaitForEndOfFrame();
             _image.color = Color.Lerp(Color.clear, Color.black, _t);
             //_text.color = Color.Lerp(Color.clear, _textColor, _t);
-
+            
+            if (!_fadeAudio)
+                continue;
+                
+            float volume = (1 - _t) * SettingsMenu.INSTANCE.MasterVolumeSlider.value;
+            FMODEvents.INSTANCE.SetMasterVolume(volume);
         }
         _image.color = Color.black;
 
@@ -79,12 +84,6 @@ public class Fading : MonoBehaviour
                 _t -= Time.deltaTime * _speedOut;
                 yield return new WaitForEndOfFrame();
                 _text.color = Color.Lerp(Color.clear, _textColor, _t);
-                
-                if (!_fadeAudio)
-                    continue;
-                
-                float volume = (1 - _t) * SettingsMenu.INSTANCE.MasterVolumeSlider.value;
-                FMODEvents.INSTANCE.SetMasterVolume(volume);
             }
             _text.color = Color.clear;
             _text.gameObject.SetActive(false);
