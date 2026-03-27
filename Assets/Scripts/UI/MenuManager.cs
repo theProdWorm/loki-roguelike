@@ -31,6 +31,11 @@ public class MenuManager : MonoBehaviour
         UnpauseGame();
     }
 
+    private void OnDisable()
+    {
+        if(Paused) UnpauseGame();
+    }
+
     // Update is called once per frame
     private void Update()
     {
@@ -68,7 +73,7 @@ public class MenuManager : MonoBehaviour
         Time.timeScale = 0;
         _playerInput.SwitchCurrentActionMap("UI");
         Paused = true;
-        _PauseCanvasGroup.gameObject.SetActive(true);
+        _PauseCanvasGroup?.gameObject.SetActive(true);
     }
 
     public static void OpenSettingsMenu()
@@ -89,7 +94,7 @@ public class MenuManager : MonoBehaviour
         Time.timeScale = 1;
         _playerInput.SwitchCurrentActionMap("Player");
         Paused = false;
-        _PauseCanvasGroup.gameObject.SetActive(false);
+        if(_PauseCanvasGroup)_PauseCanvasGroup.gameObject.SetActive(false);
     }
     
     public void ReturnToMainMenu() => UnityEngine.SceneManagement.SceneManager.LoadScene(0);
