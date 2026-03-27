@@ -64,9 +64,9 @@ namespace Audio
             if (INSTANCE != null)
             {
                 Destroy(INSTANCE.gameObject);
-                return;
             }
-            INSTANCE = this;
+            else INSTANCE = this;
+            
             _masterBus = RuntimeManager.GetBus("bus:/");
             _musicBus = RuntimeManager.GetBus("bus:/Musik");
             _brageBus = RuntimeManager.GetBus("bus:/Brage");
