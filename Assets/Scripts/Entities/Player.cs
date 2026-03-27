@@ -70,7 +70,7 @@ namespace Entities
         private static readonly int ATTACK_FLIP = Animator.StringToHash("attackFlip");
         private static readonly int SPEED = Animator.StringToHash("speed");
 
-        private static bool HEL_UNLOCKED = true;
+        private static bool HEL_UNLOCKED;
 
         public UnityEvent<int, int> OnHealthChanged;
         public UnityEvent<int, int> OnPotionChargesChanged;
