@@ -35,6 +35,7 @@ public class ChargeAction : Action
         _navMeshAgent.ResetPath();
         _wait = false;
         _validCollision = false;
+        _hitTarget = false;
         m_HasBeenProcessed = false;
 
         _chargeSpeed = ChargeSpeed.Value;
