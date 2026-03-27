@@ -43,7 +43,7 @@ namespace Gameplay
                 return;
             
             if (PLAYER_MOVING_IN_WATER)
-                Gamepad.current?.SetMotorSpeeds(_waterLowFrequency, _waterHighFrequency);
+                Gamepad.current?.SetMotorSpeeds(_waterLowFrequency * RumbleStrengthMultiplier, _waterHighFrequency * RumbleStrengthMultiplier);
             else
                 Gamepad.current?.SetMotorSpeeds(0, 0);
         }

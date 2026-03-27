@@ -55,7 +55,7 @@ public class Fading : MonoBehaviour
             
             if (!_fadeAudio)
                 continue;
-                
+            
             float volume = (1 - _t) * SettingsMenu.INSTANCE.MasterVolumeSlider.value;
             FMODEvents.INSTANCE.SetMasterVolume(volume);
         }
@@ -69,25 +69,25 @@ public class Fading : MonoBehaviour
         //}
         //_text.color = Color.clear;
 
-        if (died)
+        if (!died) 
+            yield break;
+        
+        _slowWriteRoutine = StartCoroutine(SlowWriteText());
+
+        while (_slowWriteRoutine != null)
+            yield return null;
+
+        _image.gameObject.SetActive(true);
+        _t = 1;
+        yield return new WaitForSecondsRealtime(_textWriteDelay*3);
+        while (_t >= 0)
         {
-            _slowWriteRoutine = StartCoroutine(SlowWriteText());
-
-            while (_slowWriteRoutine != null)
-                yield return null;
-
-            _image.gameObject.SetActive(true);
-            _t = 1;
-            yield return new WaitForSecondsRealtime(_textWriteDelay*3);
-            while (_t >= 0)
-            {
-                _t -= Time.deltaTime * _speedOut;
-                yield return new WaitForEndOfFrame();
-                _text.color = Color.Lerp(Color.clear, _textColor, _t);
-            }
-            _text.color = Color.clear;
-            _text.gameObject.SetActive(false);
+            _t -= Time.deltaTime * _speedOut;
+            yield return new WaitForEndOfFrame();
+            _text.color = Color.Lerp(Color.clear, _textColor, _t);
         }
+        _text.color = Color.clear;
+        _text.gameObject.SetActive(false);
     }
 
     private IEnumerator SlowWriteText()

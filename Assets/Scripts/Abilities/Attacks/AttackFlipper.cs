@@ -5,22 +5,22 @@ namespace Abilities.Attacks
 {
     public class AttackFlipper : MonoBehaviour
     {
-        private void Awake()
+        private void Start()
         {
-            if (Player.INSTANCE.FlipFenrirAttack)
-            {
-                transform.localScale = new Vector3(
-                    -transform.localScale.x,
-                    transform.localScale.y,
-                    transform.localScale.z);
+            if (!Player.INSTANCE.FlipFenrirAttack) 
+                return;
+            
+            transform.localScale = new Vector3(
+                -transform.localScale.x,
+                transform.localScale.y,
+                transform.localScale.z);
 
-                transform.position += transform.right * 0.9f;
-
-                transform.rotation = Quaternion.Euler(
-                    transform.rotation.x,
-                    transform.rotation.y - 5f,
-                    transform.rotation.z);
-            }
+            transform.position += transform.right * 0.9f;
+            
+            // transform.rotation = Quaternion.Euler(
+            //     transform.rotation.x,
+            //     transform.rotation.y - 5f,
+            //     transform.rotation.z);
         }
     }
 }

@@ -7,7 +7,10 @@ namespace Entities
             _currentHealth--;
 
             if (_currentHealth <= 0)
+            {
+                OnDeath?.Invoke(this);
                 Destroy(gameObject);
+            }
             
             return 1;
         }

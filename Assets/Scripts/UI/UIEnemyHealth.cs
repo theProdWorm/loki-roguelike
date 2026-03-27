@@ -102,7 +102,6 @@ namespace UI
             float elapsedTime = 0;
             while (elapsedTime < _healthFadeDuration)
             {
-                Debug.Log("fading");
                 float t = Mathf.Clamp01(elapsedTime / _healthFadeDuration);
                 _healthLagBar.value = Mathf.Lerp(startValue, _healthSlider.value, t);
 

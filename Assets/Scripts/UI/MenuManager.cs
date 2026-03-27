@@ -91,4 +91,6 @@ public class MenuManager : MonoBehaviour
         Paused = false;
         _PauseCanvasGroup.gameObject.SetActive(false);
     }
+    
+    public void ReturnToMainMenu() => UnityEngine.SceneManagement.SceneManager.LoadScene(0);
 }
