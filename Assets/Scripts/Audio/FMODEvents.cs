@@ -90,9 +90,12 @@ namespace Audio
 
         private void OnDisable()
         {
-            _masterBus.getVolume(out float masterVolume);
-            _sfxBus.getVolume(out float sfxVolume);
-            _musicBus.getVolume(out float musicVolume);
+            var settings = SettingsMenu.INSTANCE;
+            
+            float masterVolume = settings.MasterVolumeSlider.value;
+            float sfxVolume = settings.SfxVolumeSlider.value;
+            float musicVolume = settings.MusicVolumeSlider.value;
+            
             PlayerPrefs.SetFloat("MasterVolume",masterVolume );
             PlayerPrefs.SetFloat("SfxVolume", sfxVolume );
             PlayerPrefs.SetFloat("MusicVolume", musicVolume );
