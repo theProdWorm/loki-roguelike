@@ -8,7 +8,7 @@ namespace Entities
 
             if (_currentHealth <= 0)
             {
-                ProgressPersistence.FirstBranchDone = true;
+                OnDeath?.Invoke(this);
                 Destroy(gameObject);
             }
             
