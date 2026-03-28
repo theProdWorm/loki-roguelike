@@ -55294,17 +55294,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07b3790808df02f458624318a763afe6, type: 3}
---- !u!114 &893807872 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2804970522790086908, guid: 07b3790808df02f458624318a763afe6, type: 3}
-  m_PrefabInstance: {fileID: 893807871}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f890b5afce4c084c93f72ac32189ef7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &895056190 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 5924539a6c3e8dc41a95844f2c80b8c0, type: 3}
@@ -78182,6 +78171,7 @@ GameObject:
   - component: {fileID: 1115833219}
   - component: {fileID: 1115833218}
   - component: {fileID: 1115833217}
+  - component: {fileID: 1115833220}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -78204,8 +78194,8 @@ MonoBehaviour:
   TriggerEntered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 893807872}
-        m_TargetAssemblyTypeName: ProgressPersistence, Assembly-CSharp
+      - m_Target: {fileID: 1115833220}
+        m_TargetAssemblyTypeName: GameManager.Unlocker, Assembly-CSharp
         m_MethodName: UnlockDialogue2
         m_Mode: 1
         m_Arguments:
@@ -78260,6 +78250,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -22.58, z: 0}
+--- !u!114 &1115833220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1115833216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4378c908aea24f31879fbe8ac42814fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1116341956 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d2d78769bf71ee1458e66d524f1d197e, type: 3}

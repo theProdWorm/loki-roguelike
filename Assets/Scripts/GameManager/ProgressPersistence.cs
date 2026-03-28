@@ -20,8 +20,8 @@ public class ProgressPersistence : MonoBehaviour
     public int CurrentBranch = 0;
     public bool JustDied = false;
 
-    public void UnlockDialogue1() => FirstBranchDone = true;
-    public void UnlockDialogue2() => SecondBranchDone = true;
+    public static void UnlockDialogue1() => FirstBranchDone = true;
+    public static void UnlockDialogue2() => SecondBranchDone = true;
     
     [Tooltip("0 = Tutorial, 1 = Left Branch, 2 = Right Branch")]
     public void ChangeCurrentBranch(int branch)
